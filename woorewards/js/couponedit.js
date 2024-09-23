@@ -1,0 +1,1 @@
+jQuery(function($){$('.lws_editlist').on('change','#lws_woorewards_unlockables_coupon_percent',function(event){var root=$(event.target).closest('.lws_woorewards_system_choice');root.find('.lws_woorewards_unlockables_coupon_currency_hide').hide().filter('.currency_'+$(event.target).val()).show()})})

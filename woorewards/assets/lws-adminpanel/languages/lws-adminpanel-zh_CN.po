@@ -1,0 +1,1262 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: LWS Admin Panel\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-31 09:45+0100\n"
+"PO-Revision-Date: 2023-01-31 09:45+0100\n"
+"Last-Translator: leon <lion.su@gmail.com>\n"
+"Language-Team: 简体中文\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.2.2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: lws-adminpanel.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Loco-Version: 2.3.1; wp-5.3.2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: include/admin.php:240 include/pages/head.php:466
+msgid "Expand All"
+msgstr ""
+
+#: include/admin.php:241
+msgid "Collapse All"
+msgstr ""
+
+#: include/admin.php:249
+msgid "At least one value is unknown."
+msgstr "至少有一个值未知。"
+
+#: include/editlist/filtersimplefield.php:18
+msgid "Search"
+msgstr "搜索"
+
+#: include/editlist/filtersimplefield.php:27
+msgid "Narrow your search"
+msgstr "缩小搜索范围"
+
+#: include/editlist/filtersimplelinks.php:23
+msgid "Filter the results"
+msgstr "过滤结果"
+
+#: include/editlist/pager.php:82
+msgid "Order By"
+msgstr ""
+
+#: include/editlist/pager.php:105
+#, php-format
+msgid "%d item"
+msgid_plural "%d items"
+msgstr[0] "%d 项"
+
+#: include/editlist/pager.php:112
+msgid "Items per page"
+msgstr "每页显示项目"
+
+#: include/editlist/pager.php:132
+#, php-format
+msgctxt "Total page number"
+msgid "/ %d"
+msgid_plural "/ %d"
+msgstr[0] "/ %d"
+
+#: include/editlist/source.php:51 include/internal/editlistcontroler.php:554
+#, fuzzy
+#| msgid "Email Settings"
+msgid "Settings"
+msgstr "邮件设置"
+
+#: include/internal/editlistcontroler.php:143
+msgctxt "editlist groupby"
+msgid "Add a group"
+msgstr "新增分组"
+
+#: include/internal/editlistcontroler.php:152
+#, fuzzy
+#| msgid "Edit..."
+msgid "Edit"
+msgstr "编辑..."
+
+#: include/internal/editlistcontroler.php:156
+#: include/internal/editlistcontroler.php:596
+msgid "Delete"
+msgstr "删除"
+
+#: include/internal/editlistcontroler.php:305
+msgid "Apply"
+msgstr "执行"
+
+#: include/internal/editlistcontroler.php:348
+msgid "Action"
+msgstr ""
+
+#: include/internal/editlistcontroler.php:361
+msgid "Add"
+msgstr "增加"
+
+#: include/internal/editlistcontroler.php:505
+msgid "Values"
+msgstr ""
+
+#: include/internal/editlistcontroler.php:547
+msgid "Cancel"
+msgstr "取消"
+
+#: include/internal/editlistcontroler.php:548
+msgid "Save"
+msgstr "保存"
+
+#: include/internal/editlistcontroler.php:551
+#, fuzzy
+#| msgctxt "next wizard step"
+#| msgid "Next"
+msgctxt "Confirm event/unlockable type choice"
+msgid "Next"
+msgstr "下一步"
+
+#: include/internal/editlistcontroler.php:552
+msgctxt "Undo event/unlockable type choice"
+msgid "Back"
+msgstr ""
+
+#: include/internal/editlistcontroler.php:594
+msgid "Quick Edit"
+msgstr "快速编辑"
+
+#: include/internal/editlistcontroler.php:595
+msgid "Copy"
+msgstr "复制"
+
+#: include/internal/helpers/pages.php:59
+msgid "Used to get google fonts."
+msgstr "用以获得Google字体。"
+
+#: include/internal/helpers/pages.php:62
+msgid "Generate API Key"
+msgstr "生成 API 密钥"
+
+#: include/internal/helpers/pages.php:63
+#, php-format
+msgid "or <a target='_blank' href='%s'>click here to Get a Google API KEY</a>"
+msgstr ""
+"或者 <a target='_blank' href='%s'>点击这里来获取一个 Google API 密钥</a>"
+
+#: include/internal/helpers/pages.php:66
+msgid "You MUST be logged in to your Google account to generate a key."
+msgstr "您需要登陆到您的Google账号来生成密钥。"
+
+#: include/internal/helpers/pages.php:70
+msgid "Google account"
+msgstr "Google 账号"
+
+#: include/internal/mailer.php:356
+msgid "This is a test."
+msgstr "这是一个测试。"
+
+#: include/internal/mailer.php:430
+msgid "Email Settings"
+msgstr "邮件设置"
+
+#: include/internal/mailer.php:430
+#, php-format
+msgid "%s Email Settings"
+msgstr "%s 邮件设置"
+
+#: include/internal/mailer.php:432
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "\t\t\t\t\t\t\tOnce you've finished the email settings, <b>save your "
+#| "changes</b><br/>\n"
+#| "\t\t\t\t\t\t\tYou will then see the result in the style editor below<br/"
+#| ">\n"
+#| "\t\t\t\t\t\t\tSelect the elements you wish to change and have fun!\n"
+#| "\t\t\t\t\t\t"
+msgid ""
+"Once you've finished the email settings, <b>save your changes</b><br/>You "
+"will then see the result in the style editor below<br/>Select the elements "
+"you wish to change and have fun!"
+msgstr ""
+"\n"
+"\t\t\t\t\t\t\t当完成电子邮件设置后, <b>请先确认保存</b><br/>\n"
+"\t\t\t\t\t\t\t然后您就可以在下方的样式编辑器中看到结果<br/>\n"
+"\t\t\t\t\t\t\t选择您想要调整的元素，然后尽情编辑吧！\n"
+"\t\t\t\t\t\t"
+
+#: include/internal/mailer.php:436
+msgid "Header picture"
+msgstr "标题图片"
+
+#: include/internal/mailer.php:444
+msgid "Footer text"
+msgstr "页脚文字"
+
+#: include/internal/mailer.php:465
+msgid "Email details"
+msgstr "邮件详细内容"
+
+#: include/internal/mailer.php:470
+msgid "Subject"
+msgstr "标题"
+
+#: include/internal/mailer.php:481
+msgid "Preheader"
+msgstr "页头"
+
+#: include/internal/mailer.php:522
+msgid "Receiver Email"
+msgstr "邮件收件人"
+
+#: include/internal/mailer.php:525
+msgid "Test your email to see how it looks"
+msgstr "邮件实际展示效果测试"
+
+#: include/internal/mailer.php:532
+msgid "Send test email"
+msgstr "发送测试邮件"
+
+#: include/internal/mailer.php:550
+msgid "Test email sent."
+msgstr "测试邮件已发送。"
+
+#: include/internal/mailer.php:553
+msgid "Test email is not valid."
+msgstr "测试邮件无效。"
+
+#: include/internal/menuitems.php:68
+msgid "Custom item"
+msgstr ""
+
+#: include/internal/menuitems.php:411
+#, fuzzy
+#| msgid "Select..."
+msgid "Select All"
+msgstr "选择..."
+
+#: include/internal/menuitems.php:412
+msgid "Add to Menu"
+msgstr ""
+
+#: include/internal/menushortcode.php:18
+msgid "Shortcode item"
+msgstr ""
+
+#: include/internal/menushortcode.php:21 include/internal/menushortcode.php:57
+msgid "Logged"
+msgstr ""
+
+#: include/internal/menushortcode.php:23 include/internal/menushortcode.php:55
+msgid "Guest"
+msgstr ""
+
+#: include/internal/menushortcode.php:51
+msgid "Item content"
+msgstr ""
+
+#: include/internal/menushortcode.php:54
+msgid "Visitor type"
+msgstr ""
+
+#: include/internal/menushortcode.php:56
+msgid "All"
+msgstr ""
+
+#: include/internal/pages.php:428
+msgid "Changes not commited."
+msgstr "修改内容未提交。"
+
+#: include/internal/pages.php:429
+msgid "Please confirm or cancel the active form before submit that page."
+msgstr "提交前，请确认或取消当前表单。"
+
+#: include/internal/pages.php:430
+msgid "Do you really want to delete the line?"
+msgstr "您确定要删除该项设置么？"
+
+#: include/internal/pages.php:431
+msgid "Update error, please check the values."
+msgstr "更新错误，请检查录入值。"
+
+#: include/internal/pages.php:432
+msgid "An error occured, please try later."
+msgstr "出错了，请稍后再试试。"
+
+#: include/internal/pages.php:433
+msgid "Please, select an item."
+msgstr "请选择一项。"
+
+#: include/internal/pages.php:434
+msgid "Select a font"
+msgstr "选择字体"
+
+#: include/internal/pages.php:435
+#, fuzzy
+#| msgid "Show more"
+msgctxt "Font list"
+msgid "Show more"
+msgstr "显示更多"
+
+#: include/internal/pages.php:436
+#, fuzzy
+#| msgid "Show less"
+msgctxt "Font list"
+msgid "Show less"
+msgstr "显示更少"
+
+#: include/internal/pages.php:438
+msgctxt "Font weight"
+msgid "Thin"
+msgstr ""
+
+#: include/internal/pages.php:439
+msgctxt "Font weight"
+msgid "Extra Light"
+msgstr ""
+
+#: include/internal/pages.php:440
+msgctxt "Font weight"
+msgid "Light"
+msgstr ""
+
+#: include/internal/pages.php:441 include/internal/pages.php:442
+msgctxt "Font weight"
+msgid "Normal"
+msgstr ""
+
+#: include/internal/pages.php:443
+msgctxt "Font weight"
+msgid "Medium"
+msgstr ""
+
+#: include/internal/pages.php:444
+msgctxt "Font weight"
+msgid "Semi Bold"
+msgstr ""
+
+#: include/internal/pages.php:445
+msgctxt "Font weight"
+msgid "Bold"
+msgstr ""
+
+#: include/internal/pages.php:446
+msgctxt "Font weight"
+msgid "Extra Bold"
+msgstr ""
+
+#: include/internal/pages.php:447
+msgctxt "Font weight"
+msgid "Black"
+msgstr ""
+
+#: include/internal/pages.php:452
+msgid " didn't match any items"
+msgstr "不能匹配任何项"
+
+#: include/internal/pages.php:453
+msgid "Show All Items"
+msgstr "显示所有项"
+
+#: include/legacy/duration.php:79 include/tools/duration.php:79
+msgid "Year"
+msgid_plural "Years"
+msgstr[0] "年"
+
+#: include/legacy/duration.php:82 include/tools/duration.php:82
+msgid "Month"
+msgid_plural "Months"
+msgstr[0] "月"
+
+#: include/legacy/duration.php:85 include/tools/duration.php:85
+msgid "Week"
+msgid_plural "Weeks"
+msgstr[0] ""
+
+#: include/legacy/duration.php:88 include/tools/duration.php:88
+msgid "Hour"
+msgid_plural "Hours"
+msgstr[0] "小时"
+
+#: include/legacy/duration.php:91 include/tools/duration.php:91
+msgid "Minute"
+msgid_plural "Minutes"
+msgstr[0] "分钟"
+
+#: include/legacy/duration.php:94 include/tools/duration.php:94
+msgid "Second"
+msgid_plural "Seconds"
+msgstr[0] "秒"
+
+#: include/legacy/duration.php:97 include/tools/duration.php:97
+msgid "Day"
+msgid_plural "Days"
+msgstr[0] "天"
+
+#: include/legacy/duration.php:286 include/tools/duration.php:291
+#: include/tools/duration.php:299
+msgid "Days"
+msgstr "天"
+
+#: include/legacy/duration.php:287 include/tools/duration.php:292
+#: include/tools/duration.php:301
+msgid "Months"
+msgstr "月"
+
+#: include/legacy/duration.php:288 include/tools/duration.php:293
+#: include/tools/duration.php:302
+msgid "Years"
+msgstr "年"
+
+#: include/legacy/duration.php:291 include/tools/duration.php:300
+msgid "Weeks"
+msgstr ""
+
+#: include/legacy/duration.php:292 include/tools/duration.php:298
+#, fuzzy
+#| msgid "Hour"
+#| msgid_plural "Hours"
+msgid "Hours"
+msgstr "小时"
+
+#: include/legacy/duration.php:293 include/tools/duration.php:297
+#, fuzzy
+#| msgid "Minute"
+#| msgid_plural "Minutes"
+msgid "Minutes"
+msgstr "分钟"
+
+#: include/legacy/duration.php:294 include/tools/duration.php:296
+#, fuzzy
+#| msgid "Second"
+#| msgid_plural "Seconds"
+msgid "Seconds"
+msgstr "秒"
+
+#: include/pages/endpoint.php:63
+msgid "Enable"
+msgstr ""
+
+#: include/pages/endpoint.php:72
+msgid "Tab title"
+msgstr ""
+
+#: include/pages/endpoint.php:81
+msgid "Slug"
+msgstr ""
+
+#: include/pages/endpoint.php:89
+msgid "Role restriction"
+msgstr ""
+
+#: include/pages/endpoint.php:92
+msgid ""
+"Restrict this tab to given roles. No roles selected means no restriction at "
+"all."
+msgstr ""
+
+#: include/pages/endpoint.php:98
+msgid "Content page"
+msgstr ""
+
+#: include/pages/endpoint.php:112
+msgid "Content Edition"
+msgstr ""
+
+#: include/pages/endpoint.php:120
+msgid "Edit Page"
+msgstr ""
+
+#: include/pages/endpoint.php:126
+#, fuzzy
+#| msgid "Select a font"
+msgid "Selected Page not found"
+msgstr "选择字体"
+
+#: include/pages/endpoint.php:137
+#, fuzzy
+#| msgid "Default CSS values"
+msgid "Default Content"
+msgstr "默认 CSS 值"
+
+#: include/pages/endpoint.php:140
+msgid "Create a new default page"
+msgstr ""
+
+#: include/pages/endpoint.php:167
+msgid "Edit the page"
+msgstr ""
+
+#: include/pages/endpoint.php:168
+msgid "Page created and setup as tab."
+msgstr ""
+
+#: include/pages/endpoint.php:187
+#, fuzzy
+#| msgid "An error occured during form validation."
+msgid "An error occured during page creation."
+msgstr "验证时发生了错误。"
+
+#: include/pages/field/duration.php:88
+msgid "An integer value greater than zero."
+msgstr "大于0的整数。"
+
+#: include/pages/field/googleapiskey.php:24
+msgid "Your Google API key"
+msgstr "您的 Google API 密钥"
+
+#: include/pages/field/googleapiskey.php:32
+msgid "You should define a Google API key in this settings."
+msgstr "您需要在这里设定 Google API 密钥."
+
+#: include/pages/field/iconpicker.php:48
+msgid "Pick an Icon"
+msgstr ""
+
+#: include/pages/field/lacchecklist.php:62
+msgid "Select..."
+msgstr "选择..."
+
+#: include/pages/field/lacchecklist.php:63
+#, fuzzy
+#| msgid "Search"
+msgid "Search..."
+msgstr "搜索"
+
+#: include/pages/field/lactaglist.php:53
+#, fuzzy
+#| msgid "Add"
+msgctxt "lac-taglist \"add\" button"
+msgid "Add"
+msgstr "增加"
+
+#: include/pages/field/media.php:30
+msgid "Remove"
+msgstr "删除"
+
+#: include/pages/field/media.php:31 include/pages/field/media.php:33
+msgid "Select a media"
+msgstr "选择媒体"
+
+#: include/pages/field/media.php:32
+msgid "Use the selected item"
+msgstr "使用选中项"
+
+#: include/pages/field/media.php:34
+msgid "Edit..."
+msgstr "编辑..."
+
+#: include/pages/field/shortcode.php:25
+msgid "Shortcode"
+msgstr ""
+
+#: include/pages/field/shortcode.php:26
+msgid "Attributes"
+msgstr ""
+
+#: include/pages/field/shortcode.php:27
+msgid "Description"
+msgstr ""
+
+#: include/pages/field/shortcode.php:28
+msgid "Styling"
+msgstr ""
+
+#: include/pages/field/shortcode.php:29
+msgid "Customize the look of this shortcode"
+msgstr ""
+
+#: include/pages/field/shortcode.php:89
+msgid "Example"
+msgstr ""
+
+#: include/pages/field/stygen.php:46
+msgid "Available Elements"
+msgstr "可用元素"
+
+#: include/pages/field/stygen.php:47
+msgid "Select an element to start modifying its style"
+msgstr "选择一个元素可开始编辑样式"
+
+#: include/pages/field/stygen.php:48
+msgctxt "Stygen button"
+msgid "Reset Style"
+msgstr "重置样式"
+
+#: include/pages/field/stygen.php:130
+msgid "Snippet unknown"
+msgstr "未知片段"
+
+#: include/pages/group.php:283 include/pages/head.php:307
+msgid "Documentation"
+msgstr "帮助文档"
+
+#: include/pages/head.php:302
+msgid "Admin Menu"
+msgstr ""
+
+#: include/pages/head.php:303 include/pages/head.php:614
+msgid "Advanced Settings"
+msgstr "高级设置"
+
+#: include/pages/head.php:304
+msgid "Support"
+msgstr "技术支持"
+
+#: include/pages/head.php:305
+msgid "Troubleshooting"
+msgstr ""
+
+#: include/pages/head.php:306
+msgid "Live Chat"
+msgstr ""
+
+#: include/pages/head.php:308
+msgid "Patch Notes"
+msgstr ""
+
+#: include/pages/head.php:309
+msgid "License Information"
+msgstr ""
+
+#: include/pages/head.php:310
+#, fuzzy
+#| msgid "Try the Pro Version for free"
+msgid "Try Premium for Free"
+msgstr "免费试用专业版"
+
+#: include/pages/head.php:348
+msgid "Plugin Notifications"
+msgstr ""
+
+#: include/pages/head.php:354
+msgid "Other Notifications"
+msgstr ""
+
+#: include/pages/head.php:424
+msgid "Dismiss"
+msgstr ""
+
+#: include/pages/head.php:457
+msgid "Save Changes"
+msgstr ""
+
+#: include/pages/head.php:552
+msgid "https://plugins.longwatchstudio.com/"
+msgstr "https://plugins.longwatchstudio.com/"
+
+#: include/pages/notices.php:139
+msgid "Dismiss this notice"
+msgstr "关闭提示"
+
+#: include/pages/screens/admin.php:152 include/pages/screens/singular.php:194
+msgid "Your settings have been saved."
+msgstr "设置已保存。"
+
+#: include/pages/screens/admin.php:218
+msgid "Shortcodes Summary"
+msgstr ""
+
+#: include/pages/screens/admin.php:219
+msgid ""
+"This section groups all the shortcodes presented in that page. Click on an "
+"item to go to the shortcode detail"
+msgstr ""
+
+#: include/pages/screens/singular.php:93
+msgctxt "Singular object edition screen"
+msgid "Delete element"
+msgstr "删除元素"
+
+#: include/pages/screens/singular.php:94
+msgctxt "Singular object edition screen"
+msgid "I really want to delete it"
+msgstr "我确定要删除该项设置"
+
+#: include/pages/screens/singular.php:95
+msgctxt "Singular object edition screen"
+msgid "Cancel"
+msgstr "取消"
+
+#: include/pages/screens/singular.php:96
+msgctxt "Singular object edition screen"
+msgid "This element will be permanently removed. Are you sure?"
+msgstr "当前元素将被永久移除，确定么？"
+
+#: include/pages/screens/singular.php:97
+msgctxt "Singular object edition screen"
+msgid "Permanent deletion"
+msgstr ""
+
+#: include/pages/screens/singular.php:114
+msgctxt "Singular object creation screen"
+msgid "Create"
+msgstr "创建"
+
+#: include/pages/screens/singular.php:114
+msgctxt "Singular object edition screen"
+msgid "Update"
+msgstr "更新"
+
+#: include/pages/screens/singular.php:122
+msgid "Publish"
+msgstr "发布"
+
+#: include/pages/screens/singular.php:166
+msgid "Action rejected for current user. Insufficient capacities."
+msgstr "当前用户的操作无效，容量不足。"
+
+#: include/pages/screens/singular.php:219
+msgctxt "post deletion"
+msgid "Unavailable action."
+msgstr "无效操作。"
+
+#: include/pages/screens/singular.php:225
+msgctxt "post deletion"
+msgid "Security check failed."
+msgstr "安全性检查失败."
+
+#: include/pages/screens/singular.php:231
+msgid "Element permanently removed."
+msgstr "元素被永久移除。"
+
+#: include/pages/screens/teaser.php:45
+msgid "No data loaded."
+msgstr ""
+
+#: include/pages/screens/teaser.php:62
+#, php-format
+msgid "Last checked on %1$s at %2$s."
+msgstr ""
+
+#: include/pages/screens/teaser.php:67
+msgid "Check again."
+msgstr ""
+
+#: include/pages/wizard.php:193
+#, php-format
+msgid ""
+"If you can see this, an error occured. Click %s here %s to resolve. Then "
+"restart the wizard."
+msgstr ""
+"如果您看到这个提示, 说明出现了一些问题. 点击 %s 这里 %s 尝试修复，然后请重新"
+"运行向导。"
+
+#: include/pages/wizard.php:206
+msgid "Leave the wizard"
+msgstr "离开向导"
+
+#: include/pages/wizard.php:206 include/pages/wizard.php:1098
+msgid "You can come back later and continue from that point."
+msgstr "您可以暂停流程，并且稍后可以从暂停处继续。"
+
+#: include/pages/wizard.php:363
+msgid "An error occured during form validation."
+msgstr "验证时发生了错误。"
+
+#: include/pages/wizard.php:785
+#, php-format
+msgctxt "wizard critical path tab title with loop count"
+msgid "%s (%s)"
+msgstr "%s (%s)"
+
+#: include/pages/wizard.php:849
+msgid "Step : "
+msgstr ""
+
+#: include/pages/wizard.php:1058
+msgctxt "previous wizard step"
+msgid "Previous"
+msgstr "上一步"
+
+#: include/pages/wizard.php:1069
+msgctxt "repeat a wizard portion"
+msgid "Add"
+msgstr "增加"
+
+#: include/pages/wizard.php:1078
+msgctxt "next wizard step"
+msgid "Next"
+msgstr "下一步"
+
+#: include/pages/wizard.php:1082
+msgctxt "final wizard submit"
+msgid "Submit"
+msgstr "提交"
+
+#: include/pages/wizard.php:1097
+msgid "Leave this wizard"
+msgstr "离开当前向导"
+
+#: include/pages/wizard.php:1099
+msgid "Cancel this wizard"
+msgstr "取消当前向导"
+
+#: include/pages/wizard.php:1100
+msgid "You will lose all prepared settings."
+msgstr "所有已就绪的设置将会丢失。"
+
+#: include/tools/argparser.php:171
+#, php-format
+msgctxt "Input array validation"
+msgid "%s value rejected"
+msgstr "%s 设置无效"
+
+#: include/tools/argparser.php:182
+#, php-format
+msgctxt "Input array validation"
+msgid "%s is not an array"
+msgstr "%s 为非数组"
+
+#: include/tools/argparser.php:186
+#, php-format
+msgid "A value in %s"
+msgstr " %s 的值"
+
+#: include/tools/argparser.php:206
+#, php-format
+msgctxt "Input array validation"
+msgid "%s value is required and must be a valid datetime format"
+msgstr ""
+
+#: include/tools/argparser.php:210
+#, php-format
+msgctxt "Input array validation"
+msgid "%s must be a valid datetime format"
+msgstr ""
+
+#: include/tools/argparser.php:216
+#, php-format
+msgctxt "Input array validation"
+msgid "%s is not valid"
+msgstr "%s 无效"
+
+#: include/tools/argparser.php:222 include/tools/argparser.php:295
+#, php-format
+msgctxt "Input array validation"
+msgid "%1$s must be a valid number or an expression: %2$s"
+msgstr ""
+
+#: include/tools/argparser.php:233
+#, php-format
+msgctxt "Input array validation"
+msgid "%s must be equal or greater than zero"
+msgstr "%s 需大于或等于0"
+
+#: include/tools/argparser.php:240 include/tools/argparser.php:249
+#, php-format
+msgctxt "Input array validation"
+msgid "%s is not a decimal number"
+msgstr "%s 为非十进制数字"
+
+#: include/tools/argparser.php:242 include/tools/argparser.php:260
+#: include/tools/argparser.php:270
+#, php-format
+msgctxt "Input array validation"
+msgid "%s must be greater than zero"
+msgstr "%s 需大于0"
+
+#: include/tools/argparser.php:251
+#, fuzzy, php-format
+#| msgctxt "Input array validation"
+#| msgid "%s must be greater than zero"
+msgctxt "Input array validation"
+msgid "%s must be greater or equal to zero"
+msgstr "%s 需大于0"
+
+#: include/tools/argparser.php:258
+#, fuzzy, php-format
+#| msgctxt "Input array validation"
+#| msgid "%s must be equal or greater than zero"
+msgctxt "Input array validation"
+msgid "%s must be a valid date interval"
+msgstr "%s 需大于或等于0"
+
+#: include/tools/argparser.php:267
+#, php-format
+msgctxt "Input array validation"
+msgid "%s is not a number"
+msgstr "%s 为非数字"
+
+#: include/tools/argparser.php:275
+#, php-format
+msgctxt "Input array validation"
+msgid "%s is not a string"
+msgstr "%s 为非字串"
+
+#: include/tools/argparser.php:287
+#, php-format
+msgctxt "Input array validation"
+msgid "%s is empty"
+msgstr "%s 为空"
+
+#: include/tools/argparser.php:342
+#, php-format
+msgctxt "Input array validation"
+msgid "Missing required value for %s"
+msgstr ""
+
+#: include/tools/argparser.php:352
+#, php-format
+msgctxt "Input array validation"
+msgid "Missing entry %s"
+msgstr ""
+
+#: include/tools/argparser.php:358
+#, php-format
+msgctxt "Input array validation"
+msgid "Missing value for %s"
+msgstr ""
+
+#: include/tools/argparser.php:425
+#, php-format
+msgctxt "Input array validation"
+msgid "Unknown entry %s"
+msgstr "未知项 %s"
+
+#: include/tools/conveniences.php:26
+msgid "Pending payment"
+msgstr ""
+
+#: include/tools/conveniences.php:27
+msgid "Processing"
+msgstr ""
+
+#: include/tools/conveniences.php:28
+msgid "On hold"
+msgstr ""
+
+#: include/tools/conveniences.php:29
+msgid "Completed"
+msgstr ""
+
+#: include/tools/conveniences.php:30
+#, fuzzy
+#| msgid "Cancel"
+msgid "Cancelled"
+msgstr "取消"
+
+#: include/tools/conveniences.php:31
+msgid "Refunded"
+msgstr ""
+
+#: include/tools/conveniences.php:32
+msgid "Failed"
+msgstr ""
+
+#: include/tools/expression.php:203
+#, php-format
+msgctxt "expression"
+msgid "Placeholder mark mismatch near `%s`"
+msgstr ""
+
+#: include/tools/expression.php:206
+#, php-format
+msgctxt "expression"
+msgid "Empty placeholder near `%s`"
+msgstr ""
+
+#: include/tools/expression.php:209
+#, fuzzy, php-format
+#| msgctxt "Input array validation"
+#| msgid "Unknown entry %s"
+msgctxt "expression"
+msgid "Unknown placeholder `%s`"
+msgstr "未知项 %s"
+
+#: include/tools/expression.php:218
+#, php-format
+msgctxt "expression"
+msgid "Parenthesis mismatch near `%s`"
+msgstr ""
+
+#: include/tools/expression.php:244
+#, php-format
+msgctxt "expression"
+msgid "Placeholder `%s` requires a meta key"
+msgstr ""
+
+#: include/tools/expression.php:273
+msgctxt "expression"
+msgid "Bad expression, operand missing"
+msgstr ""
+
+#: include/tools/expression.php:282
+#, php-format
+msgctxt "expression"
+msgid "Cannot be reduced `%s`"
+msgstr ""
+
+#: include/tools/expression.php:408
+#, php-format
+msgctxt "expression"
+msgid "Unknown function `%s` or missing arguments"
+msgstr ""
+
+#: include/tools/pseudocss.php:243
+msgid "Default CSS values"
+msgstr "默认 CSS 值"
+
+#: include/tools/pseudocss.php:248
+msgctxt "Default css values"
+msgid "Reset"
+msgstr "重置"
+
+#. Plugin Name of the plugin/theme
+msgid "LWS Admin Panel"
+msgstr "LWS 管理面板"
+
+#. Plugin URI of the plugin/theme
+msgid "https://plugins.longwatchstudio.com"
+msgstr "https://plugins.longwatchstudio.com"
+
+#. Description of the plugin/theme
+msgid "Provide an easy way to manage other plugin's settings."
+msgstr "提供一个更简单的方式来管理其他插件的设置."
+
+#. Author of the plugin/theme
+msgid "Long Watch Studio"
+msgstr "Long Watch Studio"
+
+#. Author URI of the plugin/theme
+msgid "https://longwatchstudio.com"
+msgstr "https://longwatchstudio.com"
+
+#~ msgctxt "CSS color edition"
+#~ msgid "Background"
+#~ msgstr "背景"
+
+#~ msgctxt "LWSS border text demo"
+#~ msgid "This is a sample text"
+#~ msgstr "这是示例文字"
+
+#~ msgctxt "LWSS button colors"
+#~ msgid "Background"
+#~ msgstr "背景"
+
+#~ msgctxt "LWSS font text demo"
+#~ msgid "This is a sample text"
+#~ msgstr "这是示例文字"
+
+#~ msgid "You actually use a <b>hacked</b> version."
+#~ msgstr "您正在使用的是<b>盗版</b>, 请支持开发者, 购买正版."
+
+#, php-format
+#~ msgid "This activation actually uses the license key <b>%s</b>"
+#~ msgstr "激活使用了授权码 <b>%s</b>"
+
+#, php-format
+#~ msgid "%s - Activated"
+#~ msgstr "%s - 已激活"
+
+#, php-format
+#~ msgid "Visit <a href='%s'>%s</a> to discover other offers."
+#~ msgstr "访问 <a href='%s'>%s</a> 来发现其他优秀的工具."
+
+#, php-format
+#~ msgid "Your license expires the %s."
+#~ msgstr "授权有效期至 %s."
+
+#~ msgid "Set another license key"
+#~ msgstr "更换授权码"
+
+#, php-format
+#~ msgid "%s - Activate your license"
+#~ msgstr "%s - 激活您的许可"
+
+#, php-format
+#~ msgid ""
+#~ "<p>The plugin <strong>%s</strong> from <a href='%s'>%s</a> needs "
+#~ "activation</p><p>Contact your administrator.</p>"
+#~ msgstr ""
+#~ "<p>插件 <strong>%s</strong> 由 <a href='%s'>%s</a> 需要激活,</p><p>请联系"
+#~ "您的系统管理员.</p>"
+
+#~ msgid "Pro Version"
+#~ msgstr "专业版"
+
+#~ msgctxt "plugin activation form button"
+#~ msgid "Activate"
+#~ msgstr "激活"
+
+#~ msgctxt "plugin activation form"
+#~ msgid "License key"
+#~ msgstr "授权码"
+
+#~ msgctxt "plugin activation form"
+#~ msgid "Login"
+#~ msgstr "登陆"
+
+#~ msgctxt "plugin activation form"
+#~ msgid "Password"
+#~ msgstr "密码"
+
+#~ msgid "Install pro version after license validation"
+#~ msgstr "授权码验证通过后安装专业版"
+
+#, php-format
+#~ msgctxt "%4$s is license key form."
+#~ msgid ""
+#~ "<p>Activate this plugin to enjoy all the pro features of <strong>%1$s</"
+#~ "strong><br/>\n"
+#~ "If you do not have any license, please visit <a href='%3$s'>%2$s</a></p>\n"
+#~ "<p>%4$s</p>"
+#~ msgstr ""
+#~ "<p>激活插件以尽情享用专业版所有功能 <strong>%1$s</strong><br/>\n"
+#~ "如果您需要一份许可，请访问<a href='%3$s'>%2$s</a></p>\n"
+#~ "<p>%4$s</p>"
+
+#, php-format
+#~ msgid "<p>An error occured during <strong>%s</strong> activation.</p>"
+#~ msgstr "<p><strong>%s</strong> 激活时发生错误.</p>"
+
+#, php-format
+#~ msgid "or using your connection settings to <a href='%2$s'>%1$s</a>"
+#~ msgstr "或使用您的登陆信息来连接 <a href='%2$s'>%1$s</a>"
+
+#, php-format
+#~ msgid ""
+#~ "You are using the free version of %1$s. You can use it <a "
+#~ "href=\"%2$s\">here</a> or upgrade to the Trial/Pro version down below."
+#~ msgstr ""
+#~ "您正在使用免费版的 %1$s. 您可以试试 <a href=\"%2$s\">这个</a> 或使用下方的"
+#~ "链接来升级到 试用版/专业版。"
+
+#~ msgid "Install PRO version now"
+#~ msgstr "立即安装专业版"
+
+#~ msgctxt "plugin activation link"
+#~ msgid "Activate"
+#~ msgstr "激活"
+
+#, php-format
+#~ msgid "<p>The plugin <strong>%s</strong> needs activation %s</p>"
+#~ msgstr "<p>插件 <strong>%s</strong> 需要激活 %s</p>"
+
+#, php-format
+#~ msgid ""
+#~ "<p>The plugin <strong>%s</strong> from <a href='%s'>%s</a> needs "
+#~ "activation</p>\n"
+#~ "\t\t\t\t<p>Contact your administrator.</p>"
+#~ msgstr ""
+#~ "<p>插件 <strong>%s</strong> 由 <a href='%s'>%s</a> 需要激活</p>\n"
+#~ "\t\t\t\t<p>请联系您的系统管理员.</p>"
+
+#~ msgid "<p>Data seems corrupted.</p>"
+#~ msgstr "<p>数据已损坏.</p>"
+
+#~ msgid ""
+#~ "<p>Your web host cannot contact the licence server. Update and activation "
+#~ "could be affected.</p>"
+#~ msgstr ""
+#~ "<p>您的主机无法与授权验证服务器通讯。自动升级和激活服务无法正常运作。</p>"
+
+#, php-format
+#~ msgid ""
+#~ "<p>It is a known issue on some web host providers working with clusters. "
+#~ "Please contact your host provider and ask for <i>%s</i></p>"
+#~ msgstr ""
+#~ "<p>在一些使用群集的主机商提供的服务器上，这是一个已知的问题。请联系您的主"
+#~ "机提供商，并咨询 <i>%s</i></p>"
+
+#~ msgid ""
+#~ "<p>Please fill in the form again to try activation in <b>degraded mode</"
+#~ "b></p>"
+#~ msgstr "<p>请重新填写表单后尝试使用<b>降级模式</b>来激活</p>"
+
+#~ msgid "<p>Internal error, please retry later.</p>"
+#~ msgstr "<p>内部错误, 请稍后重试.</p>"
+
+#~ msgid "<p>Corrupted data.</p>"
+#~ msgstr "<p>数据损坏。</p>"
+
+#~ msgid ""
+#~ "<p class='lws-adminpanel-activation-error'>The license server cannot "
+#~ "validate your request. Please check your values and try again.</p>"
+#~ msgstr ""
+#~ "<p class='lws-adminpanel-activation-error'>授权验证服务器无法验证您所提交"
+#~ "的内容，请检查后再次提交验证.</p>"
+
+#~ msgid "<p>Operation abort, detect a man-in-the-middle attack.</p>"
+#~ msgstr "<p>操作取消，检测到中间人攻击.</p>"
+
+#~ msgid "<p>Corrupted data from license server.</p>"
+#~ msgstr "<p>从授权验证服务器收到损坏数据.</p>"
+
+#, php-format
+#~ msgid "<p><strong>%s</strong> is now activated.</p>"
+#~ msgstr "<p><strong>%s</strong> 现在已激活.</p>"
+
+#~ msgid "Now, you can check available plugin updates."
+#~ msgstr "现在，您可以检查可用的插件更新。"
+
+#~ msgid "<p>License denied.</p>"
+#~ msgstr "<p>授权码无效.</p>"
+
+#~ msgid "More..."
+#~ msgstr "更多..."
+
+#, php-format
+#~ msgid ""
+#~ "<p><b>%s</b> cannot contact licence server. Plugin update encounters "
+#~ "difficulties.</p>"
+#~ msgstr "<p><b>%s</b> 无法链接许可服务器. 插件更新受限.</p>"
+
+#~ msgid "Invalid URL Provided."
+#~ msgstr "无效 URL 地址."
+
+#~ msgid "Could not create Temporary file."
+#~ msgstr "无法创建临时文件。"
+
+#, php-format
+#~ msgid "No maintenance available for <b>%s</b>."
+#~ msgstr "目前无针对 <b>%s</b> 的服务支持。"
+
+#~ msgid "Update request rejected."
+#~ msgstr "更新请求失败。"
+
+#~ msgid "Download falls back to an older version."
+#~ msgstr "下载回滚到之前版本。"
+
+#, php-format
+#~ msgid "<p>Your maintenance expired on %s.</p>"
+#~ msgstr "<p>服务支持有效期至 %s。</p>"
+
+#~ msgid "our site"
+#~ msgstr "我们的网站"
+
+#, php-format
+#~ msgid ""
+#~ "<p>Please visit %s to renew your maintenance and receive the plugin "
+#~ "updates.</p>"
+#~ msgstr "<p>请访问 %s 更新授权，以获得服务支持及插件的持续更新.</p>"
+
+#, php-format
+#~ msgid ""
+#~ "The trial period of plugin <b>%s</b> expired the <i>%s</i>. We hope you "
+#~ "enjoyed it and expect you soon on <a href='%s' target='_blank'>%s</a>."
+#~ msgstr ""
+#~ "试用版<b>%s</b> 已过期 <i>%s</i>. 我们希望您能喜欢, 并且期待能很快能在 <a "
+#~ "href='%s' target='_blank'>%s</a> 再次与您相遇."
+
+#~ msgid "Other Plugins"
+#~ msgstr "其他插件"
+
+#~ msgid "Join Us on Discord"
+#~ msgstr "我们在Discord等待你的加入"
+
+#~ msgid "Activate your license"
+#~ msgstr "激活您的许可"
+
+#~ msgid "Watch our Youtube tutorials"
+#~ msgstr "查看 Youtube 教学"
+
+#, php-format
+#~ msgid "%1$s Admin Panel %2$s"
+#~ msgstr "%1$s 管理面板 %2$s"
