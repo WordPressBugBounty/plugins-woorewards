@@ -598,33 +598,6 @@ EOT;
 		return array($left, $right);
 	}
 
-	/** Get notices shown in the administration */
-	/** echo page header */
-	function echoHead()
-	{
-		if ($this->getTabCount($this->page->getData()) > 1) {
-?>
-			<div class='lws-tabs-zone'>
-				<div class='lws-tabs-small-menu'>
-					<div class='lws-tabs-sm-menubutton lws-icon lws-icon-menu-bars'></div>
-				</div>
-				<ul class='lws-mtab-ul-0' role='tablist' data-depth='0'>
-<?php
-			echo $this->makemenu($this->getMenuGraph()); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-?>
-				</ul>
-			</div>
-<?php
-		}
-
-		$advTitle = __("Advanced Settings", 'lws-adminpanel');
-		echo "<div class='lws-sub-description'>";
-		echo "<div id='lws_toc_options'><div class='lws-toc-options-wrapper'><div class='lws-toc-options-icon lws-icon lws-icon-settings-gear'></div><div class='lws-toc-options-text'>$advTitle</div></div></div>";
-		if (isset($this->data['subtext']))
-			echo \is_array($this->data['subtext']) ? \LWS\Adminpanel\Tools\Conveniences::array2html($this->data['subtext']) : $this->data['subtext'];
-		echo "</div>";
-	}
-
 	/** To show our topbar on any WordPress admin page.
 	 * See WooRewards-pro, the badge list screen. */
 	static function echoExternal($pageId, $settings)

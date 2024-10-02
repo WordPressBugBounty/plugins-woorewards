@@ -6,7 +6,7 @@
  * Plugin URI: https://plugins.longwatchstudio.com/product/woorewards/
  * Author: Long Watch Studio
  * Author URI: https://longwatchstudio.com
- * Version: 5.4.1
+ * Version: 5.4.2
  * License: Copyright LongWatchStudio 2022
  * Text Domain: woorewards-lite
  * Domain Path: /languages
@@ -32,7 +32,9 @@ final class LWS_WooRewards
 		if (!$instance) {
 			$instance = new self();
 			$instance->defineConstants();
-			\add_action('plugins_loaded', array($instance, 'load_plugin_textdomain'));
+			\add_action('after_setup_theme', function() {
+				\load_plugin_textdomain('woorewards-lite', FALSE, basename(dirname(__FILE__)) . '/languages/');
+			});
 
 			\add_action('before_woocommerce_init', function() { // HPOS support
 				if (\class_exists(\Automattic\WooCommerce\Utilities\FeaturesUtil::class)) {
@@ -95,21 +97,10 @@ final class LWS_WooRewards
 		static $version = '';
 		if (empty($version)) {
 			if (!function_exists('get_plugin_data')) require_once(ABSPATH . 'wp-admin/includes/plugin.php');
-			$data = \get_plugin_data(__FILE__, false);
+			$data = \get_plugin_data(__FILE__, false, false);
 			$version = (isset($data['Version']) ? $data['Version'] : '0');
 		}
 		return $version;
-	}
-
-	/** Load translation file
-	 * If called via a hook like this
-	 * @code
-	 * add_action( 'plugins_loaded', array($instance,'load_plugin_textdomain'), 1 );
-	 * @endcode
-	 * Take care no text is translated before. */
-	function load_plugin_textdomain()
-	{
-		load_plugin_textdomain('woorewards-lite', FALSE, basename(dirname(__FILE__)) . '/languages/');
 	}
 
 	/**
@@ -119,7 +110,7 @@ final class LWS_WooRewards
 	 */
 	private function defineConstants()
 	{
-		define('LWS_WOOREWARDS_VERSION', '5.4.1');
+		define('LWS_WOOREWARDS_VERSION', '5.4.2');
 		define('LWS_WOOREWARDS_FILE', __FILE__);
 		define('LWS_WOOREWARDS_DOMAIN', 'woorewards-lite');
 		define('LWS_WOOREWARDS_PAGE', 'woorewards');
@@ -157,7 +148,7 @@ final class LWS_WooRewards
 
 	public function addPluginVersion($url)
 	{
-		return '5.4.1';
+		return '5.4.2';
 	}
 
 	public function addDocUrl($url)

@@ -19,8 +19,7 @@ class Admin
 	{
 		$this->defineConstants($version, $mainFile);
 
-		if( \is_admin() )
-		{
+		if (\is_admin()) {
 			\add_filter('lws_format_copypast', function($text){
 				return "<span class='lws-group-descr-copy lws_ui_value_copy'><span class='lws-group-descr-copy-text content' tabindex='0'>{$text}</span><span class='lws-group-descr-copy-icon lws-icon lws-icon-copy copy'></span></span>";
 			});
@@ -36,38 +35,31 @@ class Admin
 			}
 		}
 
-		\add_action('init', array($this, 'load_plugin_textdomain'));
+		\add_action('after_setup_theme', function() {
+			\load_plugin_textdomain('lws-adminpanel', FALSE, \basename(dirname(LWS_ADMIN_PANEL_FILE)) . '/languages/');
+		});
 
 		$this->install();
 
-		if( \is_admin() || (defined('DOING_AJAX') && DOING_AJAX) )
-			\add_action('setup_theme', array($this, 'registerAdminPages'), 15);
+		if (\is_admin() || (defined('DOING_AJAX') && DOING_AJAX)) {
+			\add_action('after_setup_theme', array($this, 'registerAdminPages'), 15);
+		}
 
-		if( \is_admin() && !(defined('DOING_AJAX') && DOING_AJAX) )
-		{
+		if (\is_admin() && !(defined('DOING_AJAX') && DOING_AJAX)) {
 			\add_action('in_admin_header', array($this, 'adminPageHeader'));
 			\add_filter('admin_body_class', array($this, 'adminBodyClass'));
 		}
 
 		$this->registerPlugins();
 
-		if( \is_admin() && !(defined('DOING_AJAX') && DOING_AJAX) )
+		if (\is_admin() && !(defined('DOING_AJAX') && DOING_AJAX)) {
 			\add_action('init', array($this, 'wizard'), 11); // need to be still time to redirect if needed, but let WC go first
+		}
 	}
 
 	public function v()
 	{
 		return $this->version;
-	}
-
-	/** Load translation file
-	 * If called via a hook like this
-	 * @code
-	 * add_action( 'plugins_loaded', array($instance,'load_plugin_textdomain'), 1 );
-	 * @endcode
-	 * Take care no text is translated before. */
-	public function load_plugin_textdomain() {
-		\load_plugin_textdomain('lws-adminpanel', FALSE, substr(dirname(LWS_ADMIN_PANEL_FILE), strlen(WP_PLUGIN_DIR)) . '/languages/');
 	}
 
 	/**

@@ -36,7 +36,11 @@ abstract class Page
 	/** echo page content container */
 	public function page()
 	{
-		echo sprintf("<div class='lws-adminpanel' data-adminpanel-version='%s'>", \esc_attr(LWS_ADMIN_PANEL_VERSION));
+		echo sprintf(
+			"<div class='lws-adminpanel lws-adminpanel-page-%s' data-adminpanel-version='%s'>",
+			\esc_attr($this->id),
+			\esc_attr(LWS_ADMIN_PANEL_VERSION)
+		);
 
 		$this->getHead()->showStickyPanel($this->getType(), isset($this->data['text']) ? $this->data['text'] : false);
 		$this->getHead()->showTransientNotices();
@@ -48,6 +52,12 @@ abstract class Page
 		}
 
 		$this->content();
+
+		if (isset($this->data['footer'])){
+			if (\is_array($this->data['footer']))
+				$this->data['footer'] = \LWS\Adminpanel\Tools\Conveniences::array2html($this->data['footer']);
+			echo "<div class='lws-page-footer'>{$this->data['footer']}</div>";
+		}
 		echo "</div>";
 	}
 
@@ -145,6 +155,7 @@ abstract class Page
 			'pagetitle'	=> \LWS\Adminpanel\Internal\Pages::format('pagetitle',	true, 'string', "Display in breadcrums menu instead of subtitle or title."),
 			'text'		=> \LWS\Adminpanel\Internal\Pages::format('text',		true, '', "A free text displayed at top of the page, after the title banner. If array given, see \LWS\Adminpanel\Tools\Conveniences::array2html()"),
 			'subtext'	=> \LWS\Adminpanel\Internal\Pages::format('subtext',	true, '', "A free text displayed after the tab line but before tab content. If array given, see \LWS\Adminpanel\Tools\Conveniences::array2html()"),
+			'footer'	=> \LWS\Adminpanel\Internal\Pages::format('footer',	true, '', "A free text displayed after the page content. If array given, see \LWS\Adminpanel\Tools\Conveniences::array2html()"),
 			'description'=> \LWS\Adminpanel\Internal\Pages::format('description',true, '', "An html text explaining in details the purpose of the page. If array given, see \LWS\Adminpanel\Tools\Conveniences::array2html()"),
 			'color'		=> \LWS\Adminpanel\Internal\Pages::format('color',		true, 'string', "Optional color for resume display"),
 			'image'		=> \LWS\Adminpanel\Internal\Pages::format('image',		true, 'string', "Image to display in resume group"),

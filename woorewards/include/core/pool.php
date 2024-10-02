@@ -778,6 +778,12 @@ class Pool
 		return $this;
 	}
 
+	protected function getTriggerStatus()
+	{
+		$status = \apply_filters('lws_woorewards_order_events', array('processing', 'completed'));
+		return \array_unique((array)$status);
+	}
+
 	/** Register all the Hooks required to run points gain events and unlockables.
 	 *	Must be called only once per active pool. */
 	public function install()
@@ -785,14 +791,32 @@ class Pool
 		if( $this->isActive() )
 		{
 			\add_action('lws_woorewards_pool_on_order_done', array($this, 'triggerOrderDone'), 10, 2);
-			$status = \apply_filters('lws_woorewards_order_events', array('processing', 'completed'));
-			foreach (array_unique($status) as $s)
+			foreach ($this->getTriggerStatus() as $s) {
 				\add_action('woocommerce_order_status_' . $s, array($this, 'triggerOrderDone'), 99, 2); // priority late to let someone change amount and wc to save order
+			}
+			\add_action('woocommerce_checkout_order_processed', array($this, 'legacyMaybeTriggerOrderDone'), 99, 3);
+			\add_action('woocommerce_store_api_checkout_order_processed', array($this, 'maybeTriggerOrderDone'), 99, 1);
 
 			\do_action('lws_woorewards_core_pool_install', $this);
 			$this->events->filter(function($e){return $e->isValidGain(true);})->install();
 		}
 		return $this;
+	}
+
+	/**	@see maybePay */
+	function legacyMaybeTriggerOrderDone($orderId, $postedData, $order)
+	{
+		$this->maybeTriggerOrderDone($order);
+	}
+
+	/**	To be hooked at order creation.
+	 *	If the initial order status is already one of the selected one.
+	 *	Since it will trigger no action on change. */
+	public function maybeTriggerOrderDone($order)
+	{
+		if (\in_array($order->get_status(), $this->getTriggerStatus())) {
+			$this->triggerOrderDone($order->get_id(), $order);
+		}
 	}
 
 	/** try to remove points format if any.

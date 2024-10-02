@@ -26,10 +26,12 @@ class PointDiscount
 		\add_action('woocommerce_cart_emptied', array($me, 'emptied'));
 		// Test points amount during checkout
 		\add_action('woocommerce_checkout_order_processed', array($me, 'legacyCheck'), PHP_INT_MAX - 9, 3);
-		\add_action('woocommerce_store_api_checkout_order_processed', array($me, 'check'), -9, 1);
+		\add_action('woocommerce_store_api_checkout_order_processed', array($me, 'check'), PHP_INT_MAX - 9, 1);
 		// Substract points after payment
 		foreach ($me->getPayOrderStatus() as $s)
 			\add_action('woocommerce_order_status_' . $s, array($me, 'pay'), 10, 2);
+		\add_action('woocommerce_checkout_order_processed', array($me, 'legacyMaybePay'), PHP_INT_MAX - 8, 3);
+		\add_action('woocommerce_store_api_checkout_order_processed', array($me, 'maybePay'), PHP_INT_MAX - 8, 1);
 		// prevent add discount with enough points
 		\add_filter('woocommerce_coupon_is_valid', array($me, 'preventAddDiscount'), 10, 3);
 		// set used point in cart
@@ -52,10 +54,10 @@ class PointDiscount
 		$name = $this->getLabel($coupon->get_code());
 		if ($name) {
 			$label = $name;
-		} elseif (isset($coupon->wr_discount_data)) {
+		} elseif ($data = self::getDiscountMeta($coupon)) {
 			$label = sprintf(
 				_x('Reward from %s', 'Reward label', 'woorewards-lite'),
-				$this->getTitle($coupon->wr_discount_data)
+				$this->getTitle($data)
 			);
 		}
 		return $label;
@@ -68,9 +70,9 @@ class PointDiscount
 
 		$label = false;
 		if ($coupon) {
-			if (isset($coupon->wr_discount_data))
+			if ($data = self::getDiscountMeta($coupon))
 			{
-				$label = $this->getTitle($coupon->wr_discount_data);
+				$label = $this->getTitle($data);
 				$label = \wp_kses($label, array());
 			}
 			else
@@ -79,7 +81,7 @@ class PointDiscount
 
 		if ($label) {
 			$fake = clone $coupon;
-			unset($fake->wr_discount_data);
+			$fake->delete_meta_data('wr_discount_data');
 			$fake->set_code($label);
 			$msg = $fake->get_coupon_error($err);
 		}
@@ -111,11 +113,19 @@ class PointDiscount
 		{
 			if (isset($data['_lws_coupon_virtual_taxonomy']) && $data['_lws_coupon_virtual_taxonomy'])
 				$instance->update_meta_data('_lws_coupon_virtual_taxonomy', $data['_lws_coupon_virtual_taxonomy']);
-			$instance->wr_discount_data = $discount;
+			$instance->update_meta_data('wr_discount_data', $discount);
 			return $data;
 		}
 		else
 			return $coupon;
+	}
+
+	public static function getDiscountMeta($coupon)
+	{
+		/** @var \WC_Coupon $coupon */
+		$meta = $coupon->get_meta('wr_discount_data', true);
+		if ($meta) return $meta;
+		else return $coupon->wr_discount_data ?? false;
 	}
 
 	/** Coupon title, default use Pool title. */
@@ -224,7 +234,10 @@ class PointDiscount
 		if (!$valid)
 			return $valid;
 		// does it matter for us
-		if (!($coupon && isset($coupon->wr_discount_data)))
+		if (!$coupon)
+			return $valid;
+		$data = self::getDiscountMeta($coupon);
+		if (!$data)
 			return $valid;
 		// get cart
 		$cart = false;
@@ -235,17 +248,17 @@ class PointDiscount
 		if (!$cart)
 			return $valid;
 
-		if ($cart->has_discount($coupon->wr_discount_data['code']))
+		if ($cart->has_discount($data['code']))
 			return $valid;
 
 		foreach ($cart->get_coupons() as $applied)
 		{
-			if (isset($applied->wr_discount_data) && $applied->wr_discount_data['stack_id'] == $coupon->wr_discount_data['stack_id'])
-			{
+			$appData = self::getDiscountMeta($applied);
+			if ($appData && $appData['stack_id'] == $data['stack_id']) {
 				$msg = sprintf(
 					__('%2$s Conflict. Reward from %1$s already uses the same points reserve.', 'woorewards-lite'),
-					$this->getTitle($applied->wr_discount_data),
-					$this->getTitle($coupon->wr_discount_data)
+					$this->getTitle($appData),
+					$this->getTitle($data)
 				);
 				throw new \Exception($msg, self::COUPON_ERR_CODE); // message thrown not used by WC :'('
 			}
@@ -380,6 +393,22 @@ class PointDiscount
 		}
 	}
 
+	/**	@see maybePay */
+	function legacyMaybePay($orderId, $postedData, $order)
+	{
+		$this->maybePay($order);
+	}
+
+	/**	To be hooked at order creation.
+	 *	If the initial order status is already one of the selected one.
+	 *	Since it will trigger no action on change. */
+	public function maybePay($order)
+	{
+		if (\in_array($order->get_status(), $this->getPayOrderStatus())) {
+			$this->pay($order->get_id(), $order);
+		}
+	}
+
 	/** For each discount in order, pay the points cost */
 	function pay($orderId, $order)
 	{
@@ -487,12 +516,11 @@ class PointDiscount
 
 	function createOrderItem($item, $code, $coupon, $order)
 	{
-		if (isset($coupon->wr_discount_data))
-		{
-			$data = $coupon->wr_discount_data;
+		$data = self::getDiscountMeta($coupon);
+		if ($data) {
 			$data['pool'] = false; // no need to save such Object, we have pool_name to reload it.
 			$data['item'] = false;
-			$item->add_meta_data('wr_discount_data', $coupon->wr_discount_data);
+			$item->add_meta_data('wr_discount_data', $data);
 		}
 	}
 
