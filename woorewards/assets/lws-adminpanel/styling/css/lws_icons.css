@@ -1,9 +1,9 @@
 @font-face {
   font-family: "lws-icons";
-  src: url("../fonts/lws-icons.eot?v20230623");
-    src: url("../fonts/lws-icons.eot?v20230623") format("embedded-opentype"),
-      url("../fonts/lws-icons.woff2?v20230623") format("woff2"), url("../fonts/lws-icons.woff?v20230623") format("woff"),
-      url("../fonts/lws-icons.ttf?v20230623") format("truetype"), url("../fonts/lws-icons.svg?v20230623") format("svg");
+  src: url("../fonts/lws-icons.eot?20241011");
+    src: url("../fonts/lws-icons.eot?v20241011") format("embedded-opentype"),
+      url("../fonts/lws-icons.woff2?v20241011") format("woff2"), url("../fonts/lws-icons.woff?v20241011") format("woff"),
+      url("../fonts/lws-icons.ttf?v20241011") format("truetype"), url("../fonts/lws-icons.svg?v20241011") format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -1888,4 +1888,32 @@
 
 .lws-icon-transaction::before {
   content: "\f24a";
+}
+
+.lws-icon-move-left-right::before {
+  content: "\f24b";
+}
+
+.lws-icon-move-left::before {
+  content: "\f24c";
+}
+
+.lws-icon-move-right::before {
+  content: "\f24d";
+}
+
+.lws-icon-handout-1::before {
+  content: "\f24e";
+}
+
+.lws-icon-new-subscription::before {
+  content: "\f24f";
+}
+
+.lws-icon-subscription-renewal::before {
+  content: "\f250";
+}
+
+.lws-icon-lower-priority::before {
+  content: "\f251";
 }

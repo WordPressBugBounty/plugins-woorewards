@@ -4,7 +4,7 @@ Tags: loyalty, points, referrals, rewards, coupons
 Requires at least: 5.3
 Tested up to: 6.6
 Requires PHP: 7.0.0
-Stable tag: 5.4.2
+Stable tag: 5.4.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -108,6 +108,12 @@ Yes, High-Performance Order Storage is supported.
 5. Styling options
 
 == Changelog ==
+
+= 5.4.3 =
+* Dev - project managment
+* Dev - language loading order
+* MyRewards Pro :
+	* Fix - add loyalty system buttons
 
 = 5.4.2 =
 * Fix - support of pending payment order status

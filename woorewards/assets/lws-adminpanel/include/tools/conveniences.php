@@ -617,4 +617,14 @@ class Conveniences
 			\LWS\Adminpanel\Internal\WC\CartNotice::addInfo($content);
 		}
 	}
+
+	/** If $hook already passed, call $callable immediatly,
+	 *	else register it to trigger with the given $priority. */
+	static public function addGreadyHook(string $hook, callable $callable, int $priority = 10)
+	{
+		if (\did_action($hook))
+			\call_user_func($callable);
+		else
+			\add_action($hook, $callable, $priority);
+	}
 }
