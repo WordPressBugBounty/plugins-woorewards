@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<bundle name="MyRewards">
+  <domain name="woorewards-lite">
+    <project name="MyRewards" slug="woorewards-lite">
+      <source>
+        <directory>.</directory>
+				<exclude>
+					<directory>assets</directory>
+					<directory>modules</directory>
+				</exclude>
+      </source>
+      <target>
+        <directory>languages</directory>
+      </target>
+      <template>
+        <file>languages/woorewards-lite.pot</file>
+      </template>
+    </project>
+  </domain>
+  <domain name="lws-adminpanel">
+    <project name="LWS AdminPanel" slug="lws-adminpanel">
+      <source>
+        <directory>./assets/lws-adminpanel</directory>
+      </source>
+      <target>
+        <directory>./assets/lws-adminpanel/languages</directory>
+      </target>
+      <template>
+        <file>./assets/lws-adminpanel/languages/lws-adminpanel.pot</file>
+      </template>
+    </project>
+  </domain>
+  <domain name="woorewards-pro">
+    <project name="MyRewards Pro" slug="woorewards-pro">
+      <source>
+        <directory>./modules/woorewards-pro</directory>
+      </source>
+      <target>
+        <directory>./modules/woorewards-pro/languages</directory>
+      </target>
+      <template>
+        <file>./modules/woorewards-pro/languages/woorewards-pro.pot</file>
+      </template>
+    </project>
+  </domain>
+  <exclude>
+    <directory>./assets/tgm</directory>
+  </exclude>
+</bundle>

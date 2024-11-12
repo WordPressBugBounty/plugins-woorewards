@@ -1,0 +1,14 @@
+<wpml-config>
+	<custom-types>
+		<custom-type translate="0">lws_badge</custom-type>
+		<custom-type translate="0">lws-wre-pool</custom-type>
+		<custom-type translate="0">lws-wre-event</custom-type>
+		<custom-type translate="0">lws-wre-unlockable</custom-type>
+		<custom-type translate="0">lws-wre-achievement</custom-type>
+		<custom-type translate="0">lws-sponsor-reward</custom-type>
+		<custom-type translate="0">lws_custom_reward</custom-type>
+	</custom-types>
+	<custom-fields>
+		<custom-field action="ignore">lws_woorewards_social_hash</custom-field>
+	</custom-fields>
+</wpml-config>

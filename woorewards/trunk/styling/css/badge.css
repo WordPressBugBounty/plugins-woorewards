@@ -1,0 +1,77 @@
+/* Badge Widget Styles */
+.lws-badge{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.lws-badge-wrapper{
+
+	background-color:#666;
+	display: flex;flex-direction: row;
+	z-index:2000;
+	overflow: hidden;
+}
+.lws-badge-img-container{
+	width:100px;height:100px;max-width:100px;background-color: #333;
+	flex: 0 0 100px;
+	position:relative;
+	overflow:hidden;
+}
+.lws-badge-star{
+	position:absolute; top:-50px; left:-50px;
+	z-index:5;
+}
+/*override woocommerce rules*/
+.lws-badge-img-container .lws-badge-star img{width:100%;}
+.lws-badge-img{
+	position:relative;
+	z-index:10;
+	text-align: center;
+	display:flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	width:100px;height:100px;
+	box-sizing: border-box;
+}
+.lws-badge-image{
+	flex:0 1 auto;
+	max-width:100px;
+	max-height:100px;
+}
+.lws-badge-icon{
+	width:100%;font-size:60px;
+	color:#fff;text-align:center;
+	line-height: 60px;
+	box-sizing: border-box;
+}
+.lws-badge-content-container{
+	flex: 1 1 auto;
+	display:flex; flex-direction: column;
+}
+.lws-badge-content-title{
+	padding:5px 10px;
+	color:#fff;
+	font-family: "Gravity";
+	font-weight: bold;
+}
+.lws-badge-content-sep{
+	margin:0 10px;
+	border-top-width: 0px;
+	border-left-width: 0px;
+	border-right-width: 0px;
+	border-bottom-width: 1px;
+	border-style : solid;
+	border-color:#aaa;
+}
+.lws-badge-content-text{
+	padding:5px 10px;
+	color:#fff;
+	font-family: "Gravity";
+	font-weight: normal;
+	font-size:12px;
+	text-align:justify;
+}
+.lws-badge-content-text a{
+	color:#cdf;
+}

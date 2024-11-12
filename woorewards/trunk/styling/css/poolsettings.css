@@ -1,0 +1,122 @@
+.lws-woorewards-system-edit {
+	display: flex;
+	flex-direction: column;
+	flex: 1 1 auto;
+}
+.lws-editlist-cell .lws-wr-unlockable-thumbnail {
+	display: inline-block;
+	margin-right: 5px;
+}
+.lws-editlist-cell .lws-wr-unlockable-title {
+	display: inline-block;
+	vertical-align: top;
+	padding-left: 5px;
+}
+.lws-master-editlist.eventlist tfoot {
+	display: none;
+}
+.lws-master-editlist.eventlist .lws-wr-event-multiplier {
+	font-weight: 600;
+	white-space: nowrap;
+	display: flex;
+	justify-content: right;
+	padding-right: 3px;
+	gap: 5px;
+}
+.lws-master-editlist.eventlist .lws-wr-event-multiplier.formula {
+	justify-content: left;
+}
+.lws-master-editlist.unlockablelist tfoot {
+	display: none;
+}
+.lws-master-editlist.unlockablelist .lws-wr-unlockable-cost {
+	text-align: right;
+	font-weight: 600;
+	word-wrap: normal;
+	display: flex;
+	justify-content: right;
+	padding-right: 3px;
+}
+fieldset.lws-editlist-fieldset table.lws-editlist-fs-table td.rcell-choice-title .lws-wr-choice-title {
+	line-height: 28px;
+}
+.lws-master-editlist.unlockablelist {
+	margin-bottom: 40px;
+}
+.lws_editlist.unlockablelist .lws-wr-unlockable-id, .lws_editlist.eventlist .lws-wr-event-id{
+	display:none;
+	position: absolute;
+	right:0px;
+	left:0px;
+	top:0px;
+	bottom:0px;
+	justify-content:flex-end;
+	align-items:center;
+	background-color: #77777750;
+	color:#fff;
+	padding: 2px 5px;
+	font-size:11px;
+}
+.lws_editlist.unlockablelist .lws_editlist_row:hover > .lws-editlist-cell .cell-content .lws-wr-unlockable-id{
+	display:flex;
+}
+.lws_editlist.eventlist .lws_editlist_row:hover > .lws-editlist-cell .cell-content .lws-wr-event-id{
+	display:flex;
+}
+
+/** Suggestions de presentation */
+.lws-woorewards-system-edit .button.lws-adm-btn.lws-type-btn {
+	display: flex;
+	flex-wrap: nowrap;
+}
+.lws-woorewards-system-edit .button.lws-adm-btn.lws-type-btn .button-icon {
+	padding-right: 10px;
+}
+
+.lws-woorewards-system-edit .lws-woorewards-system-radiogrid {
+	overflow-y: scroll;
+	max-height: 300px;
+}
+.lws-woorewards-system-edit .lws-woorewards-system-radiogrid .lws-woorewards-system-group {
+	color: var(--type-color);
+	border-bottom: dotted 1px lightgray;
+	margin-top: 10px;
+	margin-bottom: 3px;
+}
+.lws-woorewards-system-edit .lws-woorewards-system-radiogrid .lws-woorewards-system-group .group-label {
+	display: flex;
+	font-size: large;
+}
+.lws-woorewards-system-edit .lws-woorewards-system-radiogrid .lws-woorewards-system-group .lws-wre-system-item-icon {
+	border: solid 2px darkgray;
+	border-radius: 3px;
+	margin-right: 5px;
+	padding: 3px;
+	display: inline-block;
+}
+.lws-woorewards-system-edit .lws-woorewards-system-radiogrid .lws-woorewards-system-group .item-grid {
+	display: grid;
+}
+.lws-woorewards-system-edit .lws-woorewards-system-radiogrid .lws-woorewards-system-group .item {
+	border: solid 1px var(--item-type-color);
+	border-radius: 5px;
+	color: var(--type-color);
+	margin: 3px;
+	opacity: 0.8;
+}
+/** a selected radiogrid item */
+.lws-woorewards-system-edit .lws-woorewards-system-radiogrid .lws-woorewards-system-group .item.selected {
+	border-width: 3px;
+	opacity: 1;
+}
+/** just pour bien voir ou il est pendant le dev */
+.lws-woorewards-system-edit .lws-woorewards-system-type-info {
+	min-width: 300px;
+	min-height: 100px;
+	background: darkgray;
+	color: white;
+	padding: 7px;
+	font-size: 18px;
+	margin: 10px;
+	border-radius: 7px;
+}

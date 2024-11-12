@@ -1,0 +1,977 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: LWS Admin Panel\n"
+"POT-Creation-Date: 2023-01-31 09:39+0100\n"
+"PO-Revision-Date: 2018-06-14 12:02+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"X-Generator: Poedit 3.2.2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: lws-adminpanel.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: include/admin.php:240 include/pages/head.php:466
+msgid "Expand All"
+msgstr ""
+
+#: include/admin.php:241
+msgid "Collapse All"
+msgstr ""
+
+#: include/admin.php:249
+msgid "At least one value is unknown."
+msgstr ""
+
+#: include/editlist/filtersimplefield.php:18
+msgid "Search"
+msgstr ""
+
+#: include/editlist/filtersimplefield.php:27
+msgid "Narrow your search"
+msgstr ""
+
+#: include/editlist/filtersimplelinks.php:23
+msgid "Filter the results"
+msgstr ""
+
+#: include/editlist/pager.php:82
+msgid "Order By"
+msgstr ""
+
+#: include/editlist/pager.php:105
+#, php-format
+msgid "%d item"
+msgid_plural "%d items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: include/editlist/pager.php:112
+msgid "Items per page"
+msgstr ""
+
+#: include/editlist/pager.php:132
+#, php-format
+msgctxt "Total page number"
+msgid "/ %d"
+msgid_plural "/ %d"
+msgstr[0] ""
+msgstr[1] ""
+
+#: include/editlist/source.php:51 include/internal/editlistcontroler.php:554
+msgid "Settings"
+msgstr ""
+
+#: include/internal/editlistcontroler.php:143
+msgctxt "editlist groupby"
+msgid "Add a group"
+msgstr ""
+
+#: include/internal/editlistcontroler.php:152
+msgid "Edit"
+msgstr ""
+
+#: include/internal/editlistcontroler.php:156
+#: include/internal/editlistcontroler.php:596
+msgid "Delete"
+msgstr ""
+
+#: include/internal/editlistcontroler.php:305
+msgid "Apply"
+msgstr ""
+
+#: include/internal/editlistcontroler.php:348
+msgid "Action"
+msgstr ""
+
+#: include/internal/editlistcontroler.php:361
+msgid "Add"
+msgstr ""
+
+#: include/internal/editlistcontroler.php:505
+msgid "Values"
+msgstr ""
+
+#: include/internal/editlistcontroler.php:547
+msgid "Cancel"
+msgstr ""
+
+#: include/internal/editlistcontroler.php:548
+msgid "Save"
+msgstr ""
+
+#: include/internal/editlistcontroler.php:551
+msgctxt "Confirm event/unlockable type choice"
+msgid "Next"
+msgstr ""
+
+#: include/internal/editlistcontroler.php:552
+msgctxt "Undo event/unlockable type choice"
+msgid "Back"
+msgstr ""
+
+#: include/internal/editlistcontroler.php:594
+msgid "Quick Edit"
+msgstr ""
+
+#: include/internal/editlistcontroler.php:595
+msgid "Copy"
+msgstr ""
+
+#: include/internal/helpers/pages.php:59
+msgid "Used to get google fonts."
+msgstr ""
+
+#: include/internal/helpers/pages.php:62
+msgid "Generate API Key"
+msgstr ""
+
+#: include/internal/helpers/pages.php:63
+#, php-format
+msgid "or <a target='_blank' href='%s'>click here to Get a Google API KEY</a>"
+msgstr ""
+
+#: include/internal/helpers/pages.php:66
+msgid "You MUST be logged in to your Google account to generate a key."
+msgstr ""
+
+#: include/internal/helpers/pages.php:70
+msgid "Google account"
+msgstr ""
+
+#: include/internal/mailer.php:356
+msgid "This is a test."
+msgstr ""
+
+#: include/internal/mailer.php:430
+msgid "Email Settings"
+msgstr ""
+
+#: include/internal/mailer.php:430
+#, php-format
+msgid "%s Email Settings"
+msgstr ""
+
+#: include/internal/mailer.php:432
+msgid ""
+"Once you've finished the email settings, <b>save your changes</b><br/>You "
+"will then see the result in the style editor below<br/>Select the elements "
+"you wish to change and have fun!"
+msgstr ""
+
+#: include/internal/mailer.php:436
+msgid "Header picture"
+msgstr ""
+
+#: include/internal/mailer.php:444
+msgid "Footer text"
+msgstr ""
+
+#: include/internal/mailer.php:465
+msgid "Email details"
+msgstr ""
+
+#: include/internal/mailer.php:470
+msgid "Subject"
+msgstr ""
+
+#: include/internal/mailer.php:481
+msgid "Preheader"
+msgstr ""
+
+#: include/internal/mailer.php:522
+msgid "Receiver Email"
+msgstr ""
+
+#: include/internal/mailer.php:525
+msgid "Test your email to see how it looks"
+msgstr ""
+
+#: include/internal/mailer.php:532
+msgid "Send test email"
+msgstr ""
+
+#: include/internal/mailer.php:550
+msgid "Test email sent."
+msgstr ""
+
+#: include/internal/mailer.php:553
+msgid "Test email is not valid."
+msgstr ""
+
+#: include/internal/menuitems.php:68
+msgid "Custom item"
+msgstr ""
+
+#: include/internal/menuitems.php:411
+msgid "Select All"
+msgstr ""
+
+#: include/internal/menuitems.php:412
+msgid "Add to Menu"
+msgstr ""
+
+#: include/internal/menushortcode.php:18
+msgid "Shortcode item"
+msgstr ""
+
+#: include/internal/menushortcode.php:21 include/internal/menushortcode.php:57
+msgid "Logged"
+msgstr ""
+
+#: include/internal/menushortcode.php:23 include/internal/menushortcode.php:55
+msgid "Guest"
+msgstr ""
+
+#: include/internal/menushortcode.php:51
+msgid "Item content"
+msgstr ""
+
+#: include/internal/menushortcode.php:54
+msgid "Visitor type"
+msgstr ""
+
+#: include/internal/menushortcode.php:56
+msgid "All"
+msgstr ""
+
+#: include/internal/pages.php:428
+msgid "Changes not commited."
+msgstr ""
+
+#: include/internal/pages.php:429
+msgid "Please confirm or cancel the active form before submit that page."
+msgstr ""
+
+#: include/internal/pages.php:430
+msgid "Do you really want to delete the line?"
+msgstr ""
+
+#: include/internal/pages.php:431
+msgid "Update error, please check the values."
+msgstr ""
+
+#: include/internal/pages.php:432
+msgid "An error occured, please try later."
+msgstr ""
+
+#: include/internal/pages.php:433
+msgid "Please, select an item."
+msgstr ""
+
+#: include/internal/pages.php:434
+msgid "Select a font"
+msgstr ""
+
+#: include/internal/pages.php:435
+msgctxt "Font list"
+msgid "Show more"
+msgstr ""
+
+#: include/internal/pages.php:436
+msgctxt "Font list"
+msgid "Show less"
+msgstr ""
+
+#: include/internal/pages.php:438
+msgctxt "Font weight"
+msgid "Thin"
+msgstr ""
+
+#: include/internal/pages.php:439
+msgctxt "Font weight"
+msgid "Extra Light"
+msgstr ""
+
+#: include/internal/pages.php:440
+msgctxt "Font weight"
+msgid "Light"
+msgstr ""
+
+#: include/internal/pages.php:441 include/internal/pages.php:442
+msgctxt "Font weight"
+msgid "Normal"
+msgstr ""
+
+#: include/internal/pages.php:443
+msgctxt "Font weight"
+msgid "Medium"
+msgstr ""
+
+#: include/internal/pages.php:444
+msgctxt "Font weight"
+msgid "Semi Bold"
+msgstr ""
+
+#: include/internal/pages.php:445
+msgctxt "Font weight"
+msgid "Bold"
+msgstr ""
+
+#: include/internal/pages.php:446
+msgctxt "Font weight"
+msgid "Extra Bold"
+msgstr ""
+
+#: include/internal/pages.php:447
+msgctxt "Font weight"
+msgid "Black"
+msgstr ""
+
+#: include/internal/pages.php:452
+msgid " didn't match any items"
+msgstr ""
+
+#: include/internal/pages.php:453
+msgid "Show All Items"
+msgstr ""
+
+#: include/legacy/duration.php:79 include/tools/duration.php:79
+msgid "Year"
+msgid_plural "Years"
+msgstr[0] ""
+msgstr[1] ""
+
+#: include/legacy/duration.php:82 include/tools/duration.php:82
+msgid "Month"
+msgid_plural "Months"
+msgstr[0] ""
+msgstr[1] ""
+
+#: include/legacy/duration.php:85 include/tools/duration.php:85
+msgid "Week"
+msgid_plural "Weeks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: include/legacy/duration.php:88 include/tools/duration.php:88
+msgid "Hour"
+msgid_plural "Hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#: include/legacy/duration.php:91 include/tools/duration.php:91
+msgid "Minute"
+msgid_plural "Minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: include/legacy/duration.php:94 include/tools/duration.php:94
+msgid "Second"
+msgid_plural "Seconds"
+msgstr[0] ""
+msgstr[1] ""
+
+#: include/legacy/duration.php:97 include/tools/duration.php:97
+msgid "Day"
+msgid_plural "Days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: include/legacy/duration.php:286 include/tools/duration.php:291
+#: include/tools/duration.php:299
+msgid "Days"
+msgstr ""
+
+#: include/legacy/duration.php:287 include/tools/duration.php:292
+#: include/tools/duration.php:301
+msgid "Months"
+msgstr ""
+
+#: include/legacy/duration.php:288 include/tools/duration.php:293
+#: include/tools/duration.php:302
+msgid "Years"
+msgstr ""
+
+#: include/legacy/duration.php:291 include/tools/duration.php:300
+msgid "Weeks"
+msgstr ""
+
+#: include/legacy/duration.php:292 include/tools/duration.php:298
+msgid "Hours"
+msgstr ""
+
+#: include/legacy/duration.php:293 include/tools/duration.php:297
+msgid "Minutes"
+msgstr ""
+
+#: include/legacy/duration.php:294 include/tools/duration.php:296
+msgid "Seconds"
+msgstr ""
+
+#: include/pages/endpoint.php:63
+msgid "Enable"
+msgstr ""
+
+#: include/pages/endpoint.php:72
+msgid "Tab title"
+msgstr ""
+
+#: include/pages/endpoint.php:81
+msgid "Slug"
+msgstr ""
+
+#: include/pages/endpoint.php:89
+msgid "Role restriction"
+msgstr ""
+
+#: include/pages/endpoint.php:92
+msgid ""
+"Restrict this tab to given roles. No roles selected means no restriction at "
+"all."
+msgstr ""
+
+#: include/pages/endpoint.php:98
+msgid "Content page"
+msgstr ""
+
+#: include/pages/endpoint.php:112
+msgid "Content Edition"
+msgstr ""
+
+#: include/pages/endpoint.php:120
+msgid "Edit Page"
+msgstr ""
+
+#: include/pages/endpoint.php:126
+msgid "Selected Page not found"
+msgstr ""
+
+#: include/pages/endpoint.php:137
+msgid "Default Content"
+msgstr ""
+
+#: include/pages/endpoint.php:140
+msgid "Create a new default page"
+msgstr ""
+
+#: include/pages/endpoint.php:167
+msgid "Edit the page"
+msgstr ""
+
+#: include/pages/endpoint.php:168
+msgid "Page created and setup as tab."
+msgstr ""
+
+#: include/pages/endpoint.php:187
+msgid "An error occured during page creation."
+msgstr ""
+
+#: include/pages/field/duration.php:88
+msgid "An integer value greater than zero."
+msgstr ""
+
+#: include/pages/field/googleapiskey.php:24
+msgid "Your Google API key"
+msgstr ""
+
+#: include/pages/field/googleapiskey.php:32
+msgid "You should define a Google API key in this settings."
+msgstr ""
+
+#: include/pages/field/iconpicker.php:48
+msgid "Pick an Icon"
+msgstr ""
+
+#: include/pages/field/lacchecklist.php:62
+msgid "Select..."
+msgstr ""
+
+#: include/pages/field/lacchecklist.php:63
+msgid "Search..."
+msgstr ""
+
+#: include/pages/field/lactaglist.php:53
+msgctxt "lac-taglist \"add\" button"
+msgid "Add"
+msgstr ""
+
+#: include/pages/field/media.php:30
+msgid "Remove"
+msgstr ""
+
+#: include/pages/field/media.php:31 include/pages/field/media.php:33
+msgid "Select a media"
+msgstr ""
+
+#: include/pages/field/media.php:32
+msgid "Use the selected item"
+msgstr ""
+
+#: include/pages/field/media.php:34
+msgid "Edit..."
+msgstr ""
+
+#: include/pages/field/shortcode.php:25
+msgid "Shortcode"
+msgstr ""
+
+#: include/pages/field/shortcode.php:26
+msgid "Attributes"
+msgstr ""
+
+#: include/pages/field/shortcode.php:27
+msgid "Description"
+msgstr ""
+
+#: include/pages/field/shortcode.php:28
+msgid "Styling"
+msgstr ""
+
+#: include/pages/field/shortcode.php:29
+msgid "Customize the look of this shortcode"
+msgstr ""
+
+#: include/pages/field/shortcode.php:89
+msgid "Example"
+msgstr ""
+
+#: include/pages/field/stygen.php:46
+msgid "Available Elements"
+msgstr ""
+
+#: include/pages/field/stygen.php:47
+msgid "Select an element to start modifying its style"
+msgstr ""
+
+#: include/pages/field/stygen.php:48
+msgctxt "Stygen button"
+msgid "Reset Style"
+msgstr ""
+
+#: include/pages/field/stygen.php:130
+msgid "Snippet unknown"
+msgstr ""
+
+#: include/pages/group.php:283 include/pages/head.php:307
+msgid "Documentation"
+msgstr ""
+
+#: include/pages/head.php:302
+msgid "Admin Menu"
+msgstr ""
+
+#: include/pages/head.php:303 include/pages/head.php:614
+msgid "Advanced Settings"
+msgstr ""
+
+#: include/pages/head.php:304
+msgid "Support"
+msgstr ""
+
+#: include/pages/head.php:305
+msgid "Troubleshooting"
+msgstr ""
+
+#: include/pages/head.php:306
+msgid "Live Chat"
+msgstr ""
+
+#: include/pages/head.php:308
+msgid "Patch Notes"
+msgstr ""
+
+#: include/pages/head.php:309
+msgid "License Information"
+msgstr ""
+
+#: include/pages/head.php:310
+msgid "Try Premium for Free"
+msgstr ""
+
+#: include/pages/head.php:348
+msgid "Plugin Notifications"
+msgstr ""
+
+#: include/pages/head.php:354
+msgid "Other Notifications"
+msgstr ""
+
+#: include/pages/head.php:424
+msgid "Dismiss"
+msgstr ""
+
+#: include/pages/head.php:457
+msgid "Save Changes"
+msgstr ""
+
+#: include/pages/head.php:552
+msgid "https://plugins.longwatchstudio.com/"
+msgstr ""
+
+#: include/pages/notices.php:139
+msgid "Dismiss this notice"
+msgstr ""
+
+#: include/pages/screens/admin.php:152 include/pages/screens/singular.php:194
+msgid "Your settings have been saved."
+msgstr ""
+
+#: include/pages/screens/admin.php:218
+msgid "Shortcodes Summary"
+msgstr ""
+
+#: include/pages/screens/admin.php:219
+msgid ""
+"This section groups all the shortcodes presented in that page. Click on an "
+"item to go to the shortcode detail"
+msgstr ""
+
+#: include/pages/screens/singular.php:93
+msgctxt "Singular object edition screen"
+msgid "Delete element"
+msgstr ""
+
+#: include/pages/screens/singular.php:94
+msgctxt "Singular object edition screen"
+msgid "I really want to delete it"
+msgstr ""
+
+#: include/pages/screens/singular.php:95
+msgctxt "Singular object edition screen"
+msgid "Cancel"
+msgstr ""
+
+#: include/pages/screens/singular.php:96
+msgctxt "Singular object edition screen"
+msgid "This element will be permanently removed. Are you sure?"
+msgstr ""
+
+#: include/pages/screens/singular.php:97
+msgctxt "Singular object edition screen"
+msgid "Permanent deletion"
+msgstr ""
+
+#: include/pages/screens/singular.php:114
+msgctxt "Singular object creation screen"
+msgid "Create"
+msgstr ""
+
+#: include/pages/screens/singular.php:114
+msgctxt "Singular object edition screen"
+msgid "Update"
+msgstr ""
+
+#: include/pages/screens/singular.php:122
+msgid "Publish"
+msgstr ""
+
+#: include/pages/screens/singular.php:166
+msgid "Action rejected for current user. Insufficient capacities."
+msgstr ""
+
+#: include/pages/screens/singular.php:219
+msgctxt "post deletion"
+msgid "Unavailable action."
+msgstr ""
+
+#: include/pages/screens/singular.php:225
+msgctxt "post deletion"
+msgid "Security check failed."
+msgstr ""
+
+#: include/pages/screens/singular.php:231
+msgid "Element permanently removed."
+msgstr ""
+
+#: include/pages/screens/teaser.php:45
+msgid "No data loaded."
+msgstr ""
+
+#: include/pages/screens/teaser.php:62
+#, php-format
+msgid "Last checked on %1$s at %2$s."
+msgstr ""
+
+#: include/pages/screens/teaser.php:67
+msgid "Check again."
+msgstr ""
+
+#: include/pages/wizard.php:193
+#, php-format
+msgid ""
+"If you can see this, an error occured. Click %s here %s to resolve. Then "
+"restart the wizard."
+msgstr ""
+
+#: include/pages/wizard.php:206
+msgid "Leave the wizard"
+msgstr ""
+
+#: include/pages/wizard.php:206 include/pages/wizard.php:1098
+msgid "You can come back later and continue from that point."
+msgstr ""
+
+#: include/pages/wizard.php:363
+msgid "An error occured during form validation."
+msgstr ""
+
+#: include/pages/wizard.php:785
+#, php-format
+msgctxt "wizard critical path tab title with loop count"
+msgid "%s (%s)"
+msgstr ""
+
+#: include/pages/wizard.php:849
+msgid "Step : "
+msgstr ""
+
+#: include/pages/wizard.php:1058
+msgctxt "previous wizard step"
+msgid "Previous"
+msgstr ""
+
+#: include/pages/wizard.php:1069
+msgctxt "repeat a wizard portion"
+msgid "Add"
+msgstr ""
+
+#: include/pages/wizard.php:1078
+msgctxt "next wizard step"
+msgid "Next"
+msgstr ""
+
+#: include/pages/wizard.php:1082
+msgctxt "final wizard submit"
+msgid "Submit"
+msgstr ""
+
+#: include/pages/wizard.php:1097
+msgid "Leave this wizard"
+msgstr ""
+
+#: include/pages/wizard.php:1099
+msgid "Cancel this wizard"
+msgstr ""
+
+#: include/pages/wizard.php:1100
+msgid "You will lose all prepared settings."
+msgstr ""
+
+#: include/tools/argparser.php:171
+#, php-format
+msgctxt "Input array validation"
+msgid "%s value rejected"
+msgstr ""
+
+#: include/tools/argparser.php:182
+#, php-format
+msgctxt "Input array validation"
+msgid "%s is not an array"
+msgstr ""
+
+#: include/tools/argparser.php:186
+#, php-format
+msgid "A value in %s"
+msgstr ""
+
+#: include/tools/argparser.php:206
+#, php-format
+msgctxt "Input array validation"
+msgid "%s value is required and must be a valid datetime format"
+msgstr ""
+
+#: include/tools/argparser.php:210
+#, php-format
+msgctxt "Input array validation"
+msgid "%s must be a valid datetime format"
+msgstr ""
+
+#: include/tools/argparser.php:216
+#, php-format
+msgctxt "Input array validation"
+msgid "%s is not valid"
+msgstr ""
+
+#: include/tools/argparser.php:222 include/tools/argparser.php:295
+#, php-format
+msgctxt "Input array validation"
+msgid "%1$s must be a valid number or an expression: %2$s"
+msgstr ""
+
+#: include/tools/argparser.php:233
+#, php-format
+msgctxt "Input array validation"
+msgid "%s must be equal or greater than zero"
+msgstr ""
+
+#: include/tools/argparser.php:240 include/tools/argparser.php:249
+#, php-format
+msgctxt "Input array validation"
+msgid "%s is not a decimal number"
+msgstr ""
+
+#: include/tools/argparser.php:242 include/tools/argparser.php:260
+#: include/tools/argparser.php:270
+#, php-format
+msgctxt "Input array validation"
+msgid "%s must be greater than zero"
+msgstr ""
+
+#: include/tools/argparser.php:251
+#, php-format
+msgctxt "Input array validation"
+msgid "%s must be greater or equal to zero"
+msgstr ""
+
+#: include/tools/argparser.php:258
+#, php-format
+msgctxt "Input array validation"
+msgid "%s must be a valid date interval"
+msgstr ""
+
+#: include/tools/argparser.php:267
+#, php-format
+msgctxt "Input array validation"
+msgid "%s is not a number"
+msgstr ""
+
+#: include/tools/argparser.php:275
+#, php-format
+msgctxt "Input array validation"
+msgid "%s is not a string"
+msgstr ""
+
+#: include/tools/argparser.php:287
+#, php-format
+msgctxt "Input array validation"
+msgid "%s is empty"
+msgstr ""
+
+#: include/tools/argparser.php:342
+#, php-format
+msgctxt "Input array validation"
+msgid "Missing required value for %s"
+msgstr ""
+
+#: include/tools/argparser.php:352
+#, php-format
+msgctxt "Input array validation"
+msgid "Missing entry %s"
+msgstr ""
+
+#: include/tools/argparser.php:358
+#, php-format
+msgctxt "Input array validation"
+msgid "Missing value for %s"
+msgstr ""
+
+#: include/tools/argparser.php:425
+#, php-format
+msgctxt "Input array validation"
+msgid "Unknown entry %s"
+msgstr ""
+
+#: include/tools/conveniences.php:26
+msgid "Pending payment"
+msgstr ""
+
+#: include/tools/conveniences.php:27
+msgid "Processing"
+msgstr ""
+
+#: include/tools/conveniences.php:28
+msgid "On hold"
+msgstr ""
+
+#: include/tools/conveniences.php:29
+msgid "Completed"
+msgstr ""
+
+#: include/tools/conveniences.php:30
+msgid "Cancelled"
+msgstr ""
+
+#: include/tools/conveniences.php:31
+msgid "Refunded"
+msgstr ""
+
+#: include/tools/conveniences.php:32
+msgid "Failed"
+msgstr ""
+
+#: include/tools/expression.php:203
+#, php-format
+msgctxt "expression"
+msgid "Placeholder mark mismatch near `%s`"
+msgstr ""
+
+#: include/tools/expression.php:206
+#, php-format
+msgctxt "expression"
+msgid "Empty placeholder near `%s`"
+msgstr ""
+
+#: include/tools/expression.php:209
+#, php-format
+msgctxt "expression"
+msgid "Unknown placeholder `%s`"
+msgstr ""
+
+#: include/tools/expression.php:218
+#, php-format
+msgctxt "expression"
+msgid "Parenthesis mismatch near `%s`"
+msgstr ""
+
+#: include/tools/expression.php:244
+#, php-format
+msgctxt "expression"
+msgid "Placeholder `%s` requires a meta key"
+msgstr ""
+
+#: include/tools/expression.php:273
+msgctxt "expression"
+msgid "Bad expression, operand missing"
+msgstr ""
+
+#: include/tools/expression.php:282
+#, php-format
+msgctxt "expression"
+msgid "Cannot be reduced `%s`"
+msgstr ""
+
+#: include/tools/expression.php:408
+#, php-format
+msgctxt "expression"
+msgid "Unknown function `%s` or missing arguments"
+msgstr ""
+
+#: include/tools/pseudocss.php:243
+msgid "Default CSS values"
+msgstr ""
+
+#: include/tools/pseudocss.php:248
+msgctxt "Default css values"
+msgid "Reset"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "LWS Admin Panel"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://plugins.longwatchstudio.com"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Provide an easy way to manage other plugin's settings."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Long Watch Studio"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://longwatchstudio.com"
+msgstr ""

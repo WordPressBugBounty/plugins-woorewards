@@ -1,0 +1,3955 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: MyRewards\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-30 15:24+0100\n"
+"PO-Revision-Date: 2023-06-06 15:51+0200\n"
+"Last-Translator: LongWatchStudio <plugins@longwatchstudio.com>\n"
+"Language-Team: Suomi\n"
+"Language: fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Geany / PoHelper 1.36\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: woorewards.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Loco-Version: 2.2.1; wp-5.1.1\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: include/abstracts/event.php:82
+#, php-format
+msgctxt "cooldown period eg. \"3 Months\""
+msgid "%1$s %2$s"
+msgstr "%1$s %2$s"
+
+#: include/abstracts/event.php:84
+#, php-format
+msgctxt "cooldown display"
+msgid "Max. once every %1$s"
+msgstr ""
+
+#: include/abstracts/event.php:86
+#, php-format
+msgctxt "cooldown display"
+msgid "Max. %2$s times per %1$s"
+msgstr "%2$s kertaa per %1$s"
+
+#: include/abstracts/event.php:406 include/ui/editlists/eventlist.php:16
+msgid "Action to perform"
+msgstr "Toimenpide"
+
+#: include/abstracts/event.php:408
+msgid "Action"
+msgstr "Toiminto"
+
+#: include/abstracts/event.php:413
+msgctxt "Event title"
+msgid "Action title"
+msgstr "Toimen otsikko"
+
+#: include/abstracts/event.php:419
+msgid "Points settings"
+msgstr "Pisteiden asetukset"
+
+#: include/abstracts/event.php:422
+msgctxt "Event point multiplier"
+msgid "Earned points"
+msgstr "Ansaitut pisteet"
+
+#: include/abstracts/event.php:423
+#, php-format
+msgid "Expects an integer or an expression starting by %s"
+msgstr "Odottaa kokonaislukua tai lauseketta, joka alkaa %s"
+
+#: include/abstracts/event.php:434
+msgctxt "Event point multiplier"
+msgid "Alternative points text"
+msgstr "Vaihtoehtoisten pisteiden teksti"
+
+#: include/abstracts/event.php:435
+msgid ""
+"What Earned points value is shown to your customer instead of the formula "
+"above when the expression cannot be resolved on the fly"
+msgstr ""
+"Ansaittujen pisteiden arvo näytetään asiakkaalle yllä olevan kaavan sijaan, "
+"kun lauseketta ei voi ratkaista lennossa"
+
+#: include/abstracts/event.php:451
+msgctxt "Event cooldown"
+msgid "Cooldown"
+msgstr "Jäähdyttely"
+
+#: include/abstracts/event.php:452
+msgid ""
+"Allow this event to be counted no more than X times per time interval or let "
+"it empty for no limit."
+msgstr ""
+"Anna tämän tapahtuman laskea enintään X kertaa aikaväliä kohti tai anna sen "
+"tyhjentyä ilman rajoituksia."
+
+#: include/abstracts/event.php:454
+#, php-format
+msgctxt "cooldown edition"
+msgid "Max %1$s times / %2$s"
+msgstr "Max %1$s kertaa / %2$s"
+
+#: include/abstracts/event.php:469 include/abstracts/event.php:587
+msgid "Cooldown rolling period"
+msgstr "Jäähdyttelyjakso"
+
+#: include/abstracts/event.php:470
+msgid ""
+"The default rolling period starts on the first trigger of a customer and so "
+"can be different for each customer."
+msgstr ""
+"Oletusarvoinen liukuva jakso alkaa asiakkaan ensimmäisestä käynnistimestä, "
+"joten se voi olla erilainen jokaiselle asiakkaalle."
+
+#: include/abstracts/event.php:471
+msgid ""
+"Uncheck that box and define a reference date, such as first day of a month. "
+"The reference date will be periodically shift by the cooldown and the "
+"release date will be the same for each customers."
+msgstr ""
+"Poista valintaruudun valinta ja määritä viitepäivämäärä, kuten kuukauden "
+"ensimmäinen päivä. Viitepäivämäärää siirretään ajoittain jäähdyttelyyn "
+"mennessä, ja julkaisupäivä on sama jokaiselle asiakkaalle."
+
+#: include/abstracts/event.php:472
+msgid "Hour"
+msgstr "Tunti"
+
+#: include/abstracts/event.php:473
+msgid "Minute"
+msgstr "Minuutti"
+
+#: include/abstracts/event.php:490
+msgctxt "Event max triggers"
+msgid "Max Triggers"
+msgstr "Max liipaisimet"
+
+#: include/abstracts/event.php:491
+msgid ""
+"Defines how many times this action can be triggered by each user. Leave "
+"empty for unlimited times or set an integer value"
+msgstr ""
+"Määrittää, kuinka monta kertaa kukin käyttäjä voi käynnistää tämän "
+"toiminnon. Jätä tyhjäksi rajoittamattomaksi ajaksi tai aseta kokonaislukuarvo"
+
+#: include/abstracts/event.php:503
+msgctxt "Event points delay"
+msgid "Points delay"
+msgstr "Pisteiden viive"
+
+#: include/abstracts/event.php:504
+msgid "If set, points will only be given after the delay you set here"
+msgstr ""
+"Jos se on asetettu, pisteet annetaan vasta tässä asettamasi viiveen jälkeen"
+
+#: include/abstracts/event.php:516
+msgctxt "Event points occurences"
+msgid "Repeated points"
+msgstr "Toistuvat kohdat"
+
+#: include/abstracts/event.php:517
+msgid "Set how many times points will be given and at what periodicity"
+msgstr ""
+"Määritä, kuinka monta kertaa pisteitä annetaan ja millä jaksollisuudella"
+
+#: include/abstracts/event.php:519
+#, php-format
+msgctxt "occurences edition"
+msgid "%1$s occurence(s) | one every %2$s"
+msgstr "%1$s esiintymä(t) | yksi joka %2$s"
+
+#: include/abstracts/event.php:578 include/ui/editlists/eventlist.php:14
+msgid "Earned points"
+msgstr "Ansaitut pisteet"
+
+#: include/abstracts/event.php:579 include/abstracts/event.php:858
+msgid "Earned points alternative text"
+msgstr "Ansaitut pisteet vaihtoehtoinen teksti"
+
+#: include/abstracts/event.php:580 include/abstracts/event.php:856
+#: include/abstracts/unlockable.php:194 include/abstracts/unlockable.php:369
+#: include/core/pool.php:676 include/ui/legacy/pointsdisplayer.php:91
+msgid "Title"
+msgstr "Otsikko"
+
+#: include/abstracts/event.php:581
+msgid "Max Triggers"
+msgstr "Max liipaisimet"
+
+#: include/abstracts/event.php:582
+msgid "Cooldown (action count)"
+msgstr "Jäähdyttely (toimintojen määrä)"
+
+#: include/abstracts/event.php:583
+msgid "Cooldown (period)"
+msgstr "Jäähdyttely (jakso)"
+
+#: include/abstracts/event.php:584
+msgid "Delay"
+msgstr "Viive"
+
+#: include/abstracts/event.php:585
+msgid "Occurences"
+msgstr "Esiintymiset"
+
+#: include/abstracts/event.php:586
+msgid "Occurences (period)"
+msgstr "Esiintymät (ajanjakso)"
+
+#: include/abstracts/event.php:588
+msgid "Period reference date"
+msgstr "Kauden viitepäivämäärä"
+
+#: include/abstracts/event.php:589
+msgid "Period reference hour"
+msgstr "Kauden viitetunti"
+
+#: include/abstracts/event.php:590
+msgid "Period reference minute"
+msgstr "Kauden viiteminuutti"
+
+#: include/abstracts/event.php:620
+msgid "A date is required if the cooldown is not rolling."
+msgstr "Päivämäärä vaaditaan, jos jäähdyttely ei rullaa."
+
+#: include/abstracts/event.php:851
+msgid "Error occured during rewarding event saving."
+msgstr "Palkitsemistapahtuman tallennuksen aikana sattui virhe."
+
+#: include/abstracts/event.php:1057
+msgctxt "event points expression alternative"
+msgid "Variable"
+msgstr "Muuttuja"
+
+#: include/abstracts/event.php:1249 include/abstracts/unlockable.php:857
+#: include/events/sponsoredorderamount.php:87
+msgid "Standard"
+msgstr "Vakio"
+
+#: include/abstracts/event.php:1250 include/abstracts/unlockable.php:858
+msgid "Leveling"
+msgstr "Tasoitus"
+
+#: include/abstracts/event.php:1251 include/events/sponsoredorderamount.php:89
+msgid "Achievement"
+msgstr "Saavutus"
+
+#: include/abstracts/event.php:1252 include/abstracts/unlockable.php:859
+#: include/events/sponsoredorderamount.php:90
+msgid "Events"
+msgstr "Tapahtumat"
+
+#: include/abstracts/unlockable.php:85
+msgid "Reward Information"
+msgstr "Palkintotiedot"
+
+#: include/abstracts/unlockable.php:87
+msgid "Reward type"
+msgstr "Palkintolaji"
+
+# Avattava otsikko
+#: include/abstracts/unlockable.php:92
+msgctxt "Unlockable title"
+msgid "Title"
+msgstr "Otsikko"
+
+#: include/abstracts/unlockable.php:99
+msgctxt "Unlockable title"
+msgid "Description"
+msgstr "Kuvaus"
+
+#: include/abstracts/unlockable.php:114
+msgctxt "Unlockable Thumbnail"
+msgid "Featured Image"
+msgstr "Esitetty kuva"
+
+#: include/abstracts/unlockable.php:127
+#: include/ui/editlists/unlockablelist.php:50
+msgid "Reward Settings"
+msgstr "Palkintoasetukset"
+
+#: include/abstracts/unlockable.php:130
+msgctxt "Unlockable cost"
+msgid "Points needed"
+msgstr "Pisteitä tarvitaan"
+
+#: include/abstracts/unlockable.php:136
+msgctxt "Unlockable cost"
+msgid "Send Reward email"
+msgstr "Lähetä palkintosähköpostia"
+
+#: include/abstracts/unlockable.php:148
+msgctxt "Unlockable max redeems"
+msgid "Max Redeems"
+msgstr "Max lunastaa"
+
+#: include/abstracts/unlockable.php:149
+msgid ""
+"Define how many times this reward can be redeemed by customers. Leave empty "
+"or set to 0 for no limits"
+msgstr ""
+"Määritä, kuinka monta kertaa asiakkaat voivat lunastaa tämän palkinnon. Jätä "
+"tyhjäksi tai aseta arvoksi 0 ilman rajoituksia"
+
+#: include/abstracts/unlockable.php:193
+msgid "Cost"
+msgstr "Hinta"
+
+#: include/abstracts/unlockable.php:195 include/abstracts/unlockable.php:371
+#: include/ui/admin.php:100 include/ui/shortcodes/userhistory.php:243
+msgid "Description"
+msgstr "Kuvaus"
+
+#: include/abstracts/unlockable.php:196
+msgid "Validity Starting Date"
+msgstr "Voimassaolon alkamispäivä"
+
+#: include/abstracts/unlockable.php:197
+msgid "Validity Ending Date"
+msgstr "Voimassaolon päättymispäivä"
+
+#: include/abstracts/unlockable.php:198
+msgid "Featured Image"
+msgstr "Esitetty kuva"
+
+#: include/abstracts/unlockable.php:199
+msgid "Enable Reward email"
+msgstr "Ota palkkiosähköposti käyttöön"
+
+#: include/abstracts/unlockable.php:200
+msgid "Max Redeems"
+msgstr "Max lunastaa"
+
+#: include/abstracts/unlockable.php:201
+msgid "Level Title"
+msgstr "Taso otsikko"
+
+#: include/abstracts/unlockable.php:364
+msgid "Error occured during unlockable reward saving."
+msgstr "Lukitsemattoman palkisemisen tallennuksen aikana  sattui virhe."
+
+#: include/abstracts/unlockable.php:373
+msgid "Level"
+msgstr "Taso"
+
+#: include/abstracts/unlockable.php:822
+msgctxt "Cannot be redeemed"
+msgid "Not redeemable"
+msgstr "Ei lunastettavissa"
+
+#: include/abstracts/unlockable.php:824
+#, php-format
+msgctxt "Out of valid date range"
+msgid "%d [Delayed]"
+msgstr "%d [Viivästetty]"
+
+#: include/compatibility/ultimatemember.php:37
+msgid ""
+"Set the option to true (um-public='true') to make the information public on "
+"Ultimate Members profile pages"
+msgstr ""
+"Määritä asetukseksi tosi (um-public='true'), jos haluat tehdä tiedoista "
+"julkisia Ultimate Members -profiilisivuilla"
+
+#: include/core/ajax.php:45
+msgid "Loyalty system not found."
+msgstr "Kanta-asiakasjärjestelmää ei löydy."
+
+#: include/core/ajax.php:56
+msgid "Point system or user not found."
+msgstr "Pistejärjestelmää tai käyttäjää ei löytynyt."
+
+#: include/core/ajax.php:59
+msgid "You do not have permission to see other history."
+msgstr "Sinulla ei ole oikeuksia nähdä muita historiaa."
+
+#: include/core/pointstack.php:669
+#, php-format
+msgid "Points merged from %s"
+msgstr "Pisteet yhdistettiin %s"
+
+#: include/core/pointstack.php:670
+msgid "Lost due to inactivity"
+msgstr "Kadonnut käyttämättömyyden vuoksi"
+
+#: include/core/pool.php:668
+msgid "Error occured during reward system saving."
+msgstr "Palkitsemisjärjestelmän tallennuksen aikana sattui virhe."
+
+#: include/core/pool.php:729
+#, php-format
+msgid "Failed to delete the reward system <b>%s</b>/%s."
+msgstr "Ei voitu poistaa palkintojärjestelmää <b>%s</b>/%s."
+
+#: include/core/pool.php:749
+#, php-format
+msgid "The reward system <b>%s</b>/%s successfully deleted."
+msgstr "Palkkiojärjestelmä <b>%s</b>/%s poistettiin onnistuneesti."
+
+#: include/core/pool.php:811
+#, php-format
+msgid "<b>%1$s</b> earned <b>%2$s</b> in <b>%3$s</b> for this order"
+msgstr "<b>%1$s</b> ansaittu <b>%2$s</b> tätä tilausta <b>%3$s</b> varten"
+
+#: include/core/pool.php:818
+#, php-format
+msgid "No %1$s earned in <b>%2$s</b> for this order"
+msgstr "Tästä tilauksesta <b>%2$s</b> ei %1$s ole ansaittu"
+
+#: include/core/sponsorship.php:342 include/core/sponsorship.php:346
+msgid "You must be logged in."
+msgstr "Sinun täytyy kirjautua sisään."
+
+#: include/core/sponsorship.php:344
+msgid "Unknown user."
+msgstr "Tuntematon käyttäjä."
+
+#: include/core/sponsorship.php:348
+msgid "Referee email is empty."
+msgstr "Erotuomarin sähköpostiosoite on tyhjä."
+
+#: include/core/sponsorship.php:351
+msgid "Referral has been temporary disabled."
+msgstr "Lähete on tilapäisesti poistettu käytöstä."
+
+#: include/core/sponsorship.php:354
+msgid "Maximum referrals reached."
+msgstr "Suositeltujen viittausten enimmäismäärä."
+
+#: include/core/sponsorship.php:358
+msgid "An error occured during referees emails reading."
+msgstr "Virhe tapahtui erotuomarien sähköpostien lukemisen aikana."
+
+#: include/core/sponsorship.php:365
+msgid "You cannot refer yourself."
+msgstr "Et voi viitata itseesi."
+
+#: include/core/sponsorship.php:367
+msgid "Some emails was omitted, maximum referrals reached."
+msgstr ""
+"Jotkut sähköpostit jätettiin pois, enimmäismäärä viittauksia saavutettiin."
+
+#: include/core/sponsorship.php:413
+#, php-format
+msgid "'%s' Email address is not valid."
+msgstr "'%s' sähköpostiosoite ei kelpaa."
+
+#: include/core/sponsorship.php:417
+#, php-format
+msgid "%s is already referred."
+msgstr "%s on jo viitattu."
+
+#: include/core/sponsorship.php:420
+#, php-format
+msgid "%s is already an active customer."
+msgstr "%s on jo aktiivinen asiakas."
+
+#: include/events/firstorder.php:14
+msgid "The customer will receive points when placing his first order."
+msgstr "Asiakas saa pisteitä tehdessään ensimmäisen tilauksensa."
+
+#: include/events/firstorder.php:15
+msgid "Triggered only for registered customers"
+msgstr "Käynnistetty vain rekisteröityneille asiakkaille"
+
+#: include/events/firstorder.php:21
+msgctxt "getDisplayType"
+msgid "Place a first order"
+msgstr "Välitä ensimmäinen tilaus"
+
+#: include/events/firstorder.php:39 include/events/orderamount.php:51
+#: include/events/ordercompleted.php:43 include/events/sponsoredorder.php:39
+msgid "Priority"
+msgstr "Prioriteetti"
+
+#: include/events/firstorder.php:40 include/events/orderamount.php:52
+#: include/events/ordercompleted.php:44 include/events/sponsoredorder.php:40
+msgid "Customer orders will run by ascending priority value."
+msgstr "Asiakastilaukset suoritetaan nousevan prioriteettiarvon mukaan."
+
+#: include/events/firstorder.php:68 include/events/orderamount.php:100
+#: include/events/ordercompleted.php:72
+msgid "Event Priority"
+msgstr "Tapahtuman prioriteetti"
+
+#: include/events/firstorder.php:185 include/events/orderamount.php:329
+#: include/events/ordercompleted.php:151 include/events/productreview.php:243
+#: include/events/sponsoredorder.php:226
+#: include/events/sponsoredorderamount.php:91 include/ui/admin.php:684
+#: include/unlockables/coupon.php:461
+msgid "WooCommerce"
+msgstr "WooCommerce"
+
+#: include/events/firstorder.php:186 include/events/orderamount.php:331
+#: include/events/ordercompleted.php:152
+msgid "Order"
+msgstr "Tilaus"
+
+#: include/events/firstorder.php:193
+#, php-format
+msgid "First customer order #%s"
+msgstr "Ensimmäinen asiakastilaus #%s"
+
+#: include/events/orderamount.php:16
+msgid ""
+"The customer will receive points depending on the amount spent on the order"
+msgstr "Asiakas saa pisteitä tilaukseen käytetyn summan mukaan"
+
+#: include/events/orderamount.php:17
+msgid "Most used method on MyRewards. Lots of options"
+msgstr "MyRewardsin eniten käytetty menetelmä. Paljon vaihtoehtoja"
+
+#: include/events/orderamount.php:38
+msgctxt "Order Amount Event money diviser"
+msgid "Money spent"
+msgstr "Käytetty raha"
+
+#: include/events/orderamount.php:64 include/events/productreview.php:50
+#: include/events/sponsoredorder.php:51
+msgid "Options"
+msgstr "Asetukset"
+
+#: include/events/orderamount.php:67
+msgctxt "Order Amount Event"
+msgid "Use amount after discount"
+msgstr "Käytä summaa alennuksen jälkeen"
+
+#: include/events/orderamount.php:99
+msgid "After Discount"
+msgstr "Alennuksen jälkeen"
+
+#: include/events/orderamount.php:177
+msgctxt "getDisplayType"
+msgid "Spend money"
+msgstr "Käytä rahaa"
+
+#: include/events/orderamount.php:268
+#, php-format
+msgid "Spent %1$s from order #%2$s"
+msgstr "Käytä %1$s tilauksesta #%2$s"
+
+#: include/events/orderamount.php:314
+#, php-format
+msgctxt "Point per money spent"
+msgid "[%1$s] / %2$s"
+msgstr "[%1$s] / %2$s"
+
+#: include/events/orderamount.php:317
+#, php-format
+msgctxt "Point per money spent"
+msgid "%1$s / %2$s"
+msgstr "%1$s / %2$s"
+
+#: include/events/orderamount.php:330
+msgid "Money"
+msgstr "Raha"
+
+#: include/events/ordercompleted.php:17
+msgid "The customer will receive points upon completing an order"
+msgstr "Asiakas saa pisteitä tilauksen valmistuttua"
+
+#: include/events/ordercompleted.php:18
+msgid "This method can also be used to give extra points on a first order"
+msgstr ""
+"Tätä menetelmää voidaan käyttää myös lisäpisteiden antamiseen ensimmäisestä "
+"tilauksesta"
+
+#: include/events/ordercompleted.php:24
+msgctxt "getDisplayType"
+msgid "Place an order"
+msgstr "Välitä tilaus"
+
+#: include/events/ordercompleted.php:143
+#, php-format
+msgid "Order #%s completed"
+msgstr "Tilaus #%s vahvistettu"
+
+#: include/events/productreview.php:16
+msgid "The customer will earn points for writing a review on a product."
+msgstr "Asiakas ansaitsee pisteitä kirjoittamalla arvostelun tuotteesta."
+
+#: include/events/productreview.php:17
+msgid ""
+"You can restrict this method to products already purchased by the customer"
+msgstr ""
+"Voit rajoittaa tämän menetelmän tuotteisiin, jotka asiakas on jo ostanut"
+
+#: include/events/productreview.php:32
+msgid ""
+"Points are still given once per product. The cooldown simply limits the "
+"number of times a user can earn points for his reviews during a set period."
+msgstr ""
+"Pisteitä annetaan edelleen kerran tuotetta kohden. Jäähdyttely "
+"yksinkertaisesti rajoittaa sitä, kuinka monta kertaa käyttäjä voi ansaita "
+"pisteitä arvosteluistaan tietyn ajanjakson aikana."
+
+#: include/events/productreview.php:53 include/events/productreview.php:80
+msgid "Purchase Required"
+msgstr "Osto vaaditaan"
+
+#: include/events/productreview.php:58
+msgid ""
+"If checked, points are earned only if the customer already purchased the "
+"product and order status is 'Complete'."
+msgstr ""
+"Jos tämä on valittuna, pisteitä ansaitaan vain, jos asiakas on jo ostanut "
+"tuotteen ja tilauksen tila on Valmis."
+
+#: include/events/productreview.php:122
+msgctxt "getDisplayType"
+msgid "Product review"
+msgstr "Tuotteen arvostelu"
+
+#: include/events/productreview.php:179
+#, php-format
+msgid "Review about a product (%s)"
+msgstr "Tuotteen arvostelu (%s)"
+
+#: include/events/productreview.php:244
+msgid "Website"
+msgstr "Verkkosivusto"
+
+#: include/events/sponsoredorder.php:17
+msgid ""
+"The customer will earn points when a person he referred placed an order. You "
+"can restrict this to the first referee order."
+msgstr ""
+"Asiakas ansaitsee pisteitä, kun hänen suosittelemansa henkilö on tehnyt "
+"tilauksen. Voit rajoittaa tämän ensimmäiseen erotuomarijärjestykseen."
+
+#: include/events/sponsoredorder.php:18
+#: include/events/sponsoredorderamount.php:17
+msgid "This method will only reward the Referrer, not the Referee"
+msgstr "Tämä menetelmä palkitsee vain suosittelijan, ei suosittelijaa"
+
+#: include/events/sponsoredorder.php:54
+msgctxt "Referral Order Event"
+msgid "First order only"
+msgstr "Vain ensimmäinen tilaus"
+
+#: include/events/sponsoredorder.php:55
+msgid ""
+"If checked, only the first order placed by each referee will give points."
+msgstr ""
+"Jos se tarkistetaan, vain kunkin erotuomarin ensimmäinen tilaus antaa "
+"pisteitä."
+
+#: include/events/sponsoredorder.php:83
+msgid "First order only"
+msgstr "Vain ensimmäinen tilaus"
+
+#: include/events/sponsoredorder.php:84
+msgid "Event priority"
+msgstr "Tapahtuman prioriteetti"
+
+#: include/events/sponsoredorder.php:142
+msgid " (first order only)"
+msgstr " (vain ensimmäinen tilaus)"
+
+#: include/events/sponsoredorder.php:150
+msgctxt "getDisplayType"
+msgid "Referee orders"
+msgstr "Erotuomarin määräykset"
+
+#: include/events/sponsoredorder.php:218
+#, php-format
+msgid "Referred friend %s order #%s completed"
+msgstr "Kutsuttu ystävä %s tilaus #%s valmis"
+
+#: include/events/sponsoredorder.php:227
+msgid "Available for referees"
+msgstr "Saatavilla erotuomareille"
+
+#: include/events/sponsoredorderamount.php:16
+msgid ""
+"The customer will earn points when a person he referred spends money on your "
+"shop."
+msgstr ""
+"Asiakas ansaitsee pisteitä, kun hänen suosittelemansa henkilö käyttää rahaa "
+"kauppaasi."
+
+#: include/events/sponsoredorderamount.php:28
+msgctxt "getDisplayType"
+msgid "Referee spends money"
+msgstr "Erotuomari käyttää rahaa"
+
+#: include/events/sponsoredorderamount.php:79
+#, php-format
+msgid "Referred friend %3$s spent %1$s from order #%2$s"
+msgstr "Suositeltu ystävä %3$s viettänyt %1$s tilauksesta #%2$s"
+
+#: include/events/sponsoredorderamount.php:88
+msgid "Levelling"
+msgstr "Tasojärjestelmä"
+
+#: include/events/sponsoredorderamount.php:92
+msgid "Available for referred"
+msgstr "Saatavana viitteeksi"
+
+#: include/events/t_sponsorshiporigin.php:13
+msgid "Referral link"
+msgstr "Suosittelun linkki"
+
+#: include/events/t_sponsorshiporigin.php:84
+msgid "Constraints"
+msgstr "Rajoitukset"
+
+#: include/events/t_sponsorshiporigin.php:87
+msgid "Referral Origin"
+msgstr "Viittauksen alkuperä"
+
+#: include/events/t_sponsorshiporigin.php:114
+msgid "Origin restrictions"
+msgstr "Alkuperän rajoitukset"
+
+#: include/mails/newreward.php:32 include/mails/newreward.php:35
+msgid "New Reward"
+msgstr "Uusi palkkio"
+
+#: include/mails/newreward.php:33
+msgid "Sent to customers when they receive a new reward"
+msgstr "Lähetään asiakkaille kun he saavutavat uuden palkinnon"
+
+#: include/mails/newreward.php:34
+msgid "You've received a new reward"
+msgstr "Olet saavuttanut uuden palkkion"
+
+#: include/mails/newreward.php:36
+msgid "You just got a new reward !"
+msgstr "Sait juuri uuden palkkion!"
+
+#: include/mails/newreward.php:37
+msgid "Powered by MyRewards"
+msgstr "Powered by MyRewards"
+
+#: include/mails/newreward.php:41
+msgid "Enabled"
+msgstr "Käytössä"
+
+#: include/mails/newreward.php:61
+msgid "That feature requires WooCommerce."
+msgstr "Tämä ominaisuus vaatii WooCommerce."
+
+#: include/mails/newreward.php:77
+msgid "Expiration Date"
+msgstr "Voimassaolopäivä"
+
+#: include/mails/newreward.php:78
+msgid "Coupon Details"
+msgstr "Kupongin lisätiedot"
+
+#: include/mails/newreward.php:79
+msgid "Coupon Code"
+msgstr "Kupongin koodi"
+
+#: include/mails/newreward.php:80
+msgid "Coupon Value"
+msgstr "Kupongin arvo"
+
+#: include/mails/newreward.php:84
+msgctxt "permanent coupon"
+msgid "(reusable)"
+msgstr "(uudelleen käytettävä)"
+
+#: include/options.php:78
+msgid "Requested loyalty system cannot be loaded or created."
+msgstr "Pyydettyä kanta-asiakasjärjestelmää ei voida ladata tai luoda."
+
+#: include/options.php:107
+msgid "Please, set a <b>Title</b> for this Points and Rewards System."
+msgstr ""
+"Ole hyvä ja aseta <b>otsikko</b> tälle piste- ja palkintojärjestelmälle."
+
+#: include/options.php:111
+msgid ""
+"A Points and Rewards System without a <b>Title</b> cannot be turned <b>On</"
+"b>."
+msgstr ""
+"Piste- ja palkintojärjestelmää, jolla ei ole <b>otsikkoa</b> , ei voi ottaa "
+"<b>käyttöön</b>."
+
+#: include/pointdiscount.php:56
+#, php-format
+msgctxt "Reward label"
+msgid "Reward from %s"
+msgstr "Tämä palkinto on %s arvoinen"
+
+#: include/pointdiscount.php:239
+#, php-format
+msgid "%2$s Conflict. Reward from %1$s already uses the same points reserve."
+msgstr "%2$s Konflikti. %1$s palkinto käyttää jo samaa pistevarausta."
+
+#: include/pointdiscount.php:277
+#, php-format
+msgid "The Reward \"%s\" is unknown."
+msgstr "Palkintoa \"%s\" ei tunneta."
+
+#: include/pointdiscount.php:280
+#, php-format
+msgid "The Reward \"%s\" in your cart is unknown."
+msgstr "Ostoskorissasi olevaa palkintoa \"%s\" ei tunneta."
+
+#: include/pointdiscount.php:285 include/pointdiscount.php:288
+#, php-format
+msgid "\"%s\" does not support this kind of reward anymore."
+msgstr "\"%s\" ei enää tue tällaista palkkiota."
+
+#: include/pointdiscount.php:313
+#, php-format
+msgid "At least one coupon requires %s. Guest order is not supported."
+msgstr "Vähintään yksi kuponki vaatii %s. Vieraiden järjestystä ei tueta."
+
+#: include/pointdiscount.php:319
+#, php-format
+msgid "At least one coupon requires %s. You must log in to continue."
+msgstr ""
+"Vähintään yksi kuponki vaatii %s. Sinun on kirjauduttava sisään jatkaaksesi."
+
+#: include/pointdiscount.php:364
+#, php-format
+msgid "You do not have enough %1$s to purchase the reward %2$s."
+msgstr "Sinulla ei ole tarpeeksi %1$s ostaaksesi palkkion %2$s."
+
+#: include/pointdiscount.php:389
+#, php-format
+msgid "Customer does not have enough %1$s to purchase the reward %2$s."
+msgstr "Asiakkaalla ei ole tarpeeksi %1$s ostaakseen palkkion %2$s."
+
+#: include/pointdiscount.php:424
+#, php-format
+msgctxt "order note"
+msgid "Use <i>%1$s</i> from <i>%2$s</i> to get a discount on this order"
+msgstr ""
+"Käytä <i>%1$s</i> alkaen <i>%2$s</i> saadaksesi alennuksen tästä tilauksesta"
+
+#: include/pointdiscount.php:513
+#, php-format
+msgid "Reward from %1$s on Order #%2$s"
+msgstr "Palkinto %1$s tilauksesta #%2$s"
+
+#: include/pointdiscount.php:530
+msgid "Action control failed. Try to refresh the page."
+msgstr "Toiminnon hallinta epäonnistui. Yritä päivittää sivu."
+
+#: include/pointdiscount.php:534
+msgid "A connected user is required."
+msgstr "Yhdistetty käyttäjä on pakollinen."
+
+#: include/pointdiscount.php:537
+msgid "Missing destination or bad format."
+msgstr "Puuttuva kohde tai virheellinen muoto."
+
+#: include/pointdiscount.php:540
+msgid "Cannot load the Cart. Operation aborted."
+msgstr "Ostoskoria ei voi ladata. Toiminta keskeytettiin."
+
+#: include/pointdiscount.php:544
+msgid "Points and Rewards System missing or access not granted."
+msgstr "Piste- ja palkintojärjestelmä puuttuu tai käyttöoikeutta ei myönnetä."
+
+#: include/pointdiscount.php:546
+msgid "Points and Rewards System does not accept this kind of reward."
+msgstr "Points and Rewards System ei hyväksy tällaista palkintoa."
+
+#: include/pointdiscount.php:575
+#, php-format
+msgid "Use %1$s from %2$s"
+msgstr "Käytä %1$s %2$s"
+
+#: include/ui/admin.php:58
+msgid ""
+"WooCommerce Coupons are disabled. Several MyRewards features will be broken "
+"without Coupons."
+msgstr ""
+"WooCommerce-kupongit on poistettu käytöstä. Useat MyRewards-ominaisuudet "
+"rikkoutuvat ilman kuponkeja."
+
+#: include/ui/admin.php:59
+msgid ""
+"You can check your WooCommerce General Settings and look for : <b>Enable "
+"coupons</b>."
+msgstr ""
+"Voit tarkistaa WooCommercen yleiset asetukset ja etsiä: <b>Ota kupongit "
+"käyttöön</b>."
+
+#: include/ui/admin.php:61
+#, php-format
+msgid "%1$s or %2$s this warning at your own risks."
+msgstr "%1$s tai %2$s tätä varoitusta omalla vastuullasi."
+
+#: include/ui/admin.php:65
+msgid "Click here to resolve the problem immediately"
+msgstr "Klikkaa tästä ratkaistaksesi ongelman välittömästi"
+
+#: include/ui/admin.php:70
+msgid "ignore"
+msgstr "ohita"
+
+#: include/ui/admin.php:99 include/ui/shortcodes/userhistory.php:40
+msgid "Points History"
+msgstr "Pisteiden historia"
+
+#: include/ui/admin.php:101 include/ui/shortcodes/userhistory.php:240
+msgid "Date"
+msgstr "Päivämäärä"
+
+#: include/ui/admin.php:102 include/ui/admin.php:995
+#: include/ui/legacy/pointsdisplayer.php:193
+#: include/ui/shortcodes/userhistory.php:246 woorewards.php:235
+msgid "Points"
+msgstr "Pisteet"
+
+#: include/ui/admin.php:103
+msgid "Total"
+msgstr "Yhtensä"
+
+#: include/ui/admin.php:133
+msgid "Add fun and achievements for your customers with the <a>Pro Version</a>"
+msgstr "Lisää hauskuutta ja saavutuksia asiakkaillesi <a>Pro Versiolla</a>"
+
+#: include/ui/admin.php:134
+msgid "Try the <a>Pro Version</a> for free for 30 days"
+msgstr "Kokeile <a>Pro Version</a> ilmaiseksi 30 päivää"
+
+#: include/ui/admin.php:135
+msgid "The <a>Pro Version</a> adds Events and Levelling systems. Try <a>it</a>"
+msgstr ""
+"<a>Pro Versio</a> lisää tapahtuma ja tasojärjestelmät. Kokeile <a>sitä</a>"
+
+#: include/ui/admin.php:138
+msgid "Your settings have been saved."
+msgstr "Asetuksesi on tallennettu."
+
+#. Plugin Name of the plugin/theme
+#: include/ui/admin.php:174
+msgid "MyRewards"
+msgstr "MyRewards"
+
+#: include/ui/admin.php:182 include/ui/admin.php:207 include/ui/admin.php:215
+msgid "Customers"
+msgstr "Asiakkaat"
+
+#: include/ui/admin.php:200
+msgid "Search..."
+msgstr "Etsi..."
+
+#: include/ui/admin.php:212
+msgid ""
+"Use this page to manage your customers, see and edit their points and rewards"
+msgstr ""
+"Tämän sivun avulla voit hallita asiakkaitasi, tarkastella ja muokata heidän "
+"pisteitään ja palkintojaan"
+
+#: include/ui/admin.php:220
+msgid "Points Management"
+msgstr "Pisteiden hallinta"
+
+#: include/ui/admin.php:223
+msgid "Here you can see and manage your customers reward points"
+msgstr "Täällä voit katsoa ja hallita usiakkaidesi palkintopisteitä"
+
+#: include/ui/admin.php:224
+msgid ""
+"You can view the points <b>history</b> by clicking the points total in the "
+"table"
+msgstr ""
+"Voit katsoa piste <b>historiaa</b> klikkaamalla kokonaispisteitä taulukossa"
+
+#: include/ui/admin.php:238 woorewards.php:138
+msgid "Settings"
+msgstr "Asetukset"
+
+#: include/ui/admin.php:243
+msgid ""
+"Use this page to manage your loyalty program, see and edit actions and "
+"rewards"
+msgstr ""
+"Tämän sivun avulla voit hallita kanta-asiakasohjelmaasi, tarkastella ja "
+"muokata toimintoja ja palkintoja"
+
+#: include/ui/admin.php:246
+msgid "Points and Rewards"
+msgstr "Pisteet ja palkinnot"
+
+#: include/ui/admin.php:252
+msgid "Other Settings"
+msgstr "Muut asetukset"
+
+#: include/ui/admin.php:264 include/ui/admin.php:265
+msgid "Wizard"
+msgstr "Ohjattu toiminto"
+
+#: include/ui/admin.php:270
+msgid ""
+"The wizard page lets you setup your points and rewards program in a few "
+"minutes"
+msgstr ""
+"Ohjatun toiminnon sivulla voit määrittää piste- ja palkinto-ohjelman "
+"muutamassa minuutissa"
+
+#: include/ui/admin.php:280
+msgid "General settings"
+msgstr "Yleiset asetukset"
+
+#: include/ui/admin.php:281
+msgid ""
+"Check the options below according to your needs. If you want to exclude "
+"shipping fees from points calculation, it can be done inside your loyalty "
+"systems."
+msgstr ""
+"Tarkista alla olevat vaihtoehdot tarpeidesi mukaan. Jos haluat jättää "
+"toimituskulut pois pistelaskennasta, se voidaan tehdä kanta-"
+"asiakasjärjestelmissäsi."
+
+#: include/ui/admin.php:286
+msgid "Includes taxes"
+msgstr "Sisältää verot"
+
+#: include/ui/admin.php:290
+msgid ""
+"If checked, taxes will be included in the points earned when spending money"
+msgstr ""
+"Jas valittuna, verojen osuus otetaan huomioon pisteitä ansaitessa kun rahaa "
+"käytetään"
+
+#: include/ui/admin.php:295
+msgid "Coupon prefix"
+msgstr "Kupongin etuliite"
+
+#: include/ui/admin.php:299
+msgid ""
+"Set a prefix code that will be added on all coupon codes generated by "
+"MyRewards"
+msgstr ""
+"Aseta etuliitekoodi, joka lisätään kaikkiin MyRewardsin luomiin "
+"kuponkikoodeihin"
+
+#: include/ui/admin.php:304
+msgid "Coupon code length"
+msgstr "Kuponkikoodin pituus"
+
+#: include/ui/admin.php:310
+msgid ""
+"Set the length of the generated coupon code. The length comes in addition to "
+"the code prefix."
+msgstr ""
+"Aseta luodun kuponkikoodin pituus. Pituus tulee koodin etuliitteen lisäksi."
+
+#: include/ui/admin.php:311
+#, php-format
+msgid "Minimum length is %s."
+msgstr "Vähimmäispituus on %s."
+
+#: include/ui/admin.php:316
+msgid "Order statuses for points"
+msgstr "Pisteiden tilaustilat"
+
+#: include/ui/admin.php:320
+msgid ""
+"Default state to get points is the processing order status.<br/>If you want "
+"to use other statuses instead (recommanded), select them here"
+msgstr ""
+"Pisteiden saamisen oletustila on käsittelytilauksen tila.<br/>Jos haluat "
+"käyttää sen sijaan muita tiloja (suositeltu), valitse ne tästä"
+
+#: include/ui/admin.php:325
+msgid "Deep customer search"
+msgstr "Syvällinen asiakashaku"
+
+#: include/ui/admin.php:330
+msgid ""
+"If you have troubles with searching in WooRewards Customers administration "
+"screen, disable this option. This will speed up the search but it will take "
+"less data into account."
+msgstr ""
+"Jos sinulla on ongelmia etsinnässä WooRewards Customers -hallintanäytössä, "
+"poista tämä vaihtoehto käytöstä. Tämä nopeuttaa hakua, mutta se ottaa "
+"vähemmän tietoja huomioon."
+
+#: include/ui/admin.php:335
+msgid "Show loading orders"
+msgstr "Näytä lataustilaukset"
+
+#: include/ui/admin.php:339
+msgid ""
+"For some advanced setups, managing loyalty system loading order and event "
+"trigger priority could be meaningful."
+msgstr ""
+"Joissakin edistyneissä asetuksissa kanta-asiakasjärjestelmän "
+"latausjärjestyksen ja tapahtumakäynnistimen prioriteetin hallinta voi olla "
+"mielekästä."
+
+#: include/ui/admin.php:347
+msgid "Order statuses to consume used points"
+msgstr "Tilaa tilat käytettyjen pisteiden kuluttamiseksi"
+
+#: include/ui/admin.php:348
+msgid "Points used to get a discount are consumed when order status changes."
+msgstr ""
+"Alennuksen saamiseen käytetyt pisteet kulutetaan, kun tilauksen tila muuttuu."
+
+#: include/ui/admin.php:352
+msgid "Order statuses to pay discount"
+msgstr "Tilauksen tilat alennuksen maksamiseksi"
+
+#: include/ui/admin.php:361
+msgid "Order status on payment failure"
+msgstr "Tilauksen tila maksun epäonnistumisen yhteydessä"
+
+#: include/ui/admin.php:366
+msgid "[do nothing]"
+msgstr "[älä tee mitään]"
+
+#: include/ui/admin.php:370
+msgid "Change order status if points cannot be paid after all."
+msgstr "Muuta tilauksen tilaa, jos pisteitä ei voida maksaa loppujen lopuksi."
+
+#: include/ui/admin.php:379
+msgid "Referral Features"
+msgstr "Viittausominaisuudet"
+
+#: include/ui/admin.php:380
+msgid ""
+"Here, you'll find the different tools customers can use to refer their "
+"friends and the reward given to referred users."
+msgstr ""
+"Täältä löydät erilaisia työkaluja, joita asiakkaat voivat käyttää "
+"suosittelemaan ystäviään, ja palkkion, joka annetaan suositelluille "
+"käyttäjille."
+
+#: include/ui/admin.php:381
+msgid ""
+"To reward the referrers, either use the dedicated wizard or select an "
+"appropriate earning method inside a points and rewards system."
+msgstr ""
+"Voit palkita suosittelijat joko käyttämällä erillistä ohjattua toimintoa tai "
+"valitsemalla sopivan ansaintatavan piste- ja palkintojärjestelmän sisällä."
+
+#: include/ui/admin.php:386
+msgid "Enable Referrals"
+msgstr "Ota viittaukset käyttöön"
+
+#: include/ui/admin.php:396
+msgid "Allow referrals via referral link"
+msgstr "Salli viittaukset viittauslinkin kautta"
+
+#: include/ui/admin.php:400
+msgid ""
+"When a visitor comes from a referral link and registers, he will be referred "
+"by the user that posted the link."
+msgstr ""
+"Kun kävijä tulee viittauslinkistä ja rekisteröityy, linkin lähettänyt "
+"käyttäjä ohjaa hänet."
+
+#: include/ui/admin.php:405
+msgid "Try to shorten the referral URL"
+msgstr "Yritä lyhentää viittaus-URL-osoitetta"
+
+#: include/ui/admin.php:408
+msgid ""
+"Disable that feature if you encounter plugin conflicts or redirection "
+"problems. Disable that feature makes bigger and less readable QR codes."
+msgstr ""
+"Poista tämä ominaisuus käytöstä, jos kohtaat laajennusristiriitoja tai "
+"uudelleenohjausongelmia. Poista tämä ominaisuus käytöstä tekee suuremmista "
+"ja vähemmän luettavista QR-koodeista."
+
+#: include/ui/admin.php:416
+msgid "Alternative Short Site URL"
+msgstr "Vaihtoehtoinen lyhyt sivuston URL-osoite"
+
+#: include/ui/admin.php:419
+msgid ""
+"To make the QR-Code as simple as possible, you can specify a shorter version "
+"of your site URL here that will be used as base for the image generation."
+msgstr ""
+"Jotta QR-koodi olisi mahdollisimman yksinkertainen, voit määrittää tähän "
+"lyhyemmän version sivustosi URL-osoitteesta, jota käytetään kuvan luomisen "
+"perustana."
+
+#: include/ui/admin.php:426
+msgid "Max referrals per customer"
+msgstr "Asiakaskohtaisten viittausten enimmäismäärä"
+
+#: include/ui/admin.php:431
+msgid ""
+"Set the maximum referrals allowed for users. No restriction on empty value "
+"or zero (0)."
+msgstr ""
+"Määritä käyttäjille sallitut enimmäisviittaukset. Ei rajoitusta tyhjälle "
+"arvolle tai nollalle (0)."
+
+#: include/ui/admin.php:444 include/ui/admin.php:445
+msgid "Appearance"
+msgstr "Ulkoasu"
+
+#: include/ui/admin.php:450
+msgid ""
+"Use this page to display loyalty content to your customers on your website"
+msgstr ""
+"Tämän sivun avulla voit näyttää kanta-asiakassisältöä asiakkaillesi "
+"verkkosivustollasi"
+
+#: include/ui/admin.php:456
+msgid "Emails"
+msgstr "Sähköpostit"
+
+#: include/ui/admin.php:473 include/ui/admin.php:474
+msgid "System"
+msgstr "Järjestelmä"
+
+#: include/ui/admin.php:479
+msgid ""
+"Export or import your customers points, process past orders in this page"
+msgstr ""
+"Vie tai tuo asiakkaidesi pisteitä, käsittele aiemmat tilaukset tällä sivulla"
+
+#: include/ui/admin.php:484
+msgid "Data Management"
+msgstr "Tiedonhallinta"
+
+#: include/ui/admin.php:490
+msgid "Give Points for Past orders"
+msgstr "Anna pisteitä aikaisemmille tila uksille"
+
+#: include/ui/admin.php:491
+msgid ""
+"If you want to give points for orders that pre-existed your loyalty system, "
+"you can do it here"
+msgstr ""
+"Jos haluat antaa pisteitä tila uksille, jotka ovat jo olemassa kanta-"
+"asiakkuus järjestelmääsi, voit tehdä sen täällä"
+
+#: include/ui/admin.php:492
+msgid ""
+"This operation can take several minutes. Depending on your server "
+"configuration and date range, you should run this operation several times on "
+"short dates ranges."
+msgstr ""
+"Tämä toiminto voi kestää useita minuutteja. Palvelimen kokoonpanosta ja "
+"päivämäärä alueesta riippuen tämä toiminto kannattaa suorittaa useita "
+"kertoja lyhyiden päivä määrien rajoissa."
+
+#: include/ui/admin.php:496
+msgid "Start date"
+msgstr "Aloituspäivä"
+
+#: include/ui/admin.php:507
+msgid "End date"
+msgstr "Päättymispäivä"
+
+#: include/ui/admin.php:518 include/ui/admin.php:1119
+msgid "Launch the procedure"
+msgstr "Käynnistä toiminto sarja"
+
+#: include/ui/admin.php:528
+msgid "Delete all data"
+msgstr "Poista kaikki tiedot"
+
+#: include/ui/admin.php:530
+msgid "Remove all loyalty systems, user points and all MyRewards related data."
+msgstr ""
+"Poista kaikki kanta-asiakasjärjestelmät, käyttäjäpisteet ja kaikki "
+"MyRewardsiin liittyvät tiedot."
+
+#: include/ui/admin.php:531
+msgid "Use this feature with care since this action is <b>irreversible</b>."
+msgstr ""
+"Käytä tätä ominaisuutta varoen, koska tämä toiminto on <b>peruuttamaton</b>."
+
+#: include/ui/admin.php:535 include/ui/admin.php:1183
+msgid "Delete All Data"
+msgstr "Poista kaikki tiedot"
+
+#: include/ui/admin.php:555
+#, php-format
+msgid "Next CRON action planned at %1$s (UTC%2$s)."
+msgstr "Seuraava CRON-toimenpide suunnitteilla %1$s (UTC%2$s)."
+
+#: include/ui/admin.php:557
+msgid ""
+"CRON action is not registered. To fix it, deactivate then re-activate this "
+"plugin."
+msgstr ""
+"CRON-toimintoa ei rekisteröidä. Korjaa se poistamalla aktivointi ja "
+"aktivoimalla tämä laajennus uudelleen."
+
+#: include/ui/admin.php:561
+#, php-format
+msgid "Last CRON action ran at %1$s (UTC%2$s)."
+msgstr "Viimeinen CRON-toiminto suoritettiin %1$s (UTC%2$s)."
+
+#: include/ui/admin.php:570 include/ui/admin.php:571 include/ui/admin.php:572
+#: include/ui/admin.php:637
+msgid "Pro Version"
+msgstr "Pro Versio"
+
+#: include/ui/admin.php:578
+msgid ""
+"Unlock this plugin's full potential by switching to the pro version. Check "
+"all the features and discover how to install it"
+msgstr ""
+"Avaa tämän laajennuksen koko potentiaali siirtymällä pro-versioon. Tarkista "
+"kaikki ominaisuudet ja tutustu sen asentamiseen"
+
+#: include/ui/admin.php:642
+msgid "Pro Version - How to Install"
+msgstr "Pro-versio - Kuinka asentaa"
+
+#: include/ui/admin.php:645
+msgid ""
+"If you already purchased the pro version, follow the instructions below to "
+"install and activate it"
+msgstr ""
+"Jos olet jo ostanut pro-version, asenna ja aktivoi se noudattamalla alla "
+"olevia ohjeita"
+
+#: include/ui/admin.php:659
+msgid "Pro Version - Test if for free for 1 month !"
+msgstr "Pro-versio - Testaa, jos ilmaiseksi 1 kuukausi!"
+
+#: include/ui/admin.php:662
+msgid ""
+"Discover the features of the pro version and how it will help your online "
+"store grow."
+msgstr ""
+"Tutustu pro-version ominaisuuksiin ja siihen, miten se auttaa "
+"verkkokauppaasi kasvamaan."
+
+#: include/ui/admin.php:691
+msgid "Cart Page Content"
+msgstr "Ostoskorisivun sisältö"
+
+#: include/ui/admin.php:692
+msgid ""
+"Select what and where you want to display content on the WooCommerce Cart "
+"Page. You can even display other plugins shortcodes"
+msgstr ""
+"Valitse, mitä ja missä haluat näyttää sisältöä WooCommerce-ostoskorisivulla. "
+"Voit jopa näyttää muita laajennusten lyhytkoodeja"
+
+#: include/ui/admin.php:699
+msgid "Checkout Page Content"
+msgstr "Kassasivun sisältö"
+
+#: include/ui/admin.php:700
+msgid ""
+"Select what and where you want to display content on the WooCommerce "
+"Checkout Page. You can even display other plugins shortcodes"
+msgstr ""
+"Valitse, mitä ja missä haluat näyttää sisältöä WooCommerce Checkout -"
+"sivulla. Voit jopa näyttää muita laajennusten lyhytkoodeja"
+
+#: include/ui/admin.php:723 include/ui/admin.php:728 include/ui/admin.php:870
+msgid "Shortcodes"
+msgstr "Lyhytkoodit"
+
+#: include/ui/admin.php:730
+msgid ""
+"In this section, you will find various shortcodes you can use on your "
+"website."
+msgstr ""
+"Tästä osiosta löydät erilaisia lyhytkoodeja, joita voit käyttää "
+"verkkosivustollasi."
+
+#: include/ui/admin.php:744
+msgid "Legacy"
+msgstr "Vanhentunut"
+
+#: include/ui/admin.php:750
+msgid "Points On Cart"
+msgstr "Pisteet ostoskorissa"
+
+#: include/ui/admin.php:751
+msgid ""
+"Select where the Points on Cart tool will be displayed and how it will look"
+msgstr "Valitse, missä Points on Cart -työkalu näytetään ja miltä se näyttää"
+
+#: include/ui/admin.php:755
+msgid "Cart Display"
+msgstr "Ostoskorin näyttö"
+
+#: include/ui/admin.php:762 include/ui/admin.php:788
+msgid "Not displayed at all"
+msgstr "Ei näytetä lainkaan"
+
+#: include/ui/admin.php:763
+msgid "Between products and totals"
+msgstr "Tuotteen ja yhteissumman välissä"
+
+#: include/ui/admin.php:764
+msgid "Aside from cart totals"
+msgstr "Ostoskorin kokonaissummien lisäksi"
+
+#: include/ui/admin.php:767
+msgid ""
+"The following options are used to decide where and how the Points on Cart "
+"tool will be displayed in the cart page"
+msgstr ""
+"Seuraavien vaihtoehtojen avulla päätetään, missä ja miten Points on Cart -"
+"työkalu näytetään ostoskorisivulla"
+
+#: include/ui/admin.php:772
+msgid "Reload cart page after amount modification"
+msgstr "Lataa ostoskorisivu uudelleen määrän muokkauksen jälkeen"
+
+#: include/ui/admin.php:776 include/ui/admin.php:803
+msgid ""
+"By default, changing the amount will provoke a javascript (ajax) update. "
+"Check this box if the default behavior doesn't work."
+msgstr ""
+"Oletusarvoisesti määrän muuttaminen aiheuttaa javascript (ajax) -"
+"päivityksen. Valitse tämä valintaruutu, jos oletustoiminta ei toimi."
+
+#: include/ui/admin.php:781
+msgid "Checkout Display"
+msgstr "Kassan näyttö"
+
+#: include/ui/admin.php:789 include/ui/woocommerce/cartcheckoutcontent.php:66
+msgid "Top of the page"
+msgstr "Sivun alkuun"
+
+#: include/ui/admin.php:790
+msgid "Before customer details"
+msgstr "Ennen asiakastietoja"
+
+#: include/ui/admin.php:791
+msgid "Before order review"
+msgstr "Ennen tilauksen tarkistamista"
+
+#: include/ui/admin.php:794
+msgid ""
+"The following options are used to decide where and how the Points on Cart "
+"tool will be displayed in the checkout page"
+msgstr ""
+"Seuraavien vaihtoehtojen avulla päätetään, missä ja miten Points on Cart -"
+"työkalu näytetään kassasivulla"
+
+#: include/ui/admin.php:799
+msgid "Reload checkout page after amount modification"
+msgstr "Lataa kassasivu uudelleen summan muokkauksen jälkeen"
+
+#: include/ui/admin.php:808 include/ui/woocommerce/pointsoncart.php:139
+msgid "Tool Header"
+msgstr "Työkalun otsikko"
+
+#: include/ui/admin.php:811 include/ui/woocommerce/pointsoncart.php:142
+#: include/ui/woocommerce/pointsoncart.php:600
+msgid "Loyalty points discount"
+msgstr "Uskollisuuspisteiden alennus"
+
+#: include/ui/admin.php:824 include/ui/woocommerce/pointsoncart.php:155
+msgid "Use the styling tool to change the tool's frontend appearance"
+msgstr "Käytä muotoilutyökalua muuttaaksesi työkalun käyttöliittymän ulkoasua"
+
+#: include/ui/admin.php:838
+msgid "Display Points Widget"
+msgstr "Näytä Piste Widget"
+
+#: include/ui/admin.php:840
+msgid ""
+"Legacy : This widget is no longer maintained or updated. Use the points "
+"balance shortcode instead."
+msgstr ""
+"Vanha : Tätä widgetiä ei enää ylläpidetä tai päivitetä. Käytä sen sijaan "
+"pistesaldon lyhytkoodia."
+
+#: include/ui/admin.php:844
+msgid "Text displayed if user not connected"
+msgstr "Näytettävä teksti, jos käyttäjä ei ole yhteydessä"
+
+#: include/ui/admin.php:848 include/ui/legacy/pointsdisplayer.php:253
+msgid "Please log in if you want to see your loyalty points"
+msgstr "Kirjaudu sisään, jos haluat nähdä kanta-asiakkuus pisteesi"
+
+#: include/ui/admin.php:859
+msgid ""
+"Here you can customize the look and displayed text of the shortcode/widget"
+msgstr ""
+"Täällä voit muokata ulkoasua sekä lyhytkoodissa / widgetissä olevaa tekstiä"
+
+#: include/ui/admin.php:872
+msgid ""
+"These shortcodes are deprecated and are kept here for compatibility. Try to "
+"replace them with other shortcodes"
+msgstr ""
+"Nämä lyhytkoodit ovat vanhentuneet ja niitä säilytetään täällä "
+"yhteensopivuuden vuoksi. Yritä korvata ne muilla lyhytkoodeilla"
+
+#: include/ui/admin.php:876
+msgid "Simple Points Display"
+msgstr "Yksinkertaisten pisteiden näyttö"
+
+#: include/ui/admin.php:880
+msgid ""
+"This simple shortcode is used to display the user's points with no "
+"decoration."
+msgstr ""
+"Tätä yksinkertaista lyhytkoodia käytetään käyttäjän pisteiden näyttämiseen "
+"ilman koristelua."
+
+#: include/ui/admin.php:881
+msgid ""
+"This is very convenient if you want to display points within a phrase for "
+"example."
+msgstr ""
+"Tämä on erittäin kätevää, jos haluat näyttää pisteitä esimerkiksi lauseessa."
+
+#: include/ui/admin.php:888
+msgid "Display Points"
+msgstr "Näytä pisteet"
+
+#: include/ui/admin.php:892
+msgid ""
+"This shortcode shows to customers the points they have on a loyalty system."
+msgstr ""
+"Tämä lyhytkoodi näyttää asiakkaille pisteet, jotka heillä on kanta-"
+"asiakasjärjestelmässä."
+
+#: include/ui/admin.php:896
+msgid "The text displayed before the points."
+msgstr "Pisteiden edessä näkyvä teksti."
+
+#: include/ui/admin.php:900
+msgid ""
+"(Optional) If set, the number of points displayed will show the points "
+"currency."
+msgstr ""
+"(Valinnainen) Jos se on määritetty, näytettävien pisteiden määrä näyttää "
+"pisteiden valuutan."
+
+#: include/ui/admin.php:920
+msgid "Information"
+msgstr "Tietoja"
+
+#: include/ui/admin.php:922
+msgid ""
+"MyRewards Standard uses WooCommerce <i>orders</i> and <i>coupons</i>.\n"
+"\t\t\t\t\t\t\t<br/>You should install <a href='https://wordpress.org/plugins/"
+"woocommerce/' target='_blank'>WooCommerce</a> to have them active.\n"
+"\t\t\t\t\t\t\t<br/>Or <a href='https://plugins.longwatchstudio.com/product/"
+"woorewards/' target='_blank'>upgrade <b>MyRewards</b> to the <b>Pro</b> "
+"version</a>\n"
+"\t\t\t\t\t\t\tand enjoy new ways to earn points (social media, sponsoring... "
+"with or without WooCommerce) and a lot of new reward types !"
+msgstr ""
+
+#: include/ui/admin.php:955
+msgid ""
+"You are now using the Free Version of WooRewards. However, we detect that "
+"you still have Premium Version settings that are not compatible with the "
+"Free Version."
+msgstr ""
+"Käytät nyt ilmaista versiota WooRewards. Havaitsemme kuitenkin, että sinulla "
+"on edelleen Premium-version asetuksia, jotka eivät ole yhteensopivia "
+"ilmaisen version kanssa."
+
+#: include/ui/admin.php:956
+msgid ""
+"If you buy a Premium Version License and activate it, it will restore all "
+"the Premium Version data (points and rewards systems, user points, settings)."
+msgstr ""
+"Jos ostat Premium-versiolisenssin ja aktivoit sen, se palauttaa kaikki "
+"Premium-version tiedot (pisteet ja palkintojärjestelmät, käyttäjäpisteet, "
+"asetukset)."
+
+#: include/ui/admin.php:957
+msgid ""
+"If you prefer to only use the free version, please follow the instructions "
+"below :"
+msgstr ""
+"Jos haluat käyttää vain ilmaista versiota, noudata alla olevia ohjeita:"
+
+#: include/ui/admin.php:964
+#, php-format
+msgid ""
+"The WooRewards default points and rewards system does not exist. Please run "
+"the <a%s>wizard</a> tool to create one."
+msgstr ""
+"WooRewards-oletuspiste- ja palkitsemisjärjestelmää ei ole olemassa. Luo "
+"sellainen suorittamalla <a%s>ohjattu työkalu."
+
+#: include/ui/admin.php:969
+msgid ""
+"The MyRewards default points and rewards system does not exist. Try to re-"
+"activate this plugin. If the problem persists, contact your administrator."
+msgstr ""
+"MyRewards-oletuspiste- ja palkintojärjestelmää ei ole olemassa. Yritä "
+"aktivoida tämä laajennus uudelleen. Jos ongelma jatkuu, ota yhteyttä "
+"järjestelmänvalvojaan."
+
+#: include/ui/admin.php:975
+msgid "Loading failure"
+msgstr "Latausvirhe"
+
+#: include/ui/admin.php:987
+msgid "General Settings"
+msgstr "Yleiset asetukset"
+
+#: include/ui/admin.php:989
+msgid ""
+"Before activating your loyalty program, make sure you've read the "
+"documentation. You will find links to the documentation on the top right of "
+"each group."
+msgstr ""
+"Ennen kuin aktivoit kanta-asiakasohjelman, varmista, että olet lukenut "
+"dokumentaation. Löydät linkit dokumentaatioon kunkin ryhmän oikeasta "
+"yläkulmasta."
+
+#: include/ui/admin.php:998
+msgid "Here you can manage how your customers earn loyalty points"
+msgstr ""
+"Täällä voit hallita kuinka asiakkaasi ansaitsevat kanta-asiakaspisteitä"
+
+#: include/ui/admin.php:1010 include/ui/editlists/userspoints.php:18
+#: woorewards.php:413
+msgid "Rewards"
+msgstr "Palkinnot"
+
+#: include/ui/admin.php:1013
+msgid ""
+"Here you can manage the rewards for your customers. Rewards can either be "
+"automatically generated WooCommerce Coupons or points usable on cart for "
+"immediate discounts"
+msgstr ""
+"Täällä voit hallita asiakkaidesi palkkioita. Palkinnot voidaan joko luoda "
+"automaattisesti WooCommerce-kuponkeja tai pisteitä, joita voidaan käyttää "
+"ostoskorissa välittömiä alennuksia varten"
+
+#: include/ui/admin.php:1019
+msgid "Reward Type"
+msgstr "Palkkion tyyppi"
+
+#: include/ui/admin.php:1025
+msgid "WooCommerce Coupon"
+msgstr "WooCommerce kuponki"
+
+#: include/ui/admin.php:1026 include/wizards/standard.php:145
+#: include/wizards/standard.php:355
+msgid "Points on Cart"
+msgstr "Pisteet ostoskorissa"
+
+#: include/ui/admin.php:1035
+#, php-format
+msgid "Point Value in %s"
+msgstr "Pistearvo %s"
+
+#: include/ui/admin.php:1038
+msgid ""
+"Each point spent on the cart will decrease the order total of that value"
+msgstr ""
+"Jokainen ostoskoriin käytetty piste pienentää kyseisen arvon tilaussummaa"
+
+#: include/ui/admin.php:1045 include/unlockables/coupon.php:462
+msgid "Coupon"
+msgstr "Kuponki"
+
+#: include/ui/admin.php:1093
+msgctxt "pool enabled switch"
+msgid "Off"
+msgstr "Ei käytössä"
+
+#: include/ui/admin.php:1094
+msgctxt "pool enabled switch"
+msgid "On"
+msgstr "Käytössä"
+
+# Aitue otsikko
+#: include/ui/admin.php:1102
+msgctxt "Pool title"
+msgid "Title"
+msgstr "Otsikko"
+
+#: include/ui/admin.php:1118
+#, php-format
+msgid ""
+"If you really want to process pre-existing orders, check this box and click "
+"on <i>'%s'</i> again."
+msgstr ""
+"Jos haluat todella käsitellä olemassa olevia tilauksia, valitse tämä ruutu "
+"ja napsauta <i>'%s'</i> uudelleen."
+
+#: include/ui/admin.php:1120
+msgid ""
+"If your loyalty program is live, this could lead to lots of rewards being "
+"generated and lots of emails being sent"
+msgstr ""
+"Jos kanta-asiakasohjelmasi on käynnissä, tämä voi johtaa siihen, että syntyy "
+"paljon palkintoja ja lähetetään paljon sähköposteja"
+
+#: include/ui/admin.php:1121
+msgid ""
+"Please make sure you reviewed all the settings before launching this "
+"procedure."
+msgstr ""
+"Varmista, että olet tarkistanut kaikki asetukset ennen tämän menettelyn "
+"käynnistämistä."
+
+#: include/ui/admin.php:1133 include/ui/admin.php:1134
+msgid "Dates are required"
+msgstr "Päivä määrät ovat pakollisia"
+
+#: include/ui/admin.php:1174
+#, php-format
+msgid "<b>%s</b> order(s) processed."
+msgstr "<b> %s</b> tilaus (t) käsitelty."
+
+#: include/ui/admin.php:1182
+#, php-format
+msgid ""
+"If you really want to reset all MyRewards data, check this box and click on "
+"<i>'%s'</i> again."
+msgstr ""
+"Jos haluat todella nollata kaikki MyRewards-tiedot, valitse tämä ruutu ja "
+"napsauta <i>'%s'</i> uudelleen."
+
+#: include/ui/admin.php:1184
+msgid "This operation is irreversible!"
+msgstr "Tämä toimenpide on peruuttamaton!"
+
+#: include/ui/admin.php:1185
+msgid "Consider making a backup of your database before continue."
+msgstr "Harkitse varmuuskopion tekemistä tietokannastasi ennen jatkamista."
+
+#: include/ui/admin.php:1256
+msgid ""
+"You can now create new Points and Rewards System for your customers or "
+"uninstall MyRewards."
+msgstr ""
+"Voit nyt luoda uuden piste- ja palkintojärjestelmän asiakkaillesi tai "
+"poistaa MyRewardsin asennuksen."
+
+#: include/ui/admin.php:1269 include/wizard.php:174 woorewards.php:546
+#: woorewards.php:564
+msgid "Referrals"
+msgstr "Viittaukset"
+
+#: include/ui/admin.php:1283
+msgid "Referrals Information"
+msgstr "Viittausten tiedot"
+
+#: include/ui/admin.php:1287
+msgid "You will find here a list of all customers who referred other people."
+msgstr ""
+"Täältä löydät luettelon kaikista asiakkaista, jotka suosittelivat muita "
+"ihmisiä."
+
+#: include/ui/admin.php:1289
+#, php-format
+msgid "See %s to let your customer share a referral link and get referees."
+msgstr ""
+"Katso %s, jotta asiakkaasi voi jakaa viittauslinkin ja saada suosittelijoita."
+
+#: include/ui/adminscreens/styling.php:15
+msgid "Styling"
+msgstr "Muotoilu"
+
+#: include/ui/adminscreens/styling.php:57
+msgid "Blocks"
+msgstr "Lohkot"
+
+#: include/ui/adminscreens/styling.php:60
+msgid ""
+"Set the styling of wrapping elements used on front-end elements and "
+"shortcodes"
+msgstr ""
+"Aseta käyttöliittymäelementeissä ja lyhytkoodeissa käytettävien "
+"käärintäelementtien tyyli"
+
+#: include/ui/adminscreens/styling.php:64
+msgid "Border Width"
+msgstr "Reunaviivan leveys"
+
+#: include/ui/adminscreens/styling.php:70
+#: include/ui/adminscreens/styling.php:154
+#, php-format
+msgid ""
+"Define the blocks border width. Set 0px for no border. You can set up to 4 "
+"values. %s works, %s also works"
+msgstr ""
+"Määritä lohkojen reunan leveys. Aseta 0px ilman reunaa. Voit määrittää "
+"enintään 4 arvoa. %s toimii, %s toimii myös"
+
+#: include/ui/adminscreens/styling.php:76
+msgid "Border Radius"
+msgstr "Reunaviivan pyöristys"
+
+#: include/ui/adminscreens/styling.php:82
+#: include/ui/adminscreens/styling.php:166
+#, php-format
+msgid ""
+"Define the blocks border radius. Set 0px for no radius. You can set up to 4 "
+"values. %s works, %s also works"
+msgstr ""
+"Määritä lohkojen reunan säde. Aseta 0px ilman sädettä. Voit määrittää "
+"enintään 4 arvoa. %s toimii, %s toimii myös"
+
+#: include/ui/adminscreens/styling.php:88
+msgid "Border Color"
+msgstr "Reunaviivan väri"
+
+#: include/ui/adminscreens/styling.php:92
+#: include/ui/adminscreens/styling.php:176
+msgid "Define the blocks border color"
+msgstr "Määritä lohkojen reunan väri"
+
+#: include/ui/adminscreens/styling.php:97
+msgid "Background Color"
+msgstr "Taustaväri"
+
+#: include/ui/adminscreens/styling.php:101
+#: include/ui/adminscreens/styling.php:185
+msgid "Define the blocks background color"
+msgstr "Määritä lohkojen taustaväri"
+
+#: include/ui/adminscreens/styling.php:106
+msgid "Text Color"
+msgstr "Tekstin väri"
+
+#: include/ui/adminscreens/styling.php:110
+#: include/ui/adminscreens/styling.php:194
+msgid "Define the text color"
+msgstr "Tekstin värin määrittäminen"
+
+#: include/ui/adminscreens/styling.php:115
+#: include/ui/adminscreens/styling.php:226
+msgid "Preview"
+msgstr "Esikatselu"
+
+#: include/ui/adminscreens/styling.php:141
+msgid "Buttons"
+msgstr "Painikkeet"
+
+#: include/ui/adminscreens/styling.php:144
+msgid "Set the styling of buttons used on front-end elements and shortcodes"
+msgstr ""
+"Aseta käyttöliittymäelementeissä ja lyhytkoodeissa käytettävien painikkeiden "
+"tyyli"
+
+#: include/ui/adminscreens/styling.php:148
+msgid "Button Border Width"
+msgstr "Painikkeen reunan leveys"
+
+#: include/ui/adminscreens/styling.php:160
+msgid "Button Border Radius"
+msgstr "Painikkeen reunan säde"
+
+#: include/ui/adminscreens/styling.php:172
+msgid "Button Border Color"
+msgstr "Painikkeen reunan väri"
+
+#: include/ui/adminscreens/styling.php:181
+msgid "Button Background Color"
+msgstr "Painikkeen taustaväri"
+
+#: include/ui/adminscreens/styling.php:190
+msgid "Button Text Color"
+msgstr "Painikkeen tekstin väri"
+
+#: include/ui/adminscreens/styling.php:199
+msgid "Mouseover Border Color"
+msgstr "Hiiren reunan väri"
+
+#: include/ui/adminscreens/styling.php:203
+msgid "Define the blocks border color on mouse over"
+msgstr "Määritä lohkojen reunan väri hiiren päällä"
+
+#: include/ui/adminscreens/styling.php:208
+msgid "Mouseover Background Color"
+msgstr "Mouseover-taustaväri"
+
+#: include/ui/adminscreens/styling.php:212
+msgid "Define the blocks background color on mouse over"
+msgstr "Määritä lohkojen taustaväri hiiren päällä"
+
+#: include/ui/adminscreens/styling.php:217
+msgid "Mouseover Text Color"
+msgstr "Hiiren osoittimen tekstin väri"
+
+#: include/ui/adminscreens/styling.php:221
+msgid "Define the text color on mouse over"
+msgstr "Tekstin värin määrittäminen hiiren osoittimen päällä"
+
+#: include/ui/editlists/eventlist.php:15
+#: include/ui/editlists/unlockablelist.php:16
+msgid "Public title"
+msgstr "Julkinen otsikko"
+
+#: include/ui/editlists/eventlist.php:38
+msgid "Formula"
+msgstr "Kaava"
+
+#: include/ui/editlists/eventlist.php:55
+msgid "Action to perform to earn points"
+msgstr "Suorita pisteiden ansaitsemiseksi"
+
+#: include/ui/editlists/eventlist.php:61
+msgid "Points value and options"
+msgstr "Pisteiden arvo ja vaihtoehdot"
+
+#: include/ui/editlists/eventlist.php:70
+msgid "Select a category"
+msgstr "Valitse kategoria"
+
+#: include/ui/editlists/eventlist.php:71
+msgid "Category : "
+msgstr "Kategoria: "
+
+#: include/ui/editlists/eventlist.php:74
+msgid "Select an action"
+msgstr "Valitse toiminto"
+
+#: include/ui/editlists/eventlist.php:75
+msgid "Action : "
+msgstr "Toiminta: "
+
+#: include/ui/editlists/eventlist.php:101
+msgctxt "Option Group"
+msgid "Orders"
+msgstr "Tilaukset"
+
+#: include/ui/editlists/eventlist.php:101
+msgid "Customers earn points when they place an order"
+msgstr "Asiakkaat ansaitsevat pisteitä tehdessään tilauksen"
+
+#: include/ui/editlists/eventlist.php:102
+msgctxt "Option Group"
+msgid "Website"
+msgstr "Verkkosivusto"
+
+#: include/ui/editlists/eventlist.php:102
+msgid "Users earn points by registering or posting content"
+msgstr ""
+"Käyttäjät ansaitsevat pisteitä rekisteröitymällä tai julkaisemalla sisältöä"
+
+#: include/ui/editlists/eventlist.php:103
+msgctxt "Option Group"
+msgid "Social Media"
+msgstr "Sosiaalinen Media"
+
+#: include/ui/editlists/eventlist.php:103
+msgid "Users earn points for sharing on social media"
+msgstr "Käyttäjät ansaitsevat pisteitä jakamisesta sosiaalisessa mediassa"
+
+#: include/ui/editlists/eventlist.php:104
+msgctxt "Option Group"
+msgid "Referral"
+msgstr "Lähete"
+
+#: include/ui/editlists/eventlist.php:104
+msgid "Referrers earn points when they refer someone"
+msgstr "Suosittelijat ansaitsevat pisteitä, kun he suosittelevat jotakuta"
+
+#: include/ui/editlists/eventlist.php:105
+#: include/ui/editlists/unlockablelist.php:96
+msgctxt "Option Group"
+msgid "Miscellaneous"
+msgstr "Sekalaiset"
+
+#: include/ui/editlists/eventlist.php:105
+msgid "Users earn points for various reasons"
+msgstr "Käyttäjät ansaitsevat pisteitä eri syistä"
+
+#: include/ui/editlists/eventlist.php:106
+msgctxt "Option Group"
+msgid "WooVIP"
+msgstr "WooVIP"
+
+#: include/ui/editlists/eventlist.php:106
+msgid "Earn points related to the WooVIP Plugin"
+msgstr "Ansaitse WooVIP-laajennukseen liittyviä pisteitä"
+
+#: include/ui/editlists/eventlist.php:107
+msgctxt "Option Group"
+msgid "WooVirtualWallet"
+msgstr "WooVirtualWallet"
+
+#: include/ui/editlists/eventlist.php:107
+msgid "Earn points related to the WooVirtualWallet Plugin"
+msgstr "Ansaitse WooVirtualWallet-laajennukseen liittyviä pisteitä"
+
+#: include/ui/editlists/eventlist.php:124
+msgid "The selected Earning Points System cannot be found."
+msgstr "Valittua ansaintapistejärjestelmää ei löytynyt."
+
+#: include/ui/editlists/eventlist.php:126
+msgid ""
+"Earning Points System Type cannot be changed. Delete this and create a new "
+"one instead."
+msgstr ""
+"Ansaintapistejärjestelmää ei voida vaihtaa. Poista ja luo uusi sen sijaan."
+
+#: include/ui/editlists/eventlist.php:132
+msgid "The selected Earning Points System type cannot be found."
+msgstr "Valittua ansaintapistejärjestelmää ei löytynyt."
+
+#: include/ui/editlists/eventlist.php:155
+msgid "The selected Earning Point System cannot be found."
+msgstr "Valittua ansaintapistejärjestelmää ei löytynyt."
+
+#: include/ui/editlists/multiformlist.php:49
+msgid "First Step"
+msgstr "Ensimmäinen askel"
+
+#: include/ui/editlists/multiformlist.php:50
+#: include/ui/editlists/multiformlist.php:54
+msgid "Step : "
+msgstr "Askel: "
+
+#: include/ui/editlists/multiformlist.php:53
+msgid "Second Step"
+msgstr "Toinen vaihe"
+
+#: include/ui/editlists/sponsorships.php:23
+msgid "Search Users..."
+msgstr "Hae käyttäjiä..."
+
+#: include/ui/editlists/sponsorships.php:31
+msgid "Referrer"
+msgstr "Viittaaja"
+
+#: include/ui/editlists/sponsorships.php:32
+msgid "Referee"
+msgstr "Erotuomari"
+
+#: include/ui/editlists/sponsorships.php:120
+#, php-format
+msgid ""
+"Not available here. Please take a look at our PRO version and its free "
+"Referral addon %s!"
+msgstr ""
+"Ei saatavilla täältä. Tutustu PRO-versioomme ja sen ilmaiseen Referral-"
+"lisäosaan %s!"
+
+#: include/ui/editlists/sponsorships.php:123
+msgid "here"
+msgstr "tässä"
+
+#: include/ui/editlists/unlockablelist.php:15
+msgid "Points cost"
+msgstr "Pisteiden hinta"
+
+#: include/ui/editlists/unlockablelist.php:17
+msgid "Reward description"
+msgstr "Palkkion kuvaus"
+
+#: include/ui/editlists/unlockablelist.php:37
+msgid "Select a reward category"
+msgstr "Valitse palkintoluokka"
+
+#: include/ui/editlists/unlockablelist.php:38
+msgid "Reward Category : "
+msgstr "Palkintoluokka : "
+
+#: include/ui/editlists/unlockablelist.php:41
+msgid "Select a Reward"
+msgstr "Valitse palkinto"
+
+#: include/ui/editlists/unlockablelist.php:42
+msgid "Reward : "
+msgstr "Palkita: "
+
+#: include/ui/editlists/unlockablelist.php:92
+msgctxt "Option  Group"
+msgid "Coupons"
+msgstr "Kupongit"
+
+#: include/ui/editlists/unlockablelist.php:92
+msgid "Rewards that will generate WooCommerce Coupons"
+msgstr "Palkinnot, jotka tuottavat WooCommerce-kuponkeja"
+
+#: include/ui/editlists/unlockablelist.php:93
+msgctxt "Option Group"
+msgid "User's status"
+msgstr "Käyttäjän tila"
+
+#: include/ui/editlists/unlockablelist.php:93
+msgid "Rewards that will change the user's status"
+msgstr "Palkinnot, jotka muuttavat käyttäjän tilaa"
+
+#: include/ui/editlists/unlockablelist.php:94
+msgctxt "Option  Group"
+msgid "WooVirtualWallet"
+msgstr "WooVirtualWallet"
+
+#: include/ui/editlists/unlockablelist.php:94
+msgid "Wallet Credit rewards"
+msgstr "Lompakkohyvityksen palkinnot"
+
+#: include/ui/editlists/unlockablelist.php:95
+msgctxt "Option  Group"
+msgid "WooVIP"
+msgstr "WooVIP"
+
+#: include/ui/editlists/unlockablelist.php:95
+msgid "Memberships rewards"
+msgstr "Jäsenyyden palkinnot"
+
+#: include/ui/editlists/unlockablelist.php:96
+msgid "Other types of rewards"
+msgstr "Muun tyyppiset palkinnot"
+
+#: include/ui/editlists/unlockablelist.php:128
+#: include/ui/editlists/unlockablelist.php:164
+msgid "The selected reward cannot be found."
+msgstr "Valittua palkintoa ei löytynyt."
+
+#: include/ui/editlists/unlockablelist.php:130
+msgid ""
+"The reward type cannot be changed. Delete this and create a new one instead."
+msgstr "Palkkiotyyppiä ei voida vaihtaa. Poista ja luo uusi sen sijaan."
+
+#: include/ui/editlists/unlockablelist.php:136
+msgid "The selected reward type cannot be found."
+msgstr "Valittua palkintotyyppiä ei löytynyt."
+
+#: include/ui/editlists/userspoints.php:16
+msgid "Users"
+msgstr "Käyttäjät"
+
+#: include/ui/editlists/userspoints.php:163
+msgid "User Login"
+msgstr "Käyttäjän kirjautuminen"
+
+#: include/ui/editlists/userspoints.php:164
+msgid "Email"
+msgstr "Sähköposti"
+
+#: include/ui/editlists/userspoints.php:165
+msgid "Display Name"
+msgstr "Näyttönimi"
+
+#: include/ui/editlists/userspoints.php:167
+#, php-format
+msgid "Points : %s"
+msgstr "Pisteet : %s"
+
+#: include/ui/editlists/userspointsbulkaction.php:14
+msgid ""
+"Enter '=42' to set a total of 42 points to selected users instead of adding "
+"it to current amounts."
+msgstr ""
+"Syötä '=42' asettaaksesi 42 pistettä valituille käyttäjille, sen sijaan että "
+"lisäisit sen nykyisiin summiin."
+
+#: include/ui/editlists/userspointsbulkaction.php:15
+msgid "Add/Subtract points"
+msgstr "Pisteiden lisääminen/vähentäminen"
+
+#: include/ui/editlists/userspointsbulkaction.php:54
+msgid "Cannot load default loyalty system."
+msgstr "Ei voi ladata oletus kanta-asiakasjärjestelmää."
+
+#: include/ui/editlists/userspointsbulkaction.php:60
+msgid "Commercial operation"
+msgstr "Kaupallinen toiminta"
+
+#: include/ui/editlists/userspointsbulkaction.php:71
+msgid "Points added to user."
+msgid_plural "Points added to users."
+msgstr[0] "Pisteitä lisätty käyttäjälle."
+msgstr[1] "Pisteitä lisätty käyttäjille."
+
+#: include/ui/editlists/userspointsbulkaction.php:73
+msgid "A reward was generated."
+msgid_plural "Few rewards generated."
+msgstr[0] "Palkkio saatiin."
+msgstr[1] "Palkkiot saatiin."
+
+#: include/ui/legacy/pointsdisplayer.php:41
+msgid "MyRewards Points Displayer"
+msgstr "MyRewards pisteiden näyttäjä"
+
+#: include/ui/legacy/pointsdisplayer.php:43
+msgid "Let your customers see their points."
+msgstr "Sallii asiakkaidesi nähdä heidän pisteensä."
+
+#: include/ui/legacy/pointsdisplayer.php:94
+#: include/ui/legacy/pointsdisplayer.php:162
+msgctxt "frontend"
+msgid "Current Points"
+msgstr "Nykyiset pisteet"
+
+#: include/ui/legacy/pointsdisplayer.php:100
+msgid "Header"
+msgstr "Ylätunniste"
+
+#: include/ui/legacy/pointsdisplayer.php:115
+msgid "Select a Loyalty System"
+msgstr "Valitse kanta-asiakasjärjestelmä"
+
+#: include/ui/legacy/pointsdisplayer.php:124
+msgid "Force display for all users"
+msgstr "Pakota näyttö kaikille käyttäjille"
+
+#: include/ui/legacy/pointsdisplayer.php:132
+msgid "A <i>More details</i> page URL"
+msgstr "Katso <i>Lisää tietoja</i> sivun URL"
+
+#: include/ui/legacy/pointsdisplayer.php:141
+msgid "Display the Points currency"
+msgstr "Pisteiden valuutan näyttäminen"
+
+#: include/ui/legacy/pointsdisplayer.php:231
+msgid "More Details"
+msgstr "Lisätietoja"
+
+#: include/ui/shortcodes/availablecoupons.php:39
+msgid "Available Coupons"
+msgstr "Käytettävissä olevat kupongit"
+
+#: include/ui/shortcodes/availablecoupons.php:43
+msgid ""
+"Use this shortcode to display a list of their available coupons to your "
+"customers."
+msgstr ""
+"Käytä tätä lyhytkoodia näyttääksesi luettelon heidän käytettävissä olevista "
+"kuponkeistaan asiakkaillesi."
+
+#: include/ui/shortcodes/availablecoupons.php:44
+msgid "This shortcode is better used on the cart or checkout page."
+msgstr "Tätä lyhytkoodia käytetään paremmin ostoskori- tai kassasivulla."
+
+#: include/ui/shortcodes/availablecoupons.php:48
+msgid ""
+"(Optional) Select how the coupons list is displayed. 4 possible values :"
+msgstr ""
+"(Valinnainen) Valitse, miten kuponkiluettelo näytetään. 4 mahdollista arvoa :"
+
+#: include/ui/shortcodes/availablecoupons.php:52
+msgid "Default value. Elements are displayed on top of each other"
+msgstr "Oletusarvo. Elementit näkyvät päällekkäin"
+
+#: include/ui/shortcodes/availablecoupons.php:56
+#: include/ui/shortcodes/pointsbalance.php:119
+msgid "Elements are displayed in row"
+msgstr "Elementit näytetään rivillä"
+
+#: include/ui/shortcodes/availablecoupons.php:60
+#: include/ui/shortcodes/pointsbalance.php:115
+msgid "Elements are displayed in a responsive grid"
+msgstr "Elementit näytetään responsiivisessa ruudukossa"
+
+#: include/ui/shortcodes/availablecoupons.php:64
+msgid "Elements are not wrapped in a container"
+msgstr "Elementtejä ei ole kääritty astiaan"
+
+#: include/ui/shortcodes/availablecoupons.php:71
+msgid ""
+"(Optional) Select how a coupon element is displayed. 3 possible values :"
+msgstr ""
+"(Valinnainen) Valitse, miten kuponkielementti näytetään. 3 mahdollista arvoa:"
+
+#: include/ui/shortcodes/availablecoupons.php:75
+msgid "Default Value. Horizontal display in stylable elements"
+msgstr "Oletusarvo. Vaakasuuntainen näyttö tyyliteltävissä elementeissä"
+
+#: include/ui/shortcodes/availablecoupons.php:79
+#: include/ui/shortcodes/pointsbalance.php:58
+msgid "Stylable tile with a background color"
+msgstr "Tyyliteltävä laatta, jossa on taustaväri"
+
+#: include/ui/shortcodes/availablecoupons.php:83
+msgid "Simple text without stylable elements"
+msgstr "Yksinkertainen teksti ilman tyyliteltyjä elementtejä"
+
+#: include/ui/shortcodes/availablecoupons.php:90
+msgid ""
+"(Optional) If set to true, apply buttons are added on each element to apply "
+"the coupon on the cart. Default is false"
+msgstr ""
+"(Valinnainen) Jos arvoksi on määritetty tosi, jokaiseen elementtiin lisätään "
+"Käytä-painikkeet kupongin käyttämiseksi ostoskoriin. Oletusarvo on epätosi"
+
+#: include/ui/shortcodes/availablecoupons.php:100
+msgid ""
+"(Optional) Only applies if buttons is set to true. If set to true, clicking "
+"an apply button will refresh the page."
+msgstr ""
+"(Valinnainen) Koskee vain, jos painikkeiden arvoksi on määritetty tosi. Jos "
+"arvoksi on määritetty tosi, käytä-painikkeen napsauttaminen päivittää sivun."
+
+#: include/ui/shortcodes/availablecoupons.php:156
+#: include/ui/woocommerce/pointsoncart.php:564
+msgid "Apply"
+msgstr "Käytä"
+
+#: include/ui/shortcodes/availablecoupons.php:167
+#, php-format
+msgid " (Expires on %s)"
+msgstr " (Vanhenee %s)"
+
+#: include/ui/shortcodes/pointsbalance.php:41
+#: include/ui/shortcodes/userhistory.php:249
+msgid "Points Balance"
+msgstr "Pisteiden saldo"
+
+#: include/ui/shortcodes/pointsbalance.php:45
+msgid "Use this shortcode to display their points balance to your customers."
+msgstr ""
+"Käytä tätä lyhytkoodia näyttääksesi heidän pistesaldonsa asiakkaillesi."
+
+#: include/ui/shortcodes/pointsbalance.php:46
+msgid "Use the following options to change how the balance is displayed."
+msgstr "Seuraavien asetusten avulla voit muuttaa saldon näyttötapaa."
+
+#: include/ui/shortcodes/pointsbalance.php:50
+msgid ""
+"(Optional) Select how the points balance element is displayed. 3 possible "
+"values :"
+msgstr ""
+"(Valinnainen) Valitse, miten pistesaldoelementti näytetään. 3 mahdollista "
+"arvoa:"
+
+#: include/ui/shortcodes/pointsbalance.php:54
+#: include/ui/shortcodes/pointsbalance.php:111
+msgid "Default value. Simple text without stylable elements"
+msgstr "Oletusarvo. Yksinkertainen teksti ilman tyyliteltyjä elementtejä"
+
+#: include/ui/shortcodes/pointsbalance.php:62
+msgid "Horizontal display in stylable elements"
+msgstr "Vaakasuuntainen näyttö tyyliteltävissä elementeissä"
+
+#: include/ui/shortcodes/pointsbalance.php:69
+msgid "(Optional) Select how the points are displayed. 2 possible values :"
+msgstr "(Valinnainen) Valitse, miten pisteet näytetään. 2 mahdollista arvoa:"
+
+#: include/ui/shortcodes/pointsbalance.php:73
+msgid "Default. Points are formatted with the points currency/name"
+msgstr "Laiminlyönti. Pisteet muotoillaan pisteiden valuutalla/nimellä"
+
+#: include/ui/shortcodes/pointsbalance.php:77
+msgid "Only the points balance numeric value is displayed"
+msgstr "Vain pistesaldon numeerinen arvo näytetään"
+
+#: include/ui/shortcodes/pointsbalance.php:84
+msgid ""
+"(Optional) If set, will force the display of the points and rewards system "
+"name"
+msgstr ""
+"(Valinnainen) Jos se on asetettu, se pakottaa näyttämään pisteiden ja "
+"palkintojärjestelmän nimen"
+
+#: include/ui/shortcodes/pointsbalance.php:101
+msgid ""
+"(Optional, comma separated) Select the points and rewards systems you want "
+"to show. If left empty, all active systems are displayed"
+msgstr ""
+"(Valinnainen, pilkku erotettuna) Valitse pisteet ja palkitsemisjärjestelmät, "
+"jotka haluat näyttää. Jos se jätetään tyhjäksi, kaikki aktiiviset "
+"järjestelmät näytetään"
+
+#: include/ui/shortcodes/pointsbalance.php:102
+#: include/ui/woocommerce/pointsoncart.php:189
+msgid ""
+"You can find the points and rewards systems names in WooRewards → Points and "
+"Rewards"
+msgstr ""
+"Löydät pisteiden ja palkintojärjestelmien nimet kohdasta WooRewards → Points "
+"and Rewards"
+
+#: include/ui/shortcodes/pointsbalance.php:107
+msgid ""
+"(Optional) Select how the points balance elements are organized . 4 possible "
+"values :"
+msgstr ""
+"(Valinnainen) Valitse, miten pistesaldoelementit on järjestetty . 4 "
+"mahdollista arvoa :"
+
+#: include/ui/shortcodes/pointsbalance.php:123
+#: include/ui/woocommerce/pointsoncart.php:125
+msgid "Elements are displayed on top of another"
+msgstr "Elementit näkyvät toisen päällä"
+
+#: include/ui/shortcodes/pointsbalance.php:192
+#, php-format
+msgctxt "wr_points_balance element=\"none\""
+msgid "%s : %s"
+msgstr "%s : %s"
+
+#: include/ui/shortcodes/pointsvalue.php:27
+msgid "Points Value"
+msgstr "Pisteiden arvo"
+
+#: include/ui/shortcodes/pointsvalue.php:31
+msgid "This simple shortcode is used to display how much his points are worth."
+msgstr ""
+"Tätä yksinkertaista lyhytkoodia käytetään näyttämään, kuinka paljon hänen "
+"pisteensä ovat arvokkaita."
+
+#: include/ui/shortcodes/pointsvalue.php:32
+msgid ""
+"This only works if your points and rewards system is set to points on cart."
+msgstr ""
+"Tämä toimii vain, jos piste- ja palkintojärjestelmäsi on asetettu pisteiksi "
+"ostoskorissa."
+
+#: include/ui/shortcodes/pointsvalue.php:36
+msgid "The text displayed before the points value."
+msgstr "Ennen pistearvoa näytettävä teksti."
+
+#: include/ui/shortcodes/pointsvalue.php:40
+msgid ""
+"(Optional) If set to true, the result will be displayed as a simple text. "
+"Otherwise, it will be wrapped in stylable elements"
+msgstr ""
+"(Valinnainen) Jos arvoksi on määritetty tosi, tulos näytetään "
+"yksinkertaisena tekstinä. Muuten se kääritään tyyliteltäviin elementteihin"
+
+#: include/ui/shortcodes/pointsvalue.php:56
+msgid ""
+"The points and rewards system you want to display. You can find this value "
+"in <strong>MyRewards → Points and Rewards</strong>, in the <b>Shortcode "
+"Attribute</b> column. If you don’t set this value, nothing will be displayed."
+msgstr ""
+"Piste- ja palkitsemisjärjestelmä, jonka haluat näyttää. Löydät tämän arvon "
+"<strong>MyRewards → Points and Rewards</strong> -osiosta <b>Shortcode "
+"Attribute</b> -sarakkeesta. Jos et aseta tätä arvoa, mitään ei näytetä."
+
+#: include/ui/shortcodes/referrallink.php:43
+msgid "Referral Link"
+msgstr "Suosittelun linkki"
+
+#: include/ui/shortcodes/referrallink.php:47
+msgid "Use this shortcode to show a referral link button."
+msgstr "Käytä tätä lyhytkoodia näyttääksesi viittauslinkkipainikkeen."
+
+#: include/ui/shortcodes/referrallink.php:48
+msgid "Customers can use then share this link with their friends."
+msgstr "Asiakkaat voivat käyttää ja jakaa tämän linkin ystäviensä kanssa."
+
+#: include/ui/shortcodes/referrallink.php:53
+msgid "Select the type of referral link your customers will get :"
+msgstr "Valitse suosittelulinkin tyyppi, jonka asiakkaasi saavat:"
+
+#: include/ui/shortcodes/referrallink.php:56
+msgid "(Default Value) Customers will get an url link"
+msgstr "(Oletusarvo) Asiakkaat saavat URL-linkin"
+
+#: include/ui/shortcodes/referrallink.php:57
+msgid "Customers will get a QR Code link"
+msgstr "Asiakkaat saavat QR-koodilinkin"
+
+#: include/ui/shortcodes/referrallink.php:64
+msgid ""
+"(Optional) If set, customers will see the referral link or QR-Code above the "
+"copy button"
+msgstr ""
+"(Valinnainen) Jos se on asetettu, asiakkaat näkevät viittauslinkin tai QR-"
+"koodin kopiointipainikkeen yläpuolella"
+
+#: include/ui/shortcodes/referrallink.php:69
+msgid "(Optional, default is 'true') Show or hide the copy button"
+msgstr "(Valinnainen, oletusarvo on 'tosi') Näytä tai piilota kopiointipainike"
+
+#: include/ui/shortcodes/referrallink.php:74
+msgid ""
+"(Optional) By default, the shortcode shares the url of the page it’s "
+"displayed on. You can override that setting by setting an url in this option."
+msgstr ""
+"(Valinnainen) Oletusarvoisesti lyhytkoodi jakaa sen sivun URL-osoitteen, "
+"jolla se näkyy. Voit ohittaa tämän asetuksen määrittämällä URL-osoitteen "
+"tässä vaihtoehdossa."
+
+#: include/ui/shortcodes/referrallink.php:79
+msgid "(Optional) Set the text customers will see on the copy button"
+msgstr ""
+"(Valinnainen) Määritä teksti, jonka asiakkaat näkevät kopiointipainikkeessa"
+
+#: include/ui/shortcodes/referrallink.php:84
+msgid ""
+"(Optional) Set the text customers will see when the code is copied to the "
+"clipboard"
+msgstr ""
+"(Valinnainen) Määritä teksti, jonka asiakkaat näkevät, kun koodi kopioidaan "
+"leikepöydälle"
+
+#: include/ui/shortcodes/referrallink.php:152
+msgid "Get your referral link"
+msgstr "Hanki viittauslinkkisi"
+
+#: include/ui/shortcodes/referrallink.php:159
+msgid "Get your referral QR Code"
+msgstr "Hanki viittauksesi QR-koodi"
+
+#: include/ui/shortcodes/referrallink.php:163
+msgid "Your code has been copied !"
+msgstr "Koodisi on kopioitu !"
+
+#: include/ui/shortcodes/userhistory.php:44
+msgid "This shortcode displays a user's points history."
+msgstr "Tämä lyhytkoodi näyttää käyttäjän pistehistorian."
+
+#: include/ui/shortcodes/userhistory.php:48
+msgid "(Optional) The number of rows displayed. Default is 15."
+msgstr "(Valinnainen) Näytettyjen rivien määrä. Oletusarvo on 15."
+
+#: include/ui/shortcodes/userhistory.php:56
+msgid ""
+"(Optional) The Columns to display (comma separated). <b>The order in which "
+"you specify the columns will be the grid columns order</b>."
+msgstr ""
+"(Valinnainen) Näytettävät sarakkeet (pilkuilla erotettuna). <b>Järjestys, "
+"jossa määrität sarakkeet, on ruudukon sarakkeiden järjestys</b>."
+
+#: include/ui/shortcodes/userhistory.php:57
+msgid ""
+"If not specified, the history will display the points and rewards system "
+"name, date, reason and points movement columns"
+msgstr ""
+"Jos sitä ei ole määritetty, historia näyttää piste- ja palkintojärjestelmän "
+"nimen, päivämäärän, syyn ja pisteiden liikkeen sarakkeet"
+
+#: include/ui/shortcodes/userhistory.php:58
+msgid " Here are the different options available :"
+msgstr " Tässä ovat käytettävissä olevat eri vaihtoehdot:"
+
+#: include/ui/shortcodes/userhistory.php:64
+msgid "The points and rewards system's name."
+msgstr "Piste- ja palkintojärjestelmän nimi."
+
+#: include/ui/shortcodes/userhistory.php:67
+msgid "The date at which the points movement happened."
+msgstr "Päivämäärä, jolloin pisteiden liike tapahtui."
+
+#: include/ui/shortcodes/userhistory.php:70
+msgid "The operation's description."
+msgstr "Operaation kuvaus."
+
+#: include/ui/shortcodes/userhistory.php:73
+msgid "The amount of points earned or lost during the operation."
+msgstr "Operaation aikana ansaittujen tai menetettyjen pisteiden määrä."
+
+#: include/ui/shortcodes/userhistory.php:76
+msgid ""
+"The new total of points in the user's reserve at the end of the operation."
+msgstr "Uusi pisteiden kokonaismäärä käyttäjän reservissä operaation lopussa."
+
+#: include/ui/shortcodes/userhistory.php:83
+msgid ""
+"(Optional) The column headers (comma separated). <b>Must be specified if you "
+"specified the columns option</b>. The headers must respect the same order "
+"than the ones of the previous option."
+msgstr ""
+"(Valinnainen) Sarakeotsikot (pilkuilla erotettuna). <b>On määritettävä, jos "
+"olet määrittänyt sarakkeet-vaihtoehdon</b>. Otsikoiden on noudatettava samaa "
+"järjestystä kuin edellisessä vaihtoehdossa."
+
+#: include/ui/shortcodes/userhistory.php:99
+msgid ""
+"(Optional) The points and rewards systems you want to display (comma "
+"separated). You can find this value in <strong>MyRewards → points and "
+"rewards systems</strong>, in the <b>Shortcode Attribute</b> column."
+msgstr ""
+"(Valinnainen) Näytettävät pisteet ja palkitsemisjärjestelmät (pilkuilla "
+"erotettuna). Löydät tämän arvon <strong>MyRewards → pisteistä ja "
+"palkitsemisjärjestelmistä</strong> <b>Shortcode Attribute</b> -sarakkeesta."
+
+#: include/ui/shortcodes/userhistory.php:237 include/wizards/standard.php:291
+#: woorewards.php:396
+msgid "Loyalty System"
+msgstr "Kanta-asiakasjärjestelmä"
+
+#: include/ui/woocommerce/cartcheckoutcontent.php:64
+msgid "Between Products and Totals"
+msgstr "Tuotteen ja yhteissumman välissä"
+
+#: include/ui/woocommerce/cartcheckoutcontent.php:65
+msgid "Aside From Totals"
+msgstr "Kokonaissummien lisäksi"
+
+#: include/ui/woocommerce/cartcheckoutcontent.php:67
+msgid "Before Customer Details"
+msgstr "Ennen asiakastietoja"
+
+#: include/ui/woocommerce/cartcheckoutcontent.php:68
+msgid "Before Order Review"
+msgstr "Ennen tilauksen tarkistusta"
+
+#: include/ui/woocommerce/pointsoncart.php:103
+msgid "Points on Cart Tool"
+msgstr "Pisteet ostoskorityökalusta"
+
+#: include/ui/woocommerce/pointsoncart.php:107
+msgid "This shortcode is used to display the Points on Cart tool."
+msgstr ""
+"Tätä lyhytkoodia käytetään Pisteet ostoskorissa -työkalun näyttämiseen."
+
+#: include/ui/woocommerce/pointsoncart.php:108
+msgid "You can customize its appearance in the Widgets Tab."
+msgstr "Voit mukauttaa sen ulkoasua Widgetit-välilehdessä."
+
+#: include/ui/woocommerce/pointsoncart.php:112
+msgid ""
+"(Optional) Set it to true to force a page reload when customers modify the "
+"points they want to apply on the order"
+msgstr ""
+"(Valinnainen) Määritä arvoksi tosi pakottaaksesi sivun uudelleenlatauksen, "
+"kun asiakkaat muokkaavat pisteitä, joita he haluavat käyttää tilauksessa"
+
+#: include/ui/woocommerce/pointsoncart.php:117
+msgid "(Optional) Select how the tool is displayed. 3 possible values :"
+msgstr "(Valinnainen) Valitse, miten työkalu näytetään. 3 mahdollista arvoa:"
+
+#: include/ui/woocommerce/pointsoncart.php:121
+msgid "Default value. Elements are displayed in one line"
+msgstr "Oletusarvo. Elementit näytetään yhdellä rivillä"
+
+#: include/ui/woocommerce/pointsoncart.php:129
+msgid ""
+"If you present this tool next to the cart totals block, use this option to "
+"display the tool vertically with some spacing"
+msgstr ""
+"Jos esität tämän työkalun ostoskorin kokonaissummalohkon vieressä, käytä "
+"tätä vaihtoehtoa, jos haluat näyttää työkalun pystysuunnassa joillakin "
+"väleillä"
+
+#: include/ui/woocommerce/pointsoncart.php:166
+msgid "Maximum Point Amount on Cart"
+msgstr "Ostoskorin maksimipistemäärä"
+
+#: include/ui/woocommerce/pointsoncart.php:170
+msgid ""
+"This shortcode will show the maximum quantity of Point that could be used on "
+"this cart."
+msgstr ""
+"Tämä lyhytkoodi näyttää enimmäismäärän pistettä, jota voidaan käyttää tässä "
+"ostoskorissa."
+
+#: include/ui/woocommerce/pointsoncart.php:174
+msgid ""
+"(Optional) If set, the amount will be a simple text. Otherwise, it will be "
+"presented inside a stylable element"
+msgstr ""
+"(Valinnainen) Jos se on asetettu, summa on yksinkertainen teksti. Muussa "
+"tapauksessa se esitetään tyyliteltävän elementin sisällä"
+
+#: include/ui/woocommerce/pointsoncart.php:188
+msgid ""
+"(Optional, comma separated) Select the points and rewards systems you want "
+"to show. If left empty, the first available system will be displayed"
+msgstr ""
+"(Valinnainen, pilkku erotettuna) Valitse pisteet ja palkitsemisjärjestelmät, "
+"jotka haluat näyttää. Jos se jätetään tyhjäksi, ensimmäinen käytettävissä "
+"oleva järjestelmä tulee näkyviin"
+
+#: include/ui/woocommerce/pointsoncart.php:305
+msgid "Demo. System"
+msgstr "Demo. Järjestelmä"
+
+#: include/ui/woocommerce/pointsoncart.php:562
+#, php-format
+msgid "Your %s :"
+msgstr "Sinun %s :"
+
+#: include/ui/woocommerce/pointsoncart.php:563
+msgctxt "Part of Points to use as reward"
+msgid "Used Amount :"
+msgstr "Käytetty määrä :"
+
+#: include/ui/woocommerce/pointsoncart.php:565
+msgid "Use Max Amount"
+msgstr "Käytä enimmäismäärää"
+
+#: include/ui/woocommerce/pointsoncart.php:652
+#, php-format
+msgid "Every %s you use is worth %s"
+msgstr "Jokainen käyttämäsi %s kannattaa %s"
+
+#: include/ui/woocommerce/pointsoncart.php:663
+#, php-format
+msgid "You can use a minimum of %s on a single cart."
+msgstr "Voit käyttää vähintään %s yhdessä ostoskorissa."
+
+#: include/ui/woocommerce/pointsoncart.php:674
+#, php-format
+msgid "You can use a maximum of %s on a single cart."
+msgstr "Voit käyttää enintään %s yhdessä ostoskorissa."
+
+#: include/ui/woocommerce/pointsoncart.php:685
+#, php-format
+msgid "You can only use your %s to reduce the cart total by %s%%"
+msgstr "Voit käyttää %s vain ostoskorin kokonaismäärän pienentämiseen %s%%"
+
+#: include/ui/woocommerce/pointsoncart.php:696
+#, php-format
+msgid "You can only use your %s to reduce the cart total to %s"
+msgstr "Voit käyttää %s vain ostoskorin kokonaismäärän pienentämiseen %s"
+
+#: include/ui/woocommerce/pointsoncart.php:707
+#, php-format
+msgid "The cart subtotal needs to be over %s if you want to use %s"
+msgstr "Ostoskorin välisumman on oltava yli %s, jos haluat käyttää %s"
+
+#: include/unlockables/coupon.php:18
+msgid ""
+"The customer will receive a WooCommerce Coupon, either for a fix discount or "
+"a percentage one."
+msgstr ""
+"Asiakas saa WooCommerce-kupongin joko kiinteästä alennuksesta tai "
+"prosenttiosuudesta."
+
+#: include/unlockables/coupon.php:19
+msgid "The generated coupon can be used like any other WooCommerce coupon."
+msgstr ""
+"Luotua kuponkia voidaan käyttää kuten mitä tahansa muuta WooCommerce-"
+"kuponkia."
+
+#: include/unlockables/coupon.php:39
+msgctxt "Coupon Unlockable"
+msgid "Discount type"
+msgstr "Alennuslaji"
+
+#: include/unlockables/coupon.php:43
+msgid "Fixed cart discount"
+msgstr "Ostoskorin kiinteä alennus"
+
+#: include/unlockables/coupon.php:43
+msgid "Percentage discount"
+msgstr "Alennusprosentti"
+
+#: include/unlockables/coupon.php:51
+msgctxt "Coupon Unlockable"
+msgid "Coupon amount"
+msgstr "Kuponkien määrä"
+
+#: include/unlockables/coupon.php:58
+msgctxt "Coupon Unlockable"
+msgid "Validity period"
+msgstr "Voimassaolojakso"
+
+#: include/unlockables/coupon.php:87
+msgid "Validity period"
+msgstr "Voimassaolojakso"
+
+#: include/unlockables/coupon.php:88
+msgid "Coupon amount"
+msgstr "Kuponkien määrä"
+
+#: include/unlockables/coupon.php:89
+msgid "Discount in percent or fixed price"
+msgstr "Alennus prosentteina tai kiinteä arvo"
+
+#: include/unlockables/coupon.php:158
+msgctxt "getDisplayType"
+msgid "Fixed/Percentage discount"
+msgstr "Alennusprosentti"
+
+#: include/unlockables/coupon.php:183
+#, php-format
+msgid "%s discount on an order"
+msgstr "%s alennus tilauksesta"
+
+#: include/unlockables/coupon.php:191
+#, php-format
+msgid "valid up to %s"
+msgstr ""
+
+#: include/unlockables/coupon.php:196
+#, php-format
+msgid "valid for %1$d %2$s"
+msgstr "voimassa %1$d %2$s"
+
+#: include/unlockables/coupon.php:223
+msgid " (excl. tax)"
+msgstr " (ei sisällä veroja)"
+
+#: include/unlockables/coupon.php:225
+msgid " (incl. tax)"
+msgstr " (sis. verot)"
+
+# Ei voi ostaa koska alennusta ei ole
+#: include/unlockables/coupon.php:250
+msgctxt "Cannot be bought cause no discount"
+msgid "No discount"
+msgstr "Ei alennusta"
+
+#: include/unlockables/coupon.php:280
+msgid "TESTCODE"
+msgstr "TESTIKOODI"
+
+#: include/unlockables/coupon.php:298
+#, php-format
+msgid "Coupon code : %s"
+msgstr "Kuponkikoodi : %s"
+
+#: include/unlockables/coupon.php:410
+msgid "Customer Email"
+msgstr "Asiakkaan sähköposti"
+
+#: include/unlockables/coupon.php:441
+msgid "No coupon"
+msgstr "Ei kuponkia"
+
+#: include/unlockables/coupon.php:448
+msgid "See coupons"
+msgstr "Katso kupongit"
+
+#: include/unlockables/coupon.php:463
+msgctxt "unlockable category"
+msgid "Referred"
+msgstr "Tarkoitettu"
+
+#: include/updater.php:332 include/wizard.php:135
+#: include/wizards/standard.php:27 include/wizards/standard.php:56
+#: include/wizards/standard.php:292 include/wizards/standard.php:422
+msgid "Standard System"
+msgstr "Vakiojärjestelmä"
+
+#: include/updater.php:390
+msgid ""
+"Your settings have been migrated during MyRewards update.\n"
+"We tried our best to conserve the same behavior as before but we advise you "
+"to check them anyway."
+msgstr ""
+"Asetuksesi on siirretty MyRewards päivityksen aikana.\n"
+"Teimme parhaamme säilyttääksemme saman käyttökokemuksen kuin aiemmin, mutta "
+"suosittelemme sinua tarkistamaan ne joka tapauksessa."
+
+#: include/wizard.php:25
+msgid "Loyalty System Setup"
+msgstr "Kanta-asiakasjärjestelmä"
+
+#: include/wizard.php:89
+msgid "Choose a Wizard"
+msgstr "Valitse Ohjattu toiminto"
+
+#: include/wizard.php:93
+msgid "Settings…"
+msgstr "Asetukset…"
+
+#: include/wizard.php:136
+msgid ""
+"The standard system is the most common loyalty system available. Users earn "
+"points by performing various actions. When they have enough points, they can "
+"unlock rewards such as discount coupons."
+msgstr ""
+"Vakio järjestelmä on yleisin käytettävissä oleva kanta-asiakkuus "
+"järjestelmä. Käyttäjät ansaitsevat pisteitä suorittamalla erilaisia "
+"toimintoja. Kun heillä on tarpeeksi pisteitä, he voivat avata palkintoja, "
+"kuten alennus kuponkeja."
+
+#: include/wizard.php:143
+msgid "Leveling System"
+msgstr "Tasojärjestelmä"
+
+#: include/wizard.php:144
+msgid ""
+"Leveling systems works differently than standard systems. Users earn points "
+"by performing various actions. But they don't spend their points. Instead, "
+"they reach different levels and unlock all rewards set at a level when they "
+"have enough points."
+msgstr ""
+"Tasoitus järjestelmät toimii eri tavalla kuin tavalliset järjestelmät. "
+"Käyttäjät ansaitsevat pisteitä suorittamalla erilaisia toimintoja. Mutta he "
+"eivät käytä pisteensä. Sen sijaan, ne saavuttavat eri tasoilla ja avata "
+"kaikki palkinnot asetettu tasolle, kun heillä on tarpeeksi pisteitä."
+
+#: include/wizard.php:152
+msgid "Special Events"
+msgstr "Tapahtumat"
+
+#: include/wizard.php:153
+msgid ""
+"Use the special events wizard to create temporary loyalty programs for "
+"various occasions. This wizard proposes scenarios for the following events :"
+msgstr ""
+"Luo tilapäisiä kanta-asiakas ohjelmia eri yhteyksissä ohjatun erityisten "
+"tapahtumien luomisen avulla. Tämä ohjattu toiminto ehdottaa skenaarioita "
+"seuraaville tapahtumille:"
+
+#: include/wizard.php:155
+msgid "Black Friday"
+msgstr "Musta perjantai"
+
+#: include/wizard.php:156
+msgid "Christmas"
+msgstr "Joulu"
+
+#: include/wizard.php:157
+msgid "Easter"
+msgstr "Pääsiäinen"
+
+#: include/wizard.php:165
+msgid "Double Points"
+msgstr "Nykyiset pisteet"
+
+#: include/wizard.php:166
+msgid ""
+"Create a special event and allow customers to earn twice the points for a "
+"limited period of time. You can also choose to allow users with a special "
+"role to earn twice the points. Or both."
+msgstr ""
+"Luo erityinen tapahtuma ja anna asiakkaiden ansaita kahdesti pisteitä "
+"rajoitetun ajan. Voit myös valita, että käyttäjät, joilla on erityinen "
+"rooli, ansaitsevat kahdesti pisteitä. Tai molempia."
+
+#: include/wizard.php:175
+msgid ""
+"Add a points and rewards system that rewards customers for referring new "
+"people on your website. Referees also receive a reward to encourage them to "
+"subscribe and buy on your website."
+msgstr ""
+"Lisää piste- ja palkitsemisjärjestelmä, joka palkitsee asiakkaita uusien "
+"ihmisten suosittelemisesta verkkosivustollesi. Suosittelijat saavat myös "
+"palkkion, joka kannustaa heitä tilaamaan ja ostamaan verkkosivustollasi."
+
+#: include/wizard.php:183
+msgid "Customer Birthday or Registration Anniversary"
+msgstr "Asiakkaan syntymä päivä tai ilmoittautumis päivä"
+
+#: include/wizard.php:184
+msgid ""
+"Celebrate your customers birthday or registration anniversary by sending "
+"them a discount coupon on that occasion. Really easy to set up and very "
+"appreciated by customers."
+msgstr ""
+"Juhli asiakkaitasi syntymä päivä-tai rekisteröitymis päivää lähettämällä "
+"heille alennus kuponki siinä tilaisuudessa. Todella helppo perustaa ja "
+"arvostaa asiakkaita."
+
+#: include/wizards/standard.php:29 include/wizards/standard.php:299
+msgid "Methods to earn points"
+msgstr "Menetelmäkohdat"
+
+#: include/wizards/standard.php:31 include/wizards/standard.php:339
+#: woorewards.php:414
+msgid "Reward"
+msgstr "Palkinto"
+
+#: include/wizards/standard.php:33
+msgid "Summary"
+msgstr "Yhteenveto"
+
+#: include/wizards/standard.php:45
+msgid ""
+"Welcome to this Wizard. This tool will help you configure your first loyalty "
+"system in less than 5 minutes."
+msgstr ""
+"Tervetuloa käyttämään tätä ohjattua toimintoa. Tämän työkalun avulla voit "
+"määrittää ensimmäisen kanta-asiakkuus järjestelmäsi alle 5 minuutissa."
+
+#: include/wizards/standard.php:46
+msgid "This wizard is limited for MyRewards Standard."
+msgstr "Tämä ohjattu toiminto on rajoitettu MyRewards-standardiin."
+
+#: include/wizards/standard.php:47
+msgid ""
+"If you want to have access to all methods and rewards, please consider "
+"trying MyRewards Pro."
+msgstr ""
+"Jos haluat käyttää kaikkia menetelmiä ja palkintoja, harkitse yrittää "
+"MyRewards Pro."
+
+#: include/wizards/standard.php:53
+msgid "Loyalty system name"
+msgstr "Kanta-asiakasjärjestelmä"
+
+#: include/wizards/standard.php:57
+msgid ""
+"Name your loyalty system. If you leave it empty, it will be named "
+"automatically"
+msgstr ""
+"Nimeä kanta-asiakkuus järjestelmäsi. Jos jätät sen tyhjäksi, se on nimetty "
+"automaattisesti"
+
+#: include/wizards/standard.php:67
+msgid ""
+"Your customers will earn points every time they perform the actions defined "
+"here."
+msgstr ""
+"Asiakkaasi ansaitsevat pisteitä aina, kun he suorittavat tässä määritetyt "
+"toiminnot."
+
+#: include/wizards/standard.php:68
+msgid ""
+"Set points for all the methods you want and ignore the ones you don't want. "
+"You can change all these settings later."
+msgstr ""
+"Aseta Pisteet kaikille haluamille menetelmille ja Ohita ne, joita et halua. "
+"Voit muuttaa kaikkia näitä asetuksia myöhemmin."
+
+#: include/wizards/standard.php:69
+msgid "Some categories are not accessible in the free version of MyRewards."
+msgstr "Jotkut luokat eivät ole käytettävissä ilmainen versio MyRewards."
+
+#: include/wizards/standard.php:75
+#, php-format
+msgid "Points for each %s spent"
+msgstr "Pisteet jokaisesta käytetystä %s"
+
+#: include/wizards/standard.php:79 include/wizards/standard.php:88
+#: include/wizards/standard.php:97 include/wizards/standard.php:105
+#: include/wizards/standard.php:114 include/wizards/standard.php:123
+msgid "Number | Empty to ignore"
+msgstr "Numero | Ohita tyhjänä"
+
+#: include/wizards/standard.php:84
+msgid "Points on order placed"
+msgstr "Tehdyt pisteet tilauksesta"
+
+#: include/wizards/standard.php:93
+msgid "Extra points on first order"
+msgstr "Lisäpisteitä ensimmäisestä tilauksesta"
+
+#: include/wizards/standard.php:102
+msgid "Points on product review"
+msgstr "Tuotearvostelun kohdat"
+
+#: include/wizards/standard.php:110
+#, php-format
+msgid "Points for each %s spent by Referee"
+msgstr "Pisteet jokaisesta erotuomarin käyttämästä %s"
+
+#: include/wizards/standard.php:119
+msgid "Points on Referee orders"
+msgstr "Pisteet erotuomarimääräyksistä"
+
+#: include/wizards/standard.php:133
+msgid ""
+"Select the reward for your customers. The rewards types are limited in the "
+"standard version. You can change these settings later."
+msgstr ""
+"Valitse asiakkaillesi palkkio. Palkinto tyypit ovat rajoitettuja vakio "
+"versiossa. Voit muuttaa näitä asetuksia myöhemmin."
+
+#: include/wizards/standard.php:139
+msgid "Select a reward"
+msgstr "Valitse palkinto"
+
+#: include/wizards/standard.php:146
+#, php-format
+msgctxt "Coupon Unlockable"
+msgid "Coupon (%s)"
+msgstr "Kuponki (%s)"
+
+#: include/wizards/standard.php:147 include/wizards/standard.php:203
+msgid "Discount (%)"
+msgstr "Ei alennusta"
+
+#: include/wizards/standard.php:148
+msgid "Free Product"
+msgstr "Ilmainen tuote"
+
+#: include/wizards/standard.php:149
+msgid "Free Shipping"
+msgstr "Ilmainen Toimitus"
+
+#: include/wizards/standard.php:150
+msgid "Variable Discount"
+msgstr "Alennusprosentti"
+
+#: include/wizards/standard.php:151
+msgid "Badge"
+msgstr "Arvomerkki"
+
+#: include/wizards/standard.php:152
+msgid "User Role"
+msgstr "Käyttäjärooli"
+
+#: include/wizards/standard.php:153
+msgid "VIP Membership"
+msgstr "VIP-jäsenyys"
+
+#: include/wizards/standard.php:165
+#, php-format
+msgctxt "Points on Cart Reward"
+msgid "Point value in %s"
+msgstr "Pistearvo %s"
+
+#: include/wizards/standard.php:169
+msgid ""
+"Set the monetary value of a point. Each point used on a cart will discount "
+"the total by that value."
+msgstr ""
+"Määritä pisteen rahallinen arvo. Jokainen ostoskorissa käytetty piste "
+"alentaa kokonaissumman tällä arvolla."
+
+#: include/wizards/standard.php:179
+msgid "Points Needed"
+msgstr "Pisteitä tarvitaan"
+
+#: include/wizards/standard.php:189
+#, php-format
+msgctxt "Coupon Unlockable"
+msgid "Coupon Amount (%s)"
+msgstr "Kupongin määrä (%s)"
+
+#: include/wizards/standard.php:193
+msgid ""
+"Every time customers have enough points, those points will be used to "
+"generate a coupon of that amount."
+msgstr ""
+"Joka kerta, kun asiakkailla on tarpeeksi pisteitä, näitä pisteitä käytetään "
+"tuottamaan kyseisen summan kuponki."
+
+#: include/wizards/standard.php:207
+msgid ""
+"Every time customers have enough points, those points will be used to "
+"generate a discount coupon with that percentage."
+msgstr ""
+"Joka kerta, kun asiakkailla on tarpeeksi pisteitä, näitä pisteitä käytetään "
+"luomaan alennus kuponki, jolla on kyseinen prosentti osuus."
+
+#: include/wizards/standard.php:217
+msgid ""
+"You're almost done. Check your settings below and submit if you're satisfied "
+"with the settings."
+msgstr ""
+"Olet melkein valmis. Tarkista alla olevat asetukset ja lähetä, jos olet "
+"tyytyväinen asetuksiin."
+
+#: include/wizards/standard.php:223
+msgid "Settings Summary"
+msgstr "Asetukset"
+
+#: include/wizards/standard.php:227 include/wizards/standard.php:257
+msgid ""
+"Do you want to start your loyalty system at the end of this wizard ? If you "
+"select No, you'll have to start it manually later."
+msgstr ""
+"Haluatko aloittaa kanta-asiakkuus järjestelmäsi tämän ohjatun toiminnon "
+"lopussa? Jos valitset ei, sinun on käynnistettävä se manuaalisesti myöhemmin."
+
+#: include/wizards/standard.php:232
+msgid "Enable rewards emails ?"
+msgstr "Ota palkintosähköpostit käyttöön?"
+
+#: include/wizards/standard.php:238 include/wizards/standard.php:253
+msgid "Yes"
+msgstr "Kyllä"
+
+#: include/wizards/standard.php:239 include/wizards/standard.php:254
+msgid "No"
+msgstr "Ei"
+
+#: include/wizards/standard.php:242
+msgid ""
+"By setting this option to Yes, customers will receive an email every time "
+"they receive a new coupon reward."
+msgstr ""
+"Kun määrität tämän asetuksen arvoksi Kyllä, asiakkaat saavat "
+"sähköpostiviestin aina, kun he saavat uuden kuponkipalkinnon."
+
+#: include/wizards/standard.php:247
+msgid "Start the program ?"
+msgstr "Käynnistä ohjelma?"
+
+#: include/wizards/standard.php:293
+msgid "Loyalty System Name"
+msgstr "Kanta-asiakasjärjestelmä"
+
+#: include/wizards/standard.php:302
+#, php-format
+msgid " %s points earned for each %s spent"
+msgstr ""
+
+#: include/wizards/standard.php:303
+msgid "Spend Money"
+msgstr "Käytä rahaa"
+
+#: include/wizards/standard.php:308
+#, php-format
+msgid " %s points for each placed order"
+msgstr ""
+
+#: include/wizards/standard.php:309
+msgid "Place an order"
+msgstr "Välitä tilaus"
+
+#: include/wizards/standard.php:314
+#, php-format
+msgid " %s extra points for the first order"
+msgstr ""
+
+#: include/wizards/standard.php:315
+msgid "Place a first order"
+msgstr "Välitä ensimmäinen tilaus"
+
+#: include/wizards/standard.php:320
+#, php-format
+msgid " %s points for a product review"
+msgstr " %s pistettä tuotearvosteluun"
+
+#: include/wizards/standard.php:321
+msgid "Product Review"
+msgstr "Tuotteen arvostelu"
+
+#: include/wizards/standard.php:326
+#, php-format
+msgid " %s points earned for each %s spent by a Referee"
+msgstr " %s ansaittua pistettä jokaisesta erotuomarin käyttämästä %s"
+
+#: include/wizards/standard.php:327
+msgid "Referee Spends Money"
+msgstr "Erotuomari käyttää rahaa"
+
+#: include/wizards/standard.php:332
+#, php-format
+msgid " %s points for each time a Referee places order"
+msgstr " %s pistettä jokaisesta kerrasta, kun erotuomari tekee tilauksen"
+
+#: include/wizards/standard.php:333
+msgid "Referee places an order"
+msgstr "Erotuomari tekee tilauksen"
+
+#: include/wizards/standard.php:342
+#, php-format
+msgid " %s percent discount for %s points"
+msgstr ""
+
+#: include/wizards/standard.php:343
+msgid "Percentage Discount"
+msgstr "Alennusprosentti"
+
+#: include/wizards/standard.php:348
+#, php-format
+msgid " %s%s discount for %s points"
+msgstr ""
+
+#: include/wizards/standard.php:349
+msgid "Fixed Discount"
+msgstr "Ostoskorin kiinteä alennus"
+
+#: include/wizards/standard.php:354
+#, php-format
+msgid " %s%s discount for each point"
+msgstr ""
+
+#: include/wizards/standard.php:369
+#, php-format
+msgid ""
+"Points for each %s spent expects numeric value greater than zero or leave "
+"blank."
+msgstr ""
+"Pisteet kutakin %s varten odotti numeerista arvoa, joka on suurempi kuin "
+"nolla tai jätä tyhjäksi."
+
+#: include/wizards/standard.php:372
+msgid ""
+"Points on order placed expects numeric value greater than zero or leave "
+"blank."
+msgstr ""
+"Tila uksen Pisteet odottaa numeerista arvoa, joka on suurempi kuin nolla, "
+"tai jätetään tyhjäksi."
+
+#: include/wizards/standard.php:375
+msgid ""
+"Extra points on first order expects numeric value greater than zero or leave "
+"blank."
+msgstr ""
+"Ensimmäisen tila uksen lisä Pisteet odottavat numeerista arvoa, joka on "
+"suurempi kuin nolla, tai jätetään tyhjäksi."
+
+#: include/wizards/standard.php:377
+msgid ""
+"Points for product review expects numeric value greater than zero or leave "
+"blank."
+msgstr ""
+"Tuotearvostelupisteet odottavat numeerisen arvon olevan suurempi kuin nolla "
+"tai jättää tyhjäksi."
+
+#: include/wizards/standard.php:380
+#, php-format
+msgid ""
+"Points for each %s spent by Referee expects numeric value greater than zero "
+"or leave blank."
+msgstr ""
+"Pisteet jokaisesta erotuomarin käyttämästä %s odottavat numeerisen arvon "
+"olevan suurempi kuin nolla tai jättää tyhjäksi."
+
+#: include/wizards/standard.php:382
+msgid ""
+"Points on order placed by Referee expects numeric value greater than zero or "
+"leave blank."
+msgstr ""
+"Erotuomarin antamat tilauspisteet odottavat numeerisen arvon olevan suurempi "
+"kuin nolla tai jättää tyhjäksi."
+
+#: include/wizards/standard.php:390
+msgid "Points Needed expects numeric value greater than zero."
+msgstr "Kokonaisluku, suurempi kuin 0."
+
+#: include/wizards/standard.php:395
+msgid "Please, set a reward percentage greater than 0% up to 100%."
+msgstr ""
+"Ole hyvä ja määritä palkinto prosentti, joka on suurempi kuin 0% ja enintään "
+"100%."
+
+#: include/wizards/standard.php:400
+msgid "Please, set a positive reward amount."
+msgstr "Ole hyvä, aseta positiivinen palkkio summa."
+
+#: include/wizards/standard.php:405
+msgid "Please, set a positive point value."
+msgstr "Aseta positiivinen pistearvo."
+
+#: include/wizards/standard.php:408
+msgid "Please, select a reward type."
+msgstr "Valittua palkintotyyppiä ei löytynyt."
+
+#: woorewards.php:141
+msgid "Help"
+msgstr "Apua"
+
+#. Plugin URI of the plugin/theme
+#: woorewards.php:149
+msgid "https://plugins.longwatchstudio.com/product/woorewards/"
+msgstr "https://plugins.longwatchstudio.com/product/woorewards/"
+
+#: woorewards.php:159
+msgid "https://plugins.longwatchstudio.com/docs/woorewards-4/"
+msgstr "https://plugins.longwatchstudio.com/docs/woorewards-4/"
+
+#: woorewards.php:235
+msgid "Point"
+msgstr "Piste"
+
+#: woorewards.php:285
+msgid "MyRewards Thumbnail"
+msgstr "MyRewards esikatselukuva"
+
+#: woorewards.php:286
+msgid "MyRewards Thumbnail Small"
+msgstr "MyRewards esikatselukuva pieni"
+
+#: woorewards.php:395
+msgid "Loyalty Systems"
+msgstr "Kanta-asiakkuusjärjestelmä"
+
+#: woorewards.php:404
+msgid "Earning Points Methods"
+msgstr "Ansaitsemistapa"
+
+#: woorewards.php:405
+msgid "Earning Points Method"
+msgstr "Ansaitsemistapa"
+
+#: woorewards.php:461
+msgid ""
+"We detect a MyRewards licence downgrade: Click here to restore missing "
+"configuration."
+msgstr ""
+"Havaitsimme MyRewards lisenssin alennuksen: Klikkaa täällä palauttaaksesi "
+"puuttuvat asetukset."
+
+#: woorewards.php:462
+msgid "Restore"
+msgstr "Palauta"
+
+#: woorewards.php:542
+msgid "Your MyRewards Premium trial period is about to expire"
+msgstr "MyRewards Premium -kokeilujaksosi on päättymässä"
+
+#: woorewards.php:543 woorewards.php:562
+#, php-format
+msgid ""
+"Thank you for trying MyRewards Premium. The trial period will end on <b>%s</"
+"b>"
+msgstr "Kiitos, että kokeilit MyRewards Premiumia. Koeaika päättyy <b>%s</b>"
+
+#: woorewards.php:544
+#, php-format
+msgid ""
+"If you want to keep using all Pro Features, please purchase a %s License"
+msgstr ""
+"Jos haluat jatkaa kaikkien Pro-ominaisuuksien käyttöä, osta %s lisenssi"
+
+#: woorewards.php:545 woorewards.php:563
+msgid "Premium Version features include :"
+msgstr "Premium-version ominaisuuksia ovat:"
+
+#: woorewards.php:547 woorewards.php:565
+msgid "Free products rewards"
+msgstr "Ilmaiset tuotteet palkitsevat"
+
+#: woorewards.php:548 woorewards.php:566
+msgid "WooCommerce integration tools"
+msgstr "WooCommerce-integraatiotyökalut"
+
+#: woorewards.php:549 woorewards.php:567
+msgid "Multiple points and rewards systems"
+msgstr "Useita piste- ja palkintojärjestelmiä"
+
+#: woorewards.php:550 woorewards.php:568
+msgid "Lots of widgets and shortcodes"
+msgstr "Paljon widgetejä ja lyhytkoodeja"
+
+#: woorewards.php:551 woorewards.php:569
+msgid "And a lot more ..."
+msgstr "Ja paljon muuta ..."
+
+#: woorewards.php:553
+msgid ""
+"Purchase WooRewads Premium today to keep the most powerful and customizable "
+"loyalty program"
+msgstr ""
+"Osta WooRewads Premium tänään pitääksesi tehokkaimman ja mukautettavimman "
+"kanta-asiakasohjelman"
+
+#: woorewards.php:561
+msgid "Welcome to your MyRewards Premium trial"
+msgstr "Tervetuloa MyRewards Premium -kokeiluun"
+
+#: woorewards.php:571
+msgid ""
+"Try all these premium features and create the perfect loyalty program for "
+"your website"
+msgstr ""
+"Kokeile kaikkia näitä premium-ominaisuuksia ja luo täydellinen kanta-"
+"asiakasohjelma verkkosivustollesi"
+
+#: woorewards.php:572
+msgid "At the end of your trial, consider purchasing a MyRewards License"
+msgstr "Harkitse kokeilujakson lopussa MyRewards-lisenssin ostamista"
+
+#. Description of the plugin/theme
+msgid ""
+"Improve your customers experience with Rewards, Levels and Achievements. Use "
+"it with WooCommerce to set up a loyalty program."
+msgstr ""
+"Paranna asiaskokemuksia palkinnoiden, tasojen ja saavutuksien avulla. Käytä "
+"sitä WooCommercessa, jotta voit luoda kanta-asiakasohjelman."
+
+#. Author of the plugin/theme
+msgid "Long Watch Studio"
+msgstr "Long Watch Studio"
+
+#. Author URI of the plugin/theme
+msgid "https://longwatchstudio.com"
+msgstr "https://longwatchstudio.com"
+
+#, fuzzy
+#~| msgid "Sponsorship"
+#~ msgid "Sponsorships"
+#~ msgstr "Sponsorointi"
+
+#, fuzzy
+#~| msgid "Sponsorship"
+#~ msgid "Sponsorship Information"
+#~ msgstr "Sponsorointi"
+
+#, fuzzy
+#~| msgid "Add/Substract points"
+#~ msgid "Add/Subtract Points"
+#~ msgstr "Lisää/Vähennä pisteitä"
+
+#, fuzzy
+#~| msgid "Place an order"
+#~ msgid "Place an order :"
+#~ msgstr "Välitä tilaus"
+
+#, fuzzy
+#~| msgid "Spend Money"
+#~ msgid "Spend Money :"
+#~ msgstr "Käytä rahaa"
+
+#, fuzzy
+#~| msgid "Free Product"
+#~ msgid "Review a product :"
+#~ msgstr "Ilmainen tuote"
+
+#, fuzzy
+#~| msgid "Coupon"
+#~ msgid "Coupon :"
+#~ msgstr "Kuponki"
+
+#, fuzzy
+#~| msgid "Points cost"
+#~ msgid "Points on Cart :"
+#~ msgstr "Pisteiden hinta"
+
+#, fuzzy
+#~| msgid "Standard System"
+#~ msgid "Standard System :"
+#~ msgstr "Vakiojärjestelmä"
+
+#, fuzzy
+#~| msgid "Leveling System"
+#~ msgid "Leveling System :"
+#~ msgstr "Tasojärjestelmä"
+
+#, fuzzy
+#~| msgid "Special Events"
+#~ msgid "Special Events :"
+#~ msgstr "Tapahtumat"
+
+#, fuzzy
+#~| msgid "Double Points"
+#~ msgid "Double Points :"
+#~ msgstr "Nykyiset pisteet"
+
+#, fuzzy
+#~| msgid "Customer Birthday or Registration Anniversary"
+#~ msgid "Birthday or Anniversary "
+#~ msgstr "Asiakkaan syntymä päivä tai ilmoittautumis päivä"
+
+#, fuzzy
+#~| msgid "Customer Birthday or Registration Anniversary"
+#~ msgid ""
+#~ "Send a special gift on customers birthday or registration anniversary "
+#~ "(Pro Version Only)"
+#~ msgstr "Asiakkaan syntymä päivä tai ilmoittautumis päivä"
+
+#, fuzzy
+#~| msgid "WooCommerce"
+#~ msgid "WooCommerce :"
+#~ msgstr "WooCommerce"
+
+#, fuzzy
+#~| msgid "Sponsorship"
+#~ msgid "Sponsorship/Referral :"
+#~ msgstr "Sponsorointi"
+
+#, fuzzy
+#~| msgctxt "Option Group"
+#~| msgid "Achievements"
+#~ msgid "Badges and Achievements :"
+#~ msgstr "Saavutuksia"
+
+#, fuzzy
+#~| msgid "Widgets"
+#~ msgid "Widgets :"
+#~ msgstr "Widgetit"
+
+#, fuzzy
+#~| msgid "Emails"
+#~ msgid "Emails :"
+#~ msgstr "Sähköpostit"
+
+#, fuzzy
+#~| msgid "Place an order"
+#~ msgid "Process past orders :"
+#~ msgstr "Välitä tilaus"
+
+#, fuzzy
+#~| msgctxt "Unlockable cost"
+#~| msgid "Points needed"
+#~ msgid "Points and Rewards Systems :"
+#~ msgstr "Pisteitä tarvitaan"
+
+#, fuzzy
+#~| msgid "Methods to earn points"
+#~ msgid "20+ methods to earn points :"
+#~ msgstr "Menetelmäkohdat"
+
+#, fuzzy
+#~| msgid "Sponsorship"
+#~ msgid "Referrals/Sponsorship :"
+#~ msgstr "Sponsorointi"
+
+#, fuzzy
+#~| msgid "New Reward"
+#~ msgid "New Rewards :"
+#~ msgstr "Uusi palkkio"
+
+#, fuzzy
+#~| msgid "Sponsorship"
+#~ msgctxt "Option Group"
+#~ msgid "Sponsorship/Referral"
+#~ msgstr "Sponsorointi"
+
+#, fuzzy
+#~| msgid "Select a reward"
+#~ msgid "Select the Reward"
+#~ msgstr "Valitse palkinto"
+
+#, fuzzy
+#~| msgid "Select a reward"
+#~ msgid "Setup the Reward"
+#~ msgstr "Valitse palkinto"
+
+#~ msgctxt "unlockable category"
+#~ msgid "Sponsored"
+#~ msgstr "Sponsoroitu"
+
+#, fuzzy
+#~| msgid "Sponsorship"
+#~ msgid "Referrals and Sponsorship"
+#~ msgstr "Sponsorointi"
+
+#, fuzzy
+#~| msgid "Products"
+#~ msgid "Product"
+#~ msgstr "Tuotteet"
+
+#~ msgid "Widgets"
+#~ msgstr "Widgetit"
+
+#, fuzzy
+#~| msgid ""
+#~| "In this Widget, customers can see their Reward Points available, as well "
+#~| "as a link to the 'My Account' page to see more details."
+#~ msgid "In this Widget, customers can see their Reward Points available."
+#~ msgstr ""
+#~ "Tässä Widgetissä asiakkaat voivat nähdä heidän käytettävissä olevat Kanta-"
+#~ "asiakaspisteet, sekä linkin \"Oma tili\" sivulle josta näkee lisää "
+#~ "tietoja."
+
+#~ msgid ""
+#~ "No loyalty system available. Try to re-activate the MyRewards plugin to "
+#~ "install default ones."
+#~ msgstr ""
+#~ "Ei palkkiojärjestelmää saatavilla. Kokeile uudelleenaktivoida MyRewards "
+#~ "plugin asettaaksesi oletusarvot."
+
+#~ msgid ""
+#~ "Watch our <a target='_blank' href='https://youtu.be/yl9WyGOGd_I'>youtube "
+#~ "tutorial</a> to help you set up your loyalty program"
+#~ msgstr ""
+#~ "Katsele <a target='_blank' href='https://youtu.be/yl9WyGOGd_I'>youtube "
+#~ "tutorial</a> jonka avulla voit määrittää kanta-asiakasohjelman"
+
+#~ msgctxt "Option Group"
+#~ msgid "Products"
+#~ msgstr "Tuotteet"
+
+#~ msgctxt "Option Group"
+#~ msgid "Periodic"
+#~ msgstr "Ajottainen"
+
+#~ msgctxt "Option Group"
+#~ msgid "Sharing"
+#~ msgstr "Jakaminen"
+
+#~ msgctxt "Option Group"
+#~ msgid "Sponsorship"
+#~ msgstr "Sponsorointi"
+
+#~ msgctxt "Option Group"
+#~ msgid "Achievements"
+#~ msgstr "Saavutuksia"
+
+#~ msgid "Orders"
+#~ msgstr "Tilaukset"
+
+#~ msgid "Rate us !"
+#~ msgstr "Arvostele meitä!"
+
+#~ msgid "Products"
+#~ msgstr "Tuotteet"
+
+#~ msgid "Talk about us !"
+#~ msgstr "Puhu meistä!"
+
+#, fuzzy
+#~| msgid "Points Management"
+#~ msgid "Data Management :"
+#~ msgstr "Pisteiden hallinta"
+
+#~ msgctxt "link to plugin selling site"
+#~ msgid "Long Watch Studio - MyRewards"
+#~ msgstr "Long Watch Studio"
+
+#~ msgid ""
+#~ "<p>You just installed or updated the <b>MyRewards Lite</b> version.</p>"
+#~ msgstr ""
+#~ "<p>Olet juuri asentanut tai päivittänyt <b>Woorewards Lite</b> -version.</"
+#~ "p>"
+
+#, php-format
+#~ msgid ""
+#~ "<p>Do you have a <b>licence key</b> (for Trial or Pro version)? Think "
+#~ "about setting it %s and discover all the possibilities of MyRewards.</p>"
+#~ msgstr ""
+#~ "<p>Onko sinulla <b>lisenssi avain</b> (kokeilu-tai Pro-versiolle)? "
+#~ "Ajattele, että määrität sen %s ja huomaat kaikki mahdollisuudet.</p>"
+
+#, php-format
+#~ msgid "<p>Or try the Trial version for free by ordering it on %s.</p>"
+#~ msgstr ""
+#~ "<p>Voit kokeilla kokeilu versiota maksutta tilaamalla sen kohteeseen %s.</"
+#~ "p>"
+
+#~ msgid "Add Licence Key"
+#~ msgstr "Lisää lisenssiavain"
+
+#~ msgid "Earning Method"
+#~ msgstr "Ansaitsemistapa"
+
+#~ msgid "Method"
+#~ msgstr "Menetelmä"
+
+# Tapahtumaotsikko
+#~ msgctxt "Event title"
+#~ msgid "Title"
+#~ msgstr "Otsikko"
+
+#~ msgid "Method Points"
+#~ msgstr "Menetelmäkohdat"
+
+#~ msgctxt "Unlockable validity period start"
+#~ msgid "Active Start Date"
+#~ msgstr "Aseta aloituspäivä"
+
+#~ msgctxt "Unlockable validity period end"
+#~ msgid "Active End Date"
+#~ msgstr "Aseta päättymispäivä"
+
+#~ msgid "Year"
+#~ msgid_plural "Years"
+#~ msgstr[0] "Vuosi"
+#~ msgstr[1] "Vuodet"
+
+#~ msgid "Month"
+#~ msgid_plural "Months"
+#~ msgstr[0] "Kuukausi"
+#~ msgstr[1] "Kuukaudet"
+
+#~ msgid "Day"
+#~ msgid_plural "Days"
+#~ msgstr[0] "Päivä"
+#~ msgstr[1] "Päivät"
+
+#, php-format
+#~ msgid ""
+#~ "You could present a point history to your customer by using the shortcode "
+#~ "%s"
+#~ msgstr "Voit esittää pistehistoriaa asiakkaalle käyttämällä lyhytkoodia %s"
+
+#~ msgid "Earning points"
+#~ msgstr "Ansainta pisteet"
+
+#~ msgid "Here you can manage the rewards for your customers"
+#~ msgstr "Täällä voit hallita asikkaidesi palkkioita"
+
+#, php-format
+#~ msgid "If you want, you can use the following shortcode instead : %s."
+#~ msgstr "Jos haluat, voit käyttää seuraavaa pikakoodia : %s."
+
+#~ msgid "Days"
+#~ msgstr "Päivät"
+
+#~ msgid "Months"
+#~ msgstr "Kuukaudet"
+
+#~ msgid "Years"
+#~ msgstr "Vuodet"
+
+#~ msgid "An integer value greater than zero."
+#~ msgstr "Kokonaisluku, suurempi kuin 0."
+
+#, php-format
+#~ msgid "Reset to %d"
+#~ msgstr "Nollaa %d"
+
+#~ msgid "Difficulty"
+#~ msgstr "Vaikeuksia"
+
+#~ msgid "Time needed"
+#~ msgstr "Tarvittava aika"
+
+#~ msgid "min"
+#~ msgstr "min"
+
+#~ msgid "Easy"
+#~ msgstr "Helppo"
+
+#~ msgid "Medium"
+#~ msgstr "Keskikoko"
+
+#~ msgid "https://plugins.longwatchstudio.com"
+#~ msgstr "https://plugins.longwatchstudio.com"
+
+#~ msgid ""
+#~ "In <b>MyRewards Pro</b>, you can create as many loyalty systems as you "
+#~ "want."
+#~ msgstr ""
+#~ "Käyttäessäsi <b>MyRewards Pro:ta</b>, voit luoda niin monta kanta-asiakas "
+#~ "järjestelmää kuin haluat."
+
+#~ msgid ""
+#~ "Try <a href='https://plugins.longwatchstudio.com/en/product/woorewards-"
+#~ "en/'><b>MyRewards Pro</b></a> for free for 30 days."
+#~ msgstr ""
+#~ "Kokeile <a href='https://plugins.longwatchstudio.com/en/product/"
+#~ "woorewards-en/'><b>MyRewards Prota</b></a> ilmaiseksi 30 päivää."
+
+#~ msgid "In <b>MyRewards Pro</b>, you can add many other ways to earn points."
+#~ msgstr ""
+#~ "Käyttäessäsi <b>MyRewards Pro:ta</b>, voit lisätä monia muita tapoja "
+#~ "ansaita pisteitä."
+
+#~ msgid ""
+#~ "Try <b><a href='https://plugins.longwatchstudio.com/en/product/woorewards-"
+#~ "en/'>MyRewards Pro</a></b> for free for 30 days."
+#~ msgstr ""
+#~ "Kokeile <a href='https://plugins.longwatchstudio.com/en/product/"
+#~ "woorewards-en/'><b>MyRewards Prota</b></a> ilmaiseksi 30 päivää."
+
+#~ msgid ""
+#~ "Offer free products, permanent reductions and other kinds of rewards in "
+#~ "<b>MyRewards Pro</b>."
+#~ msgstr ""
+#~ "Tarjoa ilmaisia tuotteita, pysyviä alennuksia ja muita palkintoja "
+#~ "<b>MyRewards Pro:ssa</b>."
+
+#~ msgid "https://plugins.longwatchstudio.com/en/documentation-en/woorewards/"
+#~ msgstr "https://plugins.longwatchstudio.com/en/documentation-en/woorewards/"
+
+#~ msgid "Coupon options"
+#~ msgstr "Kupongin asetukset"
+
+#~ msgctxt "getDisplayType"
+#~ msgid "Coupon for WooCommerce"
+#~ msgstr "Kuponki WooCommercelle"
+
+#~ msgid "<strong>ERROR</strong>: wrong options page."
+#~ msgstr "<strong>VIRHE</strong>: väärät asetukset."
+
+#~ msgid "You need a higher level of permission."
+#~ msgstr "Tarvitset korkeamman tason oikeuksia."
+
+#~ msgid "Sorry, you are not allowed to manage these options."
+#~ msgstr "Pahoittelut, sinun ei ole sallittua hallita näitä asetuksia."
+
+#~ msgid "Sorry, you are not allowed to delete these items."
+#~ msgstr "Pahoittelut, sinun ei ole sallittua poistaa näitä kohteita."
+
+#~ msgid "<strong>ERROR</strong>: options page not found."
+#~ msgstr "<strong>VIRHE</strong>: asetuksia ei löydy."
+
+#~ msgid "<strong>ERROR</strong>: wrong options tab."
+#~ msgstr "<strong>VIRHE</strong>: väärä asetus välilehti."
+
+#~ msgid "<strong>ERROR</strong>: pool undefined."
+#~ msgstr "<strong>VIRHE</strong>: palvelua ei määritelty."
+
+#~ msgid "Settings saved."
+#~ msgstr "Asetukset tallennettu."
+
+#~ msgid "Nothing to do here"
+#~ msgstr "Ei mitään tehtävää täällä"
+
+#: include/ui/adminscreens/pointsmanagement.php:23
+msgid "Export Points from MyRewards"
+msgstr ""
+
+#: include/ui/adminscreens/pointsmanagement.php:24
+msgid ""
+"Select a points and rewards system to export the users points from that "
+"system."
+msgstr ""
+
+#: include/ui/adminscreens/pointsmanagement.php:29
+#, fuzzy
+#| msgid "Standard"
+msgid "points and rewards system"
+msgstr "Vakio"
+
+#: include/ui/adminscreens/pointsmanagement.php:40
+#: include/ui/adminscreens/pointsmanagement.php:89
+msgid "Export"
+msgstr "Vie"
+
+#: include/ui/adminscreens/pointsmanagement.php:51
+msgid "Export from other plugins"
+msgstr ""
+
+#: include/ui/adminscreens/pointsmanagement.php:54
+msgid ""
+"If you're migrating from another loyalty plugin, you can export the users "
+"points from the other plugin and import them into MyRewards."
+msgstr ""
+
+#: include/ui/adminscreens/pointsmanagement.php:55
+msgid ""
+"The other plugin needs to be installed and active for this procedure to work."
+msgstr ""
+
+#: include/ui/adminscreens/pointsmanagement.php:61
+msgid "Loyalty Plugin or Meta Key"
+msgstr ""
+
+#: include/ui/adminscreens/pointsmanagement.php:69
+msgid "Do not change that value if you are not sure about what you are doing."
+msgstr ""
+
+#: include/ui/adminscreens/pointsmanagement.php:75
+msgid "Some Plugin need extra arguments"
+msgstr ""
+
+#: include/ui/adminscreens/pointsmanagement.php:83
+msgid ""
+"Main purpose is for plugins that support several point pools. If the plugin "
+"is not listed here, it does not need an extra argument."
+msgstr ""
+
+#: include/ui/adminscreens/pointsmanagement.php:99
+#, fuzzy
+#| msgid "Points Pool"
+msgid "Import Points"
+msgstr "Pistepotti"
+
+#: include/ui/adminscreens/pointsmanagement.php:102
+msgid "Select the exported file, then click on «Import»."
+msgstr ""
+
+#: include/ui/adminscreens/pointsmanagement.php:103
+msgid "The Import process does <b>not</b> generate any reward."
+msgstr ""
+
+#: include/ui/adminscreens/pointsmanagement.php:109
+msgid "Round imported points"
+msgstr ""
+
+#: include/ui/adminscreens/pointsmanagement.php:114
+#, fuzzy
+#| msgid "MyRewards Reward list"
+msgid "MyRewards only support integer points"
+msgstr "MyRewards palkintolista"
+
+#: include/ui/adminscreens/pointsmanagement.php:116
+msgid "Round fractions down"
+msgstr ""
+
+#: include/ui/adminscreens/pointsmanagement.php:117
+msgid "Round fractions up"
+msgstr ""
+
+#: include/ui/adminscreens/pointsmanagement.php:118
+msgid "Round to nearest integer, half way round up"
+msgstr ""
+
+#: include/ui/adminscreens/pointsmanagement.php:119
+msgid "Round to nearest integer, half way round down"
+msgstr ""
+
+#: include/ui/adminscreens/pointsmanagement.php:126
+msgid "Multiply imported points by"
+msgstr ""
+
+#: include/ui/adminscreens/pointsmanagement.php:135
+#, fuzzy
+#| msgid "Points Pool"
+msgid "Import Mode"
+msgstr "Pistepotti"
+
+#: include/ui/adminscreens/pointsmanagement.php:141
+#, fuzzy
+#| msgid "Let your customers sponsor new customers."
+msgid "Replace customers points"
+msgstr "Anna asiakkaasi sponsoroida uusia asiakkata."
+
+#: include/ui/adminscreens/pointsmanagement.php:142
+msgid "Add points to customers totals"
+msgstr ""
+
+#: include/ui/adminscreens/pointsmanagement.php:149
+msgid "Add points to that points and rewards system"
+msgstr ""
+
+#: include/ui/adminscreens/pointsmanagement.php:173
+msgid "Import"
+msgstr "Tuo"

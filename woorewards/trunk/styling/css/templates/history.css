@@ -1,0 +1,39 @@
+.lwss_selectable.wr-history-grid {
+	display: grid;
+	gap: 1px;
+}
+
+.header-line,
+.content-line {
+	display: contents;
+}
+
+.lwss_selectable.history-grid-title {
+	background-color: #eee;
+	font-weight: bold;
+	padding: 5px;
+}
+
+.lwss_selectable.history-grid-system {
+	padding: 1px 5px;
+	text-align: left;
+}
+
+.lwss_selectable.history-grid-date {
+	padding: 1px 5px;
+	text-align: left;
+}
+
+.lwss_selectable.history-grid-descr {
+	padding: 1px 5px;
+	text-align: left;
+}
+
+.lwss_selectable.history-grid-points {
+	padding: 1px 5px;
+	text-align: right;
+}
+.lwss_selectable.history-grid-total {
+	padding: 1px 5px;
+	text-align: right;
+}
