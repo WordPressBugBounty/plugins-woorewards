@@ -2,9 +2,9 @@
 Contributors: lwsdevelopers
 Tags: loyalty, points, referrals, rewards, coupons
 Requires at least: 5.3
-Tested up to: 6.6
+Tested up to: 6.7
 Requires PHP: 7.0.0
-Stable tag: 5.4.4
+Stable tag: 5.4.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -108,6 +108,10 @@ Yes, High-Performance Order Storage is supported.
 5. Styling options
 
 == Changelog ==
+
+= 5.4.5 =
+* Tag - WordPress 6.7
+* Tag - WooCommerce 9.4
 
 = 5.4.4 =
 * Tweak - support third party plugin weak code
