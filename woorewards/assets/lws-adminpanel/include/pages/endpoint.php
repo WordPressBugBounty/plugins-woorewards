@@ -82,7 +82,7 @@ class Endpoint
 			'title' => __("Tab title", 'lws-adminpanel'),
 			'type'  => 'text',
 			'extra' => array(
-				'placeholder' => $me->options['title'],
+				'placeholder' => $me->getRawTitle(),
 				'wpml'        => $me->options['wpml'],
 			)
 		);
@@ -176,7 +176,7 @@ class Endpoint
 		$pageId = \wp_insert_post(array(
 			'post_type'    => 'page',
 			'post_status'  => 'publish',
-			'post_title'   => \lws_get_option($this->options['prefix'] . '_title', $this->options['title']),
+			'post_title'   => \lws_get_option($this->options['prefix'] . '_title', $this->getRawTitle()),
 			'post_content' => $this->getDefaultContent(),
 		), false);
 
@@ -304,11 +304,24 @@ EOT;
 			// quicker having recorded in DB than running all path until default fallback each time.
 			\update_option($this->options['prefix'] . '_title', '');
 		}
-		if (!$title)
-			$title = $this->options['title'];
+		if (!$title) {
+			$title = $this->getRawTitle();
+		}
+
 		if ($wpml = $this->getWPML())
 			$title = \apply_filters('wpml_translate_single_string', $title, 'Widgets', $wpml);
 		return $title;
+	}
+
+	function getRawTitle(): string
+	{
+		if (\is_string($this->options['title'])) {
+			return $this->options['title'];
+		} elseif (\is_callable($this->options['title'])) {
+			return (string)\call_user_func($this->options['title']);
+		} else {
+			return '';
+		}
 	}
 
 	/** get translation key */

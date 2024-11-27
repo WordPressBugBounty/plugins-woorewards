@@ -167,7 +167,7 @@ class Duration
 				'H' => '%h',
 				'I' => '%i',
 				'S' => '%s',
-			), self::getSupportedPeriods(true));
+			), \array_fill_keys(self::getSupportedPeriodsKeys(true), true));
 		}
 		foreach( $def as $out => $in )
 		{
@@ -187,7 +187,7 @@ class Duration
 			return self::void();
 		static $pattern = false;
 		if( !$pattern )
-			$pattern = '/P?(T?)(\d+)([' . implode('', \array_keys(self::getSupportedPeriods(true))) . '])/i';
+			$pattern = '/P?(T?)(\d+)([' . implode('', self::getSupportedPeriodsKeys(true)) . '])/i';
 		$match = array();
 		if( preg_match($pattern, $interval, $match) )
 		{
@@ -278,7 +278,15 @@ class Duration
 	function __construct($n=0, $p='D')
 	{
 		$this->number = abs(intval($n));
-		$this->period = in_array($p, array_keys(self::getSupportedPeriods(true))) ? $p : 'D';
+		$this->period = in_array($p, self::getSupportedPeriodsKeys(true)) ? $p : 'D';
+	}
+
+	static function getSupportedPeriodsKeys($extended=false)
+	{
+		return \apply_filters(
+			'lws_adminpanel_duration_supported_periods_keys',
+			$extended ? array('S', 'I', 'H', 'D', 'W', 'M', 'Y') : array('D', 'M', 'Y')
+		);
 	}
 
 	static function getSupportedPeriods($extended=false)
