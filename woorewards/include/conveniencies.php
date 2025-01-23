@@ -92,11 +92,12 @@ EOT;
 
 		$ids = implode(",", array_map('intval', array_keys($result)));
 		$query = <<<EOT
-			SELECT p.ID, v.meta_value AS coupon_amount, o.meta_value AS product_ids, w.meta_value AS discount_type
+			SELECT p.ID, v.meta_value AS coupon_amount, f.meta_value AS wr_prod_ids, o.meta_value AS product_ids, w.meta_value AS discount_type
 			FROM {$wpdb->posts} as p
 			LEFT JOIN {$wpdb->postmeta} as w ON p.ID = w.post_id AND w.meta_key='discount_type'
 			LEFT JOIN {$wpdb->postmeta} as v ON p.ID = v.post_id AND v.meta_key='coupon_amount'
 			LEFT JOIN {$wpdb->postmeta} as o ON p.ID = o.post_id AND o.meta_key='product_ids'
+			LEFT JOIN {$wpdb->postmeta} as f ON p.ID = f.post_id AND f.meta_key='woorewards_product_list'
 			WHERE p.ID IN ({$ids})
 EOT;
 		$sub = $wpdb->get_results($query, OBJECT_K);

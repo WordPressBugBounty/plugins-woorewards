@@ -17,7 +17,7 @@ class PointDiscount
 		// simulate coupons
 		\add_filter('woocommerce_cart_totals_coupon_label', array($me, 'asLabel'), 20, 2);
 		\add_filter('woocommerce_order_item_get_code', array($me, 'asCode'), 20, 2);
-		\add_filter('woocommerce_coupon_error', array($me, 'asError'), 20, 3);
+		//\add_filter('woocommerce_coupon_error', array($me, 'asError'), 20, 3);
 		\add_filter('woocommerce_get_shop_coupon_data', array($me, 'asData'), PHP_INT_MAX - 8, 3);
 		// save coupon meta
 		\add_action('woocommerce_checkout_create_order_coupon_item', array($me, 'createOrderItem'), 10, 4);
@@ -128,6 +128,29 @@ class PointDiscount
 		else return $coupon->wr_discount_data ?? false;
 	}
 
+	/** @param $coupon \WC_Coupon */
+	public static function getDiscountTitle($coupon): string
+	{
+		$me = new self();
+		$discount = self::getDiscountMeta($coupon);
+		if ($discount) {
+			return $me->getTitle($discount);
+		} else {
+			$refs = self::extractRef($coupon->get_code());
+			if (!$refs) return '';
+			$pool = \apply_filters('lws_woorewards_get_pools_by_args', false, ['system' => $refs], \get_current_user_id())->last();
+			if (!$pool) {
+				return $refs;
+			} else {
+				return \apply_filters('lws_woorewards_pointdiscount_title', $pool->getOption('display_title'), [
+					'code' => $coupon->get_code(),
+					'pool' => $pool,
+					'pool_name' => $refs[1],
+				]);
+			}
+		}
+	}
+
 	/** Coupon title, default use Pool title. */
 	protected function getTitle($discount)
 	{
@@ -154,7 +177,7 @@ class PointDiscount
 			return $pool->getOption('display_title');
 	}
 
-	protected function fromCode($code)
+	public static function extractRef($code)
 	{
 		/// point discount flag - pool name
 		$refs = \explode('-', $code, 2);
@@ -164,11 +187,21 @@ class PointDiscount
 		if (self::CODE_PREFIX != $refs[0])
 			return false;
 
+		return $refs[1];
+	}
+
+	protected function fromCode($code)
+	{
+		/// point discount flag - pool name
+		$refs = self::extractRef($code);
+		if (!$refs)
+			return false;
+
 		$userId = \get_current_user_id();
 		if (!$userId)
 			return false;
 
-		$pool = \apply_filters('lws_woorewards_get_pools_by_args', false, array('system' => $refs[1]), $userId)->last();
+		$pool = \apply_filters('lws_woorewards_get_pools_by_args', false, array('system' => $refs), $userId)->last();
 		if (!$pool)
 			return false;
 		if (!$pool->getOption('direct_reward_mode'))

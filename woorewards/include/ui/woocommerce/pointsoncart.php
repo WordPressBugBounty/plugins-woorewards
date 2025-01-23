@@ -41,6 +41,10 @@ class PointsOnCart
 		\add_action('wp_ajax_nopriv_lws_woorewards_pointsoncart_bloc_refresh', array($me, 'ajaxRefresh'));
 		\add_action('wp', array($me, 'formValidation')); // be sure cart is loaded AND computed
 
+		// error management
+		\add_filter('woocommerce_coupon_error', [$me, 'overrideError'], 10, 3);
+		\add_filter('woocommerce_coupon_message', [$me, 'overrideMessage'], 10, 3);
+
 		\add_action('wp_enqueue_scripts', array($me, 'registerScripts'));
 		\add_action('admin_enqueue_scripts', array($me, 'registerScripts'));
 
@@ -67,6 +71,75 @@ class PointsOnCart
 				}
 			}
 		});
+	}
+
+	/**
+	 * From @see \WC_Coupon::get_coupon_message($msg_code)
+	 * @param $msg string message string, human readable
+	 * @param $msg_code int message code
+	 * @param $coupon \WC_Coupon
+	 * @return string message string, human readable
+	 */
+	public function overrideMessage($msg, $msg_code, $coupon)
+	{
+		if (!$this->isOur($coupon)) return $msg;
+		$title = \LWS\WOOREWARDS\PointDiscount::getDiscountTitle($coupon);
+
+		switch ($msg_code) {
+			case \WC_Coupon::WC_COUPON_SUCCESS:
+				$msg = sprintf(_x("%s discount applied successfully.", 'Points on cart message', 'woorewards-lite'), $title);
+				break;
+			case \WC_Coupon::WC_COUPON_REMOVED:
+				$msg = sprintf(_x("%s discount removed successfully.", 'Points on cart message', 'woorewards-lite'), $title);
+				break;
+		}
+		return $msg;
+	}
+
+	/**
+	 * From @see \WC_Coupon::get_coupon_error($err_code)
+	 * @param $err string error string, human readable
+	 * @param $err_code int error code
+	 * @param $coupon \WC_Coupon
+	 * @return string error string, human readable
+	 * @see \WC_Discounts::is_coupon_valid($coupon)
+	 */
+	public function overrideError($err, $err_code, $coupon)
+	{
+		if (!$this->isOur($coupon)) return $err;
+		$title = \LWS\WOOREWARDS\PointDiscount::getDiscountTitle($coupon);
+
+		switch ($err_code) {
+			case \WC_Coupon::E_WC_COUPON_INVALID_FILTERED:
+				$err = sprintf(_x("Sorry, %s discount cannot be applied.", 'Points on cart error', 'woorewards-lite'), $title);
+				break;
+			case \WC_Coupon::E_WC_COUPON_NOT_EXIST:
+				$err = sprintf(_x("Sorry, %s discount is no longer available.", 'Points on cart error', 'woorewards-lite'), $title);
+				break;
+			case \WC_Coupon::E_WC_COUPON_INVALID_REMOVED:
+				$err = sprintf(_x("Sorry, %s discount has been removed from your order because the requirements are no longer met.", 'Points on cart error', 'woorewards-lite'), $title);
+				break;
+			case \WC_Coupon::E_WC_COUPON_ALREADY_APPLIED_INDIV_USE_ONLY:
+				$err = sprintf(_x("Sorry, %s discount cannot be used in conjunction with other coupons.", 'Points on cart error', 'woorewards-lite'), $title);
+				break;
+			case \WC_Coupon::E_WC_COUPON_NOT_APPLICABLE:
+			case \WC_Coupon::E_WC_COUPON_EXCLUDED_CATEGORIES:
+				$err = sprintf(_x("Sorry, %s discount is not applicable to selected products.", 'Points on cart error', 'woorewards-lite'), $title);
+				break;
+		}
+		return $err;
+	}
+
+	/** @param $coupon \WC_Coupon
+	 * @return bool is a points on cart discount */
+	private function isOur($coupon): bool
+	{
+		if (!$coupon) return false;
+
+		$discount = \LWS\WOOREWARDS\PointDiscount::getDiscountMeta($coupon);
+		if ($discount) return true;
+
+		return (bool)\LWS\WOOREWARDS\PointDiscount::extractRef($coupon->get_code());
 	}
 
 	static function filterPools($pool)

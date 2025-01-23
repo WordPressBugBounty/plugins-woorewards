@@ -143,6 +143,9 @@ class Admin
 	{
 		spl_autoload_register(array($this, 'autoload'));
 
+		require_once LWS_ADMIN_PANEL_INCLUDES . '/tools/session.php';
+		\LWS\Adminpanel\Tools\Session::install();
+
 		require_once LWS_ADMIN_PANEL_INCLUDES . '/internal/mailer.php';
 		\LWS\Adminpanel\Internal\Mailer::instance();
 		require_once LWS_ADMIN_PANEL_INCLUDES . '/internal/ajax.php';

@@ -4,7 +4,7 @@ Tags: loyalty, points, referrals, rewards, coupons
 Requires at least: 5.3
 Tested up to: 6.7
 Requires PHP: 7.0.0
-Stable tag: 5.4.6
+Stable tag: 5.4.7
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -108,6 +108,13 @@ Yes, High-Performance Order Storage is supported.
 5. Styling options
 
 == Changelog ==
+
+= 5.4.7 ==
+* Tag - WooCommerce 9.6
+* Update - translations
+* Tweak - wc notice override for Points on cart
+* MyRewards Pro :
+	* Feature - new attributes for wr_available_rewards shortcode
 
 = 5.4.6 ==
 * Fix - WordPress 6.7 Delay translation time
