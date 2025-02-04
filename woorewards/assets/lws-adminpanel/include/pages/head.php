@@ -491,7 +491,7 @@ EOT;
 			{
 				$count = count(array_filter(array_column($tab->children, 'visible')));
 				$hasTab = $count > 1;
-				$href = $hasTab ? '#' : $tab->url;
+				$href = \apply_filters('lws_adminpanel_head_tab_url', $hasTab ? '#' : $tab->url, $tab);
 
 				$class = "tab-menu-item";
 				if ($hasTab) $class .= " has-children";

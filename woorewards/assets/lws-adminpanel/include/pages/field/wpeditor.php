@@ -7,8 +7,9 @@ class WPEditor extends \LWS\Adminpanel\Pages\Field
 {
 	public function input()
 	{
-		$name = $this->m_Id;
+		$name = $this->extra['name'] ?? $this->m_Id;
+		$settings = $this->extra['settings'] ?? $this->extra;
 		$value = $this->readOption(false);
-		wp_editor($value, $name, $this->extra);
+		\wp_editor($value, $name, $settings);
 	}
 }

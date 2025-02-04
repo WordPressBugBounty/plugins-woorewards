@@ -15,9 +15,15 @@ class Request
 
 	function __construct($table='', $as='', $whereOperator='AND')
 	{
+		if (\is_a($table, __CLASS__)) {
+			$table = '(' . $table->toString() . ')';
+			if (!$as) $as = '__' . \md5($table);
+		} else {
+			$table = "`{$table}`";
+		}
 		$this->sql = array(
 			'select' => array(),
-			'from'   => $as ? "FROM `{$table}` as `{$as}`" : "FROM `{$table}`",
+			'from'   => $as ? "FROM {$table} as `{$as}`" : "FROM {$table}",
 			'join'   => array(),
 			'where'  => array(),
 			'groupby'=> array(),
@@ -248,6 +254,40 @@ class Request
 			$str = $wpdb->prepare($str, $this->args); // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
 		}
 		return $wpdb->query($str); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPressDotOrg.sniffs.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared
+	}
+
+	/** @param $values array of object
+	 * @param $formats array same keys as $values objects properties and %s or $d as value
+	 * @param $repeated array (optional) works like $values,
+	 *	if a same value has to be repeated all the way (do not appears in $values objects properties) */
+	function insert(array $formats, array $values, array $repeated=[]): int
+	{
+		if (!$values) return false;
+		if (\is_array($repeated)) $repeated = (object)$repeated;
+
+		global $wpdb;
+		$sql = sprintf(
+			'INSERT INTO %s (`%s`) VALUES ',
+			\explode(' ', $this->sql['from'], 3)[1],
+			\implode('`, `', \array_keys($formats))
+		);
+
+		$sep = '';
+		foreach ($values as $row) {
+			$cleaned = [];
+			if (\is_array($row)) $row = (object)$row;
+
+			foreach ($formats as $k => $f) {
+				$v = $row->{$k} ?? ($repeated->{$k} ?? '');
+				$cleaned[$k] = ('%d' === $f) ? (int)$v : ('"' . \esc_sql((string)$v) . '"');
+			}
+
+			$sql .= sprintf('%s(%s)', $sep, \implode(',', $cleaned));
+			$sep = ",\n";
+		}
+
+		$ret = $wpdb->query($sql); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPressDotOrg.sniffs.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared
+		return $ret ? $wpdb->insert_id : false;
 	}
 
 	protected function &fill($part, $term, $add)

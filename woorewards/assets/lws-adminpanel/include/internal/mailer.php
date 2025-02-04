@@ -7,6 +7,28 @@ if( !defined( 'ABSPATH' ) ) exit();
 
 /** Manage mail formating and sending.
  *
+	* Send a mail with direct content
+		 * @param string user mail,
+		 * @param string a slug to define the mail content,
+		 * @param object content object with {subject:string, body:string, style:string} containing simlpe text, html and css.
+		 * @param data array any relevant data required by shortcodes
+		\do_action('lws_mail_send_raw', $email, $slug, $settings, $data);
+
+	* Add new email shortcodes
+		\add_filter('lws_adminpanel_mail_shortcodes_' . $slug,
+			function($text, string $tag, array $args, string $content, array $data, string $email, array $users) {...},
+		10, 7);
+
+	*	Apply mail dedicated shortcodes (if you want recursive shortcodes on given contents)
+		 * @param $text string text to work on
+		 * @param $slug string mail template
+		 * @param $data array anything
+		 * @param $email string recepient
+		 * @param $users array of \WP_users
+		\apply_filters('lws_mail_send_do_shortcodes', $content, $slug, $data, $email, $users);
+ *
+ * Legacy (includes an admin page conveniency)
+ *
  *	To send a mail, use the action 'lws_mail_send' with parameters email, template_name, data.
  *
  *	You must add a filter to set mail settings with hook 'lws_mail_settings_' . $template_name.
@@ -79,16 +101,11 @@ class Mailer
 		$settings = $this->translateSettings($template, $settings);
 
 		$settings['user_email'] = $email;
-		$settings = apply_filters('lws_mail_arguments_' . $template, $settings, $data);
+		$settings = (array)\apply_filters('lws_mail_arguments_' . $template, $settings, $data);
 
 		$headers = array('Content-Type: text/html; charset=UTF-8');
-		if( !empty($fromEMail = \sanitize_email(\get_option('woocommerce_email_from_address'))) )
-		{
-			if( !empty($fromName = \wp_specialchars_decode( \esc_html( \get_option('woocommerce_email_from_name') ), ENT_QUOTES )) )
-				$headers[] = sprintf('From: %s <%s>', $fromName, $fromEMail);
-			else
-				$headers[] = 'From: ' . $fromEMail;
-		}
+		$from = $this->getMailProvider($template);
+		if ($from) $headers[] = $from;
 
 		if( isset($settings['bcc_admin']) && !empty($settings['bcc_admin']) )
 		{
@@ -117,6 +134,111 @@ class Mailer
 		$this->altBody = false;
 
 		do_action('wpml_restore_language_from_email');
+	}
+
+	/** @return string from mail header */
+	private function getMailProvider($template)
+	{
+		$from = '';
+		$fromEMail = \sanitize_email(\get_option('woocommerce_email_from_address'));
+		if ($fromEMail) {
+			$fromName = \wp_specialchars_decode(\esc_html(\get_option('woocommerce_email_from_name')), ENT_QUOTES);
+			if ($fromName) {
+				$from = sprintf('From: %s <%s>', $fromName, $fromEMail);
+			} else {
+				$from = 'From: ' . $fromEMail;
+			}
+		}
+		return \apply_filters('lws_adm_mail_header_from', $from, $template);
+	}
+
+	/** Send a mail with direct content
+		 * @param string user mail,
+		 * @param string a slug to define the mail content,
+		 * @param object content object with {subject:string, body:string, style:string} containing simlpe text, html and css.
+		 * @param data array any relevant data required by shortcodes */
+	public function sendRaw(string $targetEmail, string $slug, object $content, array $data)
+	{
+		$headers = ['Content-Type: text/html; charset=UTF-8'];
+		$from = $this->getMailProvider($slug);
+		if ($from) $headers[] = $from;
+
+		$body = <<<EOT
+<!DOCTYPE html><html xmlns='http://www.w3.org/1999/xhtml'>
+<head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8' /></head>
+<body leftmargin='0' marginwidth='0' topmargin='0' marginheight='0' offset='0'>
+EOT;
+		$body .= $this->inlineCSS($content->body, $content->style);
+		$body .= '</body></html>';
+
+		$users = $this->getUsers($targetEmail);
+
+		$this->altBody = true;
+		\wp_mail(
+			$targetEmail,
+			$this->applyShortcodes2($content->subject, $slug, $data, $targetEmail, $users),
+			$this->applyShortcodes2($body, $slug, $data, $targetEmail, $users),
+			\apply_filters('lws_mail_headers_' . $slug, $headers, $data)
+		);
+		$this->altBody = false;
+	}
+
+	public function applyShortcodes2($text, $slug, $data, $email, $users)
+	{
+		$doubleQuote = '"(?:[^"]|(?<=\\\\)")*"';
+		$simpleQuote = "'(?:[^']|(?<=\\\\)')*'";
+		$pattern = "/(?<!\\[)\\[(\\w+)((?:\\s+\\w+=(?:{$doubleQuote}|{$simpleQuote}))*)\\]/m";
+
+		$offset = 0;
+		$newtext = '';
+		while (preg_match($pattern, $text, $matches, PREG_OFFSET_CAPTURE, $offset)) {
+			// get before
+			$newtext .= \substr($text, $offset, $matches[0][1] - $offset);
+			// go forward
+			$offset = $matches[0][1] + \strlen($matches[0][0]);
+
+			/// 0: full, 1: key, 2: args
+			$full = $matches[0][0];
+			$tag = \strtolower($matches[1][0]);
+			$args = \shortcode_parse_atts(\ltrim((string)$matches[2][0]));
+			$content = '';
+
+			// is a shortcode with a content
+			$ending = "/(?<!\\[)\\[\\/{$tag}\\]/m";
+			if (preg_match($ending, $text, $closing, PREG_OFFSET_CAPTURE, $offset)) {
+				$content = \substr($text, $offset, $closing[0][1] - $offset);
+				$offset = $closing[0][1] + \strlen($closing[0][0]);
+				$full .= $content . $closing[0][0];
+			}
+
+			// apply shortcodes, any customs
+			$value = \apply_filters('lws_adminpanel_mail_shortcodes_' . $slug, false, $tag, $args, $content, $data, $email, $users);
+			if (false  !== $value) {
+				$newtext .= $value;
+			} else switch ($tag) {
+				// generics shortcodes
+				case 'user_name':
+					$newtext .=  \LWS\Adminpanel\Internal\Mailer::getUserNames($users);
+					break;
+				case 'site_link':
+					$newtext .=  $this->getSiteLink($args, $content, $slug, $data, $email, $users);
+					break;
+				default:
+					/// @param string $match[1] the code of the shortcode
+					/// @param string \ltrim($match[2]) the raw arguments, @see \wp_parse_args() to parse them before use
+					/// @param string a slug to define the mail content,
+					/// @param data array any relevant data required by shortcodes
+					/// @param string user mail,
+					$value = \apply_filters('lws_adminpanel_mail_shortcodes2', false, $tag, $args, $content, $slug, $data, $email, $users);
+					if (false  !== $value) {
+						$newtext .= $value;
+					} else {
+						$newtext .= $full;
+					}
+					break;
+			}
+		}
+		return $newtext .=\substr($text, $offset);
 	}
 
 	private function applyShortcodes($text, $mail)
@@ -164,6 +286,25 @@ class Mailer
 			$names[$user->ID] = $name;
 		}
 		return \implode(', ', $names);
+	}
+
+	private function getSiteLink($args, $content, $slug, $data, $email, $users)
+	{
+		$args = \wp_parse_args($args, [
+			'path' => '',
+			'text' => '',
+		]);
+
+		if ($args['text']) $args['text'] = \htmlentities2($args['text']);
+		elseif ($content) $args['text'] = $this->applyShortcodes2($content, $slug, $data, $email, $users);
+		else $args['text'] = \htmlentities2(\get_bloginfo('name'));
+
+		return sprintf(
+			'<a href="%s" target="_blank" title="%s">%s</a>',
+			\esc_attr(\site_url($args['path'])),
+			\esc_attr(\get_bloginfo('description')),
+			$args['text']
+		);
 	}
 
 	/**	@return array to set in admin page registration as 'groups', each item representing a group array.
@@ -247,6 +388,21 @@ class Mailer
 	{
 		$this->settings = array();
 		$this->trSettings = array();
+
+		/** Send a mail with direct content
+		 * @param string user mail,
+		 * @param string a slug to define the mail content,
+		 * @param object content object with {subject:string, body:string, style:string} containing simlpe text, html and css.
+		 * @param data array any relevant data required by shortcodes */
+		add_action('lws_mail_send_raw', array($this, 'sendRaw'), 10, 4);
+
+		/**
+		 * @param $text string text to work on
+		 * @param $slug string mail template
+		 * @param $data array anything
+		 * @param $email string recepient
+		 * @param $users array of \WP_users */
+		add_action('lws_mail_send_do_shortcodes', array($this, 'applyShortcodes2'), 10, 5);
 
 		/** Send a mail
 		 * @param string user mail,

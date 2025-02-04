@@ -496,7 +496,7 @@ class Conveniences
 
 		$bal = $default;
 		if( isset($descr['tag']) ){
-			$bal = $descr['tag'];
+			$bal = \is_array($descr['tag']) ? $self::array2tag($descr['tag']) : $descr['tag'];
 			unset($descr['tag']);
 		}
 		$bal = explode(' ', $bal, 2);
@@ -547,6 +547,38 @@ class Conveniences
 		if ($gutenberg)
 			$html = sprintf("<!-- wp:%s -->\n%s<!-- /wp:%s -->\n\n", $gutenberg, $html, $gutenberg);
 		return $html;
+	}
+
+	/** @param $desc first entry is the tag, next are attributes
+	 * @param $close array|bool|string if not false, return a full htlm dom element. */
+	static function array2tag(array $descr, $close = false)
+	{
+		$tag = $_tag = \array_shift($descr);
+		foreach ($descr as $k => $v) {
+			if (\is_int($k)) $tag .= ' ' . (\is_array($v) ? \implode(' ', $v) : $v);
+			else $tag .= sprintf(' %s="%s"', $k, \esc_attr(\is_array($v) ? \implode(' ', $v) : $v));
+		}
+		if ($close) {
+			if (true === $close) {
+				$tag = "<{$tag} />";
+			} else if (\is_array($close)) {
+				$close['tag'] = $tag;
+				$tag = self::array2html($close);
+			} else {
+				$tag = sprintf('<%s>%s</%s>', $tag, $close, $_tag);
+			}
+		}
+		return $tag;
+	}
+
+	/** Act like @see \array_map(callable $callable, array $array)
+	 *	but assume a callable with two arguments ($value, $key) */
+	static public function arrayMap(callable $callable, array $array): array
+	{
+		foreach ($array as $k => $v) {
+			$array[$k] = \call_user_func($callable, $v, $k);
+		}
+		return $array;
 	}
 
 	static public function getCurrentURL()
