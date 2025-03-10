@@ -7,12 +7,13 @@ if (!defined('ABSPATH')) exit();
 
 class AvailableCoupons
 {
+	CONST SLUG = 'wr_available_coupons';
 
 	static function install()
 	{
 		$me = new self();
 		/** Shortcode */
-		\add_shortcode('wr_available_coupons', array($me, 'shortcode'));
+		\add_shortcode(self::SLUG, array($me, 'shortcode'));
 		/** Admin */
 		\add_filter('lws_woorewards_shortcodes', array($me, 'admin'));
 		\add_filter('lws_woorewards_rewards_shortcodes', array($me, 'admin'));
@@ -95,6 +96,29 @@ class AvailableCoupons
 						'desc' => __("(Optional) Override the expiration label if any. Use the <b>%s</b> placeholder for the date. You can set an empty string to display nothing.", 'woorewards-lite'),
 						'example' => '[wr_available_coupons expire-html=" (Expires on %s)"]'
 					),
+					array(
+						'option' => 'in-the-last',
+						'desc' => [
+							__("(Optional) Show only coupons created in the last given period.", 'woorewards-lite'),
+							__("A period is defined by a number and a duration unit.", 'woorewards-lite'),
+							__("Accepted units are:", 'woorewards-lite'), ['tag' => 'ul',
+								['D', __("for Days", 'woorewards-lite')],
+								['W', __("for Weeks", 'woorewards-lite')],
+								['M', __("for Months", 'woorewards-lite')],
+								['Y', __("for Years", 'woorewards-lite')],
+							],
+						],
+						'example' => '[wr_available_coupons in-the-last="1M"]'
+					),
+					array(
+						'option' => 'reset-day',
+						'desc' => [
+							sprintf(__("(Optional) Works with %s attribute to build an incremental period instead the default shift date.", 'woorewards-lite'), '`<i>in-the-last</i>`'),
+							__("Expect the day of the month the period should reset within the original rolling period.", 'woorewards-lite'),
+							__("The value is automatically clamped to the last day of the month if necessary.", 'woorewards-lite'),
+						],
+						'example' => '[wr_available_coupons in-the-last="1Y" reset-day="1"]'
+					),
 				),
 				'flags' => array('current_user_id'),
 			)
@@ -128,21 +152,80 @@ class AvailableCoupons
 		if (!(\LWS\Adminpanel\Tools\Conveniences::isWC() && \wc_coupons_enabled())) {
 			return '';
 		}
-		if (!$userId = \get_current_user_id()) {
+		$userId = \apply_filters('lws_woorewards_shortcode_current_user_id', \get_current_user_id(), $atts, self::SLUG);
+		if (!$userId) {
 			return \do_shortcode((string)$content);
 		}
-		if (empty($data = \LWS\WOOREWARDS\Conveniences::instance()->getCoupons($userId))) {
-			return \do_shortcode((string)$content);
-		}
+
 		$atts = \LWS\Adminpanel\Tools\Conveniences::sanitizeAttr(\wp_parse_args($atts, array(
 			'buttons'	=> false,
 			'reload'	=> false,
 			'layout'	=> 'vertical',
 			'element'	=> 'line',
 			'expire-html' => false,
+			'in-the-last' => false,
+			'min-date'    => false,
+			'reset-day'   => false,
 		)));
+		$where = $this->checkDateFilters($atts);
+
+		$data = \LWS\WOOREWARDS\Conveniences::instance()->getCoupons($userId, $where);
+		if (!$data) {
+			return \do_shortcode((string)$content);
+		}
+
 		$this->enqueueScripts();
 		return $this->getContent($atts, $data);
+	}
+
+	/** merge $atts to set a 'reset-date' entry to filter coupon by min creation date.
+	 * @param $atts array inout
+	 * @return array sql where filter @see \LWS\WOOREWARDS\Conveniences\getCoupons */
+	private function checkDateFilters(array &$atts): array
+	{
+		if ($atts['min-date']) {
+			$atts['min-date'] = \date_create_immutable($atts['min-date'], \wp_timezone());
+		}
+
+		if ($atts['in-the-last']) {
+			$atts['reset-day'] = (int)$atts['reset-day'];
+
+			// test a valid format
+			$pattern = '/(\d+)\s*([ymdw])/i';
+			if (\preg_match_all($pattern, $atts['in-the-last'], $matches, PREG_SET_ORDER)) {
+				$period = ['_' =>'P'];
+				foreach ($matches as $match) {
+					$u = \strtoupper($match[2]);
+					$period[$u] = $match[1] . $u;
+				}
+
+				$interval = new \DateInterval(\implode('', $period));
+				$date = \date_create_immutable('now', \wp_timezone())->sub($interval);
+
+				if ($atts['reset-day']) {
+					$coming = \LWS\Adminpanel\Tools\Dates::replace($date, ['day' => $atts['reset-day']]);
+					if ($coming->setTime(0, 0) < $date->setTime(0, 0)) {
+						$coming = \LWS\Adminpanel\Tools\Dates::addMonths($coming, 1, $atts['reset-day']);
+					}
+					$atts['min-date'] = $coming;
+				} else {
+					$atts['min-date'] = $date;
+				}
+			} else {
+				$atts['in-the-last'] = false;
+			}
+		}
+
+		if ($atts['min-date']) {
+			return [
+				sprintf(
+					"p.post_date_gmt >= '%s'",
+					$atts['min-date']->setTime(0, 0)->setTimezone(new \DateTimeZone('UTC'))->format('Y-m-d H:i:s')
+				),
+			];
+		} else {
+			return [];
+		}
 	}
 
 	protected function getContent($atts, $data)

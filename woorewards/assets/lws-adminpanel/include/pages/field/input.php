@@ -43,6 +43,26 @@ class Input extends \LWS\Adminpanel\Pages\Field
 		}
 		$others = $this->getDomAttributes();
 
-		return "<input name='$name' value='$value'$attrs{$others}$id$size>";
+		$datalist = '';
+		if (isset($this->extra['datalist']) && $this->extra['datalist']) {
+			if (!($this->extra['list_id'] ?? false)) {
+				static $unicifier = 0;
+				$this->extra['list_id'] = \md5(\serialize($this->extra['datalist'])) . '_' . ($unicifier++);
+			}
+			if (\is_array($this->extra['datalist'])) {
+				$datalist = sprintf('<datalist id="%s">', \esc_attr($this->extra['list_id']));
+				foreach ($this->extra['datalist'] as $label) {
+					$datalist .= sprintf('<option value="%s"%s>', \esc_attr((string)$label), $value === $label ? ' selected' : '');
+				}
+				$datalist .= '</datalist>';
+			} else {
+				$datalist = $this->extra['datalist'];
+			}
+		}
+		if ($this->extra['list_id'] ?? false) {
+			$attrs .= sprintf(' list="%s"', \esc_attr($this->extra['list_id']));
+		}
+
+		return "<input name='$name' value='$value'$attrs{$others}$id$size>" . $datalist;
 	}
 }

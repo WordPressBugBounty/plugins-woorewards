@@ -68,27 +68,34 @@ class Conveniences
 	}
 
 	/* Get Available WooCommerce coupons for the provided user */
-	public function getCoupons($userId)
+	public function getCoupons($userId, $where=false)
 	{
 		$user = \get_user_by('ID', $userId);
-		if (empty($user->user_email))
-			return array();
-		$todayDate = strtotime(date('Y-m-d'));
+		if (!$user->user_email) return [];
+
 		global $wpdb;
-		$query = <<<EOT
-			SELECT p.ID, p.post_content, p.post_title, p.post_excerpt, e.meta_value AS expiry_date
-			FROM {$wpdb->posts} as p
-			INNER JOIN {$wpdb->postmeta} as m ON p.ID = m.post_id AND m.meta_key='customer_email'
-			LEFT JOIN {$wpdb->postmeta} as l ON p.ID = l.post_id AND l.meta_key='usage_limit'
-			LEFT JOIN {$wpdb->postmeta} as u ON p.ID = u.post_id AND u.meta_key='usage_count'
-			LEFT JOIN {$wpdb->postmeta} as e ON p.ID = e.post_id AND e.meta_key='date_expires'
-			WHERE m.meta_value=%s AND post_type = 'shop_coupon' AND post_status = 'publish'
-			AND (e.meta_value is NULL OR e.meta_value = '' OR e.meta_value >= '{$todayDate}')
-			AND (u.meta_value < l.meta_value OR u.meta_value IS NULL OR l.meta_value IS NULL OR l.meta_value=0)
-EOT;
-		$result = $wpdb->get_results($wpdb->prepare($query, serialize(array($user->user_email))), OBJECT_K);
-		if (empty($result))
-			return $result;
+		$query = \LWS\Adminpanel\Tools\Request::from($wpdb->posts, 'p');
+		$query->select(['p.ID', 'p.post_content', 'p.post_title', 'p.post_excerpt', 'MAX(e.meta_value) AS expiry_date']);
+		$query->group('p.ID');
+		$query->innerJoin($wpdb->postmeta, 'm', ["p.ID = m.post_id AND m.meta_key='customer_email'"]);
+		$query->leftJoin($wpdb->postmeta, 'l', ["l.post_id = m.post_id AND l.meta_key='usage_limit'"]);
+		$query->leftJoin($wpdb->postmeta, 'u', ["u.post_id = m.post_id AND u.meta_key='usage_count'"]);
+		$query->leftJoin($wpdb->postmeta, 'e', ["e.post_id = m.post_id AND e.meta_key='date_expires'"]);
+		$query->where([
+			"m.meta_value = %s",
+			"post_type = 'shop_coupon'",
+			"post_status = 'publish'",
+			"(e.meta_value is NULL OR e.meta_value = '' OR e.meta_value >= %s)",
+			"(u.meta_value < l.meta_value OR u.meta_value IS NULL OR l.meta_value IS NULL OR l.meta_value=0)",
+		]);
+		$query->arg(\serialize([$user->user_email]));
+		$query->arg(\strtotime(\date('Y-m-d')));
+		if ($where) {
+			$query->where($where);
+		}
+
+		$result = $query->getResults(OBJECT_K);
+		if (!$result) return [];
 
 		$ids = implode(",", array_map('intval', array_keys($result)));
 		$query = <<<EOT

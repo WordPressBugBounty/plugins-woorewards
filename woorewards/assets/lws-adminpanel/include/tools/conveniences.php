@@ -659,4 +659,31 @@ class Conveniences
 		else
 			\add_action($hook, $callable, $priority);
 	}
+
+	/** @return string the associated capability if the current user role is in the given array $roles,
+	 * or fallback on $capability. */
+	public static function getCapOnRole($capability, array $roles = ['administrator' => 'manage_options']): string
+	{
+		$user = \wp_get_current_user();
+		if ($user) {
+			if (!$roles) $roles = ['administrator' => 'manage_options'];
+			$cross = \array_intersect_key($roles, \array_fill_keys((array)$user->roles, true));
+			if ($cross) {
+				return (string)\reset($cross);
+			}
+		}
+		return (string)($capability ?? 'manage_options');
+	}
+
+	/** @param $roles array of array [role => [capability]] */
+	public static function updateRolesCapabilities(array $roles)
+	{
+		foreach ($roles as $slug => $caps) {
+			$role = \get_role($slug);
+			if (!$role) continue;
+			foreach ($caps as $cap) {
+				if (!$role->has_cap($cap)) $role->add_cap($cap);
+			}
+		}
+	}
 }

@@ -173,7 +173,7 @@ class Admin
 		$resumePage = array(
 			'title'	    => __("MyRewards", 'woorewards-lite'),
 			'id'	      => LWS_WOOREWARDS_PAGE,
-			'rights'    => 'manage_rewards',
+			'rights'    => \LWS\Adminpanel\Tools\Conveniences::getCapOnRole('manage_rewards'),
 			'dashicons' => '',
 			'index'     => 57,
 			'resume'    => true,
@@ -206,7 +206,7 @@ class Admin
 		$cusPage = array(
 			'title'    => __("Customers", 'woorewards-lite'),
 			'id'       => LWS_WOOREWARDS_PAGE . '.customers',
-			'rights'   => 'manage_rewards',
+			'rights'   => \LWS\Adminpanel\Tools\Conveniences::getCapOnRole('manage_rewards'),
 			'color'    => '#A8CE38',
 			'image'		=> LWS_WOOREWARDS_IMG . '/r-customers.png',
 			'description' => __("Use this page to manage your customers, see and edit their points and rewards", 'woorewards-lite'),
@@ -236,7 +236,7 @@ class Admin
 	{
 		return array(
 			'title'    => __("Settings", 'woorewards-lite'),
-			'rights'   => 'manage_rewards',
+			'rights'   => \LWS\Adminpanel\Tools\Conveniences::getCapOnRole('manage_rewards'),
 			'id'       => LWS_WOOREWARDS_PAGE . '.loyalty',
 			'color'    => '#526981',
 			'image'    => LWS_WOOREWARDS_IMG . '/r-loyalty-systems.png',
@@ -264,7 +264,7 @@ class Admin
 			'title'    => __("Wizard", 'woorewards-lite'),
 			'subtitle' => __("Wizard", 'woorewards-lite'),
 			'id'       => LWS_WIZARD_SUMMONER . LWS_WOOREWARDS_PAGE,
-			'rights'   => 'manage_rewards',
+			'rights'   => \LWS\Adminpanel\Tools\Conveniences::getCapOnRole('manage_rewards'),
 			'color'    => '#00B7EB',
 			'image'    => LWS_WOOREWARDS_IMG . '/r-wizard.png',
 			'description' => __("The wizard page lets you setup your points and rewards program in a few minutes", 'woorewards-lite'),
@@ -444,9 +444,9 @@ class Admin
 			'title'    => __("Appearance", 'woorewards-lite'),
 			'subtitle' => __("Appearance", 'woorewards-lite'),
 			'id'       => LWS_WOOREWARDS_PAGE . '.appearance',
-			'rights'   => 'manage_rewards',
-			'color'			=> '#4CBB41',
-			'image'			=> LWS_WOOREWARDS_IMG . '/r-appearance.png',
+			'rights'   => \LWS\Adminpanel\Tools\Conveniences::getCapOnRole('manage_rewards'),
+			'color'    => '#4CBB41',
+			'image'    => LWS_WOOREWARDS_IMG . '/r-appearance.png',
 			'description'	=> __("Use this page to display loyalty content to your customers on your website", 'woorewards-lite'),
 			'tabs'     => array(
 				'woocommerce' => $this->getWoocommerceTab(),
@@ -473,9 +473,9 @@ class Admin
 			'title'    		=> __("System", 'woorewards-lite'),
 			'subtitle' 		=> __("System", 'woorewards-lite'),
 			'id'       		=> LWS_WOOREWARDS_PAGE . '.system',
-			'rights'   		=> 'manage_rewards',
-			'color'			=> '#7958A5',
-			'image'			=> LWS_WOOREWARDS_IMG . '/r-system.png',
+			'rights'   		=> \LWS\Adminpanel\Tools\Conveniences::getCapOnRole('manage_rewards'),
+			'color'       => '#7958A5',
+			'image'       => LWS_WOOREWARDS_IMG . '/r-system.png',
 			'description'	=> __("Export or import your customers points, process past orders in this page", 'woorewards-lite'),
 			'delayedFunction' => array($this, 'showCronStatus'),
 			'tabs'			=> array(
@@ -629,10 +629,10 @@ class Admin
 			'subtitle' 	=> "<div style='padding:2px 10px 4px 10px;background-color:#526981;color:#fff;text-align:center;font-weight:bold'>" . __("Pro Version", 'woorewards-lite') . "</div>",
 			'pagetitle' => __("Pro Version", 'woorewards-lite'),
 			'id'       	=> LWS_WOOREWARDS_PAGE . '-proversion',
-			'rights'   	=> 'manage_options',
-			'color'		=> '#4f9bbf',
-			'nosave'	=> true,
-			'image'		=> LWS_WOOREWARDS_IMG . '/r-pro.png',
+			'rights'   	=> \LWS\Adminpanel\Tools\Conveniences::getCapOnRole('manage_rewards'),
+			'color'     => '#4f9bbf',
+			'nosave'    => true,
+			'image'     => LWS_WOOREWARDS_IMG . '/r-pro.png',
 			'description' => __("Unlock this plugin's full potential by switching to the pro version. Check all the features and discover how to install it", 'woorewards-lite'),
 		);
 

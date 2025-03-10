@@ -286,8 +286,7 @@ class Request
 			$sep = ",\n";
 		}
 
-		$ret = $wpdb->query($sql); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPressDotOrg.sniffs.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared
-		return $ret ? $wpdb->insert_id : false;
+		return $wpdb->query($sql); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPressDotOrg.sniffs.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared
 	}
 
 	protected function &fill($part, $term, $add)

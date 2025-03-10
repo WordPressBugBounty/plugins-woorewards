@@ -177,14 +177,14 @@ class Head
 			return (object) array(
 				'id'       => $level->getId(),
 				'title'    => $level->getPageTitle(),
-				'url'      => $level->getLink($tabPath),
+				'url'      => \apply_filters('lws_adminpanel_breadcrums_particle_url', $level->getLink($tabPath), $level),
 				'siblings' => array(),
 			);
 		} else {
 			return (object) array(
 				'id'       => $level['id'],
 				'title'    => $level['title'],
-				'url'      => $this->page->getLink($tabPath),
+				'url'      => \apply_filters('lws_adminpanel_breadcrums_particle_url', $this->page->getLink($tabPath), $level),
 				'siblings' => array(),
 			);
 		}
