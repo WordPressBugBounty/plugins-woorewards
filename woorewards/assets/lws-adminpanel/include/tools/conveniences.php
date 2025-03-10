@@ -496,7 +496,7 @@ class Conveniences
 
 		$bal = $default;
 		if( isset($descr['tag']) ){
-			$bal = \is_array($descr['tag']) ? $self::array2tag($descr['tag']) : $descr['tag'];
+			$bal = \is_array($descr['tag']) ? self::array2tag($descr['tag']) : $descr['tag'];
 			unset($descr['tag']);
 		}
 		$bal = explode(' ', $bal, 2);
@@ -685,5 +685,22 @@ class Conveniences
 				if (!$role->has_cap($cap)) $role->add_cap($cap);
 			}
 		}
+	}
+
+	/**
+	 * @param $file string a file in the root directory of the plugin as reference.
+	 * @param $clue string a directory name that should exists in full path if plugin is embeded into someone else.
+	 * @param $path string appended to the returned path.
+	 * @return string the path from wp plugin dir to the base directory of the plugin (including plugin directory).
+	 */
+	public static function getPluginSubpath(string $file, string $path=''): string
+	{
+		$dir = \basename(dirname($file));
+		$sub = \substr($file, \strlen(WP_PLUGIN_DIR));
+		$pos = \strpos($sub, $dir);
+		if (false !== $pos) {
+			$dir = \substr($sub, 0, $pos + \strlen($dir));
+		}
+		return \rtrim($dir, '/\\') . '/' . \ltrim($path, '/\\');
 	}
 }

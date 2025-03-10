@@ -36,7 +36,7 @@ class Admin
 		}
 
 		\add_action('after_setup_theme', function() {
-			\load_plugin_textdomain('lws-adminpanel', FALSE, \basename(dirname(LWS_ADMIN_PANEL_FILE)) . '/languages/');
+			\load_plugin_textdomain('lws-adminpanel', FALSE, \LWS\Adminpanel\Tools\Conveniences::getPluginSubpath(LWS_ADMIN_PANEL_FILE, '/languages/'));
 		});
 
 		$this->install();
