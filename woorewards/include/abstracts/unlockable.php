@@ -49,6 +49,7 @@ abstract class Unlockable implements \LWS\WOOREWARDS\Abstracts\ICategorisable, \
 		$reward = $this->createReward($user);
 		if ($reward !== false) {
 			$this->incrRedeemCount($user->ID);
+			\do_action('lws_woorewards_reward_created', $reward, $this, $user);
 			if ($this->isEmailEnabled())
 				$this->sendMail($user, $reward, $mailTemplate);
 			return true;

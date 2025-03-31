@@ -12,12 +12,18 @@ class Session
 	private $data = false;
 	private $dirty = false;
 	private $user = false;
+	private $sent = false;
+	private $created = true;
+
+	const OBF = true;
 
 	static public function set($key, $value)
 	{
-		$GLOBALS['lwssession_user']->maybeLoad();
-		$GLOBALS['lwssession_user']->dirty = true;
-		$GLOBALS['lwssession_user']->data[$key] = \maybe_serialize($value);
+		$me = $GLOBALS['lwssession_user'];
+		$me->maybeLoad();
+		$me->dirty = true;
+		$me->data[$key] = \maybe_serialize($value);
+		$me->maybeSend();
 	}
 
 	static public function get($key, $fallback=false)
@@ -44,6 +50,7 @@ class Session
 			$me->dirty = true;
 			unset($me->data[$key]);
 		}
+		$me->maybeSend();
 	}
 
 	static public function install()
@@ -52,15 +59,39 @@ class Session
 		$GLOBALS['lwssession_user'] = $me;
 		\add_action('shutdown', [$me, 'save'], 200);
 		\add_action('wp_logout', [$me, 'clean']);
-		\LWS\Adminpanel\Tools\Conveniences::addGreadyHook('wp', [$me, 'send']);
+		$me->maybeRepeat();
+	}
+
+	/** Force start a session.
+	 * Call this if you are sure you will use it later,
+	 * but too late to place the session cookie. */
+	static public function start()
+	{
+		$GLOBALS['lwssession_user']->maybeSend();
+	}
+
+	/** repeat the session cookie if any */
+	public function maybeRepeat()
+	{
+		if ($this->hasUser()) {
+			$this->maybeSend();
+		}
+	}
+
+	private function maybeSend()
+	{
+		if (!$this->sent) {
+			$this->send();
+		}
 	}
 
 	public function send()
 	{
+		$this->sent = true;
 		if (!\headers_sent()) {
 			\setcookie(
 				$this->getCookieName(),
-				\base64_encode($this->getUser()),
+				self::OBF ? \base64_encode($this->getUser()) : $this->getUser(),
 				$this->getExpiry(),
 				COOKIEPATH ? COOKIEPATH : '/',
 				COOKIE_DOMAIN
@@ -75,13 +106,17 @@ class Session
 		$this->data = false;
 		$this->user = false;
 		$this->dirty = false;
-		\setcookie(
-			$this->getCookieName(),
-			'',
-			0,
-			COOKIEPATH ? COOKIEPATH : '/',
-			COOKIE_DOMAIN
-		);
+		$this->sent = false;
+		$this->created = false;
+		if (!\headers_sent()) {
+			\setcookie(
+				$this->getCookieName(),
+				'',
+				0,
+				COOKIEPATH ? COOKIEPATH : '/',
+				COOKIE_DOMAIN
+			);
+		}
 	}
 
 	public function save()
@@ -169,18 +204,35 @@ PRIMARY KEY id  (id), KEY `expiry` (`expiry`)
 		return \apply_filters('lwsadm_session_expiring', \time() + (DAY_IN_SECONDS * 2));
 	}
 
+	private function readUser()
+	{
+		$user = false;
+		$name = $this->getCookieName();
+		if (isset($_COOKIE[$name]) && $_COOKIE[$name]) {
+			// read from cookie if any
+			if (self::OBF) $user = \sanitize_key((string)\base64_decode((string)$_COOKIE[$name]));
+			else $user = \sanitize_key((string)$_COOKIE[$name]);
+			// valid format
+			if (!\in_array(\substr($user, 0, 2), ['l_', 'g_'], true)) {
+				$user = false;
+			}
+		}
+		return $user;
+	}
+
+	private function hasUser(): bool
+	{
+		$this->getUser();
+		return !$this->created;
+	}
+
 	private function getUser(): string
 	{
 		if (false === $this->user) {
-			$name = $this->getCookieName();
-			if (isset($_COOKIE[$name]) && $_COOKIE[$name]) {
-				// read from cookie if any
-				$this->user = (string)\base64_decode((string)$_COOKIE[$name]);
-				if (!\in_array(\substr($this->user, 0, 2), ['l_', 'g_'], true)) {
-					$this->user = false;
-				}
-			}
-			return $this->user ?: $this->createUser();
+			$this->created = false;
+			$this->user = $this->readUser();
+			$read = $this->user;
+			if (!$this->user) $this->user = $this->createUser();
 		}
 		return $this->user;
 	}
@@ -188,6 +240,7 @@ PRIMARY KEY id  (id), KEY `expiry` (`expiry`)
 	private function createUser(): string
 	{
 		if (false === $this->user) {
+			$this->created = true;
 			$u = \get_current_user_id();
 			if ($u) {
 				$this->user = ('l_' . $u);
