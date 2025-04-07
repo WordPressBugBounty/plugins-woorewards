@@ -29,7 +29,7 @@ class Coupon extends \LWS\WOOREWARDS\Abstracts\Unlockable
 	function getData($min = false)
 	{
 		$prefix = $this->getDataKeyPrefix();
-		$data = parent::getData();
+		$data = parent::getData($min);
 		$data[$prefix . 'timeout'] = $this->getTimeout()->toString();
 		$data[$prefix . 'value']   = $this->getValue();
 		$data[$prefix . 'percent'] = $this->getInPercent() ? 'per' : 'fix';
