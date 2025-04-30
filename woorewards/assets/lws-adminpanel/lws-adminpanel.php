@@ -5,7 +5,7 @@
  * Plugin URI: https://plugins.longwatchstudio.com
  * Author: Long Watch Studio
  * Author URI: https://longwatchstudio.com
- * Version: 5.6.1.1
+ * Version: 5.6.2.1
  * Text Domain: lws-adminpanel
  *
  * Copyright (c) 2022 Long Watch Studio (email: plugins@longwatchstudio.com). All rights reserved.
@@ -57,7 +57,7 @@ if( false === has_action('plugins_loaded', 'lws_adminpanel_init_v4') )
 }
 
 add_filter('lws_adminpanel_versions', function($versions){
-	$versions['5.6.1.1'] = __FILE__;
+	$versions['5.6.2.1'] = __FILE__;
 	return $versions;
 });
 require dirname(__FILE__) . '/functions.php';

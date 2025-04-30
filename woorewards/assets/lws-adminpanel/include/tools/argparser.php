@@ -22,6 +22,36 @@ namespace LWS\Adminpanel\Tools;
  * For each format, required or defaults, if not an array, assume the same for each value. */
 class ArgParser
 {
+	/**	@see \wp_parse_args but with recursive and sanitize feature.
+	 *	@param $args string|array|object required Value to merge with $defaults.
+	 *	@param $defaults array optional Array that serves as the defaults.
+	 *		That array leads the recursivity.
+	 *	@param $sanitizes array optional Array of callables.
+	 *		An empty index string '' will be used as a default sanitizer.
+	 *		If $defaults contains an array for an entry,
+	 *		the relevant value in $sanitizes must be an array of sanitizer too.
+	 *	@param $strict bool optional if true, keep only args that exists in $defaults.
+	 *	@return array */
+	static public function read($args, array $defaults = [], array $sanitizes = [], bool $strict=false)
+	{
+		$uniform = $sanitizes[''] ?? [];
+		$values = \wp_parse_args($args, $defaults);
+		if ($strict) {
+			$values = \array_intersect_key($values, $defaults);
+		}
+		foreach ($values as $option => &$sub) {
+			$sanitize = $sanitizes[$option] ?? [];
+			$default = $defaults[$option] ?? false;
+			if (\is_array($default)) {
+				// recurse
+				$values[$option] = self::read($sub, $default, $sanitize ?: ['' => $uniform]);
+			} else {
+				if ($sanitize) $values[$option] = \call_user_func($sanitize, $sub);
+				elseif ($uniform) $values[$option] = \call_user_func($uniform, $sub);
+			}
+		}
+		return $values;
+	}
 
 	static public function install()
 	{

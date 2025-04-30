@@ -3,15 +3,15 @@ msgstr ""
 "Project-Id-Version: MyRewards\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-02-05 12:18+0100\n"
-"PO-Revision-Date: 2023-06-07 08:55+0200\n"
-"Last-Translator: LongWatchStudio <support@longwatchstudio.com>\n"
+"PO-Revision-Date: 2025-04-30 09:56+0200\n"
+"Last-Translator: LongWatchStudio <plugins@longwatchstudio.com>\n"
 "Language-Team: 简体中文\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 3.0.1\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: woorewards.php\n"
@@ -96,12 +96,10 @@ msgid ""
 msgstr ""
 
 #: include/abstracts/event.php:454
-#, fuzzy, php-format
-#| msgctxt "Point per money spent"
-#| msgid "%1$s %2$s / %3$s"
+#, php-format
 msgctxt "cooldown edition"
 msgid "Max %1$s times / %2$s"
-msgstr "%1$s %2$s / %3$s"
+msgstr "最多 %1$s 次 / %2$s"
 
 #: include/abstracts/event.php:469 include/abstracts/event.php:587
 msgid "Cooldown rolling period"
@@ -403,7 +401,7 @@ msgstr ""
 #, fuzzy, php-format
 #| msgid " %s extra points for the first order"
 msgid "No %1$s earned in <b>%2$s</b> for this order"
-msgstr "首单获得 %s 额外积分"
+msgstr "此订单在 <b>%2$s</b> 中未获得 %1$s"
 
 #: include/core/sponsorship.php:342 include/core/sponsorship.php:346
 msgid "You must be logged in."
@@ -680,10 +678,9 @@ msgid "Referee spends money"
 msgstr "消费"
 
 #: include/events/sponsoredorderamount.php:79
-#, fuzzy, php-format
-#| msgid "Spent %1$s from order #%2$s"
+#, php-format
 msgid "Referred friend %3$s spent %1$s from order #%2$s"
-msgstr "订单 #%2$s 消费 %1$s"
+msgstr "推荐的朋友 %3$s 在订单 #%2$s 中消费了 %1$s"
 
 #: include/events/sponsoredorderamount.php:88
 msgid "Levelling"
@@ -1015,10 +1012,8 @@ msgid ""
 msgstr ""
 
 #: include/ui/admin.php:304
-#, fuzzy
-#| msgid "Coupon code : %s"
 msgid "Coupon code length"
-msgstr "优惠码: %s"
+msgstr "优惠券代码长度"
 
 #: include/ui/admin.php:310
 msgid ""
@@ -1572,10 +1567,8 @@ msgid "Reward Type"
 msgstr "奖励类型"
 
 #: include/ui/admin.php:1025
-#, fuzzy
-#| msgid "WooCommerce"
 msgid "WooCommerce Coupon"
-msgstr "WooCommerce"
+msgstr "WooCommerce 折扣券"
 
 #: include/ui/admin.php:1026 include/wizards/standard.php:145
 #: include/wizards/standard.php:355
@@ -1843,10 +1836,8 @@ msgid "Orders"
 msgstr "订单"
 
 #: include/ui/editlists/eventlist.php:101
-#, fuzzy
-#| msgid " %s extra points for the first order"
 msgid "Customers earn points when they place an order"
-msgstr "首单获得 %s 额外积分"
+msgstr "顾客下单即可获得积分"
 
 #: include/ui/editlists/eventlist.php:102
 msgctxt "Option Group"
@@ -1863,10 +1854,8 @@ msgid "Social Media"
 msgstr "社交媒体"
 
 #: include/ui/editlists/eventlist.php:103
-#, fuzzy
-#| msgid " %s points for each placed order"
 msgid "Users earn points for sharing on social media"
-msgstr "每单获得 %s 积分"
+msgstr "用户通过在社交媒体上分享来获得积分"
 
 #: include/ui/editlists/eventlist.php:104
 msgctxt "Option Group"
@@ -1884,10 +1873,8 @@ msgid "Miscellaneous"
 msgstr "杂项"
 
 #: include/ui/editlists/eventlist.php:105
-#, fuzzy
-#| msgid " %s points for each placed order"
 msgid "Users earn points for various reasons"
-msgstr "每单获得 %s 积分"
+msgstr "用户可以通过各种原因获得积分"
 
 #: include/ui/editlists/eventlist.php:106
 msgctxt "Option Group"
@@ -2069,10 +2056,9 @@ msgid "Display Name"
 msgstr "显示名称"
 
 #: include/ui/editlists/userspoints.php:167
-#, fuzzy, php-format
-#| msgid "Points cost"
+#, php-format
 msgid "Points : %s"
-msgstr "所需积分"
+msgstr "积分 %s"
 
 #: include/ui/editlists/userspointsbulkaction.php:14
 msgid ""
@@ -2950,12 +2936,10 @@ msgid "VIP Membership"
 msgstr "VIP会员"
 
 #: include/wizards/standard.php:165
-#, fuzzy, php-format
-#| msgid "Points added to user."
-#| msgid_plural "Points added to users."
+#, php-format
 msgctxt "Points on Cart Reward"
 msgid "Point value in %s"
-msgstr "为客户增加的积分。"
+msgstr "点值以 %s 为单位"
 
 #: include/wizards/standard.php:169
 msgid ""
@@ -3191,10 +3175,8 @@ msgid "https://plugins.longwatchstudio.com/product/woorewards/"
 msgstr "https://plugins.longwatchstudio.com/product/woorewards/"
 
 #: woorewards.php:159
-#, fuzzy
-#| msgid "https://plugins.longwatchstudio.com/docs/woorewards/"
 msgid "https://plugins.longwatchstudio.com/docs/woorewards-4/"
-msgstr "https://plugins.longwatchstudio.com/docs/woorewards/"
+msgstr "https://plugins.longwatchstudio.com/kbtopic/wr/"
 
 #: woorewards.php:235
 msgid "Point"

@@ -26,6 +26,8 @@ class Ajax
 			add_action( 'wp_ajax_lws_adminpanel_get_order_status', array( $this, 'getOrderStatus') );
 
 			add_action( 'wp_ajax_lws_adminpanel_forget_notice', array( $this, 'permanentDismiss') );
+
+			\add_action( 'wp_ajax_lws_adminpanel_wc_products_and_variations_list', array( $this, 'getWCProductsAndVariations') );
 		}
 		add_filter( 'lws_autocomplete_compose_page', array( $this, 'composePage') );
 		add_filter( 'lws_autocomplete_compose_user', array( $this, 'composeUser') );
@@ -252,23 +254,112 @@ class Ajax
 		wp_send_json($wpdb->get_results($sql, OBJECT_K)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPressDotOrg.sniffs.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared
 	}
 
-	/** @param $readAsIdsArray (bool) true if term is an array of ID or false if term is a string
-	 *	@param $_REQUEST['term'] (string) filter on post_title or if $readAsIdsArray (array of int) filter on ID.
-	 *	@return mixed array of int if $readAsIdsArray, else a string. */
-	private function getTerm($readAsIdsArray)
+	/** autocomplete/lac compliant.
+	 * Search wp_post(wc_product & variations) on id (or name if fromValue is false or missing).
+	 * @see hook 'lws_woorewards_wc_products_and_variations_list'.
+	 * @param $_REQUEST['term'] (string) filter on product name
+	 * @param $_REQUEST['page'] (int /optional) result page, not set means return all.
+	 * @param $_REQUEST['count'] (int /optional) number of result per page, default is 10 if page is set. */
+	public function getWCProductsAndVariations()
 	{
+		if (!(isset($_REQUEST['lac']) && \wp_verify_nonce($_REQUEST['lac'], 'lws_lac_model'))) {
+			\wp_send_json_error('Unauthorized access');
+		}
+
+		$fromValue = (isset($_REQUEST['fromValue']) && boolval($_REQUEST['fromValue']));
+		$term = $this->getTerm($fromValue);
+		$spec = array();
+
+		global $wpdb;
+		$sql = array(
+			'SELECT' => "SELECT p.ID as value, p.post_title as label",
+			'FROM' => "FROM {$wpdb->posts} as p",
+			'JOIN' => '',
+			'WHERE' => '',
+			'GROUP' => '',
+		);
+
+		if ($fromValue) {
+			$sql['WHERE'] = " WHERE p.ID IN (" . implode(',', $term) . ")";
+		} else {
+			$sql['SELECT'] .= ", GROUP_CONCAT(v.ID SEPARATOR ',') as variations";
+			$sql['GROUP'] = "GROUP BY p.ID";
+			$sql['JOIN'] = "LEFT JOIN {$wpdb->posts} as v ON p.ID=v.post_parent AND v.post_type='product_variation'";
+			$sql['WHERE'] = "WHERE p.post_type='product' AND (p.post_status='publish' OR p.post_status='private')";
+
+			if ($term) {
+				$search = trim($term, "%");
+				$sql['WHERE'] .= $wpdb->prepare(" AND p.post_title LIKE %s", "%$search%");
+			}
+		}
+
+		$sql = $this->pager(implode(' ', $sql), 'p.post_title');
+		$products = $wpdb->get_results($sql);
+		if ($products) {
+			for ($i=0 ; $i<count($products) ; $i++) {
+				$product = &$products[$i];
+				if (isset($product->variations) && $product->variations) {
+					$grp = (object)array(
+						'value'      => $product->value . 'g',
+						'label'      => $product->label,
+						'variations' => false,
+					);
+					$grp->group = $wpdb->get_results(<<<EOT
+SELECT p.ID as value, CONCAT('#', p.ID, ' - ', p.post_title) as label FROM {$wpdb->posts} as p
+WHERE p.post_type='product_variation' AND (p.post_status='publish' OR p.post_status='private')
+AND ID IN ({$product->variations})
+ORDER BY p.post_title ASC
+EOT
+					);
+					\array_splice($products, $i+1, 0, array($grp));
+				}
+			}
+		}
+		\wp_send_json($products);
+	}
+
+	/** @return $sql with order by and limit appended. */
+	protected function pager($sql, $orderBy='', $dir='ASC')
+	{
+		if( !empty($orderBy) )
+			$sql .= " ORDER BY {$orderBy} {$dir}";
+
+		if( isset($_REQUEST['page']) && is_numeric($_REQUEST['page']) )
+		{
+			$count = absint(isset($_REQUEST['count']) && is_numeric($_REQUEST['count']) ? $_REQUEST['count'] : 10);
+			$offset = absint($_REQUEST['page']) * $count;
+			$sql .= " LIMIT $offset, $count";
+		}
+		return $sql;
+	}
+
+	/** @param $readAsIdsArray (bool) true if term is an array of ID or false if term is a string
+	 *	@param $prefix (string) remove this prefix at start of term values.
+	 *	@param $_REQUEST['term'] (string) filter on post_title or if $readAsIdsArray (array of int) filter on ID.
+	 *	@return array|string an array of int if $readAsIdsArray, else a string. */
+	private function getTerm($readAsIdsArray, $prefix='', $keySanitize='\intval', $valueSanitize='\sanitize_text_field')
+	{
+		$len = strlen($prefix);
 		$term = '';
 		if( isset($_REQUEST['term']) )
 		{
 			if( $readAsIdsArray )
 			{
 				if( is_array($_REQUEST['term']) )
-					$term = array_map('intval', $_REQUEST['term']);
+				{
+					$term = array();
+					foreach( $_REQUEST['term'] as $t )
+					{
+						if( $len > 0 && substr($t, 0, $len) == $prefix )
+							$t = substr($t, $len);
+						$term[] = \call_user_func($keySanitize, $t);
+					}
+				}
 				else
-					$term = array(intval($_REQUEST['term']));
+					$term = array(\call_user_func($keySanitize, $_REQUEST['term']));
 			}
 			else
-				$term = \sanitize_text_field(trim($_REQUEST['term']));
+				$term = \call_user_func($valueSanitize, trim($_REQUEST['term']));
 		}
 		return $term;
 	}

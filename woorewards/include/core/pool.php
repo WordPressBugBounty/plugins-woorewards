@@ -53,8 +53,18 @@ class Pool
 	 *	@param $origin (\LWS\WOOREWARDS\Abstracts\Event) optional, the source Event. */
 	public function addPoints($userId, $value, $reason='', \LWS\WOOREWARDS\Abstracts\Event $origin=null, $origin2=false)
 	{
+		$old = $this->getPoints($userId);
 		$value = \apply_filters('lws_woorewards_core_pool_point_add', $value, $userId, $reason, $this, $origin);
 		$this->getStack($userId)->add($value, $reason, false, $origin ? $origin : '', $origin2);
+		\do_action('lws_woorewards_core_pool_points_changed', (object)[
+			'user_id'  => $userId,
+			'value'    => $value + $old,
+			'system'   => $this,
+			'previous' => $old,
+			'reason'   => $reason,
+			'origin'   => $origin,
+			'provider' => $origin2,
+		]);
 		return $this;
 	}
 
@@ -65,8 +75,18 @@ class Pool
 	 *	@param $origin (\LWS\WOOREWARDS\Abstracts\Event|\LWS\WOOREWARDS\Abstracts\Unlockable) optional, the source Event. */
 	public function setPoints($userId, $value, $reason='', $origin=null, $origin2=false)
 	{
+		$old = $this->getPoints($userId);
 		$value = \apply_filters('lws_woorewards_core_pool_point_set', $value, $userId, $reason, $this);
 		$this->getStack($userId)->set($value, $reason, $origin ? $origin : '', $origin2);
+		\do_action('lws_woorewards_core_pool_points_changed', (object)[
+			'user_id'  => $userId,
+			'value'    => $value,
+			'system'   => $this,
+			'previous' => $old,
+			'reason'   => $reason,
+			'origin'   => $origin,
+			'provider' => $origin2,
+		]);
 		return $this;
 	}
 
@@ -77,8 +97,18 @@ class Pool
 	 *	@param $origin (\LWS\WOOREWARDS\Abstracts\Unlockable) optional, the source Event. */
 	public function usePoints($userId, $value, $reason='', \LWS\WOOREWARDS\Abstracts\Unlockable $origin=null, $origin2=false)
 	{
+		$old = $this->getPoints($userId);
 		$value = \apply_filters('lws_woorewards_core_pool_point_sub', $value, $userId, $reason, $this, $origin);
 		$this->getStack($userId)->sub($value, $reason, false, $origin ? $origin : '', $origin2);
+		\do_action('lws_woorewards_core_pool_points_changed', (object)[
+			'user_id'  => $userId,
+			'value'    => $old - $value,
+			'system'   => $this,
+			'previous' => $old,
+			'reason'   => $reason,
+			'origin'   => $origin,
+			'provider' => $origin2,
+		]);
 		return $this;
 	}
 

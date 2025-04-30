@@ -2,9 +2,9 @@
 Contributors: lwsdevelopers
 Tags: loyalty, points, referrals, rewards, coupons
 Requires at least: 5.3
-Tested up to: 6.7
+Tested up to: 6.8
 Requires PHP: 7.0.0
-Stable tag: 5.4.12.1
+Stable tag: 5.4.13
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -108,6 +108,15 @@ Yes, High-Performance Order Storage is supported.
 5. Styling options
 
 == Changelog ==
+
+= 5.4.13 =
+* Tag - WordPress 6.8
+* Tag - WooCommerce 9.8
+* Fix - Order note translation
+* Dev - new points changes hook
+* MyRewards Pro :
+	* Feature - New coupon edition tab about generation information
+	* Fix - Delay reward redeem since wc needs more time to initialize now
 
 = 5.4.12 =
 * MyRewards Pro :

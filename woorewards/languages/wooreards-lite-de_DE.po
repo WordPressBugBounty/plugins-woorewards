@@ -396,7 +396,7 @@ msgstr ""
 #, fuzzy, php-format
 #| msgid " %s extra points for the first order"
 msgid "No %1$s earned in <b>%2$s</b> for this order"
-msgstr "%s zusätzliche Punkte für die Erstbestellung"
+msgstr "Für diese Bestellung wurden in <b>%2$s</b> keine %1$s verdient"
 
 #: include/core/sponsorship.php:342 include/core/sponsorship.php:346
 msgid "You must be logged in."
