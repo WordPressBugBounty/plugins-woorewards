@@ -201,7 +201,7 @@ class ProductReview extends \LWS\WOOREWARDS\Abstracts\Event
 		return true;
 	}
 
-	/** @return true if customer already purchase product.
+	/** @return int number of customer's orders containing the product.
 	 * Order should ends to a term.
 	 * So tested post_status IN ('wc-completed', 'wc-processing', 'wc-refunded')
 	 * Other status (that are omited) are:
@@ -209,13 +209,17 @@ class ProductReview extends \LWS\WOOREWARDS\Abstracts\Event
 	 * * wc-cancelled, wc-failed : never finalised. */
 	protected function isProductOrdered($comment)
 	{
+		$status_in = \implode("','", \array_map('\esc_sql',
+				\LWS\WOOREWARDS\Conveniences::getOrderDoneStatus()
+		));
+
 		global $wpdb;
 		if (\LWS\Adminpanel\Tools\Conveniences::isHPOS()) {
 			$sql = <<<EOT
 SELECT count(*) FROM {$wpdb->prefix}wc_orders as p
 INNER JOIN {$wpdb->prefix}woocommerce_order_itemmeta as m ON m.meta_key='_product_id' AND m.meta_value=%d
 INNER JOIN {$wpdb->prefix}woocommerce_order_items as i ON m.order_item_id=i.order_item_id AND p.id=i.order_id
-WHERE p.type='shop_order' AND p.status IN ('wc-completed', 'wc-processing', 'wc-refunded')
+WHERE p.type='shop_order' AND p.status IN ('{$status_in}')
 AND customer_id=%d
 EOT;
 		} else {
@@ -224,10 +228,10 @@ SELECT count(*) FROM {$wpdb->posts} as p
 INNER JOIN {$wpdb->prefix}woocommerce_order_itemmeta as m ON m.meta_key='_product_id' AND m.meta_value=%d
 INNER JOIN {$wpdb->prefix}woocommerce_order_items as i ON m.order_item_id=i.order_item_id AND p.ID=i.order_id
 INNER JOIN {$wpdb->postmeta} as c ON c.post_id=p.ID AND c.meta_key='_customer_user' AND c.meta_value=%d
-WHERE p.post_type='shop_order' AND p.post_status IN ('wc-completed', 'wc-processing', 'wc-refunded')
+WHERE p.post_type='shop_order' AND p.post_status IN ('{$status_in}')
 EOT;
 		}
-		return !empty(intval($wpdb->get_var($wpdb->prepare($sql, $comment->comment_post_ID, $comment->user_id))));
+		return (int)$wpdb->get_var($wpdb->prepare($sql, $comment->comment_post_ID, $comment->user_id));
 	}
 
 	/** @return (false|object{userId, productId} */

@@ -4,7 +4,7 @@ Tags: loyalty, points, referrals, rewards, coupons
 Requires at least: 5.3
 Tested up to: 6.8
 Requires PHP: 7.0.0
-Stable tag: 5.4.13
+Stable tag: 5.4.13.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -108,6 +108,10 @@ Yes, High-Performance Order Storage is supported.
 5. Styling options
 
 == Changelog ==
+
+= 5.4.13.1 =
+* Update - translation templates
+* Improvement - dynamic order status list to test purchased product
 
 = 5.4.13 =
 * Tag - WordPress 6.8

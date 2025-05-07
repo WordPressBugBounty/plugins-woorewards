@@ -329,4 +329,26 @@ EOT;
 			return $cache[$transient] = (int)$wpdb->get_var($query);
 		}
 	}
+
+
+	/** @return array order status (as in database status field)
+	 *	indicating a processed order. */
+	static public function getOrderDoneStatus(): array
+	{
+		static $list = null;
+		if (null === $list) {
+			// WC_Order like status values
+			$paid = \wc_get_is_paid_statuses();
+			// Database like status values
+			$all = \wc_get_order_statuses();
+			// get first list but as database like format
+			foreach ($paid as $index => $status) {
+				$prefixed = 'wc-' . $status;
+				if (isset($all[$prefixed])) $paid[$index] = $prefixed;
+			}
+			$paid[] = 'wc-refunded';
+			$list = \apply_filters('lws_woorewards_product_ordered_status_list', $paid);
+		}
+		return $list;
+	}
 }

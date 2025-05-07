@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MyRewards\n"
-"POT-Creation-Date: 2024-10-28 13:15+0100\n"
-"PO-Revision-Date: 2024-12-02 09:27+0100\n"
+"POT-Creation-Date: 2025-05-06 18:38+0200\n"
+"PO-Revision-Date: 2025-05-06 18:38+0200\n"
 "Last-Translator: LongWatchStudio <plugins@longwatchstudio.com>\n"
 "Language-Team: \n"
 "Language: fr_FR\n"
@@ -10,14 +10,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: woorewards.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
-"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-KeywordsList: "
+"__;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
@@ -178,8 +177,8 @@ msgid "Earned points alternative text"
 msgstr "Points gagnés texte alternatif"
 
 #: include/abstracts/event.php:608 include/abstracts/event.php:896
-#: include/abstracts/unlockable.php:208 include/abstracts/unlockable.php:380
-#: include/core/pool.php:697 include/ui/legacy/pointsdisplayer.php:93
+#: include/abstracts/unlockable.php:209 include/abstracts/unlockable.php:381
+#: include/core/pool.php:727 include/ui/legacy/pointsdisplayer.php:93
 msgid "Title"
 msgstr "Titre"
 
@@ -233,12 +232,12 @@ msgctxt "event points expression alternative"
 msgid "Variable"
 msgstr "Variable"
 
-#: include/abstracts/event.php:1300 include/abstracts/unlockable.php:880
+#: include/abstracts/event.php:1300 include/abstracts/unlockable.php:881
 #: include/events/sponsoredorderamount.php:87
 msgid "Standard"
 msgstr "Standard"
 
-#: include/abstracts/event.php:1301 include/abstracts/unlockable.php:881
+#: include/abstracts/event.php:1301 include/abstracts/unlockable.php:882
 msgid "Leveling"
 msgstr "Niveaux"
 
@@ -246,55 +245,55 @@ msgstr "Niveaux"
 msgid "Achievement"
 msgstr "Succès"
 
-#: include/abstracts/event.php:1303 include/abstracts/unlockable.php:882
+#: include/abstracts/event.php:1303 include/abstracts/unlockable.php:883
 #: include/events/sponsoredorderamount.php:90
 msgid "Events"
 msgstr "Événements"
 
-#: include/abstracts/unlockable.php:99
+#: include/abstracts/unlockable.php:100
 msgid "Reward Information"
 msgstr "Informations sur la récompense"
 
-#: include/abstracts/unlockable.php:101
+#: include/abstracts/unlockable.php:102
 msgid "Reward type"
 msgstr "Type de récompense"
 
-#: include/abstracts/unlockable.php:106
+#: include/abstracts/unlockable.php:107
 msgctxt "Unlockable title"
 msgid "Title"
 msgstr "Titre"
 
-#: include/abstracts/unlockable.php:113
+#: include/abstracts/unlockable.php:114
 msgctxt "Unlockable title"
 msgid "Description"
 msgstr "Description"
 
-#: include/abstracts/unlockable.php:128
+#: include/abstracts/unlockable.php:129
 msgctxt "Unlockable Thumbnail"
 msgid "Featured Image"
 msgstr "Image à la une"
 
-#: include/abstracts/unlockable.php:141
+#: include/abstracts/unlockable.php:142
 #: include/ui/editlists/unlockablelist.php:53
 msgid "Reward Settings"
 msgstr "Réglages de récompense"
 
-#: include/abstracts/unlockable.php:144
+#: include/abstracts/unlockable.php:145
 msgctxt "Unlockable cost"
 msgid "Points needed"
 msgstr "Points nécessaires"
 
-#: include/abstracts/unlockable.php:150
+#: include/abstracts/unlockable.php:151
 msgctxt "Unlockable cost"
 msgid "Send Reward email"
 msgstr "Envoyer un e-mail Récompense"
 
-#: include/abstracts/unlockable.php:162
+#: include/abstracts/unlockable.php:163
 msgctxt "Unlockable max redeems"
 msgid "Max Redeems"
 msgstr "Max Débloquage"
 
-#: include/abstracts/unlockable.php:163
+#: include/abstracts/unlockable.php:164
 msgid ""
 "Define how many times this reward can be redeemed by customers. Leave empty "
 "or set to 0 for no limits"
@@ -302,53 +301,53 @@ msgstr ""
 "Définissez combien de fois cette récompense peut être échangée par les "
 "clients. Laisser vide ou défini sur 0 pour aucune limite"
 
-#: include/abstracts/unlockable.php:207
+#: include/abstracts/unlockable.php:208
 msgid "Cost"
 msgstr "Coût"
 
-#: include/abstracts/unlockable.php:209 include/abstracts/unlockable.php:382
+#: include/abstracts/unlockable.php:210 include/abstracts/unlockable.php:383
 #: include/ui/admin.php:100 include/ui/shortcodes/userhistory.php:251
 msgid "Description"
 msgstr "Description"
 
-#: include/abstracts/unlockable.php:210
+#: include/abstracts/unlockable.php:211
 msgid "Validity Starting Date"
 msgstr "Date de début de validité"
 
-#: include/abstracts/unlockable.php:211
+#: include/abstracts/unlockable.php:212
 msgid "Validity Ending Date"
 msgstr "Date de fin de validité"
 
-#: include/abstracts/unlockable.php:212
+#: include/abstracts/unlockable.php:213
 msgid "Featured Image"
 msgstr "Image à la une"
 
-#: include/abstracts/unlockable.php:213
+#: include/abstracts/unlockable.php:214
 msgid "Enable Reward email"
 msgstr "Activez l’e-mail Récompense"
 
-#: include/abstracts/unlockable.php:214
+#: include/abstracts/unlockable.php:215
 msgid "Max Redeems"
 msgstr "Max Échanges"
 
-#: include/abstracts/unlockable.php:215
+#: include/abstracts/unlockable.php:216
 msgid "Level Title"
 msgstr "Titre du Niveau"
 
-#: include/abstracts/unlockable.php:375
+#: include/abstracts/unlockable.php:376
 msgid "Error occured during unlockable reward saving."
 msgstr "Une erreur s’est produite lors de l’enregistrement de la récompense."
 
-#: include/abstracts/unlockable.php:384
+#: include/abstracts/unlockable.php:385
 msgid "Level"
 msgstr "Niveau"
 
-#: include/abstracts/unlockable.php:845
+#: include/abstracts/unlockable.php:846
 msgctxt "Cannot be redeemed"
 msgid "Not redeemable"
 msgstr "Non débloquable"
 
-#: include/abstracts/unlockable.php:847
+#: include/abstracts/unlockable.php:848
 #, php-format
 msgctxt "Out of valid date range"
 msgid "%d [Delayed]"
@@ -389,27 +388,27 @@ msgstr "Points fusionnés à partir de %s"
 msgid "Lost due to inactivity"
 msgstr "Perdu en raison de l’inactivité"
 
-#: include/core/pool.php:689
+#: include/core/pool.php:719
 msgid "Error occured during reward system saving."
 msgstr ""
 "Une erreur s’est produite lors de l’enregistrement du système de récompense."
 
-#: include/core/pool.php:750
+#: include/core/pool.php:780
 #, php-format
 msgid "Failed to delete the reward system <b>%s</b>/%s."
 msgstr "Impossible de supprimer le système de récompense <b> %s </b>/%s."
 
-#: include/core/pool.php:770
+#: include/core/pool.php:800
 #, php-format
 msgid "The reward system <b>%s</b>/%s successfully deleted."
 msgstr "Le système de récompense <b> %s </b>/%s a été supprimé avec succès."
 
-#: include/core/pool.php:875
+#: include/core/pool.php:905
 #, php-format
 msgid "<b>%1$s</b> earned <b>%2$s</b> in <b>%3$s</b> for this order"
 msgstr "<b>%1$s</b> gagnés <b>%2$s</b> pour <b>%3$s</b> cette commande"
 
-#: include/core/pool.php:882
+#: include/core/pool.php:912
 #, php-format
 msgid "No %1$s earned in <b>%2$s</b> for this order"
 msgstr "Pas de %1$s gagnés <b>%2$s</b> pour cette commande"
@@ -494,7 +493,7 @@ msgid "Event Priority"
 msgstr "Priorité de l’événement"
 
 #: include/events/firstorder.php:155 include/events/orderamount.php:355
-#: include/events/ordercompleted.php:153 include/events/productreview.php:255
+#: include/events/ordercompleted.php:153 include/events/productreview.php:259
 #: include/events/sponsoredorder.php:232
 #: include/events/sponsoredorderamount.php:91 include/ui/admin.php:742
 #: include/unlockables/coupon.php:516
@@ -628,7 +627,7 @@ msgstr "Noter un produit"
 msgid "Review about a product (%s)"
 msgstr "Avis sur un produit ( %s)"
 
-#: include/events/productreview.php:256
+#: include/events/productreview.php:260
 msgid "Website"
 msgstr "Site web"
 
@@ -799,51 +798,51 @@ msgctxt "Reward label"
 msgid "Reward from %s"
 msgstr "Récompense de %s"
 
-#: include/pointdiscount.php:259
+#: include/pointdiscount.php:292
 #, php-format
 msgid "%2$s Conflict. Reward from %1$s already uses the same points reserve."
 msgstr ""
 "%2$s conflit. Récompense de %1$s utilise déjà la même réserve de points."
 
-#: include/pointdiscount.php:296
+#: include/pointdiscount.php:329
 #, php-format
 msgid "The Reward \"%s\" is unknown."
 msgstr "La récompense « %s » dans votre panier est inconnue."
 
-#: include/pointdiscount.php:299
+#: include/pointdiscount.php:332
 #, php-format
 msgid "The Reward \"%s\" in your cart is unknown."
 msgstr "La récompense « %s » dans votre panier est inconnue."
 
-#: include/pointdiscount.php:304 include/pointdiscount.php:307
+#: include/pointdiscount.php:337 include/pointdiscount.php:340
 #, php-format
 msgid "\"%s\" does not support this kind of reward anymore."
 msgstr "« %s » ne supporte plus ce genre de récompense."
 
-#: include/pointdiscount.php:332
+#: include/pointdiscount.php:365
 #, php-format
 msgid "At least one coupon requires %s. Guest order is not supported."
 msgstr ""
 "Au moins un coupon nécessite %s. La commande d’invité n’est pas prise en "
 "charge."
 
-#: include/pointdiscount.php:338
+#: include/pointdiscount.php:371
 #, php-format
 msgid "At least one coupon requires %s. You must log in to continue."
 msgstr ""
 "Au moins un coupon nécessite %s. Vous devez vous connecter pour continuer."
 
-#: include/pointdiscount.php:388
+#: include/pointdiscount.php:421
 #, php-format
 msgid "You do not have enough %1$s to purchase the reward %2$s."
 msgstr "Vous n’avez pas assez %1$s pour acheter la récompense %2$s."
 
-#: include/pointdiscount.php:429
+#: include/pointdiscount.php:462
 #, php-format
 msgid "Customer does not have enough %1$s to purchase the reward %2$s."
 msgstr "Le client n’a pas assez de %1$s pour acheter la récompense %2$s."
 
-#: include/pointdiscount.php:465
+#: include/pointdiscount.php:498
 #, php-format
 msgctxt "order note"
 msgid "Use <i>%1$s</i> from <i>%2$s</i> to get a discount on this order"
@@ -851,37 +850,37 @@ msgstr ""
 "Utilisez <i>%1$s</i> depuis <i>%2$s</i> pour obtenir une remise sur cette "
 "commande"
 
-#: include/pointdiscount.php:553
+#: include/pointdiscount.php:586
 #, php-format
 msgid "Reward from %1$s on Order #%2$s"
 msgstr "Récompense de %1$s sur commande #%2$s"
 
-#: include/pointdiscount.php:570
+#: include/pointdiscount.php:603
 msgid "Action control failed. Try to refresh the page."
 msgstr "Le contrôle d’action a échoué. Essayez de rafraîchir la page."
 
-#: include/pointdiscount.php:574
+#: include/pointdiscount.php:607
 msgid "A connected user is required."
 msgstr "Un utilisateur connecté est requis."
 
-#: include/pointdiscount.php:577
+#: include/pointdiscount.php:610
 msgid "Missing destination or bad format."
 msgstr "Destination manquante ou mauvais format."
 
-#: include/pointdiscount.php:580
+#: include/pointdiscount.php:613
 msgid "Cannot load the Cart. Operation aborted."
 msgstr "Impossible de charger le panier. Opération avortée."
 
-#: include/pointdiscount.php:584
+#: include/pointdiscount.php:617
 msgid "Points and Rewards System missing or access not granted."
 msgstr "Système de points et récompenses manquant ou accès non accordé."
 
-#: include/pointdiscount.php:586
+#: include/pointdiscount.php:619
 msgid "Points and Rewards System does not accept this kind of reward."
 msgstr ""
 "Le système de points et de récompenses n’accepte pas ce genre de récompense."
 
-#: include/pointdiscount.php:616
+#: include/pointdiscount.php:649
 #, php-format
 msgid "Use %1$s from %2$s"
 msgstr "Utilisez %1$s de %2$s"
@@ -1657,16 +1656,16 @@ msgstr ""
 msgid "Reload checkout page after amount modification"
 msgstr "Recharger la page de paiement après modification du montant"
 
-#: include/ui/admin.php:914 include/ui/woocommerce/pointsoncart.php:168
+#: include/ui/admin.php:914 include/ui/woocommerce/pointsoncart.php:241
 msgid "Tool Header"
 msgstr "En-tête d’outil"
 
-#: include/ui/admin.php:917 include/ui/woocommerce/pointsoncart.php:171
-#: include/ui/woocommerce/pointsoncart.php:648
+#: include/ui/admin.php:917 include/ui/woocommerce/pointsoncart.php:244
+#: include/ui/woocommerce/pointsoncart.php:721
 msgid "Loyalty points discount"
 msgstr "Réduction sur les points de fidélité"
 
-#: include/ui/admin.php:930 include/ui/woocommerce/pointsoncart.php:184
+#: include/ui/admin.php:930 include/ui/woocommerce/pointsoncart.php:257
 msgid "Use the styling tool to change the tool's frontend appearance"
 msgstr "Utilisez l’outil de style pour modifier l’apparence de l’outil"
 
@@ -2392,8 +2391,8 @@ msgid "Enter a value"
 msgstr "Saisissez une valeur"
 
 #: include/ui/blocks/integration.php:28
-#: include/ui/shortcodes/availablecoupons.php:170
-#: include/ui/woocommerce/pointsoncart.php:612
+#: include/ui/shortcodes/availablecoupons.php:253
+#: include/ui/woocommerce/pointsoncart.php:685
 msgid "Apply"
 msgstr "Valider"
 
@@ -2755,11 +2754,11 @@ msgstr "Widget Afficher les points"
 msgid "More Details"
 msgstr "Plus de détails"
 
-#: include/ui/shortcodes/availablecoupons.php:39
+#: include/ui/shortcodes/availablecoupons.php:40
 msgid "Available Coupons"
 msgstr "Codes promo disponibles"
 
-#: include/ui/shortcodes/availablecoupons.php:43
+#: include/ui/shortcodes/availablecoupons.php:44
 msgid ""
 "Use this shortcode to display a list of their available coupons to your "
 "customers."
@@ -2767,57 +2766,57 @@ msgstr ""
 "Utilisez ce shortcode pour afficher une liste de leurs coupons disponibles à "
 "vos clients."
 
-#: include/ui/shortcodes/availablecoupons.php:44
+#: include/ui/shortcodes/availablecoupons.php:45
 msgid "This shortcode is better used on the cart or checkout page."
 msgstr ""
 "Ce shortcode est particuloèrement utile la page du panier ou du paiement."
 
-#: include/ui/shortcodes/availablecoupons.php:48
+#: include/ui/shortcodes/availablecoupons.php:49
 msgid ""
 "(Optional) Select how the coupons list is displayed. 4 possible values :"
 msgstr ""
 "(Facultatif) Sélectionnez le mode d’affichage de la liste des coupons. 4 "
 "valeurs possibles :"
 
-#: include/ui/shortcodes/availablecoupons.php:52
+#: include/ui/shortcodes/availablecoupons.php:53
 msgid "Default value. Elements are displayed on top of each other"
 msgstr "Valeur par défaut. Les éléments sont affichés les uns sur les autres"
 
-#: include/ui/shortcodes/availablecoupons.php:56
+#: include/ui/shortcodes/availablecoupons.php:57
 #: include/ui/shortcodes/pointsbalance.php:124
 msgid "Elements are displayed in row"
 msgstr "Les éléments sont affichés en ligne"
 
-#: include/ui/shortcodes/availablecoupons.php:60
+#: include/ui/shortcodes/availablecoupons.php:61
 #: include/ui/shortcodes/pointsbalance.php:120
 msgid "Elements are displayed in a responsive grid"
 msgstr "Les éléments sont affichés dans une grille responsive"
 
-#: include/ui/shortcodes/availablecoupons.php:64
+#: include/ui/shortcodes/availablecoupons.php:65
 msgid "Elements are not wrapped in a container"
 msgstr "Les éléments ne sont pas enveloppés dans un conteneur"
 
-#: include/ui/shortcodes/availablecoupons.php:71
+#: include/ui/shortcodes/availablecoupons.php:72
 msgid ""
 "(Optional) Select how a coupon element is displayed. 3 possible values :"
 msgstr ""
 "(Facultatif) Sélectionnez le mode d’affichage d’un élément coupon. 3 valeurs "
 "possibles :"
 
-#: include/ui/shortcodes/availablecoupons.php:75
+#: include/ui/shortcodes/availablecoupons.php:76
 msgid "Default Value. Horizontal display in stylable elements"
 msgstr "Valeur par défaut. Affichage horizontal dans des éléments stylisables"
 
-#: include/ui/shortcodes/availablecoupons.php:79
+#: include/ui/shortcodes/availablecoupons.php:80
 #: include/ui/shortcodes/pointsbalance.php:58
 msgid "Stylable tile with a background color"
 msgstr "Tuile stylisable avec une couleur d’arrière-plan"
 
-#: include/ui/shortcodes/availablecoupons.php:83
+#: include/ui/shortcodes/availablecoupons.php:84
 msgid "Simple text without stylable elements"
 msgstr "Texte simple sans éléments stylisables"
 
-#: include/ui/shortcodes/availablecoupons.php:90
+#: include/ui/shortcodes/availablecoupons.php:91
 msgid ""
 "(Optional) If set to true, apply buttons are added on each element to apply "
 "the coupon on the cart. Default is false"
@@ -2826,7 +2825,7 @@ msgstr ""
 "sur chaque élément pour appliquer le coupon sur le panier. La valeur par "
 "défaut est false"
 
-#: include/ui/shortcodes/availablecoupons.php:95
+#: include/ui/shortcodes/availablecoupons.php:96
 #, php-format
 msgid ""
 "(Optional) Override the expiration label if any. Use the <b>%s</b> "
@@ -2836,7 +2835,53 @@ msgstr ""
 "<b>%s</b> pour la date. Vous pouvez définir une chaîne vide pour ne rien "
 "afficher."
 
+#: include/ui/shortcodes/availablecoupons.php:102
+msgid "(Optional) Show only coupons created in the last given period."
+msgstr ""
+
+#: include/ui/shortcodes/availablecoupons.php:103
+msgid "A period is defined by a number and a duration unit."
+msgstr ""
+
+#: include/ui/shortcodes/availablecoupons.php:104
+msgid "Accepted units are:"
+msgstr ""
+
 #: include/ui/shortcodes/availablecoupons.php:105
+msgid "for Days"
+msgstr ""
+
+#: include/ui/shortcodes/availablecoupons.php:106
+msgid "for Weeks"
+msgstr ""
+
+#: include/ui/shortcodes/availablecoupons.php:107
+msgid "for Months"
+msgstr ""
+
+#: include/ui/shortcodes/availablecoupons.php:108
+msgid "for Years"
+msgstr ""
+
+#: include/ui/shortcodes/availablecoupons.php:116
+#, php-format
+msgid ""
+"(Optional) Works with %s attribute to build an incremental period instead "
+"the default shift date."
+msgstr ""
+
+#: include/ui/shortcodes/availablecoupons.php:117
+msgid ""
+"Expect the day of the month the period should reset within the original "
+"rolling period."
+msgstr ""
+
+#: include/ui/shortcodes/availablecoupons.php:118
+msgid ""
+"The value is automatically clamped to the last day of the month if necessary."
+msgstr ""
+
+#: include/ui/shortcodes/availablecoupons.php:129
 msgid ""
 "(Optional) Only applies if buttons is set to true. If set to true, clicking "
 "an apply button will refresh the page."
@@ -2844,7 +2889,7 @@ msgstr ""
 "(Facultatif) S’applique uniquement si buttons a la valeur true. Si la valeur "
 "est true, cliquer sur un bouton Appliquer rafraîchira la page."
 
-#: include/ui/shortcodes/availablecoupons.php:182
+#: include/ui/shortcodes/availablecoupons.php:265
 #, php-format
 msgid " (Expires on %s)"
 msgstr " (Expire le %s)"
@@ -2920,7 +2965,7 @@ msgstr ""
 "systèmes actifs sont affichés"
 
 #: include/ui/shortcodes/pointsbalance.php:107
-#: include/ui/woocommerce/pointsoncart.php:218
+#: include/ui/woocommerce/pointsoncart.php:291
 msgid ""
 "You can find the points and rewards systems names in WooRewards → Points and "
 "Rewards"
@@ -2937,7 +2982,7 @@ msgstr ""
 "organisés. 4 valeurs possibles :"
 
 #: include/ui/shortcodes/pointsbalance.php:128
-#: include/ui/woocommerce/pointsoncart.php:149
+#: include/ui/woocommerce/pointsoncart.php:222
 msgid "Elements are displayed on top of another"
 msgstr "Les éléments sont affichés au-dessus d’un autre"
 
@@ -3191,19 +3236,63 @@ msgstr ""
 "<b>%d</b> commandes vérifiées, y compris <b>%d</b> traitées pour un montant "
 "de <b>%d</b> points."
 
+#: include/ui/woocommerce/pointsoncart.php:90
+#, php-format
+msgctxt "Points on cart message"
+msgid "%s discount applied successfully."
+msgstr ""
+
+#: include/ui/woocommerce/pointsoncart.php:93
+#, php-format
+msgctxt "Points on cart message"
+msgid "%s discount removed successfully."
+msgstr ""
+
+#: include/ui/woocommerce/pointsoncart.php:114
+#, php-format
+msgctxt "Points on cart error"
+msgid "Sorry, %s discount cannot be applied."
+msgstr ""
+
+#: include/ui/woocommerce/pointsoncart.php:117
+#, php-format
+msgctxt "Points on cart error"
+msgid "Sorry, %s discount is no longer available."
+msgstr ""
+
+#: include/ui/woocommerce/pointsoncart.php:120
+#, php-format
+msgctxt "Points on cart error"
+msgid ""
+"Sorry, %s discount has been removed from your order because the requirements "
+"are no longer met."
+msgstr ""
+
+#: include/ui/woocommerce/pointsoncart.php:123
+#, php-format
+msgctxt "Points on cart error"
+msgid "Sorry, %s discount cannot be used in conjunction with other coupons."
+msgstr ""
+
 #: include/ui/woocommerce/pointsoncart.php:127
+#, php-format
+msgctxt "Points on cart error"
+msgid "Sorry, %s discount is not applicable to selected products."
+msgstr ""
+
+#: include/ui/woocommerce/pointsoncart.php:200
 msgid "Points on Cart Tool"
 msgstr "Outil de points sur panier"
 
-#: include/ui/woocommerce/pointsoncart.php:131
+#: include/ui/woocommerce/pointsoncart.php:204
 msgid "This shortcode is used to display the Points on Cart tool."
 msgstr "Ce shortcode est utilisé pour afficher l’outil Points on Cart."
 
-#: include/ui/woocommerce/pointsoncart.php:132
+#: include/ui/woocommerce/pointsoncart.php:205
 msgid "You can customize its appearance in the Widgets Tab."
 msgstr "Vous pouvez personnaliser son apparence dans l’onglet Widgets."
 
-#: include/ui/woocommerce/pointsoncart.php:136
+#: include/ui/woocommerce/pointsoncart.php:209
 msgid ""
 "(Optional) Set it to true to force a page reload when customers modify the "
 "points they want to apply on the order"
@@ -3212,17 +3301,17 @@ msgstr ""
 "lorsque les clients modifient les points qu’ils souhaitent appliquer sur la "
 "commande"
 
-#: include/ui/woocommerce/pointsoncart.php:141
+#: include/ui/woocommerce/pointsoncart.php:214
 msgid "(Optional) Select how the tool is displayed. 3 possible values :"
 msgstr ""
 "(Facultatif) Sélectionnez le mode d’affichage de l’outil. 3 valeurs "
 "possibles :"
 
-#: include/ui/woocommerce/pointsoncart.php:145
+#: include/ui/woocommerce/pointsoncart.php:218
 msgid "Default value. Elements are displayed in one line"
 msgstr "Valeur par défaut. Les éléments sont affichés sur une seule ligne"
 
-#: include/ui/woocommerce/pointsoncart.php:153
+#: include/ui/woocommerce/pointsoncart.php:226
 msgid ""
 "If you present this tool next to the cart totals block, use this option to "
 "display the tool vertically with some spacing"
@@ -3230,7 +3319,7 @@ msgstr ""
 "Si vous présentez cet outil à côté du bloc totaux du panier, utilisez cette "
 "option pour afficher l’outil verticalement avec un certain espacement"
 
-#: include/ui/woocommerce/pointsoncart.php:160
+#: include/ui/woocommerce/pointsoncart.php:233
 msgid ""
 "(Optional, default is false) Set it to true to show this widget only if the "
 "current customer has points to spend."
@@ -3238,11 +3327,11 @@ msgstr ""
 "(Facultatif, faux par défaut) Mettez-le à true pour n'afficher ce widget que "
 "si le client actuel a des points à dépenser."
 
-#: include/ui/woocommerce/pointsoncart.php:195
+#: include/ui/woocommerce/pointsoncart.php:268
 msgid "Maximum Point Amount on Cart"
 msgstr "Montant maximum de point sur panier"
 
-#: include/ui/woocommerce/pointsoncart.php:199
+#: include/ui/woocommerce/pointsoncart.php:272
 msgid ""
 "This shortcode will show the maximum quantity of Point that could be used on "
 "this cart."
@@ -3250,7 +3339,7 @@ msgstr ""
 "Ce shortcode affichera la quantité maximale de point qui pourrait être "
 "utilisée sur ce panier."
 
-#: include/ui/woocommerce/pointsoncart.php:203
+#: include/ui/woocommerce/pointsoncart.php:276
 msgid ""
 "(Optional) If set, the amount will be a simple text. Otherwise, it will be "
 "presented inside a stylable element"
@@ -3258,7 +3347,7 @@ msgstr ""
 "(Facultatif) S’il est défini, le montant sera un texte simple. Sinon, il "
 "sera présenté à l’intérieur d’un élément stylable"
 
-#: include/ui/woocommerce/pointsoncart.php:217
+#: include/ui/woocommerce/pointsoncart.php:290
 msgid ""
 "(Optional, comma separated) Select the points and rewards systems you want "
 "to show. If left empty, the first available system will be displayed"
@@ -3267,52 +3356,52 @@ msgstr ""
 "de récompenses que vous souhaitez afficher. S’il est laissé vide, tous les "
 "systèmes actifs sont affichés"
 
-#: include/ui/woocommerce/pointsoncart.php:347
+#: include/ui/woocommerce/pointsoncart.php:420
 msgid "Demo. System"
 msgstr "Démo. Système"
 
-#: include/ui/woocommerce/pointsoncart.php:610
+#: include/ui/woocommerce/pointsoncart.php:683
 #, php-format
 msgid "Your %s :"
 msgstr "Vos %s :"
 
-#: include/ui/woocommerce/pointsoncart.php:611
+#: include/ui/woocommerce/pointsoncart.php:684
 msgctxt "Part of Points to use as reward"
 msgid "Used Amount :"
 msgstr "Montant utilisé :"
 
-#: include/ui/woocommerce/pointsoncart.php:613
+#: include/ui/woocommerce/pointsoncart.php:686
 msgid "Use Max Amount"
 msgstr "Utiliser le montant maximum"
 
-#: include/ui/woocommerce/pointsoncart.php:700
+#: include/ui/woocommerce/pointsoncart.php:773
 #, php-format
 msgid "Every %s you use is worth %s"
 msgstr "Chaque %s que vous utilisez vaut %s"
 
-#: include/ui/woocommerce/pointsoncart.php:711
+#: include/ui/woocommerce/pointsoncart.php:784
 #, php-format
 msgid "You can use a minimum of %s on a single cart."
 msgstr "Vous pouvez utiliser un minimum de %s sur un seul panier."
 
-#: include/ui/woocommerce/pointsoncart.php:721
+#: include/ui/woocommerce/pointsoncart.php:794
 #, php-format
 msgid "You can use a maximum of %s on a single cart."
 msgstr "Vous ne pouvez pas utiliser plus de %s sur un même panier."
 
-#: include/ui/woocommerce/pointsoncart.php:731
+#: include/ui/woocommerce/pointsoncart.php:804
 #, php-format
 msgid "You can only use your %s to reduce the cart total by %s%%"
 msgstr ""
 "Vous ne pouvez utiliser vos %s que pour réduire le total du panier de %s%%"
 
-#: include/ui/woocommerce/pointsoncart.php:742
+#: include/ui/woocommerce/pointsoncart.php:815
 #, php-format
 msgid "You can only use your %s to reduce the cart total to %s"
 msgstr ""
 "Vous ne pouvez utiliser vos %s que pour réduire le total du panier jusqu'à %s"
 
-#: include/ui/woocommerce/pointsoncart.php:753
+#: include/ui/woocommerce/pointsoncart.php:826
 #, php-format
 msgid "The cart subtotal needs to be over %s if you want to use %s"
 msgstr ""
