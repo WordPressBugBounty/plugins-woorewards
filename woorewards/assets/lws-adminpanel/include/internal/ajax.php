@@ -42,7 +42,7 @@ class Ajax
 			\update_site_option(
 				'lws_adminpanel_notices',
 				array_filter(
-					\get_site_option('lws_adminpanel_notices', array()),
+					(array)\get_site_option('lws_adminpanel_notices', array()),
 					function($k)use($key){return $key!=$k;},
 					ARRAY_FILTER_USE_KEY
 				)

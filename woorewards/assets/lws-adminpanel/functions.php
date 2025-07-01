@@ -17,7 +17,7 @@ if( !function_exists('lws_admin_delete_notice') )
 	/** @param $option (array) key are level (string: error, warning, success, info), dismissible (bool), forgettable (bool), once (bool) */
 	function lws_admin_delete_notice($key)
 	{
-		$notices = get_site_option('lws_adminpanel_notices', array());
+		$notices = (array)get_site_option('lws_adminpanel_notices', array());
 		if( isset($notices[$key]) )
 		{
 			unset($notices[$key]);
@@ -32,7 +32,7 @@ if( !function_exists('lws_admin_add_notice') )
 	function lws_admin_add_notice($key, $message, $options=array())
 	{
 		$options['message'] = $message;
-		\update_site_option('lws_adminpanel_notices', array_merge(get_site_option('lws_adminpanel_notices', array()), array($key => $options)));
+		\update_site_option('lws_adminpanel_notices', array_merge((array)get_site_option('lws_adminpanel_notices', array()), array($key => $options)));
 	}
 }
 

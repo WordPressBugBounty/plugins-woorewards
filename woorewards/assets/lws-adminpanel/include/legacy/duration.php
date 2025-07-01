@@ -107,7 +107,7 @@ class Duration
 
 	/** @return \DateTimeInterface clone of given arg.
 	 * @param $d if null, use now(). */
-	function addDate(\DateTimeInterface $d=null)
+	function addDate(?\DateTimeInterface $d=null): \DateTimeInterface
 	{
 		$d = $d ? clone $d : \date_create();
 		return $d->add($this->toInterval());
@@ -115,19 +115,18 @@ class Duration
 
 	/** @return \DateTimeInterface clone of given arg.
 	 * @param $d if null, use now(). */
-	function subDate(\DateTimeInterface $d=null)
+	function subDate(?\DateTimeInterface $d=null): \DateTimeInterface
 	{
 		$d = $d ? clone $d : \date_create();
 		return $d->sub($this->toInterval());
 	}
 
 	/** Compute the date at end of duration.
-	 * @param $from (false|\DateTime) Starting date, default false means today.
+	 * @param $from (null|false|\DateTimeInterface) Starting date, default false means today.
 	 * @return \DateTime = $form + interval  */
-	function getEndingDate($from=false)
+	function getEndingDate($from=false): \DateTimeInterface
 	{
-		if( false === $from )
-			$from = \date_create();
+		$from = $from ? clone $from : \date_create();
 		return $from->add($this->toInterval());
 	}
 
@@ -155,19 +154,21 @@ class Duration
 		return new \DateInterval($this->toString());
 	}
 
+	/** @param \DateInterval $interval
+	 * @return \LWS\Adminpanel\Tools\Duration */
 	static function fromInterval($interval)
 	{
 		static $def = false;
 		if( !$def )
 		{
-			$def = array(
+			$def = array_intersect_key(array(
 				'Y' => '%y',
 				'M' => '%m',
 				'D' => '%d',
 				'H' => '%h',
 				'I' => '%i',
 				'S' => '%s',
-			);
+			), \array_fill_keys(self::getSupportedPeriodsKeys(true), true));
 		}
 		foreach( $def as $out => $in )
 		{
@@ -181,7 +182,7 @@ class Duration
 
 	/** @param $interval first int is assumed as delay and first [YMD] as unit. if unit is omitted, day is assumed.
 	 * A starting 'P' is ignored. */
-	static function fromString($interval)
+	static function fromString($interval, $falseOnError=false)
 	{
 		if( empty($interval) )
 			return self::void();
@@ -195,7 +196,12 @@ class Duration
 				$match[3] = str_replace('M', 'I', $match[3]);
 			return new self($match[2], $match[3]);
 		}
-		else
+		elseif ($falseOnError) {
+			if (\is_numeric($interval))
+				return new self(intval($interval), 'D');
+			else
+				return false;
+		} else
 			return new self(intval($interval), 'D');
 	}
 
@@ -270,7 +276,7 @@ class Duration
 		$this->number *= $qty;
 	}
 
-	protected function __construct($n=0, $p='D')
+	function __construct($n=0, $p='D')
 	{
 		$this->number = abs(intval($n));
 		$this->period = in_array($p, self::getSupportedPeriodsKeys(true)) ? $p : 'D';
@@ -295,12 +301,15 @@ class Duration
 				'M' => __("Months", 'lws-adminpanel'),
 				'Y' => __("Years", 'lws-adminpanel'),
 			);
-			$allPeriods =  array_merge($periods, array(
-				'W' => __("Weeks", 'lws-adminpanel'),
-				'H' => __("Hours", 'lws-adminpanel'),
-				'I' => __("Minutes", 'lws-adminpanel'),
+			$allPeriods =  array(
 				'S' => __("Seconds", 'lws-adminpanel'),
-			));
+				'I' => __("Minutes", 'lws-adminpanel'),
+				'H' => __("Hours", 'lws-adminpanel'),
+				'D' => __("Days", 'lws-adminpanel'),
+				'W' => __("Weeks", 'lws-adminpanel'),
+				'M' => __("Months", 'lws-adminpanel'),
+				'Y' => __("Years", 'lws-adminpanel'),
+			);
 		}
 		return \apply_filters('lws_adminpanel_duration_supported_periods', $extended ? $allPeriods : $periods);
 	}

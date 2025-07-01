@@ -309,7 +309,7 @@ class Head
 			'asettings'=> __("Advanced Settings", 'lws-adminpanel'),
 			'support'  => __("Support", 'lws-adminpanel'),
 			'tshooting'=> __("Troubleshooting", 'lws-adminpanel'),
-			'chat'     => __("Live Chat", 'lws-adminpanel'),
+		//	'chat'     => __("Live Chat", 'lws-adminpanel'),
 			'doc'      => __("Documentation", 'lws-adminpanel'),
 			'patch'    => __("Patch Notes", 'lws-adminpanel'),
 			'lic'      => __("License Information", 'lws-adminpanel'),
@@ -378,12 +378,12 @@ EOT;
 		echo "<div class='top-menu-item-text'>{$labels['tshooting']}</div></a>";
 		*/
 
-		/** Live Chat */
-		echo "<a href='{$settings['chat']}' target='_blank' class='top-menu-item'>";
-		echo "<div class='top-menu-item-icon lws-icon-discord'></div>";
-		echo "<div class='top-menu-item-text'>{$labels['chat']}</div></a>";
+		// Live Chat
+		// echo "<a href='{$settings['chat']}' target='_blank' class='top-menu-item'>";
+		// echo "<div class='top-menu-item-icon lws-icon-discord'></div>";
+		// echo "<div class='top-menu-item-text'>{$labels['chat']}</div></a>";
 
-		/** Live Chat */
+		/** Web documentation */
 		echo "<a href='{$settings['doc']}' target='_blank' class='top-menu-item separator'>";
 		echo "<div class='top-menu-item-icon lws-icon-books'></div>";
 		echo "<div class='top-menu-item-text'>{$labels['doc']}</div></a>";
@@ -559,7 +559,7 @@ EOT;
 			'version'    => \apply_filters('lws_adminpanel_plugin_version_'     . $id, '', $this->id),
 			'origin'     => \apply_filters('lws_adminpanel_plugin_origin_'      . $id, array('LWS', 'Long Watch Studio'), $this->id),
 			'doc'        => \apply_filters('lws_adminpanel_documentation_url_'  . $id, __('https://plugins.longwatchstudio.com/knowledge-base/', 'lws-adminpanel'), $this->id),
-			'chat'       => \apply_filters('lws_adminpanel_plugin_chat_url_'    . $id, self::CHAT, $this->id),
+		//	'chat'       => \apply_filters('lws_adminpanel_plugin_chat_url_'    . $id, self::CHAT, $this->id),
 			'mailto'     => \apply_filters('lws_adminpanel_plugin_support_email'. $id, self::MAILTO, $this->id),
 			'purchase'   => false,
 			'lite'       => true,

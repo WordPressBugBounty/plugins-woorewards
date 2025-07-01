@@ -321,7 +321,8 @@ namespace LWS\WOOREWARDS\Core{
 				$users->sponsor_id = false;
 			if (!$users->sponsor_id)
 				$users->origin = false;
-			return $users;
+
+			return \apply_filters('lws_woorewards_order_sponsored_by', $users, $order, $guestAllowed, $ref);
 		}
 
 		/** @param $sponsored (int|string|\WP_User) user objet or user id.

@@ -33,6 +33,8 @@ class Pool
 	protected $drmPointRate        = 1.0;              /// directRewardMode: value of a point in current WC currency
 	protected $drmCats             = array();          /// directRewardMode restriction: assign category to virtual coupon
 
+	public $cmpData = null;
+
 	/** A pool is active if set as activated */
 	public function isActive()
 	{
@@ -51,7 +53,7 @@ class Pool
 	 *	@param $value (int) final number of point earned.
 	 *	@param $reason (string) optional, the cause of the earning.
 	 *	@param $origin (\LWS\WOOREWARDS\Abstracts\Event) optional, the source Event. */
-	public function addPoints($userId, $value, $reason='', \LWS\WOOREWARDS\Abstracts\Event $origin=null, $origin2=false)
+	public function addPoints($userId, $value, $reason='', ?\LWS\WOOREWARDS\Abstracts\Event $origin=null, $origin2=false)
 	{
 		$old = $this->getPoints($userId);
 		$value = \apply_filters('lws_woorewards_core_pool_point_add', $value, $userId, $reason, $this, $origin);
@@ -95,7 +97,7 @@ class Pool
 	 *	@param $value (int) the point amount of a user to substract.
 	 *	@param $reason (string|\LWS\WOOREWARDS\Core\Trace) optional, the cause of the earning.
 	 *	@param $origin (\LWS\WOOREWARDS\Abstracts\Unlockable) optional, the source Event. */
-	public function usePoints($userId, $value, $reason='', \LWS\WOOREWARDS\Abstracts\Unlockable $origin=null, $origin2=false)
+	public function usePoints($userId, $value, $reason='', ?\LWS\WOOREWARDS\Abstracts\Unlockable $origin=null, $origin2=false)
 	{
 		$old = $this->getPoints($userId);
 		$value = \apply_filters('lws_woorewards_core_pool_point_sub', $value, $userId, $reason, $this, $origin);
@@ -1016,14 +1018,14 @@ GROUP BY `user_id`", (int)$order->get_id(), (int)\get_current_blog_id()), OBJECT
 			return $a->type == self::T_STANDARD ? -1 : 1;
 		}
 
-		if( !isset($a->cmpData) ) {
+		if( null === $a->cmpData ) {
 			$a->cmpData = array(
 //				'label' => $a->getOption('display_title'),
 				'loading' => \intval($a->getOption('loading_order', 1024)),
 				'enabled' => in_array($a->status, array('publish', 'private'))
 			);
 		}
-		if( !isset($b->cmpData) ) {
+		if( null === $b->cmpData ) {
 			$b->cmpData = array(
 //				'label' => $b->getOption('display_title'),
 				'loading' => \intval($b->getOption('loading_order', 1024)),

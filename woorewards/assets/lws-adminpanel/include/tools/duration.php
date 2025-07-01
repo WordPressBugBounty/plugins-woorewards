@@ -107,7 +107,7 @@ class Duration
 
 	/** @return \DateTimeInterface clone of given arg.
 	 * @param $d if null, use now(). */
-	function addDate(\DateTimeInterface $d=null)
+	function addDate(?\DateTimeInterface $d=null): \DateTimeInterface
 	{
 		$d = $d ? clone $d : \date_create();
 		return $d->add($this->toInterval());
@@ -115,19 +115,18 @@ class Duration
 
 	/** @return \DateTimeInterface clone of given arg.
 	 * @param $d if null, use now(). */
-	function subDate(\DateTimeInterface $d=null)
+	function subDate(?\DateTimeInterface $d=null): \DateTimeInterface
 	{
 		$d = $d ? clone $d : \date_create();
 		return $d->sub($this->toInterval());
 	}
 
 	/** Compute the date at end of duration.
-	 * @param $from (false|\DateTime) Starting date, default false means today.
+	 * @param $from (null|false|\DateTimeInterface) Starting date, default false means today.
 	 * @return \DateTime = $form + interval  */
-	function getEndingDate($from=false)
+	function getEndingDate($from=false): \DateTimeInterface
 	{
-		if( false === $from )
-			$from = \date_create();
+		$from = $from ? clone $from : \date_create();
 		return $from->add($this->toInterval());
 	}
 
@@ -155,6 +154,8 @@ class Duration
 		return new \DateInterval($this->toString());
 	}
 
+	/** @param \DateInterval $interval
+	 * @return \LWS\Adminpanel\Tools\Duration */
 	static function fromInterval($interval)
 	{
 		static $def = false;

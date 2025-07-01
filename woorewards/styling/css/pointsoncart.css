@@ -101,6 +101,12 @@ body.theme-storefront form.woocommerce-checkout .lws-wr-pointsoncart {
     clear: right;
     width: 41%;
 }
+@media screen and (orientation:portrait) {
+	body.theme-storefront form.woocommerce-checkout .lws-wr-pointsoncart {
+		float: none;
+		width: 100%;
+	}
+}
 body.theme-storefront form.woocommerce-checkout .woocommerce-billing-fields .lws-wr-pointsoncart {
     float: left;
     width: auto;
