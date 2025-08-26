@@ -167,9 +167,9 @@ class UserHistory
 								\esc_attr(\LWS\WOOREWARDS\Core\PointStack::dateTimeI18n($item['op_date'])),
 								\LWS\WOOREWARDS\Core\PointStack::dateI18n($item['op_date'])
 							),
-							'descr'  => $item['op_reason'],
-							'points' => $item['op_value'],
-							'total'  => $item['op_result'],
+							'descr'  => \wp_kses_post($item['op_reason']),
+							'points' => (int)$item['op_value'],
+							'total'  => (int)$item['op_result'],
 						);
 					}
 				}
@@ -215,14 +215,24 @@ class UserHistory
 		foreach ($history as $item) {
 			foreach ($atts['columns'] as $i => $column) {
 				$value = isset($item[$column]) ? $item[$column] : '';
-				$content .= sprintf("\n\t\t<div class='lwss_selectable cell %s history-grid-%s' data-type='%s'>%s</div>", \esc_attr($column), \esc_attr($column), $atts['headers'][$i], $value);
+				$content .= sprintf(
+					"\n\t\t<div class='lwss_selectable cell %s history-grid-%s' data-type='%s'>%s</div>",
+					\esc_attr($column),
+					\esc_attr($column),
+					$atts['headers'][$i],
+					$value
+				);
 			}
 		}
 
 		$gridTemplateColumns = implode(' ', array_fill_keys($atts['columns'], 'auto'));
 		$head = '';
 		for ($i = 0; $i < count($atts['columns']); ++$i)
-			$head .= sprintf("\n\t\t<div class='lwss_selectable history-grid-title %s' data-type='Title'>%s</div>", \esc_attr($atts['columns'][$i]), isset($atts['headers'][$i]) ? $atts['headers'][$i] : '');
+			$head .= sprintf(
+				"\n\t\t<div class='lwss_selectable history-grid-title %s' data-type='Title'>%s</div>",
+				\esc_attr($atts['columns'][$i]),
+				$atts['headers'][$i] ?? ''
+			);
 
 		return <<<EOT
 <div class='lwss_selectable wr-history-grid' data-type='Grid' style='grid-template-columns:{$gridTemplateColumns}'>
@@ -260,6 +270,6 @@ EOT;
 					$headers[$i] = $atts['columns'][$i];
 			}
 		}
-		return $headers;
+		return \array_map('\wp_kses_post', $headers);
 	}
 }

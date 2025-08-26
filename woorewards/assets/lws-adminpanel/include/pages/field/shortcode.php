@@ -49,7 +49,7 @@ class Shortcode extends \LWS\Adminpanel\Pages\Field
 			<div class="shortcode-wrapper lws_ui_value_copy">
 				<div class="title">{$texts['title']}</div>
 				<div class="content">{$title}</div>
-				<div class="copy-icon lws-icon-copy copy"></div>
+				<button type="button" class="copy-icon lws-icon-copy copy"></button>
 			</div>
 EOT;
 		}

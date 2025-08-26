@@ -1326,9 +1326,9 @@ EOT;
 				\wp_delete_post($post_id, true);
 		}
 
-		$wpdb->query("DROP TABLE IF EXISTS {$wpdb->prefix}lws_wr_historic");
-		$wpdb->query("DROP TABLE IF EXISTS {$wpdb->prefix}lws_wr_achieved_log");
-		// do not drop {$wpdb->base_prefix}lws_wr_tinyurls since such url can be widely shared
+		$wpdb->query("TRUNCATE {$wpdb->base_prefix}lws_wr_historic");
+		$wpdb->query("TRUNCATE {$wpdb->prefix}lws_wr_achieved_log");
+		// do not truncate {$wpdb->base_prefix}lws_wr_tinyurls since such url can be widely shared
 
 		// user meta
 		$ukeys = \implode("','", array(

@@ -268,6 +268,7 @@ class AvailableCoupons
 					$descr .= \str_replace('%s', $date, $atts['expire-html']);
 				}
 			}
+			$descr = \wp_kses_post($descr);
 			$button = '';
 			if ($btemplate) {
 				if ($reloadNonce)

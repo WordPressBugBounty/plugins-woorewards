@@ -6,12 +6,12 @@
  * Plugin URI: https://plugins.longwatchstudio.com/product/woorewards/
  * Author: Long Watch Studio
  * Author URI: https://longwatchstudio.com
- * Version: 5.4.14
+ * Version: 5.5.0
  * License: Copyright LongWatchStudio 2022
  * Text Domain: woorewards-lite
  * Domain Path: /languages
  * WC requires at least: 7.1.0
- * WC tested up to: 9.9
+ * WC tested up to: 10.1
  *
  * Copyright (c) 2022 Long Watch Studio (email: plugins@longwatchstudio.com). All rights reserved.
  *
@@ -110,7 +110,7 @@ final class LWS_WooRewards
 	 */
 	private function defineConstants()
 	{
-		define('LWS_WOOREWARDS_VERSION', '5.4.14');
+		define('LWS_WOOREWARDS_VERSION', '5.5.0');
 		define('LWS_WOOREWARDS_FILE', __FILE__);
 		define('LWS_WOOREWARDS_DOMAIN', 'woorewards-lite');
 		define('LWS_WOOREWARDS_PAGE', 'woorewards');
@@ -127,7 +127,7 @@ final class LWS_WooRewards
 		define('LWS_WOOREWARDS_IMG', 		plugins_url('/img', LWS_WOOREWARDS_FILE));
 
 		global $wpdb;
-		$wpdb->lwsWooRewardsHistoric = $wpdb->prefix . 'lws_wr_historic';
+		$wpdb->lwsWooRewardsHistoric = $wpdb->base_prefix . 'lws_wr_historic';
 	}
 
 	public function extensionListActions($links, $file)
@@ -148,7 +148,7 @@ final class LWS_WooRewards
 
 	public function addPluginVersion($url)
 	{
-		return '5.4.14';
+		return '5.5.0';
 	}
 
 	public function addDocUrl($url)

@@ -101,13 +101,13 @@ class PointsValue
 			);
 			if ($atts['raw']) {
 				if ($atts['text'] != '') {
-					$content .= $atts['text'] . ' ';
+					$content .= \wp_kses_post($atts['text']) . ' ';
 				}
 				$content .= $formatted_value;
 			} else {
 				$content .= "<span class='wr-points-value-wrapper'>";
 				if ($atts['text'] != '') {
-					$content .= "<span class='wr-points-value-text'>" . $atts['text'] . " </span>";
+					$content .= "<span class='wr-points-value-text'>" . \wp_kses_post($atts['text']) . " </span>";
 				}
 				$content .= "<span class='wr-points-value-value'>" . $formatted_value . " </span>";
 				$content .= "</span>";

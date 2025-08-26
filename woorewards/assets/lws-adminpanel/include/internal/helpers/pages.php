@@ -3,7 +3,7 @@ if( !defined( 'ABSPATH' ) ) exit();
 
 require LWS_ADMIN_PANEL_INCLUDES . '/internal/editlistcontroler.php';
 
-/** @param $pages an array of page description.
+/** @param array $pages page description.
  * for examples @see Pages::makePages or @see examples.php */
 function lws_register_pages($pages)
 {
@@ -11,9 +11,9 @@ function lws_register_pages($pages)
 }
 
 /** explore the lwss pseudocss file to create customizable values edition fields.
- * @param $url the path to .lwss file.
- * @param $textDomain the text-domain to use for wordpress translation of field ID to human readable title.
- * @return array of field to use in pages descrption array. */
+ * @param string $url the path to .lwss file.
+ * @param string $textDomain the text-domain to use for wordpress translation of field ID to human readable title.
+ * @return array of field to use in pages description array. */
 function lwss_to_fields($url, $textDomain, $fieldsBefore=null, $fieldsAfter=null)
 {
 	$fields = \LWS\Adminpanel\Tools\PseudoCss::toFieldArray($url, $textDomain);
@@ -42,11 +42,11 @@ function lws_mail_settings($templates)
 }
 
 /** Instanciate a list to insert in a group array associated with id 'editlist'.
- * @param $editionId (string) is a unique id which refer to this EditList.
- * @param $recordUIdKey (string) is the key which will be used to ensure record unicity.
- * @param $source instance which etends EditListSource.
- * @param $mode allows list for modification (use bitwise operation, @see ALL)
- * @param $filtersAndActions an array of instance of EditList\Action or EditList\Filter. */
+ * @param $editionId string is a unique id which refer to this EditList.
+ * @param $recordUIdKey string is the key which will be used to ensure record unicity.
+ * @param $source object instance which extends EditListSource.
+ * @param $mode int allows list for modification (use bitwise operation, @see ALL)
+ * @param $filtersAndActions array of instance of EditList\Action or EditList\Filter. */
 function lws_editlist( $editionId, $recordUIdKey, $source, $mode = \LWS\Adminpanel\EditList::ALL, $filtersAndActions=array() )
 {
 	return new \LWS\Adminpanel\Internal\EditlistControler($editionId, $recordUIdKey, $source, $mode, $filtersAndActions);

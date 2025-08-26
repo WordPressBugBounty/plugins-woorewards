@@ -215,6 +215,7 @@ class PointsDisplayer extends \LWS\WOOREWARDS\Ui\Widget
 				$displaytitle = \apply_filters('wpml_translate_single_string', $displaytitle, 'Widgets', "WooRewards Show Points - title");
 			}
 			if ($displaytitle || $this->stygen) {
+				$displaytitle = \wp_kses_post($displaytitle);
 				$displaytitle = <<<EOT
 				<div class='lwss_selectable lwss_modify lws-displaypoints-label' data-id='lws_woorewards_displaypoints_title' data-type='Header'>
 					<div class='lwss_modify_content'>{$displaytitle}</div>
@@ -229,7 +230,7 @@ EOT;
 					$atts['more_details_url'] = \apply_filters('lws_woorewards_displaypoints_detail_url', '', $poolname, $pointstotal, $this->stygen);
 				}
 				if ($atts['more_details_url']) {
-					$href = ($this->stygen ? '#' : \esc_attr($atts['more_details_url']));
+					$href = ($this->stygen ? '#' : \esc_attr(\sanitize_url($atts['more_details_url'])));
 					$label = \lws_get_option('lws_woorewards_button_more_details', __("More Details", 'woorewards-lite'));
 					if (!$this->stygen) {
 						$label = \apply_filters('wpml_translate_single_string', $label, 'Widgets', "WooRewards Show Points - details");

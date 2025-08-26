@@ -4,11 +4,11 @@ Tags: loyalty, points, referrals, rewards, coupons
 Requires at least: 5.3
 Tested up to: 6.8
 Requires PHP: 7.3.0
-Stable tag: 5.4.14
+Stable tag: 5.5.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Free top rated points and rewards program to retain your customers, grow your sales and get new customers
+Free top-rated points and rewards program to retain your customers, grow your sales and get new customers
 
 == Description ==
 
@@ -108,6 +108,11 @@ Yes, High-Performance Order Storage is supported.
 5. Styling options
 
 == Changelog ==
+
+= 5.5.0 =
+* Fix - Patchstack PSID 9ac113201d6c minor XSS vulnerability
+* Fix - Referral link copy button on iOS
+* Fix - Expiration due to inactivity on multisite
 
 = 5.4.14 =
 * Tag - Require PHP 7.3

@@ -218,7 +218,7 @@ class Conveniences
 			$tobase = strlen($map_base);
 			$result = '';
 			while ($decimal >= $tobase) {
-				$result = $map_base[intval($decimal%$tobase)].$result;
+				$result = $map_base[intval($decimal) % $tobase].$result;
 				$decimal /= $tobase;
 			}
 			return $map_base[intval($decimal)].$result;

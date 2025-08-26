@@ -66,6 +66,10 @@ class Updater
 			}
 		}
 
+		if (\version_compare($fromVersion, '5.4.15', '<')) {
+			self::mergeAllHistorics();
+		}
+
 		if( version_compare($fromVersion, '3.13.2', '<') )
 		{
 			self::updateNamesWPML();
@@ -152,6 +156,53 @@ class Updater
 		\update_option('lws_woorewards_ignore_woocommerce_disable_coupons', '');
 	}
 
+	/** @retrun bool merge done successfully */
+	public static function mergeAllHistorics(): bool
+	{
+		if (!\is_multisite()) return true;
+
+		global $wpdb;
+		// only do it once on main site
+		if ($wpdb->base_prefix !== $wpdb->prefix) return false;
+
+		$target  = $wpdb->base_prefix . 'lws_wr_historic';
+		$sources = \array_diff(
+			(array) $wpdb->get_col("SHOW TABLES LIKE '%lws_wr_historic'"),
+			[$target]
+		);
+		if (!$sources) return true;
+
+		try {
+			// try to give 5min to let db copy under IIS servers,
+			// others do not take into account time spent outside the script itself
+			@\set_time_limit(5 * 60);
+		} catch (\Exception $_e) {}
+
+		// compose the query
+		$query = \implode(';', \array_map(function($table) use ($target) {
+			$fields = '`user_id`, `stack`, `mvt_date`, `points_moved`, `new_total`, `commentar`, `origin`, `origin2`, `order_id`, `blog_id`';
+			return sprintf(
+				'INSERT INTO `%s` (%s) SELECT %s FROM `%s`',
+				$target,
+				$fields,
+				$fields,
+				$table
+			);
+		}, $sources));
+
+		// merge all history into main one
+		$done = (bool)$wpdb->query($query);
+
+		if ($done) {
+			// prevent lines duplication
+			$wpdb->query( \implode( ';', \array_map( function ( $table ) {
+				return sprintf( 'TRUNCATE `%s`', $table );
+			}, $sources ) ) );
+		}
+
+		return $done;
+	}
+
 	/** keep old default value since it became Off by default */
 	private static function setOldMailEnabledDefaultValue()
 	{
@@ -221,7 +272,7 @@ EOT;
 	{
 		global $wpdb;
 		/// Alter table historic: Add stack field
-		$thistoric = $wpdb->prefix.'lws_wr_historic';
+		$thistoric = $wpdb->base_prefix . 'lws_wr_historic';
 		$charset_collate = $wpdb->get_charset_collate();
 		$sql = "CREATE TABLE $thistoric (
 			id bigint(20) NOT NULL AUTO_INCREMENT,
@@ -240,7 +291,7 @@ EOT;
 			KEY `stack` (`stack`)
 			) $charset_collate;";
 
-		$tSuccess = $wpdb->prefix.'lws_wr_achieved_log';
+		$tSuccess = $wpdb->prefix . 'lws_wr_achieved_log';
 		$sqlAchieved = "CREATE TABLE $tSuccess (
 			`id` bigint(30) NOT NULL AUTO_INCREMENT,
 			`user_id` bigint(20) NOT NULL COMMENT 'recipient user id',
@@ -269,7 +320,7 @@ EOT;
 	private static function databaseMigrationv2v3()
 	{
 		global $wpdb;
-		$thistoric = $wpdb->prefix.'lws_wr_historic';
+		$thistoric = $wpdb->base_prefix . 'lws_wr_historic';
 
 		$default = !empty(self::$defaultStackId) ? self::$defaultStackId : 'default';
 

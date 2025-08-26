@@ -21,7 +21,7 @@ class Admin
 
 		if (\is_admin()) {
 			\add_filter('lws_format_copypast', function($text){
-				return "<span class='lws-group-descr-copy lws_ui_value_copy'><span class='lws-group-descr-copy-text content' tabindex='0'>{$text}</span><span class='lws-group-descr-copy-icon lws-icon lws-icon-copy copy'></span></span>";
+				return "<span class='lws-group-descr-copy lws_ui_value_copy'><span class='lws-group-descr-copy-text content' tabindex='0'>{$text}</span><button type='button' class='lws-group-descr-copy-icon lws-icon lws-icon-copy copy'></button></span>";
 			});
 
 			/// when user cannot dismiss a notice (other plugin crash JS), let show the button as a form submit.

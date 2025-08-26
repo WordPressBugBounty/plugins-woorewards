@@ -143,7 +143,10 @@ class ReferralLink
 		// LINK URL
 		$url = '';
 		if (isset($atts['url']) && $atts['url']) {
-			$url = \add_query_arg('referral', $this->getOrCreateToken($userId), $atts['url']);
+			$url = \add_query_arg(
+				['referral' => $this->getOrCreateToken($userId)],
+				\sanitize_url($atts['url'])
+			);
 		} else // current page
 		{
 			$url = \add_query_arg('referral', $this->getOrCreateToken($userId), \LWS\Adminpanel\Tools\Conveniences::getCurrentPermalink());
@@ -156,20 +159,23 @@ class ReferralLink
 
 	protected function getContent($atts, $url)
 	{
-		$showlnk = (\LWS\Adminpanel\Tools\Conveniences::argIsTrue($atts['showlink']) ? '' : ' hiddenlink');
-		$showbtn = (\LWS\Adminpanel\Tools\Conveniences::argIsTrue($atts['showbutton']) ? '' : ' hidden');
-
 		if ($atts['mode'] == 'link') {
 			// Link
-			$link = \htmlentities($url);
-			$content = "<div class='link-url url_to_copy{$showlnk} link' tabindex='0'>" . $link . "</div>";
+			$inside = sprintf(
+				'<div class="link-url url_to_copy%s link" tabindex="0">%s</div>',
+				\LWS\Adminpanel\Tools\Conveniences::argIsTrue($atts['showlink']) ? '' : ' hiddenlink',
+				\htmlentities($url)
+			);
 			if (!$atts['button']) {
 				$atts['button'] = __('Get your referral link', 'woorewards-lite');
 			}
 		} else {
 			// QR Code
-			$link = \esc_attr($url);
-			$content = "<div class='link-url url_to_copy{$showlnk} qrcode' tabindex='0' data-qrcode='{$link}'></div>";
+			$inside = sprintf(
+				'<div class="link-url url_to_copy%s qrcode" tabindex="0" data-qrcode="%s"></div>',
+				\LWS\Adminpanel\Tools\Conveniences::argIsTrue($atts['showlink']) ? '' : ' hiddenlink',
+				\esc_attr($url)
+			);
 			if (!$atts['button']) {
 				$atts['button'] = __('Get your referral QR Code', 'woorewards-lite');
 			}
@@ -177,20 +183,26 @@ class ReferralLink
 		if (!$atts['copied']) {
 			$atts['copied'] = __('Your code has been copied !', 'woorewards-lite');
 		}
-		$wrapper = 'wr-referral-code-wrapper';
-		if ('i' === \substr($atts['layout'], 0, 1)) {
-			$wrapper .= ' refinline';
-		}
 
-		return <<<EOT
-		<div class='{$wrapper}'>
-			{$content}
-			<div class='link-button-wrapper wr_refl_button_copy{$showbtn}'>
-				<div class='copy-button wr_refl_button_copy'>{$atts['button']}</div>
-				<div class='copied-message'>{$atts['copied']}</div>
-			</div>
+		// Use a real <button> element to meet iOS Safari's user interaction requirement
+		$content = <<<EOT
+		<div class='wr-referral-code-wrapper%s'>
+			%s
+			<button type="button" class='link-button-wrapper wr_refl_button_copy%s' data-url="%s">
+				<div class='copy-button wr_refl_button_copy'>%s</div>
+				<div class='copied-message'>%s</div>
+			</button>
 		</div>
 EOT;
+		return sprintf(
+			$content,
+			'i' === \substr($atts['layout'], 0, 1) ? ' refinline' : '',
+			$inside,
+			\LWS\Adminpanel\Tools\Conveniences::argIsTrue($atts['showbutton']) ? '' : ' hidden',
+			\esc_attr($url),
+			\wp_kses_post($atts['button']),
+			\wp_kses_post($atts['copied'])
+		);
 	}
 
 	/** If a tiny URL is detected and decoded, redirect and die. */
