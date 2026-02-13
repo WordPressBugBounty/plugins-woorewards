@@ -199,20 +199,21 @@ abstract class Wizard
 	 * This expose a button to clean that data (same as leave the wizard) */
 	function errorFallback()
 	{
-		$text = __("If you can see this, an error occured. Click %s here %s to resolve. Then restart the wizard.", 'lws-adminpanel');
+		/* translators: 1: cancel button balise open, 2: button balise close. */
+		$text = __('If you can see this, an error occured. Click %1$s here %2$s to resolve. Then restart the wizard.', 'woorewards');
 		$text = sprintf($text, "<button class='lws-wizard-action-cancel' name='submit' type='submit' value='cancel'>", "</button>");
 		$formAttrs = '';
 		foreach( $this->getFormAttributes() as $attr => $val )
 			$formAttrs .= sprintf(' %s="%s"', $attr, \esc_attr($val));
 		$nonce = \wp_nonce_field('lws-wizard-'.$this->slug, '_wpnonce', true, false);
-		echo "<form $formAttrs>{$nonce}<p style='margin-left:auto;margin-right:0px;width:50%;'>{$text}</p></form>";
+		echo "<form $formAttrs>{$nonce}<p style='margin-left:auto;margin-right:0px;width:50%;'>{$text}</p></form>"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	function topCancelButton($wp_admin_bar)
 	{
 		$args = array(
 			'id' => 'lws-wizard-cancel',
-			'title' => sprintf('<span class="label">%s</span> %s', __("Leave the wizard", 'lws-adminpanel'), \lws_get_tooltips_html(__("You can come back later and continue from that point."))),
+			'title' => sprintf('<span class="label">%s</span> %s', __("Leave the wizard", 'woorewards'), \lws_get_tooltips_html(__("You can come back later and continue from that point.", 'woorewards'))),
 			'href' => $this->getCancelledURL(),
 		);
 		$wp_admin_bar->add_node($args);
@@ -226,7 +227,7 @@ abstract class Wizard
 
 	function scripts()
 	{
-		\wp_enqueue_script('lws-adm-wizard-style', LWS_ADMIN_PANEL_JS.'/controls/wizard.js', array('jquery'), LWS_ADMIN_PANEL_VERSION);
+		\wp_enqueue_script('lws-adm-wizard-style', LWS_ADMIN_PANEL_JS.'/controls/wizard.js', array('jquery'), LWS_ADMIN_PANEL_VERSION, true);
 		\wp_enqueue_style('lws-adm-wizard-style', LWS_ADMIN_PANEL_CSS.'/controls/wizard.css', array('lws-icons'), LWS_ADMIN_PANEL_VERSION);
 		\wp_enqueue_style('lws-wizard-style', LWS_ADMIN_PANEL_CSS.'/wizard.min.css', array('lws-icons'), LWS_ADMIN_PANEL_VERSION);
 		//$rootColors = sprintf(':root{--lws-wizard-main-color: %s;--lws-wizard-done-color: %s;}', $this->getColor(), $this->getDoneColor());
@@ -266,6 +267,7 @@ abstract class Wizard
 			$this->repeat = false;
 			$this->lastStep = '';
 			$this->timestamp = '';
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$this->requested = isset($_GET['step']) ? \sanitize_key($_GET['step']) : false;
 
 			$this->data = \get_option('lws-wizard-state-'.$this->slug, array());
@@ -360,7 +362,7 @@ abstract class Wizard
 					$url = $this->getCancelledURL(true);
 				\update_option('lws-wizard-state-'.$this->slug, array());
 				\do_action('lws_wizard_submitted', $this->slug, $this->data);
-				\wp_redirect($url);
+				\wp_safe_redirect($url);
 				exit;
 			}
 			\update_option('lws-wizard-state-'.$this->slug, $this->data);
@@ -368,7 +370,7 @@ abstract class Wizard
 		else
 		{
 			if( !$err )
-				$this->lastError = array(__("An error occured during form validation.", 'lws-adminpanel'));
+				$this->lastError = array(__("An error occured during form validation.", 'woorewards'));
 			else if( is_array($err) )
 				$this->lastError = $err;
 			else
@@ -405,7 +407,7 @@ abstract class Wizard
 	{
 		// clean state backup and redirect to usual admin
 			\update_option('lws-wizard-state-'.$this->slug, array());
-			\wp_redirect($this->getCancelledURL(true));
+			\wp_safe_redirect($this->getCancelledURL(true));
 			exit;
 	}
 
@@ -431,8 +433,9 @@ abstract class Wizard
 			$this->lastStep = \sanitize_key($_POST['step']);
 			$this->timestamp = \sanitize_key($_POST['timestamp']);
 			// ... todo: do not get all $_POST, but look a getPage($this->lastStep, 'register') to get only relevent values
-			foreach (\array_keys($_POST) as $k) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-				$form[$k] = \wp_unslash($_POST[$k]); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
+			foreach (\array_keys($_POST) as $k)
+				$form[$k] = \wp_unslash($_POST[$k]); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.InputNotValidated
 		}
 		return $form;
 	}
@@ -440,6 +443,7 @@ abstract class Wizard
 	protected function getAction()
 	{
 		if( !isset($this->action) || null === $this->action )
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing
 			$this->action = isset($_POST['submit']) ? \sanitize_key($_POST['submit']) : false;
 		return $this->action;
 	}
@@ -682,7 +686,9 @@ abstract class Wizard
 				case 'not_isset':
 					return !$exists;
 				default:
-					error_log("Wrong Wizard hierarchy condition 'compare' operator. Accept [==, !=, <, >, <=, >=, isset, not_isset, match] only");
+					if (defined('WP_DEBUG') && WP_DEBUG) {
+						error_log("Wrong Wizard hierarchy condition 'compare' operator. Accept [==, !=, <, >, <=, >=, isset, not_isset, match] only"); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+					}
 					return false;
 			}
 		}
@@ -697,7 +703,9 @@ abstract class Wizard
 			}
 			if( !in_array($op, array('OR', 'AND')) )
 			{
-				error_log("Wrong Wizard hierarchy condition 'relation' operator. Accept [AND, OR] only");
+				if (defined('WP_DEBUG') && WP_DEBUG) {
+					error_log("Wrong Wizard hierarchy condition 'relation' operator. Accept [AND, OR] only"); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+				}
 				return false;
 			}
 			if( empty($condition) )
@@ -745,16 +753,12 @@ abstract class Wizard
 	{
 		$img = $this->getLogoImg();
 		$title = $this->getTitle();
-		return <<<EOT
-<div class='top-container'>
-	<div class='logo'>
-		{$img}
-	</div>
-	<div class='title'>
-		{$title}
-	</div>
-</div>
-EOT;
+		return "<div class='top-container'>"
+			. "<div class='logo'>"
+			. $img // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			. "</div>"
+			. "<div class='title'>" . esc_html($title) . "</div>"
+			. "</div>";
 	}
 
 	protected function getPathTabs($criticalPath)
@@ -788,15 +792,15 @@ EOT;
 					);
 				}
 
-				if( isset($item['loop']) && ($loop = intval($item['loop'])) > 1 )
-					$item['label'] = sprintf(_x('%s (%s)', 'wizard critical path tab title with loop count', 'lws-adminpanel'), $item['label'], $loop);
+				if( isset($item['loop']) && ($loop = intval($item['loop'])) > 1 ) {
+					/* translators: 1: The level label, 2: loop index. */
+					$item['label'] = sprintf(_x('%1$s (%2$s)', 'wizard critical path tab title with loop count', 'woorewards'), $item['label'], $loop);
+				}
 
-				$tabs[$step] = <<<EOT
-<{$tag} class='step-item {$state}'{$attr}>
-	<div class='line'></div>
-	<div class='text'>{$item['label']}</div>
-</{$tag}>
-EOT;
+				$tabs[$step] = "<" . $tag . " class='step-item " . esc_attr($state) . "'" . $attr . ">"
+					. "<div class='line'></div>"
+					. "<div class='text'>" . esc_html($item['label']) . "</div>"
+					. "</" . $tag . ">";
 			}
 		}
 		return $tabs;
@@ -853,31 +857,30 @@ EOT;
 		$time = \esc_attr(\microtime());
 		$color = $this->getColor();
 		$colorstring = \lws_get_theme_colors('--group-color', $color);
-		$steplabel = __("Step : ", 'lws-adminpanel');
-		echo <<<EOT
-<div class="lws_wizard" style="$colorstring">
-	<form $formAttrs>
-		<input type='hidden' name='step' value='{$eStep}'>
-		<input type='hidden' name='loop' value='{$loop}'>
-		<input type='hidden' name='timestamp' value='{$time}'>
-		{$nonce}
-		{$head}
-		<div class="big-container">
-			<div class="upper-container">
-				<div class="steps-container">
-					<div class="step-label">{$steplabel}{$label}</div>
-					<div class="step-more lws-icon-menu-bars">
-						<div class="steps-dropdown">
-							{$tabs}
-						</div>
-					</div>
-				</div>
-				<button class='cancel-button' name='submit' type='submit' value='cancel'>
-					<div class='icon lws-icon lws-icon-e-remove'></div>
-					<div class='text'>Cancel</div>
-				</button>
-			</div>
-EOT;
+		$steplabel = __("Step : ", 'woorewards');
+		$html = "<div class=\"lws_wizard\" style=\"" . esc_attr($colorstring) . "\">"
+			. "<form" . $formAttrs . ">"
+			. "<input type='hidden' name='step' value='" . esc_attr($eStep) . "'>"
+			. "<input type='hidden' name='loop' value='" . esc_attr($loop) . "'>"
+			. "<input type='hidden' name='timestamp' value='" . esc_attr($time) . "'>"
+			. $nonce
+			. $head
+			. "<div class=\"big-container\">"
+			. "<div class=\"upper-container\">"
+			. "<div class=\"steps-container\">"
+			. "<div class=\"step-label\">" . esc_html($steplabel) . esc_html($label) . "</div>"
+			. "<div class=\"step-more lws-icon-menu-bars\">"
+			. "<div class=\"steps-dropdown\">"
+			. $tabs
+			. "</div>"
+			. "</div>"
+			. "</div>"
+			. "<button class='cancel-button' name='submit' type='submit' value='cancel'>"
+			. "<div class='icon lws-icon lws-icon-e-remove'></div>"
+			. "<div class='text'>Cancel</div>"
+			. "</button>"
+			. "</div>";
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		if ($title = isset($page['title']) ? trim($page['title']) : '') {
 			$title = "<div class='form-title'>{$title}</div>";
@@ -893,10 +896,9 @@ EOT;
 		if (isset($page['class']) && !empty($page['class'])) {
 			$mainclass = ' ' . $page['class'];
 		}
-		echo <<<EOT
-			<div class='main-container$mainclass' data-step='{$eStep}' data-occurrence='$loop'>
-				<div class='form-title-line'>{$title}{$help}</div>
-EOT;
+		$header = "<div class='main-container" . esc_attr($mainclass) . "' data-step='" . esc_attr($eStep) . "' data-occurrence='" . esc_attr($loop) . "'>"
+			. "<div class='form-title-line'>" . $title . $help . "</div>";
+		echo $header; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		if( isset($page['groups']) )
 		{
@@ -904,18 +906,10 @@ EOT;
 			$this->groups($page['groups']);
 		}
 
-		$buttons = implode('', $this->getButtons($criticalPath, $step, $page));
-
-		//$foot = $this->getFoot();
-		echo <<<EOT
-		</div>
-			<div class='action-line'>
-				{$buttons}
-			</div>
-		</div>
-	</form>
-</div>
-EOT;
+		echo sprintf( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			'</div><div class="action-line">%s</div></div></form></div>',
+			implode('', $this->getButtons($criticalPath, $step, $page)) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		);
 	}
 
 	/** help is not compatible with usual page group, but only available in wizard page.
@@ -984,7 +978,7 @@ EOT;
 			if( isset($group['groups']) && count($group['groups']) )
 				$class .= ' parent-group';
 
-			echo "<div class='{$class}'$attributes style='{$style}'>";
+			echo wp_kses_post("<div class='{$class}'$attributes style='{$style}'>");
 
 			$title = '';
 			$help = $this->getGroupHelp($group, '<div class="group-help">%s</div>');
@@ -993,9 +987,9 @@ EOT;
 				$title = "<div class='group-title'>{$title}</div>";
 			}
 			if ($title && $help) {
-				echo "<div class='group-title-line'>{$title}{$help}</div>";
+				echo wp_kses_post("<div class='group-title-line'>{$title}{$help}</div>");
 			} else {
-				echo $title . $help;
+				echo wp_kses_post($title . $help);
 			}
 			if( isset($group['groups']) && count($group['groups']) )
 			{
@@ -1029,16 +1023,16 @@ EOT;
 						{
 							$tooltip = '';
 							if (!empty($help = $field->help())) {
-								echo "<div class='item-help'><div class='icon lws-icons lws-icon-bulb'></div><div class='text'>{$help}</div></div>";
+								echo wp_kses_post("<div class='item-help'><div class='icon lws-icons lws-icon-bulb'></div><div class='text'>{$help}</div></div>");
 								$tooltip = "<div class='help-container'><div class='toggle-help'>?</div></div>";
 							}
 
 							$title = $field->title();
 							if ($title) {
 								$labelClass = $field->addStrongClass('item-label');
-								echo "<div class='{$labelClass}'><span class='label'>{$title}</span>{$tooltip}</div><div class='item-value' style='{$vStyle}'>";
+								echo wp_kses_post("<div class='{$labelClass}'><span class='label'>{$title}</span>{$tooltip}</div><div class='item-value' style='{$vStyle}'>");
 							} else {
-								echo "<div class='item-value twocols' style='{$vStyle}'>";
+								echo wp_kses_post("<div class='item-value twocols' style='{$vStyle}'>");
 							}
 							$field->input();
 							echo "</div>";
@@ -1062,62 +1056,54 @@ EOT;
 
 		if( $curIndex > 0 )
 		{
-			$button = _x("Previous", 'previous wizard step', 'lws-adminpanel');
-			$buttons['previous'] = <<<EOT
-	<button class='button back' name='submit' type='submit' value='previous'>
-		<div class='icon lws-icon lws-icon-circle-left'></div>
-		<div class='label'>{$button}</div>
-	</button>
-EOT;
+			$button = _x("Previous", 'previous wizard step', 'woorewards');
+			$buttons['previous'] = '<button class="button back" name="submit" type="submit" value="previous">'
+			. '<div class="icon lws-icon lws-icon-circle-left"></div>'
+			. '<div class="label">' . esc_html($button) . '</div>'
+			. '</button>';
 		}
 
 		if( isset($page['repeatable']) && $page['repeatable'] )
 		{
-			$button = (isset($page['repeat_btn_text']) && $page['repeat_btn_text']) ? $page['repeat_btn_text'] : _x("Add", 'repeat a wizard portion', 'lws-adminpanel');
-			$buttons['repeat'] = <<<EOT
-	<button class='button redo' name='submit' type='submit' value='repeat'>
-		<div class='icon lws-icon lws-icon-repeat'></div>
-		<div class='label'>{$button}</div>
-	</button>
-EOT;
+			$button = (isset($page['repeat_btn_text']) && $page['repeat_btn_text']) ? $page['repeat_btn_text'] : _x("Add", 'repeat a wizard portion', 'woorewards');
+			$buttons['repeat'] = '<button class="button redo" name="submit" type="submit" value="repeat">'
+			. '<div class="icon lws-icon lws-icon-repeat"></div>'
+			. '<div class="label">' . esc_html($button) . '</div>'
+			. '</button>';
 		}
 
-		$button =  _x("Next", 'next wizard step', 'lws-adminpanel');
+		$button =  _x("Next", 'next wizard step', 'woorewards');
 		$value = 'next';
 		if( ++$curIndex >= count($criticalPath) )
 		{
-			$button = _x("Submit", 'final wizard submit', 'lws-adminpanel');
+			$button = _x("Submit", 'final wizard submit', 'woorewards');
 			$value = 'submit';
 		}
-		$buttons['next'] = <<<EOT
-	<button class='button next' name='submit' type='submit' value='{$value}'>
-		<div class='label'>{$button}</div>
-		<div class='icon lws-icon lws-icon-circle-right'></div>
-	</button>
-EOT;
+		$buttons['next'] = '<button class="button next" name="submit" type="submit" value="' . esc_attr($value) . '">'
+			. '<div class="label">' . esc_html($button) . '</div>'
+			. '<div class="icon lws-icon lws-icon-circle-right"></div>'
+			. '</button>';
 		return $buttons;
 	}
 
 	protected function getFoot()
 	{
 		$href = $this->getCancelledURL();
-		$leave = __("Leave this wizard", 'lws-adminpanel');
-		$leavetip = \lws_get_tooltips_html(__("You can come back later and continue from that point.", 'lws-adminpanel'));
-		$cancel = __("Cancel this wizard", 'lws-adminpanel');
-		$canceltip = \lws_get_tooltips_html(__("You will lose all prepared settings.", 'lws-adminpanel'));
-		return <<<EOT
-<div class='cancel-container'>
-	<button class='button cancel' name='submit' type='submit' value='cancel'>
-		<div class='icon lws-icon lws-icon-cross'></div>
-		<div class='text'>{$cancel}</div>
-		{$canceltip}
-	</button>
-	<a class='button leave' href='{$href}'>
-		<div class='icon lws-icon lws-icon-leave'></div>
-		<div class='text'>{$leave}</div>
-		{$leavetip}
-	</a>
-</div>
-EOT;
+		$leave = __("Leave this wizard", 'woorewards');
+		$leavetip = \lws_get_tooltips_html(__("You can come back later and continue from that point.", 'woorewards'));
+		$cancel = __("Cancel this wizard", 'woorewards');
+		$canceltip = \lws_get_tooltips_html(__("You will lose all prepared settings.", 'woorewards'));
+		return '<div class="cancel-container">'
+			. '<button class="button cancel" name="submit" type="submit" value="cancel">'
+			. '<div class="icon lws-icon lws-icon-cross"></div>'
+			. '<div class="text">' . esc_html($cancel) . '</div>'
+			. $canceltip
+			. '</button>'
+			. '<a class="button leave" href="' . esc_url($href) . '">'
+			. '<div class="icon lws-icon lws-icon-leave"></div>'
+			. '<div class="text">' . esc_html($leave) . '</div>'
+			. $leavetip
+			. '</a>'
+			. '</div>';
 	}
 }

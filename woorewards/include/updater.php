@@ -40,6 +40,8 @@ class Updater
 	{
 		global $wpdb;
 
+		$fresh = version_compare($fromVersion, '1.0.0', '<');
+
 		if( version_compare($fromVersion, '2.6.6', '<') )
 		{
 			self::addCapacity();
@@ -61,7 +63,7 @@ class Updater
 			// Convert each shop_order postmeta 'lws_woorewards_validate_order' to new event <once> mark
 			foreach( array('lws_woorewards_events_firstorder', 'lws_woorewards_events_orderamount', 'lws_woorewards_events_ordercompleted') as $meta ) {
 				// let as it is for hpos support, in a new install with WC 7.8+, we can expect a WR 5.0+ fresh install too.
-				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 				$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) SELECT s.post_id, %s, s.meta_value FROM {$wpdb->postmeta} AS s WHERE s.meta_key='lws_woorewards_validate_order'", $meta));
 			}
 		}
@@ -131,9 +133,14 @@ class Updater
 				'lws_woorewards_pro_events_sponsoredfirstorder'  => 'lws_woorewards_events_sponsoredorder',
 			);
 			foreach ($type as $src => $dst) {
-				$wpdb->query("UPDATE {$wpdb->postmeta} SET meta_value='{$dst}' WHERE meta_key='wre_event_type' AND meta_value='{$src}'");
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+				$wpdb->query($wpdb->prepare("UPDATE {$wpdb->postmeta} SET meta_value=%s WHERE meta_key='wre_event_type' AND meta_value=%s", $dst, $src));
 			}
 			self::addV5PrefabEvents();
+		}
+
+		if (!$fresh && version_compare($fromVersion, '5.6.0', '<')) {
+			self::v560();
 		}
 
 		$defaultOptions = array(
@@ -156,7 +163,32 @@ class Updater
 		\update_option('lws_woorewards_ignore_woocommerce_disable_coupons', '');
 	}
 
-	/** @retrun bool merge done successfully */
+	public static function v560()
+	{
+		$option = 'lws_woorewards_history_template';
+		$css64 = \get_option($option, false);
+		if ($css64) {
+			$css = \base64_decode($css64);
+			$file = LWS_WOOREWARDS_PATH . '/styling/css/templates/userpointshistory.css';
+			global $wp_filesystem;
+			if ( empty( $wp_filesystem ) ) {
+				require_once ABSPATH . '/wp-admin/includes/file.php';
+				\WP_Filesystem();
+			}
+			$content = $wp_filesystem->get_contents( $file );
+			if ($content) {
+				\update_option($option, \base64_encode($content . "\n\n" . $css));
+
+				// revoke cache
+				$cacheName = sanitize_key($option) . '-cached.css';
+				$cached = new \LWS\Adminpanel\Tools\Cache($cacheName);
+				$cached->del();
+				\update_option($option . '_adm_ts', time());
+			}
+		}
+	}
+
+		/** @retrun bool merge done successfully */
 	public static function mergeAllHistorics(): bool
 	{
 		if (!\is_multisite()) return true;
@@ -167,7 +199,7 @@ class Updater
 
 		$target  = $wpdb->base_prefix . 'lws_wr_historic';
 		$sources = \array_diff(
-			(array) $wpdb->get_col("SHOW TABLES LIKE '%lws_wr_historic'"),
+			(array) $wpdb->get_col("SHOW TABLES LIKE '%lws_wr_historic'"), // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			[$target]
 		);
 		if (!$sources) return true;
@@ -175,7 +207,7 @@ class Updater
 		try {
 			// try to give 5min to let db copy under IIS servers,
 			// others do not take into account time spent outside the script itself
-			@\set_time_limit(5 * 60);
+			@\set_time_limit(5 * 60); // phpcs:ignore Squiz.PHP.DiscouragedFunctions.Discouraged -- migration needs time
 		} catch (\Exception $_e) {}
 
 		// compose the query
@@ -191,13 +223,15 @@ class Updater
 		}, $sources));
 
 		// merge all history into main one
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- migration query with table names
 		$done = (bool)$wpdb->query($query);
 
 		if ($done) {
 			// prevent lines duplication
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- migration TRUNCATE with escaped table names
 			$wpdb->query( \implode( ';', \array_map( function ( $table ) {
-				return sprintf( 'TRUNCATE `%s`', $table );
-			}, $sources ) ) );
+				return sprintf( 'TRUNCATE `%s`', \esc_sql($table) );  // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
+			}, $sources ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 		}
 
 		return $done;
@@ -221,35 +255,35 @@ class Updater
 	private static function eventPoolNameToId()
 	{
 		global $wpdb;
-		$sql = <<<EOT
-SELECT p.post_name, m.post_id
-FROM {$wpdb->postmeta} as m
-INNER JOIN {$wpdb->posts} as e ON m.post_id=e.ID
-INNER JOIN {$wpdb->posts} as p ON p.ID=e.post_parent
-WHERE m.`meta_key`='wre_event_type'
-AND m.`meta_value` = 'lws_woorewards_events_productreview'
-EOT;
+		$sql = "SELECT p.post_name, m.post_id"
+			. " FROM {$wpdb->postmeta} as m"
+			. " INNER JOIN {$wpdb->posts} as e ON m.post_id=e.ID"
+			. " INNER JOIN {$wpdb->posts} as p ON p.ID=e.post_parent"
+			. " WHERE m.`meta_key`='wre_event_type'"
+			. " AND m.`meta_value` = 'lws_woorewards_events_productreview'";
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- migration query
 		$events = $wpdb->get_results($sql);
 		foreach( $events as $event )
 		{
-			$up = <<<EOT
-UPDATE {$wpdb->usermeta}
-SET `meta_key`='lws_wre_event_review_{$event->post_id}'
-WHERE `meta_key`='lws_wre_event_review_{$event->post_name}'
-EOT;
-			$wpdb->query($up); // phpcs:ignore WordPressDotOrg.sniffs.DirectDB.UnescapedDBParameter, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.PreparedSQL.NotPrepared
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+			$wpdb->query($wpdb->prepare(
+				"UPDATE {$wpdb->usermeta} SET `meta_key`=%s WHERE `meta_key`=%s",
+				'lws_wre_event_review_' . $event->post_id,
+				'lws_wre_event_review_' . $event->post_name
+			));
 		}
 	}
 
 	public static function log($msg)
 	{
 		if( !empty($msg) )
-			error_log($msg);
+			error_log($msg); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- updater logging
 	}
 
 	private static function updateProductReviewEvent()
 	{
 		global $wpdb;
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$wpdb->query("UPDATE {$wpdb->postmeta} SET meta_value = 'lws_woorewards_events_productreview' WHERE meta_value = 'lws_woorewards_pro_events_productreview'");
 	}
 
@@ -324,17 +358,21 @@ EOT;
 
 		$default = !empty(self::$defaultStackId) ? self::$defaultStackId : 'default';
 
-		$wpdb->query("ALTER TABLE {$thistoric} CHANGE points_moved points_moved SMALLINT(10) NULL DEFAULT NULL;"); // phpcs:ignore WordPressDotOrg.sniffs.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery
-		$wpdb->query($wpdb->prepare("UPDATE {$thistoric} SET stack=%s WHERE stack=''", $default)); // phpcs:ignore WordPressDotOrg.sniffs.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- migration
+		$wpdb->query("ALTER TABLE {$thistoric} CHANGE points_moved points_moved SMALLINT(10) NULL DEFAULT NULL;");
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- migration
+		$wpdb->query($wpdb->prepare("UPDATE {$thistoric} SET stack=%s WHERE stack=''", $default));
 
 		$tmeta = $wpdb->usermeta;
 		$mkey = \LWS\WOOREWARDS\Core\PointStack::MetaPrefix;
 		// this query only works on MySql, we should only update last entry per user but it is ok like this
 		$copyPts = "UPDATE $thistoric INNER JOIN $tmeta ON $thistoric.user_id=$tmeta.user_id AND $tmeta.meta_key='lws_wr_points' SET new_total=$tmeta.meta_value";
-		if( false !== $wpdb->query($copyPts) ) // phpcs:ignore WordPressDotOrg.sniffs.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- migration
+		if( false !== $wpdb->query($copyPts) )
 		{
 			// point usermeta key renamed
-			$wpdb->query($wpdb->prepare("UPDATE {$tmeta} SET meta_key=%s WHERE meta_key='lws_wr_points'", $mkey . $default)); // phpcs:ignore WordPressDotOrg.sniffs.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			$wpdb->query($wpdb->prepare("UPDATE {$tmeta} SET meta_key=%s WHERE meta_key='lws_wr_points'", $mkey . $default));
 		}
 	}
 
@@ -382,7 +420,7 @@ EOT;
 			$pool->setOptions(array(
 				'type'      => \LWS\WOOREWARDS\Core\Pool::T_STANDARD,
 				'disabled'  => true,
-				'title'     => __("Standard System", 'woorewards-lite'),
+				'title'     => "Standard System",
 				'whitelist' => array(\LWS\WOOREWARDS\Core\Pool::T_STANDARD)
 			));
 
@@ -440,8 +478,8 @@ EOT;
 			{
 				\lws_admin_add_notice(
 					'up-lws-v2-settings',
-					__("Your settings have been migrated during MyRewards update.
-We tried our best to conserve the same behavior as before but we advise you to check them anyway.", 'woorewards-lite'),
+					"Your settings have been migrated during MyRewards update.
+We tried our best to conserve the same behavior as before but we advise you to check them anyway.",
 					array(
 						'level' => 'success',
 						'once' => false,
@@ -616,7 +654,7 @@ We tried our best to conserve the same behavior as before but we advise you to c
 		// if not already exists (prefabs are not deletable)
 		$pools = \LWS\WOOREWARDS\Collections\Pools::instanciate()->load(array(
 			'numberposts' => 1,
-			'meta_query'  => array(
+			'meta_query'  => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 				array(
 					'key'     => 'wre_pool_prefab',
 					'value'   => 'yes', // This cannot be empty because of a bug in WordPress
@@ -638,6 +676,7 @@ We tried our best to conserve the same behavior as before but we advise you to c
 		global $wpdb;
 		$icl = $wpdb->prefix . 'icl_strings';
 
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- table name from wpdb prefix
 		if( $wpdb->get_col("SHOW TABLES LIKE '{$icl}'") )
 		{
 			$template = 'Woorewards mail - %s - %s';
@@ -697,7 +736,7 @@ We tried our best to conserve the same behavior as before but we advise you to c
 						"UPDATE `{$icl}` SET `name`='{$template}' WHERE %s",
 						$dst, $suffix, implode(' OR ', $where)
 					);
-					$wpdb->query($sql); // phpcs:ignore WordPressDotOrg.sniffs.DirectDB.UnescapedDBParameter, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.PreparedSQL.NotPrepared
+					$wpdb->query($sql); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- WPML migration with esc_sql'd table
 				}
 			}
 		}

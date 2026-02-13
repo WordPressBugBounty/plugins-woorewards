@@ -36,9 +36,10 @@ class Ajax
 
 	public function permanentDismiss()
 	{
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if( isset($_GET['key']) && !empty($_GET['key']) )
 		{
-			$key = sanitize_text_field($_GET['key']);
+			$key = sanitize_text_field(wp_unslash($_GET['key'])); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			\update_site_option(
 				'lws_adminpanel_notices',
 				array_filter(
@@ -56,7 +57,7 @@ class Ajax
 	 * @param $_REQUEST['count'] (int /optional) number of result per page, default is 10 if page is set. */
 	public function getPosts()
 	{
-		if (!(isset($_REQUEST['lac']) && \wp_verify_nonce($_REQUEST['lac'], 'lws_lac_model'))) {
+		if (!(isset($_REQUEST['lac']) && \wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['lac'])), 'lws_lac_model'))) {
 			\wp_send_json_error('Unauthorized access');
 		}
 
@@ -86,17 +87,18 @@ class Ajax
 			$sql .= " LIMIT $offset, $count";
 		}
 
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter
 		$results = $wpdb->get_results($sql, OBJECT_K);
 		$results = \array_filter($results, function($row) {
 			return \is_post_publicly_viewable($row->value) || \current_user_can('read_post', $row->value);
 		});
-		wp_send_json($results); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPressDotOrg.sniffs.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared
+		wp_send_json($results);
 	}
 
 	/* Lists all registered post types, including custom post types */
 	public function getPostTypes()
 	{
-		if (!(isset($_REQUEST['lac']) && \wp_verify_nonce($_REQUEST['lac'], 'lws_lac_model'))) {
+		if (!(isset($_REQUEST['lac']) && \wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['lac'])), 'lws_lac_model'))) {
 			\wp_send_json_error('Unauthorized access');
 		}
 
@@ -114,7 +116,7 @@ class Ajax
 
 	public function getOrderStatus()
 	{
-		if (!(isset($_REQUEST['lac']) && \wp_verify_nonce($_REQUEST['lac'], 'lws_lac_model'))) {
+		if (!(isset($_REQUEST['lac']) && \wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['lac'])), 'lws_lac_model'))) {
 			\wp_send_json_error('Unauthorized access');
 		}
 		\wp_send_json(\LWS\Adminpanel\Tools\Conveniences::getOrderStatusList(true));
@@ -123,7 +125,7 @@ class Ajax
 	// return Media Sizes
 	public function getMediaSizes()
 	{
-		if (!(isset($_REQUEST['lac']) && \wp_verify_nonce($_REQUEST['lac'], 'lws_lac_model'))) {
+		if (!(isset($_REQUEST['lac']) && \wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['lac'])), 'lws_lac_model'))) {
 			\wp_send_json_error('Unauthorized access');
 		}
 		\wp_send_json(\LWS\Adminpanel\Tools\MediaHelper::getMediaSizes());
@@ -135,7 +137,7 @@ class Ajax
 	 * @param $_REQUEST['count'] (int /optional) number of result per page, default is 10 if page is set. */
 	public function getUsers()
 	{
-		if (!(isset($_REQUEST['lac']) && \wp_verify_nonce($_REQUEST['lac'], 'lws_lac_model'))) {
+		if (!(isset($_REQUEST['lac']) && \wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['lac'])), 'lws_lac_model'))) {
 			\wp_send_json_error('Unauthorized access');
 		}
 		if (!\current_user_can('list_users')) {
@@ -171,13 +173,14 @@ class Ajax
 			$sql .= " LIMIT $offset, $count";
 		}
 
-		wp_send_json($wpdb->get_results($sql, OBJECT_K)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPressDotOrg.sniffs.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter
+		wp_send_json($wpdb->get_results($sql, OBJECT_K));
 	}
 
 	/** @param $_REQUEST['term'] (string) filter on role name */
 	public function getRoles()
 	{
-		if (!(isset($_REQUEST['lac']) && \wp_verify_nonce($_REQUEST['lac'], 'lws_lac_model'))) {
+		if (!(isset($_REQUEST['lac']) && \wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['lac'])), 'lws_lac_model'))) {
 			\wp_send_json_error('Unauthorized access');
 		}
 
@@ -187,11 +190,12 @@ class Ajax
 		{
 			if( $fromValue )
 			{
+				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 				$term = array_map('trim', array_map('sanitize_text_field', is_array($_REQUEST['term']) ? $_REQUEST['term'] : array($_REQUEST['term'])));
 			}
 			else
 			{
-				$term = trim(sanitize_text_field($_REQUEST['term']));
+				$term = trim(sanitize_text_field(wp_unslash($_REQUEST['term'])));
 			}
 		}
 
@@ -217,12 +221,12 @@ class Ajax
 	 * @param $_REQUEST['count'] (int /optional) number of result per page, default is 10 if page is set. */
 	public function getTaxonomy()
 	{
-		if (!(isset($_REQUEST['lac']) && \wp_verify_nonce($_REQUEST['lac'], 'lws_lac_model'))) {
+		if (!(isset($_REQUEST['lac']) && \wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['lac'])), 'lws_lac_model'))) {
 			\wp_send_json_error('Unauthorized access');
 		}
 
 		$fields = array('taxonomy', 'parent', 'slug', 'name', 'term_group', 'count', 'description');
-		$fromValue = (isset($_REQUEST['fromValue']) && boolval($_REQUEST['fromValue']));
+		$fromValue = (isset($_REQUEST['fromValue']) && boolval($_REQUEST['fromValue'])); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$term = $this->getTerm($fromValue);
 
 		global $wpdb;
@@ -251,7 +255,7 @@ class Ajax
 			$sql .= " LIMIT $offset, $count";
 		}
 
-		wp_send_json($wpdb->get_results($sql, OBJECT_K)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPressDotOrg.sniffs.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared
+		wp_send_json($wpdb->get_results($sql, OBJECT_K)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 	}
 
 	/** autocomplete/lac compliant.
@@ -262,11 +266,11 @@ class Ajax
 	 * @param $_REQUEST['count'] (int /optional) number of result per page, default is 10 if page is set. */
 	public function getWCProductsAndVariations()
 	{
-		if (!(isset($_REQUEST['lac']) && \wp_verify_nonce($_REQUEST['lac'], 'lws_lac_model'))) {
+		if (!(isset($_REQUEST['lac']) && \wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['lac'])), 'lws_lac_model'))) {
 			\wp_send_json_error('Unauthorized access');
 		}
 
-		$fromValue = (isset($_REQUEST['fromValue']) && boolval($_REQUEST['fromValue']));
+		$fromValue = (isset($_REQUEST['fromValue']) && boolval($_REQUEST['fromValue'])); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$term = $this->getTerm($fromValue);
 		$spec = array();
 
@@ -294,7 +298,7 @@ class Ajax
 		}
 
 		$sql = $this->pager(implode(' ', $sql), 'p.post_title');
-		$products = $wpdb->get_results($sql);
+		$products = $wpdb->get_results($sql); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 		if ($products) {
 			for ($i=0 ; $i<count($products) ; $i++) {
 				$product = &$products[$i];
@@ -304,13 +308,12 @@ class Ajax
 						'label'      => $product->label,
 						'variations' => false,
 					);
-					$grp->group = $wpdb->get_results(<<<EOT
-SELECT p.ID as value, CONCAT('#', p.ID, ' - ', p.post_title) as label FROM {$wpdb->posts} as p
-WHERE p.post_type='product_variation' AND (p.post_status='publish' OR p.post_status='private')
-AND ID IN ({$product->variations})
-ORDER BY p.post_title ASC
-EOT
-					);
+					$grp->group = $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter
+					"SELECT p.ID as value, CONCAT('#', p.ID, ' - ', p.post_title) as label FROM {$wpdb->posts} as p"
+					. " WHERE p.post_type='product_variation' AND (p.post_status='publish' OR p.post_status='private')"
+					. " AND ID IN ({$product->variations})" // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
+					. " ORDER BY p.post_title ASC"
+				);
 					\array_splice($products, $i+1, 0, array($grp));
 				}
 			}
@@ -324,10 +327,12 @@ EOT
 		if( !empty($orderBy) )
 			$sql .= " ORDER BY {$orderBy} {$dir}";
 
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- nonce verified in caller
 		if( isset($_REQUEST['page']) && is_numeric($_REQUEST['page']) )
 		{
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$count = absint(isset($_REQUEST['count']) && is_numeric($_REQUEST['count']) ? $_REQUEST['count'] : 10);
-			$offset = absint($_REQUEST['page']) * $count;
+			$offset = absint($_REQUEST['page']) * $count; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$sql .= " LIMIT $offset, $count";
 		}
 		return $sql;
@@ -341,25 +346,28 @@ EOT
 	{
 		$len = strlen($prefix);
 		$term = '';
-		if( isset($_REQUEST['term']) )
+		if( isset($_REQUEST['term']) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		{
 			if( $readAsIdsArray )
 			{
-				if( is_array($_REQUEST['term']) )
+				if( is_array($_REQUEST['term']) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 				{
 					$term = array();
-					foreach( $_REQUEST['term'] as $t )
+					foreach( $_REQUEST['term'] as $t ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 					{
+						$t = \wp_unslash($t);
 						if( $len > 0 && substr($t, 0, $len) == $prefix )
 							$t = substr($t, $len);
 						$term[] = \call_user_func($keySanitize, $t);
 					}
 				}
-				else
-					$term = array(\call_user_func($keySanitize, $_REQUEST['term']));
+				else {
+					$term = array( \call_user_func( $keySanitize, \wp_unslash( $_REQUEST['term'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+				}
 			}
-			else
-				$term = \call_user_func($valueSanitize, trim($_REQUEST['term']));
+			else {
+				$term = \call_user_func( $valueSanitize, trim( \wp_unslash( $_REQUEST['term'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			}
 		}
 		return $term;
 	}
@@ -370,9 +378,9 @@ EOT
 	private function specToFilter($fields)
 	{
 		$where = array();
-		if( isset($_REQUEST['spec']) )
+		if( isset($_REQUEST['spec']) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		{
-			$spec =  json_decode(base64_decode($_REQUEST['spec']), true);
+			$spec = json_decode(base64_decode(sanitize_text_field(wp_unslash($_REQUEST['spec']))), true); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			if( is_array($spec) )
 			{
 				$where = \LWS\Adminpanel\Pages\Field\Autocomplete::specToFilter($spec, $fields);
@@ -433,9 +441,10 @@ EOT
 	public function googleFontList()
 	{
 		$limit = 20;
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if( isset($_REQUEST['limit']) && is_numeric($_REQUEST['limit']) && (0 < $_REQUEST['limit']) )
-			$limit = intval($_REQUEST['limit']);
-		$all = isset($_REQUEST['all']) && $_REQUEST['all'] == 1;
+			$limit = intval($_REQUEST['limit']); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$all = isset($_REQUEST['all']) && $_REQUEST['all'] == 1; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$cached = new \LWS\Adminpanel\Tools\Cache('googlefontlist-'.($all?'all':'pop').'.json');
 
 		$json = json_decode( $cached->pop() );
@@ -473,8 +482,8 @@ EOT
 
 		if( empty($json) || !isset($json->items) || is_null($json->items) )
 		{
-			error_log("Google API return an error. Key used is " . $this->googleApiKey());
-			error_log( print_r($json,true) );
+			if (defined('WP_DEBUG') && WP_DEBUG) error_log("Google API return an error. Key used is " . $this->googleApiKey()); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+			if (defined('WP_DEBUG') && WP_DEBUG) error_log( print_r($json,true) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log, WordPress.PHP.DevelopmentFunctions.error_log_print_r
 			$json = null;
 		}
 

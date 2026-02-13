@@ -44,7 +44,7 @@ abstract class LAC extends \LWS\Adminpanel\Pages\Field
 	/** echo the control */
 	public function input()
 	{
-		echo $this->html();
+		echo $this->html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/** @param $remote also allow ajax and predefined data source */
@@ -57,7 +57,7 @@ abstract class LAC extends \LWS\Adminpanel\Pages\Field
 		{
 			if( $readonly )
 			{
-				error_log("[". __CLASS__ ."] No data list provided to " . $this->id());
+				if (defined('WP_DEBUG') && WP_DEBUG) error_log("[". __CLASS__ ."] No data list provided to " . $this->id()); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 				return false;
 			}
 			else if( !empty($value = $this->readOption(false)) )
@@ -163,7 +163,7 @@ abstract class LAC extends \LWS\Adminpanel\Pages\Field
 				$max = (isset($prebuild['max']) && is_numeric($prebuild['max']) && $prebuild['max']>=0) ? intval($prebuild['max']) : 20;
 				$end .= "\nLIMIT 0, $max";
 
-				$source = $wpdb->get_results("$select$from$where$end", OBJECT_K); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPressDotOrg.sniffs.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				$source = $wpdb->get_results("$select$from$where$end", OBJECT_K); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 
 				if( !empty($value) )
 				{
@@ -177,9 +177,9 @@ abstract class LAC extends \LWS\Adminpanel\Pages\Field
 					}
 					else
 					{
-						$where .= $wpdb->prepare("{$prebuild['value']}=%s", $value); // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
+						$where .= $wpdb->prepare("{$prebuild['value']}=%s", $value); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
 					}
-					$this->mergeArray($source, $wpdb->get_results("$select$from$where", OBJECT_K)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPressDotOrg.sniffs.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+					$this->mergeArray($source, $wpdb->get_results("$select$from$where", OBJECT_K)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 				}
 			}
 		}
@@ -220,7 +220,7 @@ abstract class LAC extends \LWS\Adminpanel\Pages\Field
 				{
 					if( is_string($filter) )
 					{
-						$where[] = $wpdb->prepare("`$key`=%s", $filter); // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
+						$where[] = $wpdb->prepare("`$key`=%s", $filter); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
 					}
 					else if( is_array($filter) && !empty($filter) )
 					{
@@ -234,14 +234,17 @@ abstract class LAC extends \LWS\Adminpanel\Pages\Field
 								$where[] = "`$key` $op (" . implode(',', $filter[0]) . ")";
 							}
 						}
-						else if( is_string($filter[0]) )
-							$where[] = $wpdb->prepare("`$key` $op %s", $filter[0]); // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
+						else if( is_string($filter[0]) ) {
+							$where[] = $wpdb->prepare("`$key` $op %s", $filter[0]); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
+						}
 					}
-					else
-						error_log(__FUNCTION__." part of filter ignored [$key] due to data part.");
+					else {
+						if (defined('WP_DEBUG') && WP_DEBUG) error_log(__FUNCTION__." part of filter ignored [$key] due to data part."); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+					}
 				}
-				else
-					error_log(__FUNCTION__." part of filter ignored [$key] not tolerated.");
+				else {
+					if (defined('WP_DEBUG') && WP_DEBUG) error_log(__FUNCTION__." part of filter ignored [$key] not tolerated."); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+				}
 			}
 		}
 		return $where;

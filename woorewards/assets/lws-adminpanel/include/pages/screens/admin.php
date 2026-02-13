@@ -79,22 +79,21 @@ class Admin extends \LWS\Adminpanel\Pages\Page
 			'method' => 'post',
 			'action' => $this->action,
 		));
-		$attrs = '';
-		foreach($formAttrs as $k => $v)
-		{
-			$v = \esc_attr($v);
-			$attrs .= " $k='$v'";
-		}
 
 		$path = $this->getPathAsString();
 		// form is required with 'tab' to know where we are
-		echo "<form id='{$this->id}' {$attrs}><input type='hidden' name='tab' value='{$path}'>";
+		echo sprintf('<form id="%s" ', \esc_attr($this->id));
+		foreach($formAttrs as $k => $v) {
+			echo sprintf(' %s="%s"', \sanitize_key($k), \esc_attr($v));
+		}
+		echo sprintf('><input type="hidden" name="tab" value="%s">', \esc_attr($path));
 
 		// let WordPress register the page fields
 		\settings_fields($this->id);
 
-		$extraClass= $this->vertnav ? ' has-vertnav' : '';
-		echo "<div class='groups-grid$extraClass'>";
+		if ($this->vertnav) echo '<div class="groups-grid has-vertnav">';
+		else echo '<div class="groups-grid">';
+
 		foreach( $this->groups as $Group )
 			$Group->eContent();
 
@@ -142,6 +141,7 @@ class Admin extends \LWS\Adminpanel\Pages\Page
 	/** Notify settings well saved */
 	public function noticeSettingsSaved($value)
 	{
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if( $value && isset($_POST['option_page']) && $_POST['option_page'] == $this->id )
 		{
 			$val = array_merge(array('code'=>'', 'type'=>'', 'message'=>''), \current($value));
@@ -150,7 +150,7 @@ class Admin extends \LWS\Adminpanel\Pages\Page
 				// transiant/fleeting notice
 				\lws_admin_add_notice_once(
 					'lws_ap_page',
-					$val['message'] ? $val['message'] : __("Your settings have been saved.", 'lws-adminpanel'),
+					$val['message'] ? $val['message'] : __("Your settings have been saved.", 'woorewards'),
 					array('level'=>'success')
 				);
 			}
@@ -216,8 +216,8 @@ class Admin extends \LWS\Adminpanel\Pages\Page
 				'id'     => 'shortcodes_summary',
 				'icon'   => 'lws-icon-shortcode',
 				'color'  => '#00769b',
-				'title'  => $summaryTitle ? $summaryTitle : __('Shortcodes Summary', 'lws-adminpanel'),
-				'text'   => $summaryText ? $summaryText : __('This section groups all the shortcodes presented in that page. Click on an item to go to the shortcode detail', 'lws-adminpanel'),
+				'title'  => $summaryTitle ? $summaryTitle : __('Shortcodes Summary', 'woorewards'),
+				'text'   => $summaryText ? $summaryText : __('This section groups all the shortcodes presented in that page. Click on an item to go to the shortcode detail', 'woorewards'),
 				'fields' => array(
 					'custom' => array(
 						'id'    => 'custom_summary',

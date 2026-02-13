@@ -1,5 +1,6 @@
 <?php
 namespace LWS\Adminpanel\Pages\Field;
+if (!defined('ABSPATH')) exit();
 
 /** Provides a Theme selector for complex html templates
  * @param string extra['css'] a url (@see plugins_dir()) to the css;
@@ -42,19 +43,42 @@ class Themer extends \LWS\Adminpanel\Pages\Field
 			$lightThemes = $this->getLightThemes($prefix);
 			$darkThemes = $this->getDarkThemes($prefix);
 
-			$themer = <<<EOT
-			<div class='lws_themer lws-themer-main' data-cssvalues='{$cssValues}' data-prefix='{$prefix}' data-type='{$type}'>
-				<input name='{$this->m_Id}' type='hidden' value='' class='lws_themer_chain'/>
+			?>
+			<div
+				class='lws_themer lws-themer-main'
+				data-cssvalues='<?php echo \esc_attr($cssValues) ?>'
+				data-prefix='<?php echo \esc_attr($prefix) ?>'
+				data-type='<?php echo \esc_attr($type) ?>'
+			>
+				<input
+					name='<?php echo \esc_attr($this->m_Id) ?>'
+					type='hidden'
+					value=''
+					class='lws_themer_chain'
+				/>
 				<div class='lws-themer-top'>
-					{$themerContent}
+					<?php
+						// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						echo $themerContent
+					?>
 					<div class='lws-themer-themes-panel'>
 						<div class='lws-themer-light-themes'>
 							<div class='lws-themer-light-title'>Light Themes</div>
-							<div class='lws-themer-tlist-container'>{$lightThemes}</div>
+							<div class='lws-themer-tlist-container'>
+								<?php
+									// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+									echo $lightThemes
+								?>
+							</div>
 						</div>
 						<div class='lws-themer-dark-themes'>
 							<div class='lws-themer-dark-title'>Dark Themes</div>
-							<div class='lws-themer-tlist-container'>{$darkThemes}</div>
+							<div class='lws-themer-tlist-container'>
+								<?php
+									// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+									echo $darkThemes
+								?>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -83,8 +107,7 @@ class Themer extends \LWS\Adminpanel\Pages\Field
 					</div>
 				</div>
 			</div>
-EOT;
-			echo $themer;
+<?php
 		}
 	}
 
@@ -109,7 +132,7 @@ EOT;
 				$innerHTML .= $body->ownerDocument->saveHTML($child);
 			}
 		} else {
-			error_log("themer {$this->m_Id} got no content.");
+			if (defined('WP_DEBUG') && WP_DEBUG) error_log("themer {$this->m_Id} got no content."); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 		}
 		return $innerHTML;
 	}
@@ -302,7 +325,7 @@ EOT;
 	protected function is_valid()
 	{
 		if (!isset($this->extra['css'])) {
-			error_log("No lwss file provided");
+			if (defined('WP_DEBUG') && WP_DEBUG) error_log("No lwss file provided"); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 			return false;
 		}
 		return true;
@@ -336,7 +359,7 @@ EOT;
 				return $balise->Defaults;
 		};
 
-		error_log("The Themer requires a template css with :root selector. See ".$cssFile);
+		if (defined('WP_DEBUG') && WP_DEBUG) error_log("The Themer requires a template css with :root selector. See ".$cssFile); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 		return '';
 	}
 
@@ -355,7 +378,7 @@ EOT;
 	public function reset($force=false)
 	{
 		$resetId = "lws-stygen-reset-{$this->m_Id}";
-		if ($force || (isset($_POST[$resetId]) && boolval($_POST[$resetId]))) {
+		if ($force || (isset($_POST[$resetId]) && boolval($_POST[$resetId]))) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			delete_option($this->m_Id);
 			$this->revokeCache('', '', $this->m_Id);
 		}

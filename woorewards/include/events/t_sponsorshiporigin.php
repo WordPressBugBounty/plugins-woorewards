@@ -13,7 +13,7 @@ trait T_SponsorshipOrigin
 	public function getAvailableOrigins()
 	{
 		return array(
-			array('value' => 'referral',  'label' => __("Referral link", 'woorewards-lite')),
+			array('value' => 'referral',  'label' => __("Referral link", 'woorewards')),
 		);
 	}
 
@@ -84,10 +84,10 @@ trait T_SponsorshipOrigin
 
 	protected function filterSponsorshipForm($content='', $prefix='', $context='editlist', $column=10)
 	{
-		$form = $this->getFieldsetBegin($column, __("Constraints", 'woorewards-lite'));
+		$form = $this->getFieldsetBegin($column, __("Constraints", 'woorewards'));
 
 		// Origin restriction
-		$label   = __("Referral Origin", 'woorewards-lite');
+		$label   = __("Referral Origin", 'woorewards');
 		$form .= "<div class='lws-{$context}-opt-title label'>{$label}</div>";
 		$form .= "<div class='lws-{$context}-opt-input value'>";
 		$form .= \LWS\Adminpanel\Pages\Field\LacChecklist::compose($prefix . 'origins', array(
@@ -114,7 +114,7 @@ trait T_SponsorshipOrigin
 				$prefix . 'origins' => array(),
 			),
 			'labels'   => array(
-				$prefix . 'origins' => __("Origin restrictions", 'woorewards-lite'),
+				$prefix . 'origins' => __("Origin restrictions", 'woorewards'),
 			)
 		));
 		if( !(isset($values['valid']) && $values['valid']) )

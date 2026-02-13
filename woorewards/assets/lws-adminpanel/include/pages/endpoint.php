@@ -70,7 +70,7 @@ class Endpoint
 
 		$fields['enable'] = array(
 			'id'    => $me->options['prefix'] . '_enable',
-			'title' => __("Enable", 'lws-adminpanel'),
+			'title' => __("Enable", 'woorewards'),
 			'type'  => 'box',
 			'extra' => array(
 				'layout'  => 'toggle',
@@ -79,7 +79,7 @@ class Endpoint
 		);
 		$fields['title']  = array(
 			'id'    => $me->options['prefix'] . '_title',
-			'title' => __("Tab title", 'lws-adminpanel'),
+			'title' => __("Tab title", 'woorewards'),
 			'type'  => 'text',
 			'extra' => array(
 				'placeholder' => $me->getRawTitle(),
@@ -88,7 +88,7 @@ class Endpoint
 		);
 		$fields['slug']  = array(
 			'id'    => $me->options['prefix'] . '_slug',
-			'title' => __("Slug", 'lws-adminpanel'),
+			'title' => __("Slug", 'woorewards'),
 			'type'  => 'text',
 			'extra' => array(
 				'placeholder' => $me->options['slug'],
@@ -96,16 +96,16 @@ class Endpoint
 		);
 		$fields['roles']  = array(
 			'id'    => $me->options['prefix'] . '_role',
-			'title' => __("Role restriction", 'lws-adminpanel'),
+			'title' => __("Role restriction", 'woorewards'),
 			'type'  => 'lacchecklist',
 			'extra' => array(
-				'help'   => __("Restrict this tab to given roles. No roles selected means no restriction at all.", 'lws-adminpanel'),
+				'help'   => __("Restrict this tab to given roles. No roles selected means no restriction at all.", 'woorewards'),
 				'source' => $roles,
 			)
 		);
 		$fields['page'] = array(
 			'id'    => $me->options['prefix'] . '_page',
-			'title' => __("Content page", 'lws-adminpanel'),
+			'title' => __("Content page", 'woorewards'),
 			'type'  => 'lacselect',
 			'extra' => array(
 				'id'         => $me->options['prefix'] . '_page',
@@ -119,7 +119,7 @@ class Endpoint
 			$fields['see'] = array(
 				'id'    => 'lws_adminpanel_myaccount_page_edit',
 				'type'  => 'custom',
-				'title' => __("Content Edition", 'lws-adminpanel'),
+				'title' => __("Content Edition", 'woorewards'),
 				'extra' => array(
 					'content' => function()use($me, $pageId){
 						$href = \get_edit_post_link($pageId, 'raw');
@@ -127,13 +127,13 @@ class Endpoint
 							return sprintf(
 								'<a target="_blank" class="lws-adm-btn big" href="%s">%s</a>',
 								\esc_attr($href),
-								__('Edit Page', 'lws-adminpanel')
+								__('Edit Page', 'woorewards')
 							);
 						} else {
 							return sprintf(
 								'<strong id="%s" class="lws-warning">%s</strong>',
 								$me->options['prefix'] . '_warning',
-								__('Selected Page not found', 'lws-adminpanel')
+								__('Selected Page not found', 'woorewards')
 							);
 						}
 					},
@@ -144,10 +144,10 @@ class Endpoint
 		if ($me->options['content'] && \current_user_can('edit_pages') && \current_user_can('publish_pages')) {
 			$fields['create'] = array(
 				'id'    => $me->options['prefix'] . '_create',
-				'title' => __("Default Content", 'lws-adminpanel'),
+				'title' => __("Default Content", 'woorewards'),
 				'type'  => 'button',
 				'extra' => array(
-					'text' => __("Create a new default page", 'lws-adminpanel'),
+					'text' => __("Create a new default page", 'woorewards'),
 					'callback' => array($me, 'createPage'),
 				)
 			);
@@ -183,27 +183,25 @@ class Endpoint
 		if ($pageId) {
 			\update_option($this->options['prefix'] . '_page', $pageId);
 			$href = \esc_attr(\get_edit_post_link($pageId, 'raw'));
-			$link = __('Edit the page', 'lws-adminpanel');
-			$text = __("Page created and setup as tab.", 'lws-adminpanel');
+			$link = __('Edit the page', 'woorewards');
+			$text = __("Page created and setup as tab.", 'woorewards');
 		//var pageElt = document.getElementById('{$eltId}');
 		//pageElt.value = {$pageId};
 		//pageElt.dispatchEvent(new Event('change'));
-			return <<<EOT
-	<script type='text/javascript'>
-		jQuery( function($) {
-			$('#{$this->options['prefix']}_page').val('{$pageId}').trigger('change');
-			$('#{$this->options['prefix']}_warning').remove();
-		});
-	</script>
-	<div class='notice notice-success'>
-		<p>
-			{$text}<br/>
-			<a href='{$href}'>{$link}</a>
-		</p>
-	</div>
-EOT;
+			return "<script type='text/javascript'>"
+				. "jQuery( function($) {"
+				. "$('#" . esc_attr($this->options['prefix']) . "_page').val('" . esc_attr($pageId) . "').trigger('change');"
+				. "$('#" . esc_attr($this->options['prefix']) . "_warning').remove();"
+				. "});"
+				. "</script>"
+				. "<div class='notice notice-success'>"
+				. "<p>"
+				. esc_html($text) . "<br/>"
+				. "<a href='" . esc_attr($href) . "'>" . esc_html($link) . "</a>"
+				. "</p>"
+				. "</div>";
 		} else {
-			return sprintf('<div class="notice notice-error"><p>%s</p></div>', __("An error occured during page creation.", 'lws-adminpanel'));
+			return sprintf('<div class="notice notice-error"><p>%s</p></div>', __("An error occured during page creation.", 'woorewards'));
 		}
 	}
 
@@ -355,7 +353,7 @@ EOT;
 			$content = \apply_filters('the_content', $content);
 			$this->restoreElementor();
 			$content = \str_replace(']]>', ']]&gt;', $content);
-			echo $content;
+			echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 

@@ -37,7 +37,7 @@ class Events extends \LWS\WOOREWARDS\Abstracts\Collection
 		$posts = isset($args['post_parent']) ? \get_children($args) : \get_posts($args);
 		if( !is_array($posts) )
 		{
-			error_log("Fail to load events, check posts with for :".print_r($args, true));
+			if (defined('WP_DEBUG') && WP_DEBUG) \error_log("Fail to load events, check posts with for :" . \print_r($args, true)); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log, WordPress.PHP.DevelopmentFunctions.error_log_print_r
 		}
 		else
 		{
@@ -65,10 +65,11 @@ class Events extends \LWS\WOOREWARDS\Abstracts\Collection
 		else
 		{
 			$reg = \LWS\WOOREWARDS\Abstracts\Event::getRegisteredByName($ref);
-			if( !empty($reg) && !empty($event = \LWS\WOOREWARDS\Abstracts\Event::instanciate($reg)) )
+			if( !empty($reg) && !empty($event = \LWS\WOOREWARDS\Abstracts\Event::instanciate($reg)) ) {
 				$this->add($event);
-			else
-				error_log("Cannot found MyRewards Event type: ".print_r($ref, true));
+			} else {
+				if (defined('WP_DEBUG') && WP_DEBUG) \error_log("Cannot found MyRewards Event type: " . \print_r($ref, true)); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log, WordPress.PHP.DevelopmentFunctions.error_log_print_r
+			}
 		}
 		return $this;
 	}

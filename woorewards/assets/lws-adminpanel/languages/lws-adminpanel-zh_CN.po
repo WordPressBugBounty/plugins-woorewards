@@ -742,10 +742,10 @@ msgstr ""
 #: include/pages/wizard.php:193
 #, php-format
 msgid ""
-"If you can see this, an error occured. Click %s here %s to resolve. Then "
+"If you can see this, an error occured. Click %1$s here %2$s to resolve. Then "
 "restart the wizard."
 msgstr ""
-"如果您看到这个提示, 说明出现了一些问题. 点击 %s 这里 %s 尝试修复，然后请重新"
+"如果您看到这个提示, 说明出现了一些问题. 点击 %1$s 这里 %2$s 尝试修复，然后请重新"
 "运行向导。"
 
 #: include/pages/wizard.php:206
@@ -763,8 +763,8 @@ msgstr "验证时发生了错误。"
 #: include/pages/wizard.php:785
 #, php-format
 msgctxt "wizard critical path tab title with loop count"
-msgid "%s (%s)"
-msgstr "%s (%s)"
+msgid "%1$s (%2$s)"
+msgstr "%1$s (%2$s)"
 
 #: include/pages/wizard.php:849
 msgid "Step : "

@@ -20,16 +20,17 @@ class FilterSimpleField extends Filter
 		$this->name = $name;
 		$this->extra = $extra;
 		$this->placeholder = \esc_attr($placeholder);
-		$this->buttonLabel = (empty($buttonLabel) ? __('Search', 'lws-adminpanel') : $buttonLabel);
+		$this->buttonLabel = (empty($buttonLabel) ? __('Search', 'woorewards') : $buttonLabel);
 	}
 
 	function input($above=true)
 	{
 		$search = '';
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		if( isset($_GET[$this->name]) && !empty(trim($_GET[$this->name])) )
-			$search = trim(esc_attr(\sanitize_text_field($_GET[$this->name])));
+			$search = trim(esc_attr(\sanitize_text_field(wp_unslash($_GET[$this->name])))); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
-		$filterlabel = __('Narrow your search', 'lws-adminpanel');
+		$filterlabel = __('Narrow your search', 'woorewards');
 
 		$retour = "<div class='lws-editlist-filter-box end'><div class='lws-editlist-filter-box-title'>{$filterlabel}</div>";
 		foreach( $this->extra as $name => $value)

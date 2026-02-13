@@ -18,7 +18,7 @@ class DateTime extends \LWS\Adminpanel\Pages\Field
 
 	public function input()
 	{
-		echo $this->html();
+		echo $this->html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	private function html()
@@ -66,16 +66,14 @@ class DateTime extends \LWS\Adminpanel\Pages\Field
 
 		// looks better with the small box finally
 		// ... build a time picker?
-		return <<<EOT
-<div class='lws-editlist-opt-multi lws-field-datetime'>
-	<input class="lws-input {$class} sub date" data-for="{$id}" type="date" value="{$date}">
-	&nbsp;–&nbsp;
-	<input class="lws-input {$class} sub time" data-for="{$id}" type="text" size="8" value="{$time}" placeholder="hh:mm:ss">
-	{$utc}
-	<input class="{$class} sub offset" data-for="{$id}" type="hidden" value="{$tz}">
-	<input class="{$class} master" type="hidden" name="{$id}" value="{$text}">
-</div>
-EOT;
+		return "<div class='lws-editlist-opt-multi lws-field-datetime'>"
+			. "<input class='lws-input " . esc_attr($class) . " sub date' data-for='" . esc_attr($id) . "' type='date' value='" . esc_attr($date) . "'>"
+			. "&nbsp;&#8211;&nbsp;"
+			. "<input class='lws-input " . esc_attr($class) . " sub time' data-for='" . esc_attr($id) . "' type='text' size='8' value='" . esc_attr($time) . "' placeholder='hh:mm:ss'>"
+			. $utc
+			. "<input class='" . esc_attr($class) . " sub offset' data-for='" . esc_attr($id) . "' type='hidden' value='" . esc_attr($tz) . "'>"
+			. "<input class='" . esc_attr($class) . " master' type='hidden' name='" . esc_attr($id) . "' value='" . esc_attr($text) . "'>"
+			. "</div>";
 	}
 
 	/** since WP 5.3 return a string +/-offset_in_sec

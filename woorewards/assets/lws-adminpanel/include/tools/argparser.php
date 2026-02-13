@@ -1,5 +1,6 @@
 <?php
 namespace LWS\Adminpanel\Tools;
+if (!defined('ABSPATH')) exit();
 
 /** Parse an argument array.
  *	Extract and sanitize.
@@ -95,7 +96,7 @@ class ArgParser
 	function parsePostTransposed($attrs, $options)
 	{
 		$attrs['post'] = true;
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
 		$attrs['values'] = \wp_unslash($_POST); // WPCS: input var ok, sanitization ok, CSRF ok.
 		return $this->parseTransposed($attrs, $options, true);
 	}
@@ -104,7 +105,7 @@ class ArgParser
 	function parsePost($args)
 	{
 		$args['post'] = true;
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
 		$args['values'] = \wp_unslash($_POST); // WPCS: input var ok, sanitization ok, CSRF ok.
 		return $this->parse($args, true);
 	}
@@ -197,8 +198,10 @@ class ArgParser
 		{
 			if( isset($format['callable']) && is_callable($format['callable']) )
 			{
-				if( !call_user_func($format['callable'], $value) )
-					return $this->error($args, sprintf(_x("%s value rejected", "Input array validation", 'lws-adminpanel'), $this->label($args, $key)));
+				if( !call_user_func($format['callable'], $value) ) {
+					/* translators: 1: The field label. */
+					return $this->error($args, sprintf(_x("%s value rejected", "Input array validation", 'woorewards'), $this->label($args, $key)));
+				}
 			}
 			else
 			{
@@ -208,12 +211,15 @@ class ArgParser
 					if( $value )
 						$value = @json_decode($value);
 				}
-				if( !is_array($value) )
-					return $this->error($args, sprintf(_x("%s is not an array", "Input array validation", 'lws-adminpanel'), $this->label($args, $key)));
+				if( !is_array($value) ) {
+					/* translators: 1: The field label. */
+					return $this->error($args, sprintf(_x("%s is not an array", "Input array validation", 'woorewards'), $this->label($args, $key)));
+				}
 				if( !empty($format) )
 				{
 					$f = array_pop($format);
-					$sub = sprintf(__("A value in %s", 'lws-adminpanel'), $this->label($args, $key));
+					/* translators: 1: The field label. */
+					$sub = sprintf(__("A value in %s", 'woorewards'), $this->label($args, $key));
 					foreach( $value as &$v )
 					{
 						if( !$this->formatValue($args, $sub, $f, $v) )
@@ -232,24 +238,32 @@ class ArgParser
 				if ($lfor == 'date')
 				{
 					if (!strlen($value)) {
-						if ('D' == $f) // date required
-							return $this->error($args, sprintf(_x("%s value is required and must be a valid datetime format", "Input array validation", 'lws-adminpanel'), $this->label($args, $key)));
+						if ('D' == $f) {
+							// date required
+							/* translators: 1: The field label. */
+							return $this->error($args, sprintf(_x("%s value is required and must be a valid datetime format", "Input array validation", 'woorewards'), $this->label($args, $key)));
+						}
 					} else {
 						$value = \date_create($value);
-						if (!$value)
-							return $this->error($args, sprintf(_x("%s must be a valid datetime format", "Input array validation", 'lws-adminpanel'), $this->label($args, $key)));
+						if (!$value) {
+							/* translators: 1: The field label. */
+							return $this->error($args, sprintf(_x("%s must be a valid datetime format", "Input array validation", 'woorewards'), $this->label($args, $key)));
+						}
 					}
 				}
 				elseif( $f == '/' )
 				{
-					if( !preg_match($format, $value) )
-						return $this->error($args, sprintf(_x("%s is not valid", "Input array validation", 'lws-adminpanel'), $this->label($args, $key)));
+					if( !preg_match($format, $value) ) {
+						/* translators: 1: The field label. */
+						return $this->error($args, sprintf(_x("%s is not valid", "Input array validation", 'woorewards'), $this->label($args, $key)));
+					}
 				}
 				else if( $f == '=' )
 				{
 					$exp = new \LWS\Adminpanel\Tools\Expression();
 					if (!$exp->isValid($value, array('empty' => ('!' != substr($format, 1, 1)),))) {
-						return $this->error($args, sprintf(_x('%1$s must be a valid number or an expression: %2$s', 'Input array validation', 'lws-adminpanel'), $this->label($args, $key), $exp->err()));
+						/* translators: 1: The field label, 2: detailed error. */
+						return $this->error($args, sprintf(_x('%1$s must be a valid number or an expression: %2$s', 'Input array validation', 'woorewards'), $this->label($args, $key), $exp->err()));
 					} else {
 						if (\strlen($value) && (!\LWS\Adminpanel\Tools\Expression::isExpr($value)) && \strlen(\rtrim($next = \ltrim($format, '=!')))) {
 							return $this->formatValue($args, $key, $next, $value);
@@ -259,50 +273,69 @@ class ArgParser
 				else if( $f == '0' )
 				{
 					$v = $value;
-					if( !is_numeric($value) || ($v = intval($value)) < 0 )
-						return $this->error($args, sprintf(_x("%s must be equal or greater than zero", "Input array validation", 'lws-adminpanel'), $this->label($args, $key)));
+					if( !is_numeric($value) || ($v = intval($value)) < 0 ) {
+						/* translators: 1: The field label. */
+						return $this->error($args, sprintf(_x("%s must be equal or greater than zero", "Input array validation", 'woorewards'), $this->label($args, $key)));
+					}
 					$value = $v;
 				}
 				else if( $u == 'F' )
 				{
 					$v = $this->unlocaliseDecimal($value);
-					if( $v === false )
-						return $this->error($args, sprintf(_x("%s is not a decimal number", "Input array validation", 'lws-adminpanel'), $this->label($args, $key)));
-					else if( $f == $u && $v <= 0.0 )
-						return $this->error($args, sprintf(_x("%s must be greater than zero", "Input array validation", 'lws-adminpanel'), $this->label($args, $key)));
+					if( $v === false ) {
+						/* translators: 1: The field label. */
+						return $this->error($args, sprintf(_x("%s is not a decimal number", "Input array validation", 'woorewards'), $this->label($args, $key)));
+					}
+					else if( $f == $u && $v <= 0.0 ) {
+						/* translators: 1: The field label. */
+						return $this->error($args, sprintf(_x("%s must be greater than zero", "Input array validation", 'woorewards'), $this->label($args, $key)));
+					}
 					$value = $v;
 				}
 				else if( $u == '.' )
 				{
 					$v = $this->unlocaliseDecimal($value);
-					if( $v === false )
-						return $this->error($args, sprintf(_x("%s is not a decimal number", "Input array validation", 'lws-adminpanel'), $this->label($args, $key)));
-					else if( $f == $u && $v < 0.0 )
-						return $this->error($args, sprintf(_x("%s must be greater or equal to zero", "Input array validation", 'lws-adminpanel'), $this->label($args, $key)));
+					if( $v === false ) {
+						/* translators: 1: The field label. */
+						return $this->error($args, sprintf(_x("%s is not a decimal number", "Input array validation", 'woorewards'), $this->label($args, $key)));
+					}
+					else if( $f == $u && $v < 0.0 ) {
+						/* translators: 1: The field label. */
+						return $this->error($args, sprintf(_x("%s must be greater or equal to zero", "Input array validation", 'woorewards'), $this->label($args, $key)));
+					}
 					$value = $v;
 				}
 				elseif ('P' == $u)
 				{
 					$value = \LWS\Adminpanel\Tools\Duration::fromString($value, true);
-					if (!$value)
-						return $this->error($args, sprintf(_x("%s must be a valid date interval", "Input array validation", 'lws-adminpanel'), $this->label($args, $key)));
-					if ($value->isNull() && $u == $f)
-						return $this->error($args, sprintf(_x("%s must be greater than zero", "Input array validation", 'lws-adminpanel'), $this->label($args, $key)));
+					if (!$value) {
+						/* translators: 1: The field label. */
+						return $this->error($args, sprintf(_x("%s must be a valid date interval", "Input array validation", 'woorewards'), $this->label($args, $key)));
+					}
+					if ($value->isNull() && $u == $f) {
+						/* translators: 1: The field label. */
+						return $this->error($args, sprintf(_x("%s must be greater than zero", "Input array validation", 'woorewards'), $this->label($args, $key)));
+					}
 				}
 				else
 				{
 					if( $u == 'I' || $u == 'D' || $u == '+' )
 					{
-						if( !is_numeric($value) )
-							return $this->error($args, sprintf(_x("%s is not a number", "Input array validation", 'lws-adminpanel'), $this->label($args, $key)));
+						if( !is_numeric($value) ) {
+							/* translators: 1: The field label. */
+							return $this->error($args, sprintf(_x("%s is not a number", "Input array validation", 'woorewards'), $this->label($args, $key)));
+						}
 						$v = \intval(\trim($value));
-						if( $u == $f && $v <= 0 )
-							return $this->error($args, sprintf(_x("%s must be greater than zero", "Input array validation", 'lws-adminpanel'), $this->label($args, $key)));
+						if( $u == $f && $v <= 0 ) {
+							/* translators: 1: The field label. */
+							return $this->error($args, sprintf(_x("%s must be greater than zero", "Input array validation", 'woorewards'), $this->label($args, $key)));
+						}
 						$value = $v;
 					}
 					else if( !is_string($value) )
 					{
-						return $this->error($args, sprintf(_x("%s is not a string", "Input array validation", 'lws-adminpanel'), $this->label($args, $key)));
+						/* translators: 1: The field label. */
+						return $this->error($args, sprintf(_x("%s is not a string", "Input array validation", 'woorewards'), $this->label($args, $key)));
 					}
 					else
 					{
@@ -313,19 +346,25 @@ class ArgParser
 						else
 							$value = trim($value);
 
-						if( $u == $f && $this->isEmpty($value) )
-							return $this->error($args, sprintf(_x("%s is empty", "Input array validation", 'lws-adminpanel'), $this->label($args, $key)));
+						if( $u == $f && $this->isEmpty($value) ) {
+							/* translators: 1: The field label. */
+							return $this->error($args, sprintf(_x("%s is empty", "Input array validation", 'woorewards'), $this->label($args, $key)));
+						}
 					}
 				}
 			}
 		}
 		else if (\is_object($format) && \is_a($format, '\LWS\Adminpanel\Tools\Expression'))
 		{
-			if (!$format->isValid($value))
-				return $this->error($args, sprintf(_x('%1$s must be a valid number or an expression: %2$s', 'Input array validation', 'lws-adminpanel'), $this->label($args, $key), $format->err()));
+			if (!$format->isValid($value)) {
+				/* translators: 1: The field label, 2: detailed error. */
+				return $this->error($args, sprintf(_x('%1$s must be a valid number or an expression: %2$s', 'Input array validation', 'woorewards'), $this->label($args, $key), $format->err()));
+			}
 		}
 		else
-			error_log("[" . __CLASS__ . "] unknown given format ($key): " . print_r($format, true));
+		{
+			if (defined('WP_DEBUG') && WP_DEBUG) error_log("[" . __CLASS__ . "] unknown given format ($key): " . print_r($format, true)); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log, WordPress.PHP.DevelopmentFunctions.error_log_print_r
+		}
 		return true;
 	}
 
@@ -368,8 +407,10 @@ class ArgParser
 		{
 			foreach( $args['required'] as $key => $required )
 			{
-				if( $required && ( !isset($args['values'][$key]) || $this->isEmpty($args['values'][$key]) ) )
-					return $this->error($args, sprintf(_x("Missing required value for %s", "Input array validation", 'lws-adminpanel'), $this->label($args, $key)));
+				if( $required && ( !isset($args['values'][$key]) || $this->isEmpty($args['values'][$key]) ) ) {
+					/* translators: 1: The problematic entry. */
+					return $this->error($args, sprintf(_x("Missing required value for %s", "Input array validation", 'woorewards'), $this->label($args, $key)));
+				}
 			}
 		}
 		else if( boolval($args['required']) )
@@ -378,14 +419,18 @@ class ArgParser
 			{
 				foreach( $args['format'] as $key => $f )
 				{
-					if( !isset($args['values'][$key]) )
-						return $this->error($args, sprintf(_x("Missing entry %s", "Input array validation", 'lws-adminpanel'), $this->label($args, $key)));
+					if( !isset($args['values'][$key]) ) {
+						/* translators: 1: The problematic entry. */
+						return $this->error($args, sprintf(_x("Missing entry %s", "Input array validation", 'woorewards'), $this->label($args, $key)));
+					}
 				}
 			}
 			foreach( $args['values'] as $key => $value )
 			{
-				if( $this->isEmpty($value) )
-					return $this->error($args, sprintf(_x("Missing value for %s", "Input array validation", 'lws-adminpanel'), $this->label($args, $key)));
+				if( $this->isEmpty($value) ) {
+					/* translators: 1: The problematic entry. */
+					return $this->error($args, sprintf(_x("Missing value for %s", "Input array validation", 'woorewards'), $this->label($args, $key)));
+				}
 			}
 		}
 	}
@@ -451,8 +496,10 @@ class ArgParser
 		{
 			foreach( $args['values'] as $key => $value )
 			{
-				if( !isset($args['format'][$key]) )
-					return $this->error($args, sprintf(_x("Unknown entry %s", "Input array validation", 'lws-adminpanel'), $this->label($args, $key)));
+				if( !isset($args['format'][$key]) ) {
+					/* translators: 1: The unexpected entry. */
+					return $this->error($args, sprintf(_x("Unknown entry %s", "Input array validation", 'woorewards'), $this->label($args, $key)));
+				}
 			}
 		}
 		return true;

@@ -55,10 +55,10 @@ class Filter
 	 * @note cannot be used with EditListFilter::content since we must be at display step to know data. */
 	static function url($getArgs=array())
 	{
-		if( isset($_REQUEST['page']) )
-			$getArgs['page'] = \sanitize_text_field($_REQUEST['page']);
-		if( isset($_REQUEST['tab']) )
-			$getArgs['tab'] = \sanitize_text_field($_REQUEST['tab']);
+		if( isset($_REQUEST['page']) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$getArgs['page'] = \sanitize_text_field(wp_unslash($_REQUEST['page'])); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if( isset($_REQUEST['tab']) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$getArgs['tab'] = \sanitize_text_field(wp_unslash($_REQUEST['tab'])); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		return add_query_arg($getArgs, admin_url('/admin.php'));
 	}
 

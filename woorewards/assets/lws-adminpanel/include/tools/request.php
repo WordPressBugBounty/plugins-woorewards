@@ -176,7 +176,7 @@ class Request
 		if( $this->args )
 		{
 			global $wpdb;
-			$str = $wpdb->prepare($str, $this->args); // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
+			$str = $wpdb->prepare($str, $this->args); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
 		}
 		return $str;
 	}
@@ -184,25 +184,25 @@ class Request
 	function getVar($columnOffset=0, $rowOffset=0)
 	{
 		global $wpdb;
-		return $wpdb->get_var($this->toString(), $columnOffset, $rowOffset); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPressDotOrg.sniffs.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared
+		return $wpdb->get_var($this->toString(), $columnOffset, $rowOffset); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 	}
 
 	function getRow($outputType=OBJECT, $rowOffset=0)
 	{
 		global $wpdb;
-		return $wpdb->get_row($this->toString(), $outputType, $rowOffset); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPressDotOrg.sniffs.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared
+		return $wpdb->get_row($this->toString(), $outputType, $rowOffset); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 	}
 
 	function getCol($columnOffset=0)
 	{
 		global $wpdb;
-		return $wpdb->get_col($this->toString(), $columnOffset); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPressDotOrg.sniffs.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared
+		return $wpdb->get_col($this->toString(), $columnOffset); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 	}
 
 	function getResults($outputType=OBJECT)
 	{
 		global $wpdb;
-		return $wpdb->get_results($this->toString(), $outputType); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPressDotOrg.sniffs.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared
+		return $wpdb->get_results($this->toString(), $outputType); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 	}
 
 	function delete()
@@ -221,9 +221,9 @@ class Request
 		$str = implode("\n", array_filter($tmp));
 		if ($this->args) {
 			global $wpdb;
-			$str = $wpdb->prepare($str, $this->args); // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
+			$str = $wpdb->prepare($str, $this->args); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
 		}
-		return $wpdb->query($str); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPressDotOrg.sniffs.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared
+		return $wpdb->query($str); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 	}
 
 	/** @param $field (array|string) a field key (require a value) or an array with field => value
@@ -244,16 +244,16 @@ class Request
 		if (!\is_array($field))
 			$field = array($field => $value);
 		foreach ($field as $f => $v) {
-			$tmp['set'][] = \is_int($v) ? sprintf("$f=%d", \intval($v)) : $wpdb->prepare("$f=%s", $v);
+			$tmp['set'][] = \is_int($v) ? sprintf("$f=%d", \intval($v)) : $wpdb->prepare("$f=%s", $v); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		}
 		$tmp['set'] = ('SET ' . \implode(', ', $tmp['set']));
 
 		$str = implode("\n", array_filter($tmp));
 		if ($this->args) {
 			global $wpdb;
-			$str = $wpdb->prepare($str, $this->args); // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
+			$str = $wpdb->prepare($str, $this->args); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
 		}
-		return $wpdb->query($str); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPressDotOrg.sniffs.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared
+		return $wpdb->query($str); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 	}
 
 	/** @param $values array of object
@@ -286,7 +286,7 @@ class Request
 			$sep = ",\n";
 		}
 
-		return $wpdb->query($sql); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPressDotOrg.sniffs.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared
+		return $wpdb->query($sql); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 	}
 
 	protected function &fill($part, $term, $add)

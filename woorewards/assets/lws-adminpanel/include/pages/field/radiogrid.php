@@ -22,7 +22,7 @@ class RadioGrid extends \LWS\Adminpanel\Pages\Field
 
 	public function input()
 	{
-		echo $this->html();
+		echo $this->html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	public function title()
@@ -59,37 +59,29 @@ class RadioGrid extends \LWS\Adminpanel\Pages\Field
 
 		switch ($type) {
 			case 'wizard-choice':
-				$block = <<<EOT
-<div class="container-background"></div>
-{$icon}
-<div class="text">
-	<div class="title">{$opt['label']}</div>
-	{$descr}
-</div>
-EOT;
+				$block = "<div class='container-background'></div>"
+				. $icon
+				. "<div class='text'>"
+				. "<div class='title'>" . $opt['label'] . "</div>"
+				. $descr
+				. "</div>";
 				break;
 			case 'large':
-				$block = <<<EOT
-<div class='inner-background'></div>
-{$icon}
-<div class='label'>{$opt['label']}</div>
-{$descr}
-EOT;
+				$block = "<div class='inner-background'></div>"
+				. $icon
+				. "<div class='label'>" . $opt['label'] . "</div>"
+				. $descr;
 				break;
 			case 'auto-cols':
-				$block = <<<EOT
-<div class='inner-background'></div>
-{$icon}
-<div class='label'>{$opt['label']}</div>
-EOT;
+				$block = "<div class='inner-background'></div>"
+				. $icon
+				. "<div class='label'>" . $opt['label'] . "</div>";
 				break;
 			case 'big-icon':
-				$block = <<<EOT
-<div class='icon-background'></div>
-{$icon}
-<div class='label-background'></div>
-<div class='label'>{$opt['label']}</div>
-EOT;
+				$block = "<div class='icon-background'></div>"
+				. $icon
+				. "<div class='label-background'></div>"
+				. "<div class='label'>" . $opt['label'] . "</div>";
 				break;
 			default:
 				$block = "{$icon}<div class='label'>{$opt['label']}</div>";
@@ -126,13 +118,11 @@ EOT;
 		switch ($type) {
 			case 'large':
 				$title = parent::title();
-				return <<<EOT
-{$input}
-<div class="radiogrid-large-container">
-	<div class="large-opt-title">{$title}</div>
-	<div class="large-grid">{$items}</div>
-</div>
-EOT;
+				return $input
+					. "<div class='radiogrid-large-container'>"
+					. "<div class='large-opt-title'>" . $title . "</div>"
+					. "<div class='large-grid'>" . $items . "</div>"
+					. "</div>";
 			case 'big-icon':
 				$cols = $columns ? $columns : \str_repeat(' 1fr', \count($source));
 				return "{$input}<div class='radiogrid-big-icon-grid' style='grid-template-columns:{$cols};'>{$items}</div>";

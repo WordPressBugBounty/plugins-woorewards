@@ -15,8 +15,8 @@ class ProductReview extends \LWS\WOOREWARDS\Abstracts\Event
 	{
 		return array_merge(parent::getInformation(), array(
 			'icon'  => 'lws-icon-star-full',
-			'short' => __("The customer will earn points for writing a review on a product.", 'woorewards-lite'),
-			'help'  => __("You can restrict this method to products already purchased by the customer", 'woorewards-lite'),
+			'short' => __("The customer will earn points for writing a review on a product.", 'woorewards'),
+			'help'  => __("You can restrict this method to products already purchased by the customer", 'woorewards'),
 		));
 	}
 
@@ -31,7 +31,7 @@ class ProductReview extends \LWS\WOOREWARDS\Abstracts\Event
 	protected function getCooldownTooltips($text)
 	{
 		$text .= '<br/>';
-		$text .= __("Points are still given once per product. The cooldown simply limits the number of times a user can earn points for his reviews during a set period.", 'woorewards-lite');
+		$text .= __("Points are still given once per product. The cooldown simply limits the number of times a user can earn points for his reviews during a set period.", 'woorewards');
 		return $text;
 	}
 
@@ -49,15 +49,15 @@ class ProductReview extends \LWS\WOOREWARDS\Abstracts\Event
 		$prefix = $this->getDataKeyPrefix();
 		$form = parent::getForm($context);
 
-		$form .= $this->getFieldsetBegin(2, __("Options", 'woorewards-lite'));
+		$form .= $this->getFieldsetBegin(2, __("Options", 'woorewards'));
 
 		// hide from search and robots on/off
-		$label = __("Purchase Required", 'woorewards-lite');
+		$label = __("Purchase Required", 'woorewards');
 		$toggle = \LWS\Adminpanel\Pages\Field\Checkbox::compose($prefix . 'purchase_required', array(
 			'id'      => $prefix . 'purchase_required',
 			'layout'  => 'toggle',
 		));
-		$tooltip = __("If checked, points are earned only if the customer already purchased the product and order status is 'Complete'.", 'woorewards-lite');
+		$tooltip = __("If checked, points are earned only if the customer already purchased the product and order status is 'Complete'.", 'woorewards');
 		$form .= "<div class='field-help'>{$tooltip}</div>";
 		$form .= "<div class='lws-{$context}-opt-title label'>{$label}<div class='bt-field-help'>?</div></div>";
 		$form .= "<div class='lws-{$context}-opt-input value'>{$toggle}</div>";
@@ -79,7 +79,7 @@ class ProductReview extends \LWS\WOOREWARDS\Abstracts\Event
 				$prefix.'purchase_required' => '',
 			),
 			'labels'   => array(
-				$prefix.'purchase_required' => __("Purchase Required", 'woorewards-lite'),
+				$prefix.'purchase_required' => __("Purchase Required", 'woorewards'),
 			)
 		));
 		if( !(isset($values['valid']) && $values['valid']) )
@@ -121,7 +121,7 @@ class ProductReview extends \LWS\WOOREWARDS\Abstracts\Event
 	/** @return string a human readable type for UI */
 	public function getDisplayType()
 	{
-		return _x("Product review", "getDisplayType", 'woorewards-lite');
+		return _x("Product review", "getDisplayType", 'woorewards');
 	}
 
 	/** Add hook to grab events and add points. */
@@ -167,7 +167,7 @@ class ProductReview extends \LWS\WOOREWARDS\Abstracts\Event
 		if( $points = \apply_filters('trigger_'.$this->getType(), 1, $this, $comment) )
 		{
 			\add_user_meta($comment->user_id, $this->oncekey(), $comment->comment_post_ID, false);
-			$reason = \LWS\WOOREWARDS\Core\Trace::byReason(array("Review about a product (%s)", \get_the_title($comment->comment_post_ID)), 'woorewards-lite');
+			$reason = \LWS\WOOREWARDS\Core\Trace::byReason(array("Review about a product (%s)", \get_the_title($comment->comment_post_ID)), 'woorewards');
 			$this->addPoint(array(
 					'user'    => $comment->user_id,
 					'product' => $comment->comment_post_ID,
@@ -178,7 +178,8 @@ class ProductReview extends \LWS\WOOREWARDS\Abstracts\Event
 	/** Never call, only to have poedit/wpml able to extract the sentance. */
 	private function poeditDeclare()
 	{
-		__("Review about a product (%s)", 'woorewards-lite');
+		/* translators: %s: product name */
+		__("Review about a product (%s)", 'woorewards');
 	}
 
 	protected function isValid($comment, $delayed=false)
@@ -215,22 +216,19 @@ class ProductReview extends \LWS\WOOREWARDS\Abstracts\Event
 
 		global $wpdb;
 		if (\LWS\Adminpanel\Tools\Conveniences::isHPOS()) {
-			$sql = <<<EOT
-SELECT count(*) FROM {$wpdb->prefix}wc_orders as p
-INNER JOIN {$wpdb->prefix}woocommerce_order_itemmeta as m ON m.meta_key='_product_id' AND m.meta_value=%d
-INNER JOIN {$wpdb->prefix}woocommerce_order_items as i ON m.order_item_id=i.order_item_id AND p.id=i.order_id
-WHERE p.type='shop_order' AND p.status IN ('{$status_in}')
-AND customer_id=%d
-EOT;
+			$sql = "SELECT count(*) FROM {$wpdb->prefix}wc_orders as p"
+				. " INNER JOIN {$wpdb->prefix}woocommerce_order_itemmeta as m ON m.meta_key='_product_id' AND m.meta_value=%d"
+				. " INNER JOIN {$wpdb->prefix}woocommerce_order_items as i ON m.order_item_id=i.order_item_id AND p.id=i.order_id"
+				. " WHERE p.type='shop_order' AND p.status IN ('{$status_in}')"
+				. " AND customer_id=%d";
 		} else {
-			$sql = <<<EOT
-SELECT count(*) FROM {$wpdb->posts} as p
-INNER JOIN {$wpdb->prefix}woocommerce_order_itemmeta as m ON m.meta_key='_product_id' AND m.meta_value=%d
-INNER JOIN {$wpdb->prefix}woocommerce_order_items as i ON m.order_item_id=i.order_item_id AND p.ID=i.order_id
-INNER JOIN {$wpdb->postmeta} as c ON c.post_id=p.ID AND c.meta_key='_customer_user' AND c.meta_value=%d
-WHERE p.post_type='shop_order' AND p.post_status IN ('{$status_in}')
-EOT;
+			$sql = "SELECT count(*) FROM {$wpdb->posts} as p"
+				. " INNER JOIN {$wpdb->prefix}woocommerce_order_itemmeta as m ON m.meta_key='_product_id' AND m.meta_value=%d"
+				. " INNER JOIN {$wpdb->prefix}woocommerce_order_items as i ON m.order_item_id=i.order_item_id AND p.ID=i.order_id"
+				. " INNER JOIN {$wpdb->postmeta} as c ON c.post_id=p.ID AND c.meta_key='_customer_user' AND c.meta_value=%d"
+				. " WHERE p.post_type='shop_order' AND p.post_status IN ('{$status_in}')";
 		}
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- $sql built from wpdb table names and esc_sql'd status values
 		return (int)$wpdb->get_var($wpdb->prepare($sql, $comment->comment_post_ID, $comment->user_id));
 	}
 
@@ -239,8 +237,10 @@ EOT;
 	{
 		if( !$comment_approved )
 			return false;
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- WP comment submission handles nonce
 		if( !(isset($_POST['rating']) && isset($_POST['comment_post_ID'])) ) // it is a review
 			return false;
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if( !is_numeric($_POST['rating']) ) // it is a valid rating
 			return false;
 		if( empty($comment = \get_comment($comment_id, OBJECT)) ) // it is a valid comment
@@ -256,8 +256,8 @@ EOT;
 	public function getCategories()
 	{
 		return array_merge(parent::getCategories(), array(
-			'woocommerce' => __("WooCommerce", 'woorewards-lite'),
-			'site'  => __("Website", 'woorewards-lite')
+			'woocommerce' => __("WooCommerce", 'woorewards'),
+			'site'  => __("Website", 'woorewards')
 		));
 	}
 }

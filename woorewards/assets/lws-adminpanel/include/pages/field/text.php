@@ -12,7 +12,7 @@ class Text extends \LWS\Adminpanel\Pages\Field
 
 	public function input()
 	{
-		echo $this->html();
+		echo $this->html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	private function html()
@@ -75,18 +75,13 @@ class Text extends \LWS\Adminpanel\Pages\Field
 		$class = $this->getExtraCss('class', 'class', false, $this->style);
 		$attrs = $this->getDomAttributes();
 
-		if( empty($prop) )
-		{
-			return "<input {$class} type='{$type}' name='{$this->m_Id}' value='$mix'$size$maxlen$pattern$placeholder$required$disabled$readonly$id{$attrs} />";
-		}
-		else
-		{
-			return <<<EOT
-<div class='lwss-css-inputs'>
-	<input {$class} type='$type' data-css='$prop' data-lwss='$dft'$source value='$mix'$maxlen$pattern$placeholder$required$disabled$readonly$id{$attrs} />
-	<input class='lwss-merge-css' type='hidden' name='{$this->m_Id}' value='$prop:$value' />
-</div>
-EOT;
+		$attributes = $maxlen . $pattern . $placeholder . $required . $disabled . $readonly . $id . $attrs;
+		if( empty($prop) ) {
+			return "<input {$class} type='{$type}' name='{$this->m_Id}' value='$mix'$size$attributes />";
+		} else {
+			$in1 = "<input {$class} type='$type' data-css='$prop' data-lwss='$dft'$source value='$mix'$attributes />";
+			$in2 = "<input class='lwss-merge-css' type='hidden' name='{$this->m_Id}' value='$prop:$value' />";
+			return "<div class='lwss-css-inputs'>{$in1}{$in2}</div>";
 		}
 	}
 }

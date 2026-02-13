@@ -25,18 +25,14 @@ class WooRewards extends \LWS\WOOREWARDS\PointsFlow\ExportMethod
 			$stackName = $pool->getStackId();
 
 		global $wpdb;
-		$sql = <<<EOT
-SELECT user_email as `email`, meta_value as `points`
-FROM {$wpdb->users}
-LEFT JOIN {$wpdb->usermeta} ON ID=user_id AND `meta_key`=%s
-EOT;
-		return $wpdb->get_results($wpdb->prepare($sql, 'lws_wre_points_' . $stackName));
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		return $wpdb->get_results($wpdb->prepare("SELECT user_email as `email`, meta_value as `points` FROM {$wpdb->users} LEFT JOIN {$wpdb->usermeta} ON ID=user_id AND `meta_key`=%s", 'lws_wre_points_' . $stackName));
 	}
 
 	/** @return (string) human readable name */
 	public function getTitle()
 	{
-		return __("MyRewards", 'woorewards-lite');
+		return __("MyRewards", 'woorewards');
 	}
 
 	/** @return (bool) appear in method combobox */

@@ -189,8 +189,9 @@ class Expression
 		if ($this->isTestMode()) {
 			return false;
 		} else {
-			if (!$this->isSilent())
-				error_log($error);
+			if (!$this->isSilent()) {
+				if (defined('WP_DEBUG') && WP_DEBUG) error_log($error); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+			}
 			return $this->options['default'];
 		}
 	}
@@ -202,14 +203,20 @@ class Expression
 		$open = 0;
 		while(false !== ($open = strpos($expression, '{', $open))) {
 			$close = strpos($expression, '}', $open + 1);
-			if (false === $close)
-				throw new \Exception(sprintf(_x("Placeholder mark mismatch near `%s`", 'expression', LWS_WOOREWARDS_PRO_DOMAIN), substr($expression, \max(0, $open - 10), $open + 3)));
+			if (false === $close) {
+				/* translators: error description about no closure end found 1: line number */
+				throw new \Exception(esc_html(sprintf(_x( "Placeholder mark mismatch near `%s`", 'expression', 'woorewards' ), substr( $expression, \max( 0, $open - 10 ), $open + 3 ))));
+			}
 			$placeholder = \trim(substr($expression, $open + 1, $close - $open - 1));
-			if (!$placeholder)
-				throw new \Exception(sprintf(_x("Empty placeholder near `%s`", 'expression', LWS_WOOREWARDS_PRO_DOMAIN), substr($expression, \max(0, $open - 10), $open + 3)));
+			if (!$placeholder) {
+				/* translators: error description about empty closure 1: line number */
+				throw new \Exception(esc_html(sprintf(_x("Empty placeholder near `%s`", 'expression', 'woorewards'), substr($expression, \max(0, $open - 10), $open + 3))));
+			}
 			$value = $this->replacePlaceholder($placeholder);
-			if (false === $value)
-				throw new \Exception(sprintf(_x("Unknown placeholder `%s`", 'expression', LWS_WOOREWARDS_PRO_DOMAIN), $placeholder));
+			if (false === $value) {
+				/* translators: error description about unexpected token 1: the token */
+				throw new \Exception(esc_html(sprintf(_x("Unknown placeholder `%s`", 'expression', 'woorewards'), $placeholder)));
+			}
 			$expression = (substr($expression, 0, $open) . $value . substr($expression, $close + 1));
 			++$open;
 		}
@@ -217,8 +224,10 @@ class Expression
 		// extract parenthesis then
 		while(false !== ($close = strpos($expression, ')'))) {
 			$open = strrpos($expression, '(', $close - strlen($expression));
-			if (false === $open)
-				throw new \Exception(sprintf(_x("Parenthesis mismatch near `%s`", 'expression', LWS_WOOREWARDS_PRO_DOMAIN), substr($expression, \max(0, $close - 10), $close + 5)));
+			if (false === $open) {
+				/* translators: error description about parenthesis mismatch 1: the line number */
+				throw new \Exception(esc_html(sprintf(_x("Parenthesis mismatch near `%s`", 'expression', 'woorewards'), substr($expression, \max(0, $close - 10), $close + 5))));
+			}
 			// reduce and replace
 			$value = trim(substr($expression, $open + 1, $close - $open - 1));
 			if (!\is_numeric($value))
@@ -243,8 +252,10 @@ class Expression
 		if (\preg_match('/user_(integer|float|timestamp):(.*)/i', $placeholder, $match)) {
 			$userId = (($this->options['user'] && \is_object($this->options['user'])) ? $this->options['user']->ID : $this->options['user']);
 			$meta = \trim($match[2]);
-			if (!$meta)
-				throw new \Exception(sprintf(_x("Placeholder `%s` requires a meta key", 'expression', LWS_WOOREWARDS_PRO_DOMAIN), $placeholder));
+			if (!$meta) {
+				/* translators: error description about missing value 1: the invalid expression */
+				throw new \Exception(esc_html(sprintf(_x("Placeholder `%s` requires a meta key", 'expression', 'woorewards'), $placeholder)));
+			}
 			if ($this->isTestMode()) {
 				return ('timestamp' == $match[1]) ? \time() : 1;
 			}
@@ -272,8 +283,10 @@ class Expression
 	 *	Better to test if not already numeric value before calling this. */
 	protected function reduceOperators($expression)
 	{
-		if (!strlen($expression))
-			throw new \Exception(_x("Bad expression, operand missing", 'expression', LWS_WOOREWARDS_PRO_DOMAIN));
+		if (!strlen($expression)) {
+			/* translators: error description about bad operation */
+			throw new \Exception(esc_html(_x("Bad expression, operand missing", 'expression', 'woorewards')));
+		}
 
 		$expression = $this->opMul($expression);
 		$expression = $this->opSum($expression);
@@ -281,8 +294,10 @@ class Expression
 		$expression = $this->opFct($expression);
 
 		// here lay only a number
-		if (!\is_numeric($expression))
-			throw new \Exception(sprintf(_x("Cannot be reduced `%s`", 'expression', LWS_WOOREWARDS_PRO_DOMAIN), $expression));
+		if (!\is_numeric($expression)) {
+			/* translators: error description about invalid operation 1: The expression */
+			throw new \Exception(esc_html(sprintf(_x("Cannot be reduced `%s`", 'expression', 'woorewards'), $expression)));
+		}
 		return $expression;
 	}
 
@@ -411,8 +426,10 @@ class Expression
 					/// @param the function name
 					/// @param array of argument, should be all numbers
 					$value = \apply_filters('lws_adminpanel_expression_function', false, $fct, $args, $this->options);
-					if (false === $value)
-						throw new \Exception(sprintf(_x("Unknown function `%s` or missing arguments", 'expression', LWS_WOOREWARDS_PRO_DOMAIN), $matches[0][0]));
+					if (false === $value) {
+						/* translators: error description about unknown token 1: the token */
+						throw new \Exception(\esc_html(sprintf(_x("Unknown function `%s` or missing arguments", 'expression', 'woorewards'), $matches[0][0])));
+					}
 				}
 			}
 

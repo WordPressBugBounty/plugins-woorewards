@@ -14,18 +14,13 @@ class WooCommercePAndR extends \LWS\WOOREWARDS\PointsFlow\ExportMethod
 	{
 		// get content
 		global $wpdb;
-		$sql = <<<EOT
-SELECT u.user_email as `email`, SUM(wc.points_balance) as `points`
-FROM {$wpdb->prefix}wc_points_rewards_user_points as wc
-INNER JOIN {$wpdb->users} as u ON u.ID=wc.user_id
-GROUP BY wc.user_id
-EOT;
-		return $wpdb->get_results($sql);
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- third-party table name
+		return $wpdb->get_results("SELECT u.user_email as `email`, SUM(wc.points_balance) as `points` FROM {$wpdb->prefix}wc_points_rewards_user_points as wc INNER JOIN {$wpdb->users} as u ON u.ID=wc.user_id GROUP BY wc.user_id");
 	}
 
 	/** @return (string) human readable name */
 	public function getTitle()
 	{
-		return __("WooCommerce Points And Rewards (by WooCommerce)", 'woorewards-lite');
+		return __("WooCommerce Points And Rewards (by WooCommerce)", 'woorewards');
 	}
 }

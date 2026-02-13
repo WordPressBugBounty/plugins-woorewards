@@ -18,6 +18,6 @@ class RymeraLoyaltyProgram extends \LWS\WOOREWARDS\PointsFlow\Methods\MetaKey
 	/** @return (string) human readable name */
 	public function getTitle()
 	{
-		return __("Loyalty Program by Rymera", 'woorewards-lite');
+		return __("Loyalty Program by Rymera", 'woorewards');
 	}
 }

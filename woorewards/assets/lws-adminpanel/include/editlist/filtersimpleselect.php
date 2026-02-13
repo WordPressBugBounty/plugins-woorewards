@@ -33,11 +33,11 @@ class FilterSimpleSelect extends Filter
 	function input($above=true)
 	{
 		$search = '';
-		if (isset($_GET[$this->name]) && \strlen(\trim($_GET[$this->name])))
-			$search = \esc_attr(\trim(\sanitize_text_field($_GET[$this->name])));
+		if (isset($_GET[$this->name]) && \strlen(\trim($_GET[$this->name]))) // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			$search = \esc_attr(\trim(\sanitize_text_field(\wp_unslash($_GET[$this->name])))); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
-		$title = $this->filterLabel ? $this->filterLabel : __('Narrow your search', 'lws-adminpanel');
-		$button = $this->buttonLabel ? $this->buttonLabel : __('Search', 'lws-adminpanel');
+		$title = $this->filterLabel ? $this->filterLabel : __('Narrow your search', 'woorewards');
+		$button = $this->buttonLabel ? $this->buttonLabel : __('Search', 'woorewards');
 		$input = '';
 		foreach ($this->extra as $name => $value) {
 			$input .= "<input type='hidden' name='{$name}' value='{$value}'>";
@@ -56,13 +56,11 @@ class FilterSimpleSelect extends Filter
 			$select['default'] = $this->defaultValue;
 		$input .= \LWS\Adminpanel\Pages\Field\LacSelect::compose($this->name, $select);
 
-		return <<<EOT
-<div class='lws-editlist-filter-box end'>
-	<div class='lws-editlist-filter-box-title'>{$title}</div>
-	<div class='lws-editlist-filter-box-content'>
-		{$input}<button class='lws-adm-btn lws-editlist-filter-btn'>{$button}</button>
-	</div>
-</div>
-EOT;
+		return "<div class='lws-editlist-filter-box end'>"
+			. "<div class='lws-editlist-filter-box-title'>" . esc_html($title) . "</div>"
+			. "<div class='lws-editlist-filter-box-content'>"
+			. $input . "<button class='lws-adm-btn lws-editlist-filter-btn'>" . esc_html($button) . "</button>"
+			. "</div>"
+			. "</div>";
 	}
 }

@@ -11,17 +11,18 @@ class UsersPointsBulkAction extends \LWS\Adminpanel\EditList\Action
 
 	function input()
 	{
-		$help = esc_attr(__("Enter '=42' to set a total of 42 points to selected users instead of adding it to current amounts.", 'woorewards-lite'));
-		$str = "<label for='{$this->key}' title='$help'>".__("Add/Subtract points", 'woorewards-lite')."</label>";
+		$help = esc_attr(__("Enter '=42' to set a total of 42 points to selected users instead of adding it to current amounts.", 'woorewards'));
+		$str = "<label for='{$this->key}' title='$help'>".__("Add/Subtract points", 'woorewards')."</label>";
 		$str .= " <input type='text' pattern='[0-9]+' name='{$this->key}' id='{$this->key}' size='4' class='lws-input lws-ignore-confirm'/>";
 		return $str;
 	}
 
 	function apply($user_ids)
 	{
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified by editlist framework
 		if (!isset($_POST[$this->key]))
 			return false;
-		$points = \sanitize_text_field($_POST[$this->key]);
+		$points = \sanitize_text_field(\wp_unslash($_POST[$this->key]));// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		$set = false;
 		if( substr($points, 0, 1) == '=' )
 		{
@@ -35,7 +36,7 @@ class UsersPointsBulkAction extends \LWS\Adminpanel\EditList\Action
 
 		// load the default pool
 		$pools = \LWS\WOOREWARDS\Collections\Pools::instanciate()->load(array(
-			'meta_query'  => array(
+			'meta_query'  => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 				array(
 					'key'     => 'wre_pool_prefab',
 					'value'   => 'yes',
@@ -51,13 +52,13 @@ class UsersPointsBulkAction extends \LWS\Adminpanel\EditList\Action
 
 		if( empty($pool = $pools->get(0)) )
 		{
-			\lws_admin_add_notice_once('lws-wre-users-points-add', __("Cannot load default loyalty system.", 'woorewards-lite'), array('level'=>'error'));
+			\lws_admin_add_notice_once('lws-wre-users-points-add', __("Cannot load default loyalty system.", 'woorewards'), array('level'=>'error'));
 			return false;
 		}
 		else
 		{
 			$count = 0;
-			$reason = __("Commercial operation", 'woorewards-lite');
+			$reason = __("Commercial operation", 'woorewards');
 			foreach( $user_ids as $user_id )
 			{
 				if( $set )
@@ -68,9 +69,9 @@ class UsersPointsBulkAction extends \LWS\Adminpanel\EditList\Action
 					$count += $pool->addPoints($user_id, $points, $reason)->tryUnlock($user_id);
 			}
 
-			$msg = _n("Points added to user.", "Points added to users.", count($user_ids), 'woorewards-lite');
+			$msg = _n("Points added to user.", "Points added to users.", count($user_ids), 'woorewards');
 			if( $count > 0 )
-				$msg .= '<br/>' . _n("A reward was generated.", "Few rewards generated.", $count, 'woorewards-lite');
+				$msg .= '<br/>' . _n("A reward was generated.", "Few rewards generated.", $count, 'woorewards');
 			\lws_admin_add_notice_once('lws-wre-users-points-add', $msg, array('level'=>'success'));
 		}
 		return true;

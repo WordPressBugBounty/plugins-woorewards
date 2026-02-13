@@ -15,14 +15,14 @@ class FirstOrder extends \LWS\WOOREWARDS\Abstracts\Event
 	{
 		return array_merge(parent::getInformation(), array(
 			'icon'  => 'lws-icon-shop',
-			'short' => __("The customer will receive points when placing his first order.", 'woorewards-lite'),
-			'help'  => __("Triggered only for registered customers", 'woorewards-lite'),
+			'short' => __("The customer will receive points when placing his first order.", 'woorewards'),
+			'help'  => __("Triggered only for registered customers", 'woorewards'),
 		));
 	}
 
 	public function getDisplayType()
 	{
-		return _x("Place a first order", "getDisplayType", 'woorewards-lite');
+		return _x("Place a first order", "getDisplayType", 'woorewards');
 	}
 
 	function getData()
@@ -41,15 +41,13 @@ class FirstOrder extends \LWS\WOOREWARDS\Abstracts\Event
 
 		// just hidden since we do not want to reset the value on save
 		$noPri = (\get_option('lws_woorewards_show_loading_order_and_priority') ? '' : ' style="display: none;"');
-		$label = __("Priority", 'woorewards-lite');
-		$tooltip = __("Customer orders will run by ascending priority value.", 'woorewards-lite');
-		$str = <<<EOT
-		<div class='field-help'{$noPri}>$tooltip</div>
-		<div class='lws-$context-opt-title label'{$noPri}>$label<div class='bt-field-help'>?</div></div>
-		<div class='lws-$context-opt-input value'{$noPri}>
-			<input type='text' id='{$prefix}event_priority' name='{$prefix}event_priority' placeholder='10' size='5' />
-		</div>
-EOT;
+		$label = __("Priority", 'woorewards');
+		$tooltip = __("Customer orders will run by ascending priority value.", 'woorewards');
+		$str = "<div class='field-help'{$noPri}>$tooltip</div>"
+			. "<div class='lws-$context-opt-title label'{$noPri}>$label<div class='bt-field-help'>?</div></div>"
+			. "<div class='lws-$context-opt-input value'{$noPri}>"
+			. "<input type='text' id='{$prefix}event_priority' name='{$prefix}event_priority' placeholder='10' size='5' />"
+			. "</div>";
 
 		$phb0 = $this->getFieldsetPlaceholder(false, 0);
 		$form = str_replace($phb0, $str.$phb0, $form);
@@ -70,7 +68,7 @@ EOT;
 				$prefix.'event_priority'   => $this->getEventPriority(),
 			),
 			'labels'   => array(
-				$prefix.'event_priority'   => __("Event Priority", 'woorewards-lite'),
+				$prefix.'event_priority'   => __("Event Priority", 'woorewards'),
 			)
 		));
 		if( !(isset($values['valid']) && $values['valid']) )
@@ -131,7 +129,7 @@ EOT;
 		{
 			$reason = \LWS\WOOREWARDS\Core\Trace::byOrder($order->order)
 				->setProvider($order->order->get_customer_id('edit'))
-				->setReason(array("First customer order #%s", $order->order->get_order_number()), 'woorewards-lite');
+				->setReason(array("First customer order #%s", $order->order->get_order_number()), 'woorewards');
 
 			$this->addPoint(array(
 					'user'  => $userId,
@@ -152,15 +150,16 @@ EOT;
 	public function getCategories()
 	{
 		return array_merge(parent::getCategories(), array(
-			'woocommerce' => __("WooCommerce", 'woorewards-lite'),
-			'order' => __("Order", 'woorewards-lite')
+			'woocommerce' => __("WooCommerce", 'woorewards'),
+			'order' => __("Order", 'woorewards')
 		));
 	}
 
 	/** Never call, only to have poedit/wpml able to extract the sentance. */
 	private function poeditDeclare()
 	{
-		__("First customer order #%s", 'woorewards-lite');
+		/* translators: %s: order number */
+		__("First customer order #%s", 'woorewards');
 	}
 
 	function isGuestAllowed()

@@ -25,7 +25,7 @@ class Shortcode extends \LWS\Adminpanel\Pages\Field
 
 	public function input()
 	{
-		echo $this->html();
+		echo $this->html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	private function html()
@@ -33,11 +33,11 @@ class Shortcode extends \LWS\Adminpanel\Pages\Field
 		$id = $this->getExtraValue('id', $this->m_Id);
 		$content = "<div class='lws-shortcode-description-wrapper' id='{$id}'>";
 		$texts = array(
-			'title' => __("Shortcode", 'lws-adminpanel'),
-			'options' => __("Attributes", 'lws-adminpanel'),
-			'desc' => __("Description", 'lws-adminpanel'),
-			'style' => __("Styling", 'lws-adminpanel'),
-			'styledesc' => __("Customize the look of this shortcode", 'lws-adminpanel'),
+			'title' => __("Shortcode", 'woorewards'),
+			'options' => __("Attributes", 'woorewards'),
+			'desc' => __("Description", 'woorewards'),
+			'style' => __("Styling", 'woorewards'),
+			'styledesc' => __("Customize the look of this shortcode", 'woorewards'),
 		);
 
 		if(isset($this->extra['shortcode']))
@@ -45,25 +45,21 @@ class Shortcode extends \LWS\Adminpanel\Pages\Field
 			$title = $this->extra['shortcode'];
 			if (\is_object($title))
 				$title = $title->toText();
-			$content .= <<<EOT
-			<div class="shortcode-wrapper lws_ui_value_copy">
-				<div class="title">{$texts['title']}</div>
-				<div class="content">{$title}</div>
-				<button type="button" class="copy-icon lws-icon-copy copy"></button>
-			</div>
-EOT;
+			$content .= "<div class='shortcode-wrapper lws_ui_value_copy'>"
+				. "<div class='title'>" . $texts['title'] . "</div>"
+				. "<div class='content'>" . $title . "</div>"
+				. "<button type='button' class='copy-icon lws-icon-copy copy'></button>"
+				. "</div>";
 		}
 
 		if(isset($this->extra['description']))
 		{
 			if( \is_array($this->extra['description']) )
 				$this->extra['description'] = \LWS\Adminpanel\Tools\Conveniences::array2html((array)$this->extra['description']);
-			$content .= <<<EOT
-			<div class="description-wrapper">
-				<div class="title">{$texts['desc']}</div>
-				<div class="content">{$this->extra['description']}</div>
-			</div>
-EOT;
+			$content .= "<div class='description-wrapper'>"
+				. "<div class='title'>" . $texts['desc'] . "</div>"
+				. "<div class='content'>" . $this->extra['description'] . "</div>"
+				. "</div>";
 		}
 
 		if(isset($this->extra['options']))
@@ -111,28 +107,24 @@ EOT;
 					if (\is_object($example))
 						$example = $example->toText();
 
-					$optContent .= "<div class='opt-example label foldable'>" . __("Example", 'lws-adminpanel') . "</div>";
+					$optContent .= "<div class='opt-example label foldable'>" . __("Example", 'woorewards') . "</div>";
 					$optContent .= "<div class='opt-example value foldable'>{$example}</div>";
 				}
 
 				$optContent .= "</div>";
 			}
-			$content .= <<<EOT
-			<div class="options-wrapper folding-master">
-				<div class="title folding-toggle">{$texts['options']}<span class='ellipse'> …</span></div>
-				<div class="content foldable">$optContent</div>
-			</div>
-EOT;
+			$content .= "<div class='options-wrapper folding-master'>"
+				. "<div class='title folding-toggle'>" . $texts['options'] . "<span class='ellipse'> &hellip;</span></div>"
+				. "<div class='content foldable'>" . $optContent . "</div>"
+				. "</div>";
 		}
 
 		if(isset($this->extra['style_url']))
 		{
-			$content .= <<<EOT
-			<div class="style-wrapper">
-				<div class="title">{$texts['style']}</div>
-				<div class="content"><a href="{$this->extra['style_url']}" target="_blank">{$texts['styledesc']}</a></div>
-			</div>
-EOT;
+			$content .= "<div class='style-wrapper'>"
+				. "<div class='title'>" . $texts['style'] . "</div>"
+				. "<div class='content'><a href='" . \esc_attr($this->extra['style_url']) . "' target='_blank'>" . $texts['styledesc'] . "</a></div>"
+				. "</div>";
 		}
 
 		$content .= '</div>';

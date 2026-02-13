@@ -13,6 +13,11 @@ class UsersPoints extends \LWS\Adminpanel\EditList\Source
 	protected $sortSource = false;
 	protected $stackIds   = false;
 
+	public function getEditCapability(): string
+	{
+		return 'manage_rewards';
+	}
+
 	function labels()
 	{
 		$default = \LWS_WooRewards::getInstalledPool();
@@ -23,9 +28,9 @@ class UsersPoints extends \LWS\Adminpanel\EditList\Source
 		}
 		$column = self::L_PREFIX . ($default ? $default->getId() : 'default');
 		$labels = array(
-			'user'    => array(__("Users", 'woorewards-lite'), '1fr'),
+			'user'    => array(__("Users", 'woorewards'), '1fr'),
 			$column   => array(\LWS_WooRewards::getPointSymbol(2, $default), 'max-content'), // usermeta 'lws_wre_points_default'
-			'rewards' => array(__("Rewards", 'woorewards-lite'), 'auto'), // filled by filter
+			'rewards' => array(__("Rewards", 'woorewards'), 'auto'), // filled by filter
 		);
 		return \apply_filters('lws_woorewards_ui_userspoints_labels', $labels);
 	}
@@ -51,6 +56,7 @@ class UsersPoints extends \LWS\Adminpanel\EditList\Source
 	{
 		global $wpdb;
 		// get all points for that user
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$points = $wpdb->get_results($wpdb->prepare(
 			"SELECT meta_key, meta_value FROM {$wpdb->usermeta} WHERE user_id = %d AND meta_key LIKE %s",
 			(int)$user['user_id'],
@@ -92,6 +98,7 @@ class UsersPoints extends \LWS\Adminpanel\EditList\Source
 		if (false === $this->stackIds)
 		{
 			global $wpdb;
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$this->stackIds = $wpdb->get_results("SELECT post_id, post_name, meta_value as stack_id FROM {$wpdb->postmeta} INNER JOIN {$wpdb->posts} ON ID=post_id WHERE meta_key='wre_pool_point_stack'", OBJECT_K);
 		}
 		return $this->stackIds;
@@ -110,7 +117,8 @@ class UsersPoints extends \LWS\Adminpanel\EditList\Source
 	/** @return object the given $sql array with WHERE clause if required. */
 	protected function search($request)
 	{
-		$needle = isset($_REQUEST['usersearch']) ? \trim($_REQUEST['usersearch']) : '';
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- admin editlist search
+		$needle = isset($_REQUEST['usersearch']) ? \sanitize_text_field(\wp_unslash($_REQUEST['usersearch'])) : '';
 		if ($needle) {
 			global $wpdb;
 			$mask = ("'%" . \esc_sql($needle) . "%'");
@@ -161,21 +169,21 @@ class UsersPoints extends \LWS\Adminpanel\EditList\Source
 	{
 		if (false === $this->sortSource) {
 			global $wpdb;
-			$sql = <<<EOT
-SELECT pool.ID, stack.meta_value as stack_id, pool.post_title
-FROM {$wpdb->posts} as `pool`
-LEFT JOIN {$wpdb->postmeta} AS stack ON stack.post_id=pool.ID AND stack.meta_key="wre_pool_point_stack"
-WHERE post_type=%s AND post_status NOT IN ("trash")
-ORDER BY post_title ASC
-EOT;
+			$sql = "SELECT pool.ID, stack.meta_value as stack_id, pool.post_title"
+				. " FROM {$wpdb->posts} as `pool`"
+				. " LEFT JOIN {$wpdb->postmeta} AS stack ON stack.post_id=pool.ID AND stack.meta_key='wre_pool_point_stack'"
+				. " WHERE post_type=%s AND post_status NOT IN ('trash')"
+				. " ORDER BY post_title ASC";
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$stacks = $wpdb->get_results($wpdb->prepare($sql, \LWS\WOOREWARDS\Core\Pool::POST_TYPE));
 
 			$this->sortSource = array(
-				array('value' => '', 'label' => __("User Login", 'woorewards-lite')), // user_login
-				array('value' => 'email', 'label' => __("Email", 'woorewards-lite')), // user_email
-				array('value' => 'name', 'label' => __("Display Name", 'woorewards-lite')), // display_name
+				array('value' => '', 'label' => __("User Login", 'woorewards')), // user_login
+				array('value' => 'email', 'label' => __("Email", 'woorewards')), // user_email
+				array('value' => 'name', 'label' => __("Display Name", 'woorewards')), // display_name
 			);
-			$label = __("Points : %s", 'woorewards-lite');
+			/* translators: %s: loyalty system name */
+			$label = __("Points : %s", 'woorewards');
 			foreach($stacks as $stack) {
 				$this->sortSource[] = array(
 					'value' => ($stack->ID . '-' . $stack->stack_id),

@@ -65,7 +65,7 @@ class MenuItems
 	 *	else the title of the menu graph element. */
 	protected function getTitle($item=false)
 	{
-		return __('Custom item', 'lws-adminpanel');
+		return __('Custom item', 'woorewards');
 	}
 
 	/** How to embed our menu item. */
@@ -233,9 +233,9 @@ class MenuItems
 		static $post = false;
 		if (false === $post) {
 			$post = array();
-			if (isset($_POST['menu-item'])) {
+			if (isset($_POST['menu-item'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 				// support only one kind of menu at a time
-				foreach ((array)$_POST['menu-item'] as $data) { // WPCS: input var okay, CSRF ok.
+				foreach ((array)wp_unslash($_POST['menu-item']) as $data) { // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 					// get menuitems extended instance
 					if (!isset($data['menu-item-slug'])) continue;
 					$instance = self::findInstance(\sanitize_key($data['menu-item-slug']));
@@ -360,24 +360,20 @@ class MenuItems
 			$panel .= $this->formatChoice($subtype, $choice);
 		}
 		if ($panel) {
-			$panel = <<<EOT
-<div class="posttypediv">
-	<div class="tabs-panel tabs-panel-active">
-		<ul class="categorychecklist form-no-clear">{$panel}
-		</ul>
-	</div>
-</div>
-EOT;
+			$panel = "<div class='posttypediv'>"
+			. "<div class='tabs-panel tabs-panel-active'>"
+			. "<ul class='categorychecklist form-no-clear'>"
+			. $panel
+			. "</ul></div></div>";
 		}
 
 		$form = $this->getForm($index, $this->extraClass);
-		echo <<<EOT
-<div id="{$texts['id']}" class="lws_navmenu_metabox">
-	<input type="hidden" class="menu-item-classes" name="menu-item[{$index}][menu-item-classes]" value="{$texts['class']}">
-	<input type="hidden" class="menu-item-type" data-slug="{$texts['slug']}" name="menu-item[{$index}][menu-item-type]" value="{$texts['type']}">
-	{$panel}{$form}{$buttons}
-</div>
-EOT;
+		echo sprintf('<div id="%s" class="lws_navmenu_metabox">', \esc_attr($texts['id']));
+		echo sprintf('<input type="hidden" class="menu-item-classes" name="menu-item[%s][menu-item-classes]" value="%s">', \esc_attr($index), \esc_attr($texts['class']));
+		echo sprintf('<input type="hidden" class="menu-item-type" data-slug="%s" name="menu-item[%s][menu-item-type]" value="%s">', \esc_attr($texts['slug']), \esc_attr($index), \esc_attr($texts['type']));
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo $panel . $form . $buttons;
+		echo '</div>';
 	}
 
 	protected function formatChoice($subtype, $choice)
@@ -408,26 +404,31 @@ EOT;
 	protected function getButtons($withSelectAll=false)
 	{
 		$id = \esc_attr($this->getId());
-		$select = __("Select All", 'lws-adminpanel');
-		$submit = __("Add to Menu", 'lws-adminpanel');
 
 		$selectAll = '';
 		if ($this->hasSelectAll($withSelectAll)) {
-			$selectAll = <<<EOT
-<span class="list-controls hide-if-no-js">
-	<input type="checkbox" id="selectall-{$id}" class="lws_select_all">
-	<label for="selectall-{$id}">{$select}</label>
-</span>
-EOT;
+			$selectAll = sprintf(
+				'<span class="list-controls hide-if-no-js">'
+				. '<input type="checkbox" id="selectall-%s" class="lws_select_all">'
+				. '<label for="selectall-%s">%s</label>'
+				. '</span>',
+				$id,
+				$id,
+				\esc_html__("Select All", 'woorewards')
+			);
 		}
-		return <<<EOT
-<p class="button-controls">{$selectAll}
-	<span class="add-to-menu">
-		<input type="submit" class="button-secondary submit-add-to-menu right submit_lws_menuitems" value="{$submit}" name="add-lws-menu-item" id="submit-{$id}">
-		<span class="spinner"></span>
-	</span>
-</p>
-EOT;
+
+		return '<p class="button-controls">'
+		       . $selectAll
+		       . '<span class="add-to-menu">'
+		       . sprintf(
+						 '<input type="submit" class="button-secondary submit-add-to-menu right submit_lws_menuitems" value="%s" name="add-lws-menu-item" id="submit-%s">',
+						 \esc_html__("Add to Menu", 'woorewards'),
+			       $id
+		       )
+		       . '<span class="spinner"></span>'
+		       . '</span>'
+		       . '</p>';
 	}
 
 	/** @return array of (string)subtype => array

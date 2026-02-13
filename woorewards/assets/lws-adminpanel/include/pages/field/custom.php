@@ -22,8 +22,8 @@ class Custom extends \LWS\Adminpanel\Pages\Field
 
 		$content = $this->getExtraValue('content');
 		if (\is_string($content))
-			echo $content;
+			echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		elseif (\is_callable($content))
-			echo \call_user_func($content, $this->id());
+			echo \call_user_func($content, $this->id()); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }

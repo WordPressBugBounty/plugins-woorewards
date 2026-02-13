@@ -27,6 +27,6 @@ class Hidden extends \LWS\Adminpanel\Pages\Field
 			$class[] = $c;
 		$class = implode(' ', $class);
 
-		echo "<input class='{$class}' type='hidden' name='$name' value='$value' {$id}/>";
+		echo "<input class='{$class}' type='hidden' name='$name' value='$value' {$id}/>"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }

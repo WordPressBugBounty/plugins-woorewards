@@ -97,7 +97,9 @@ class Session
 				COOKIE_DOMAIN
 			);
 		} else {
-			error_log('LWS send session: header already sent!');
+			if (defined('WP_DEBUG') && WP_DEBUG) {
+				error_log('LWS send session: header already sent!'); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+			}
 		}
 	}
 
@@ -126,9 +128,9 @@ class Session
 
 			global $wpdb;
 			$table = $this->getTableName();
-			$wpdb->query($wpdb->prepare( // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-				"INSERT INTO {$table} (`id`, `value`, `expiry`) VALUES (%s, %s, %d)
-				ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `expiry` = VALUES(`expiry`)",
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
+			$wpdb->query($wpdb->prepare(
+				"INSERT INTO {$table} (`id`, `value`, `expiry`) VALUES (%s, %s, %d) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `expiry` = VALUES(`expiry`)", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 				$this->getUser(),
 				maybe_serialize($this->data),
 				$this->getExpiry()
@@ -144,6 +146,7 @@ class Session
 	{
 		global $wpdb;
 		$table = $this->getTableName();
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 		$wpdb->query($wpdb->prepare("DELETE FROM {$table} WHERE `expiry` < %d", \time()));
 	}
 
@@ -152,6 +155,7 @@ class Session
 		global $wpdb;
 		$table = $this->getTableName();
 		$query = $wpdb->prepare('SHOW TABLES LIKE %s', $wpdb->esc_like($table));
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
 		return $wpdb->get_var($query) === $table;
 	}
 
@@ -161,10 +165,8 @@ class Session
 			global $wpdb;
 			$charset = $wpdb->get_charset_collate();
 			$table = $this->getTableName();
-			$wpdb->query("CREATE TABLE {$table} (
-`id` VARCHAR(20) NOT NULL, `expiry` INT(20), `value` TEXT,
-PRIMARY KEY id  (id), KEY `expiry` (`expiry`)
-) {$charset};");
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
+			$wpdb->query("CREATE TABLE {$table} (`id` VARCHAR(20) NOT NULL, `expiry` INT(20), `value` TEXT, PRIMARY KEY id  (id), KEY `expiry` (`expiry`)) {$charset};");
 		}
 	}
 
@@ -182,6 +184,7 @@ PRIMARY KEY id  (id), KEY `expiry` (`expiry`)
 		if ($this->hasTable()) {
 		 global $wpdb;
 		 $table = $this->getTableName();
+		 // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 		 $data = $wpdb->get_var($wpdb->prepare("SELECT `value` FROM {$table} WHERE `id` = %s", $this->getUser()));
 		 $this->data = $data ? (array)\maybe_unserialize($data) : [];
 		}
@@ -208,10 +211,10 @@ PRIMARY KEY id  (id), KEY `expiry` (`expiry`)
 	{
 		$user = false;
 		$name = $this->getCookieName();
-		if (isset($_COOKIE[$name]) && $_COOKIE[$name]) {
+		if (isset($_COOKIE[$name]) && $_COOKIE[$name]) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitized on next lines
 			// read from cookie if any
-			if (self::OBF) $user = \sanitize_key((string)\base64_decode((string)$_COOKIE[$name]));
-			else $user = \sanitize_key((string)$_COOKIE[$name]);
+			if (self::OBF) $user = \sanitize_key((string)\base64_decode(sanitize_text_field(wp_unslash((string)$_COOKIE[$name]))));
+			else $user = \sanitize_key(sanitize_text_field(wp_unslash((string)$_COOKIE[$name])));
 			// valid format
 			if (!\in_array(\substr($user, 0, 2), ['l_', 'g_'], true)) {
 				$user = false;
@@ -245,7 +248,7 @@ PRIMARY KEY id  (id), KEY `expiry` (`expiry`)
 			if ($u) {
 				$this->user = ('l_' . $u);
 			} else {
-				$this->user = ('g_' . \wp_create_nonce('lwsadm_session_guest' . \rand()));
+				$this->user = ('g_' . \wp_create_nonce('lwsadm_session_guest' . \wp_rand()));
 			}
 		}
 		return $this->user;

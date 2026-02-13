@@ -160,6 +160,7 @@ abstract class Collection
 	 *	If similarity exists, a counter is incremented at end of the name. */
 	public static function getNewName($proposal='untitled', $existants=array())
 	{
+		$existants = \array_filter((array)$existants);
 		if( empty($existants) )
 			return $proposal;
 

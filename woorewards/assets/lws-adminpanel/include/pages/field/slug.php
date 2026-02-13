@@ -9,6 +9,11 @@ class Slug extends \LWS\Adminpanel\Pages\Field
 	{
 		$name = $this->m_Id;
 		$value = $this->readOption();
-		echo "<input class='{$this->style} lws-input-slug' type='text' pattern='[a-z0-9]+(-[a-z0-9]+)*' name='$name' value='$value' placeholder='slug' />";
+		echo sprintf(
+			"<input class='%s lws-input-slug' type='text' pattern='[a-z0-9]+(-[a-z0-9]+)*' name='%s' value='%s' placeholder='slug' />",
+			\esc_attr($this->style),
+			\esc_attr($name),
+			\esc_attr($value)
+		);
 	}
 }

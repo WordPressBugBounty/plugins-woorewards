@@ -26,7 +26,9 @@ class Admin
 
 			/// when user cannot dismiss a notice (other plugin crash JS), let show the button as a form submit.
 			/// So add URL argument &lws_adminpanel_notice_dismiss_force_reload=yes
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			if (isset($_GET, $_GET['lws_adminpanel_notice_dismiss_force_reload']) && \current_user_can('manage_options')) {
+				// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				$noticeMode = \sanitize_key($_GET['lws_adminpanel_notice_dismiss_force_reload']);
 				if ('yes' == $noticeMode)
 					\update_option('lws_adminpanel_notice_dismiss_force_reload', 'on');
@@ -36,6 +38,7 @@ class Admin
 		}
 
 		\add_action('after_setup_theme', function() {
+			// phpcs:ignore PluginCheck.CodeAnalysis.DiscouragedFunctions.load_plugin_textdomainFound, WordPress.WP.DeprecatedParameters.Load_plugin_textdomainParam2Found
 			\load_plugin_textdomain('lws-adminpanel', FALSE, \LWS\Adminpanel\Tools\Conveniences::getPluginSubpath(LWS_ADMIN_PANEL_FILE, '/languages/'));
 		});
 
@@ -71,7 +74,7 @@ class Admin
 	{
 		define('LWS_ADMIN_PANEL_VERSION', $version );
 		define('LWS_ADMIN_PANEL_FILE',    $mainFile);
-		define('LWS_ADMIN_PANEL_DOMAIN', 'lws-adminpanel');
+		define('LWS_ADMIN_PANEL_DOMAIN', 'woorewards');
 
 		define('LWS_ADMIN_PANEL_PATH',     \dirname(LWS_ADMIN_PANEL_FILE));
 		define('LWS_ADMIN_PANEL_INCLUDES', LWS_ADMIN_PANEL_PATH . '/include');
@@ -238,19 +241,19 @@ class Admin
 		\wp_register_style('lws-popup',           LWS_ADMIN_PANEL_CSS . '/controls/lwsdial.min.css', array(), LWS_ADMIN_PANEL_VERSION);
 
 		/* Scripts */
-		\wp_register_script('lws-base64',            LWS_ADMIN_PANEL_JS . '/tools/objcvt.js', array(), LWS_ADMIN_PANEL_VERSION);
-		\wp_register_script('lws-tools',             LWS_ADMIN_PANEL_JS . '/tools/tools.js',  array('jquery'), LWS_ADMIN_PANEL_VERSION);
+		\wp_register_script('lws-base64',            LWS_ADMIN_PANEL_JS . '/tools/objcvt.js', array(), LWS_ADMIN_PANEL_VERSION, true);
+		\wp_register_script('lws-tools',             LWS_ADMIN_PANEL_JS . '/tools/tools.js',  array('jquery'), LWS_ADMIN_PANEL_VERSION, true);
 		\wp_localize_script('lws-tools', 'lws_ajax', array('url' => admin_url('/admin-ajax.php'),));
-		\wp_register_script('lws-md5',               LWS_ADMIN_PANEL_JS . '/resources/jquery.md5.js',      array('jquery'), LWS_ADMIN_PANEL_VERSION);
+		\wp_register_script('lws-md5',               LWS_ADMIN_PANEL_JS . '/resources/jquery.md5.js',      array('jquery'), LWS_ADMIN_PANEL_VERSION, true);
 		\wp_register_script('lws-radio',             LWS_ADMIN_PANEL_JS . '/controls/radio.js',            array('jquery', 'jquery-ui-widget'), LWS_ADMIN_PANEL_VERSION, true);
 		\wp_register_script('lws-icon-picker',       LWS_ADMIN_PANEL_JS . '/controls/iconpicker.js',       array('jquery'), LWS_ADMIN_PANEL_VERSION, true);
 		\wp_register_script('lws-field-validation',  LWS_ADMIN_PANEL_JS . '/controls/fieldvalidation.js',  array('jquery', 'jquery-ui-widget'), LWS_ADMIN_PANEL_VERSION, true);
 		\wp_register_script('lws-checkgrid',         LWS_ADMIN_PANEL_JS . '/controls/checkgrid.js',        array('jquery', 'jquery-ui-core', 'jquery-ui-mouse', 'jquery-ui-draggable', 'jquery-ui-droppable'), LWS_ADMIN_PANEL_VERSION, true);
-		\wp_register_script('lws-popup',             LWS_ADMIN_PANEL_JS . '/controls/lwsdial.js',            array('jquery', 'jquery-ui-widget'), LWS_ADMIN_PANEL_VERSION);
+		\wp_register_script('lws-popup',             LWS_ADMIN_PANEL_JS . '/controls/lwsdial.js',            array('jquery', 'jquery-ui-widget'), LWS_ADMIN_PANEL_VERSION, true);
 		\wp_register_script('lws-admin-interface',   LWS_ADMIN_PANEL_JS . '/interface/admin-interface.js', array('jquery', 'lws-tools', 'lws-md5'), LWS_ADMIN_PANEL_VERSION, true);
 		\wp_localize_script('lws-admin-interface', 'button_texts', array(
-			'expand' => __("Expand All", 'lws-adminpanel'),
-			'collapse' => __("Collapse All", 'lws-adminpanel'),
+			'expand' => __("Expand All", 'woorewards'),
+			'collapse' => __("Collapse All", 'woorewards'),
 		));
 
 		/* Fields */
@@ -259,7 +262,7 @@ class Admin
 		\wp_register_script('lws-lac-select',    LWS_ADMIN_PANEL_JS . '/controls/lac/lacselect.js',    array('lws-lac-model'), LWS_ADMIN_PANEL_VERSION, true);
 		\wp_register_script('lws-lac-checklist', LWS_ADMIN_PANEL_JS . '/controls/lac/lacchecklist.js', array('lws-lac-model'), LWS_ADMIN_PANEL_VERSION, true );
 		\wp_register_script('lws-lac-taglist',   LWS_ADMIN_PANEL_JS . '/controls/lac/lactaglist.js',   array('lws-lac-model'), LWS_ADMIN_PANEL_VERSION, true );
-		\wp_localize_script('lws-lac-taglist', 'lws_lac_taglist', array('value_unknown' => __("At least one value is unknown.", 'lws-adminpanel')));
+		\wp_localize_script('lws-lac-taglist', 'lws_lac_taglist', array('value_unknown' => __("At least one value is unknown.", 'woorewards')));
 
 		/** enqueue lac scripts, styles and dependencies. @param (array) lac basenames (eg. 'select'). */
 		\add_action('lws_adminpanel_enqueue_lac_scripts', function($lacs=array()){
@@ -330,7 +333,7 @@ class Admin
 		{
 			\LWS\Adminpanel\Pages\Notices::instance()->enqueueScripts();
 			foreach( $notices as $notice )
-				echo \LWS\Adminpanel\Pages\Notices::instance()->itemToHTML($notice);
+				echo wp_kses_post(\LWS\Adminpanel\Pages\Notices::instance()->itemToHTML($notice));
 		}
 	}
 
@@ -342,9 +345,9 @@ class Admin
 	function wizard()
 	{
 		$slug = false;
-		if( isset($_GET['page']) )
+		if( isset($_GET['page']) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		{
-			$page = \sanitize_key($_GET['page']);
+			$page = \sanitize_key(wp_unslash($_GET['page'])); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			if( 0 === strpos($page, LWS_WIZARD_SUMMONER) )
 				$slug = substr($page, strlen(LWS_WIZARD_SUMMONER));
 		}

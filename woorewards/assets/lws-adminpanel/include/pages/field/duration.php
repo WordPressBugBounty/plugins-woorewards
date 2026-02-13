@@ -20,7 +20,7 @@ class Duration extends \LWS\Adminpanel\Pages\Field
 
 	public function input()
 	{
-		echo $this->html();
+		echo $this->html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	private function html()
@@ -85,7 +85,7 @@ class Duration extends \LWS\Adminpanel\Pages\Field
 
 	protected function value($duration)
 	{
-		$title = esc_attr(__("An integer value greater than zero.", 'lws-adminpanel'));
+		$title = esc_attr(__("An integer value greater than zero.", 'woorewards'));
 		$hidden = $this->isStartHidden($duration) ? ' style="display:none"' : '';
 		$v = $duration->getCount();
 		if (!$v)
@@ -101,11 +101,9 @@ class Duration extends \LWS\Adminpanel\Pages\Field
 	{
 		$checked = $duration->isNull() ? '' : ' checked';
 		$idAttr = (false === strpos($this->m_Id, '[') ? "id='{$this->m_Id}'" : '');
-		return <<<EOT
-		<label class='lws-checkbox-wrapper'>
-			<input type='checkbox' {$idAttr} class='lws_adm_lifetime_check'$checked />
-			<div class='lws-checkbox'></div>
-		</label>
-EOT;
+		return "<label class='lws-checkbox-wrapper'>"
+			. "<input type='checkbox' " . $idAttr . " class='lws_adm_lifetime_check'" . $checked . " />"
+			. "<div class='lws-checkbox'></div>"
+			. "</label>";
 	}
 }

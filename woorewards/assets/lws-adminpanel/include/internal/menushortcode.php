@@ -15,12 +15,12 @@ class MenuShortcode extends \LWS\Adminpanel\Internal\MenuItems
 
 	protected function getTitle($item=false)
 	{
-		$title = __('Shortcode item', 'lws-adminpanel');
+		$title = __('Shortcode item', 'woorewards');
 		if ($item && $item->classes) {
 			if (\in_array('lws-admpnl-logged-only', $item->classes))
-				$title .= sprintf(' (%s)', __("Logged", 'lws-adminpanel'));
+				$title .= sprintf(' (%s)', __("Logged", 'woorewards'));
 			elseif (\in_array('lws-admpnl-guest-only', $item->classes))
-				$title .= sprintf(' (%s)', __("Guest", 'lws-adminpanel'));
+				$title .= sprintf(' (%s)', __("Guest", 'woorewards'));
 		}
 		return $title;
 	}
@@ -48,30 +48,28 @@ class MenuShortcode extends \LWS\Adminpanel\Internal\MenuItems
 	protected function getForm($index, $inputClass)
 	{
 		$texts = array(
-			'label'   => __("Item content", 'lws-adminpanel'),
+			'label'   => __("Item content", 'woorewards'),
 			'ph'      => '[my_shortcode]',
 			'visitor' => array(
-				'label'  => __("Visitor type", 'lws-adminpanel'),
-				'guest'  => __("Guest", 'lws-adminpanel'),
-				'all'    => __("All", 'lws-adminpanel'),
-				'logged' => __("Logged", 'lws-adminpanel'),
+				'label'  => __("Visitor type", 'woorewards'),
+				'guest'  => __("Guest", 'woorewards'),
+				'all'    => __("All", 'woorewards'),
+				'logged' => __("Logged", 'woorewards'),
 			),
 		);
 
-		return <<<EOT
-<p class="setupdiv">
-	<label class="howto">{$texts['label']}
-		<textarea class="menu-item-title lws-required" name="menu-item[{$index}][menu-item-title]" placeholder="{$texts['ph']}" style="width:100%;"></textarea>
-	</label>
-</p>
-<div class="visitortypediv">
-	<ul class="add-menu-item-tabs"><li class="tabs">{$texts['visitor']['label']}</li></ul>
-	<div class="wp-tab-panel tabs-panel-active"><ul>
-		<li><label><input type="radio" value="" checked="" data-dft="on" class="{$inputClass}" name="lws_shortcode_visitor">{$texts['visitor']['all']}</label></li>
-		<li><label><input type="radio" value="guest" class="{$inputClass}" name="lws_shortcode_visitor">{$texts['visitor']['guest']}</label></li>
-		<li><label><input type="radio" value="logged" class="{$inputClass}" name="lws_shortcode_visitor">{$texts['visitor']['logged']}</label></li>
-	</ul></div>
-</div>
-EOT;
+		return "<p class='setupdiv'>"
+			. "<label class='howto'>" . esc_html($texts['label'])
+			. "<textarea class='menu-item-title lws-required' name='menu-item[" . esc_attr($index) . "][menu-item-title]' placeholder='" . esc_attr($texts['ph']) . "' style='width:100%;'></textarea>"
+			. "</label>"
+			. "</p>"
+			. "<div class='visitortypediv'>"
+			. "<ul class='add-menu-item-tabs'><li class='tabs'>" . esc_html($texts['visitor']['label']) . "</li></ul>"
+			. "<div class='wp-tab-panel tabs-panel-active'><ul>"
+			. "<li><label><input type='radio' value='' checked='' data-dft='on' class='" . esc_attr($inputClass) . "' name='lws_shortcode_visitor'>" . esc_html($texts['visitor']['all']) . "</label></li>"
+			. "<li><label><input type='radio' value='guest' class='" . esc_attr($inputClass) . "' name='lws_shortcode_visitor'>" . esc_html($texts['visitor']['guest']) . "</label></li>"
+			. "<li><label><input type='radio' value='logged' class='" . esc_attr($inputClass) . "' name='lws_shortcode_visitor'>" . esc_html($texts['visitor']['logged']) . "</label></li>"
+			. "</ul></div>"
+			. "</div>";
 	}
 }

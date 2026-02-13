@@ -52,7 +52,7 @@ class Achievement
 				$data['popup'] = boolval($options['visible']) ? 1 : 0;
 
 			global $wpdb;
-			$wpdb->insert(
+			$wpdb->insert( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
 				self::tableName(),
 				$data
 			);
@@ -81,30 +81,27 @@ class Achievement
 	{
 		global $wpdb;
 		$table = self::tableName();
-		return $wpdb->get_results($wpdb->prepare(
-			"SELECT * FROM {$table} WHERE `display` IS NULL AND `popup`=1 AND user_id=%d ORDER BY id ASC",
-			self::getUserId()
-		));
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- custom table
+		return $wpdb->get_results($wpdb->prepare("SELECT * FROM {$table} WHERE `display` IS NULL AND `popup`=1 AND user_id=%d ORDER BY id ASC", self::getUserId()));
 	}
 
 	protected function count()
 	{
 		global $wpdb;
 		$table = self::tableName();
-		return $wpdb->get_var($wpdb->prepare(
-			"SELECT COUNT(id) FROM {$table} WHERE `display` IS NULL AND `popup`=1 AND user_id=%d",
-			self::getUserId()
-		));
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- custom table
+		return $wpdb->get_var($wpdb->prepare("SELECT COUNT(id) FROM {$table} WHERE `display` IS NULL AND `popup`=1 AND user_id=%d", self::getUserId()));
 	}
 
 	protected function clear()
 	{
 		global $wpdb;
 		$table = self::tableName();
-		if( \get_option('lws_woorewards_achievement_log_delete_on_clear', false) )
-			$wpdb->query($wpdb->prepare("DELETE FROM {$table} WHERE `display` IS NULL AND user_id=%d", self::getUserId()));
-		else
-			$wpdb->query($wpdb->prepare("UPDATE {$table} SET display=CURRENT_TIMESTAMP WHERE `display` IS NULL AND user_id=%d", self::getUserId()));
+		if( \get_option('lws_woorewards_achievement_log_delete_on_clear', false) ) {
+			$wpdb->query( $wpdb->prepare( "DELETE FROM {$table} WHERE `display` IS NULL AND user_id=%d", self::getUserId() ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
+		} else {
+			$wpdb->query( $wpdb->prepare( "UPDATE {$table} SET display=CURRENT_TIMESTAMP WHERE `display` IS NULL AND user_id=%d", self::getUserId() ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
+		}
 	}
 
 	protected function getScriptDependencies()
@@ -137,7 +134,7 @@ class Achievement
 					$title = esc_attr($options->title);
 					$image = esc_attr($options->image ? $options->image : LWS_WOOREWARDS_IMG.'/badge-reward.png');
 					$background = esc_attr($options->background ? $options->background : LWS_WOOREWARDS_IMG.'/badge-star.png');
-					echo "<div class='lws_wre_badge' data-title='$title' data-imageurl='$image' data-bgurl='$background'>$options->message</div>";
+					echo "<div class='lws_wre_badge' data-title='" . esc_attr($title) . "' data-imageurl='" . esc_attr($image) . "' data-bgurl='" . esc_attr($background) . "'>" . wp_kses_post($options->message) . "</div>";
 					if( $first )
 					{
 						$first = false;

@@ -17,6 +17,6 @@ class HostPlugin extends \LWS\WOOREWARDS\PointsFlow\Methods\MetaKey
 	/** @return (string) human readable name */
 	public function getTitle()
 	{
-		return __("HostPlugin", 'woorewards-lite');
+		return __("HostPlugin", 'woorewards');
 	}
 }

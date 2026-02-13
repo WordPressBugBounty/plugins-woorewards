@@ -13,7 +13,7 @@ class Styling
 	{
 		$tab = array(
 			'id'	=> 'styling',
-			'title'	=>  __("Styling", 'woorewards-lite'),
+			'title'	=>  __("Styling", 'woorewards'),
 			'icon'	=> 'lws-icon-inkpot',
 			'groups' => array(
 				'blocks'  => self::getGroupBlocks($withRoot, true, false),
@@ -22,8 +22,15 @@ class Styling
 		);
 		if ($withScript) {
 			$tab['function'] = function() {
-				if ($style = \LWS\WOOREWARDS\Ui\AdminScreens\Styling::getInline())
-					echo $style;
+				if ($style = \LWS\WOOREWARDS\Ui\AdminScreens\Styling::getInline()) {
+					echo wp_kses($style, [
+						'style' => [
+							'id'    => true,
+							'type'  => true,
+							'media' => true,
+						],
+					]);
+				}
 			};
 			self::enqueueScripts();
 		}
@@ -46,87 +53,87 @@ class Styling
 
 	public static function getGroupBlocks($withRoot=false, $loadValues=false, $withScript=true)
 	{
-		$preview = <<<EOT
-<div class='wr_style_preview' style='background-color:#fff;user-select:none;cursor:pointer;border:1px solid #eee;border-radius:4px;padding:20px;display:flex;justify-content:center; align-items:center;'>
-	<div class='wr-wrapper'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi quis diam in orci vestibulum varius ut eu urna. Nullam eros purus, congue ut sollicitudin a, ultricies a felis.</div>
-</div>
-EOT;
+		$preview = "<div class='wr_style_preview' style='background-color:#fff;user-select:none;cursor:pointer;border:1px solid #eee;border-radius:4px;padding:20px;display:flex;justify-content:center; align-items:center;'>"
+			. "<div class='wr-wrapper'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi quis diam in orci vestibulum varius ut eu urna. Nullam eros purus, congue ut sollicitudin a, ultricies a felis.</div>"
+			. "</div>";
 
 		$group = array(
 			'id'     => 'blocks',
 			'icon'   => 'lws-icon-grid-interface',
-			'title'  => __("Blocks", 'woorewards-lite'),
+			'title'  => __("Blocks", 'woorewards'),
 			'color'  => '#425981',
 			'class'  => 'half',
-			'text'   => __("Set the styling of wrapping elements used on front-end elements and shortcodes", 'woorewards-lite'),
+			'text'   => __("Set the styling of wrapping elements used on front-end elements and shortcodes", 'woorewards'),
 			'fields' => array(
 				'--wr-block-border-width' => array(
 					'id'    => 'lws_wr_styling[--wr-block-border-width]',
-					'title' => __('Border Width', 'woorewards-lite'),
+					'title' => __('Border Width', 'woorewards'),
 					'type'  => 'input',
 					'extra' => array(
 						'gizmo'       => true,
 						'size'        => '30',
 						'placeholder' => '0px',
-						'tooltips'    => sprintf(__("Define the blocks border width. Set 0px for no border. You can set up to 4 values. %s works, %s also works", 'woorewards-lite'), "<b>2px</b>", "<b>0px 1px 0px 2px</b>"),
+						/* translators: %1$s: example value, %2$s: example value */
+						'tooltips'    => sprintf(__('Define the blocks border width. Set 0px for no border. You can set up to 4 values. %1$s works, %2$s also works', 'woorewards'), "<b>2px</b>", "<b>0px 1px 0px 2px</b>"),
 						'pattern'     => self::SIZE_PATTERN,
 					)
 				),
 				'--wr-block-border-style' => array(
 					'id'    => 'lws_wr_styling[--wr-block-border-style]',
-					'title' => __('Border Style', 'woorewards-lite'),
+					'title' => __('Border Style', 'woorewards'),
 					'type'  => 'lacselect',
 					'extra' => array(
 						'mode'     => 'select',
 						'maxwidth' => '220px',
 						'source'   => array(
-							array('value' => '',       'label' => __("Inherit", 'woorewards-lite')),
-							array('value' => 'none',   'label' => __("None", 'woorewards-lite')),
-							array('value' => 'solid',  'label' => __("Solid", 'woorewards-lite')),
-							array('value' => 'hidden', 'label' => __("Hidden", 'woorewards-lite')),
-							array('value' => 'dotted', 'label' => __("Dotted", 'woorewards-lite')),
-							array('value' => 'dashed', 'label' => __("Dashed", 'woorewards-lite')),
-							array('value' => 'double', 'label' => __("Double", 'woorewards-lite')),
-							array('value' => 'groove', 'label' => __("Groove", 'woorewards-lite')),
-							array('value' => 'ridge',  'label' => __("Ridge", 'woorewards-lite')),
-							array('value' => 'inset',  'label' => __("Inset", 'woorewards-lite')),
-							array('value' => 'outset', 'label' => __("Outset", 'woorewards-lite')),
+							array('value' => '',       'label' => __("Inherit", 'woorewards')),
+							array('value' => 'none',   'label' => __("None", 'woorewards')),
+							array('value' => 'solid',  'label' => __("Solid", 'woorewards')),
+							array('value' => 'hidden', 'label' => __("Hidden", 'woorewards')),
+							array('value' => 'dotted', 'label' => __("Dotted", 'woorewards')),
+							array('value' => 'dashed', 'label' => __("Dashed", 'woorewards')),
+							array('value' => 'double', 'label' => __("Double", 'woorewards')),
+							array('value' => 'groove', 'label' => __("Groove", 'woorewards')),
+							array('value' => 'ridge',  'label' => __("Ridge", 'woorewards')),
+							array('value' => 'inset',  'label' => __("Inset", 'woorewards')),
+							array('value' => 'outset', 'label' => __("Outset", 'woorewards')),
 						),
 					)
 				),
 				'--wr-block-border-radius' => array(
 					'id'    => 'lws_wr_styling[--wr-block-border-radius]',
-					'title' => __('Border Radius', 'woorewards-lite'),
+					'title' => __('Border Radius', 'woorewards'),
 					'type'  => 'input',
 					'extra' => array(
 						'gizmo'       => true,
 						'size'        => '30',
 						'placeholder' => '0px',
-						'tooltips'    => sprintf(__("Define the blocks border radius. Set 0px for no radius. You can set up to 4 values. %s works, %s also works", 'woorewards-lite'), "<b>2px</b>", "<b>0px 1px 0px 2px</b>"),
+						/* translators: %1$s: example value, %2$s: example value */
+						'tooltips'    => sprintf(__('Define the blocks border radius. Set 0px for no radius. You can set up to 4 values. %1$s works, %2$s also works', 'woorewards'), "<b>2px</b>", "<b>0px 1px 0px 2px</b>"),
 						'pattern'     => self::SIZE_PATTERN,
 					)
 				),
 				'--wr-block-border-color' => array(
 					'id'    => 'lws_wr_styling[--wr-block-border-color]',
-					'title' => __('Border Color', 'woorewards-lite'),
+					'title' => __('Border Color', 'woorewards'),
 					'type'  => 'color',
 					'extra' => array(
 						'gizmo'    => true,
-						'tooltips' => __("Define the blocks border color", 'woorewards-lite'),
+						'tooltips' => __("Define the blocks border color", 'woorewards'),
 					)
 				),
 				'--wr-block-background-color' => array(
 					'id'    => 'lws_wr_styling[--wr-block-background-color]',
-					'title' => __('Background Color', 'woorewards-lite'),
+					'title' => __('Background Color', 'woorewards'),
 					'type'  => 'color',
 					'extra' => array(
 						'gizmo'    => true,
-						'tooltips' => __("Define the blocks background color", 'woorewards-lite'),
+						'tooltips' => __("Define the blocks background color", 'woorewards'),
 					)
 				),
 				'--wr-block-font-size' => array(
 					'id'    => 'lws_wr_styling[--wr-block-font-size]',
-					'title' => __('Font Size', 'woorewards-lite'),
+					'title' => __('Font Size', 'woorewards'),
 					'type'  => 'input',
 					'extra' => array(
 						'gizmo'       => true,
@@ -137,28 +144,29 @@ EOT;
 				),
 				'--wr-block-font-color' => array(
 					'id'    => 'lws_wr_styling[--wr-block-font-color]',
-					'title' => __('Text Color', 'woorewards-lite'),
+					'title' => __('Text Color', 'woorewards'),
 					'type'  => 'color',
 					'extra' => array(
 						'gizmo'    => true,
-						'tooltips' => __("Define the text color", 'woorewards-lite'),
+						'tooltips' => __("Define the text color", 'woorewards'),
 					)
 				),
 				'--wr-block-padding' => array(
 					'id'    => 'lws_wr_styling[--wr-block-padding]',
-					'title' => __('Padding', 'woorewards-lite'),
+					'title' => __('Padding', 'woorewards'),
 					'type'  => 'input',
 					'extra' => array(
 						'gizmo'       => true,
 						'size'        => '30',
 						'placeholder' => '10px',
-						'tooltips'    => sprintf(__("Define the blocks inner padding. Set 0px for no padding. You can set up to 4 values. %s works, %s also works", 'woorewards-lite'), "<b>2px</b>", "<b>0px 1px 0px 2px</b>"),
+						/* translators: %1$s: example value, %2$s: example value */
+						'tooltips'    => sprintf(__('Define the blocks inner padding. Set 0px for no padding. You can set up to 4 values. %1$s works, %2$s also works', 'woorewards'), "<b>2px</b>", "<b>0px 1px 0px 2px</b>"),
 						'pattern'     => self::SIZE_PATTERN,
 					)
 				),
 				'preview' => array(
 					'id'    => 'block-preview',
-					'title' => __('Preview', 'woorewards-lite'),
+					'title' => __('Preview', 'woorewards'),
 					'type'  => 'custom',
 					'extra' => array(
 						'content' => $preview,
@@ -175,87 +183,87 @@ EOT;
 
 	public static function getGroupButtons($withRoot=false, $loadValues=false, $withScript=true)
 	{
-		$preview = <<<EOT
-<div class='wr_style_preview' style='background-color:#fff;user-select:none;cursor:pointer;border:1px solid #eee;border-radius:4px;padding:20px;display:flex;justify-content:center; align-items:center;'>
-	<div class='wr-button'>Button Text</div>
-</div>
-EOT;
+		$preview = "<div class='wr_style_preview' style='background-color:#fff;user-select:none;cursor:pointer;border:1px solid #eee;border-radius:4px;padding:20px;display:flex;justify-content:center; align-items:center;'>"
+			. "<div class='wr-button'>Button Text</div>"
+			. "</div>";
 
 		$group = array(
 			'id'     => 'buttons',
 			'icon'   => 'lws-icon-click',
-			'title'  => __("Buttons", 'woorewards-lite'),
+			'title'  => __("Buttons", 'woorewards'),
 			'color'  => '#425981',
 			'class'  => 'half',
-			'text'   => __("Set the styling of buttons used on front-end elements and shortcodes", 'woorewards-lite'),
+			'text'   => __("Set the styling of buttons used on front-end elements and shortcodes", 'woorewards'),
 			'fields' => array(
 				'--wr-button-border-width' => array(
 					'id'    => 'lws_wr_styling[--wr-button-border-width]',
-					'title' => __('Button Border Width', 'woorewards-lite'),
+					'title' => __('Button Border Width', 'woorewards'),
 					'type'  => 'input',
 					'extra' => array(
 						'gizmo'       => true,
 						'size'        => '30',
 						'placeholder' => '0px',
-						'tooltips'    => sprintf(__("Define the blocks border width. Set 0px for no border. You can set up to 4 values. %s works, %s also works", 'woorewards-lite'), "<b>2px</b>", "<b>0px 1px 0px 2px</b>"),
+						/* translators: %1$s: example value, %2$s: example value */
+						'tooltips'    => sprintf(__('Define the blocks border width. Set 0px for no border. You can set up to 4 values. %1$s works, %2$s also works', 'woorewards'), "<b>2px</b>", "<b>0px 1px 0px 2px</b>"),
 						'pattern'     => self::SIZE_PATTERN,
 					)
 				),
 				'--wr-button-border-style' => array(
 					'id'    => 'lws_wr_styling[--wr-button-border-style]',
-					'title' => __('Button Border Style', 'woorewards-lite'),
+					'title' => __('Button Border Style', 'woorewards'),
 					'type'  => 'lacselect',
 					'extra' => array(
 						'mode'     => 'select',
 						'maxwidth' => '220px',
 						'source'   => array(
-							array('value' => '',       'label' => __("Inherit", 'woorewards-lite')),
-							array('value' => 'none',   'label' => __("None", 'woorewards-lite')),
-							array('value' => 'solid',  'label' => __("Solid", 'woorewards-lite')),
-							array('value' => 'hidden', 'label' => __("Hidden", 'woorewards-lite')),
-							array('value' => 'dotted', 'label' => __("Dotted", 'woorewards-lite')),
-							array('value' => 'dashed', 'label' => __("Dashed", 'woorewards-lite')),
-							array('value' => 'double', 'label' => __("Double", 'woorewards-lite')),
-							array('value' => 'groove', 'label' => __("Groove", 'woorewards-lite')),
-							array('value' => 'ridge',  'label' => __("Ridge", 'woorewards-lite')),
-							array('value' => 'inset',  'label' => __("Inset", 'woorewards-lite')),
-							array('value' => 'outset', 'label' => __("Outset", 'woorewards-lite')),
+							array('value' => '',       'label' => __("Inherit", 'woorewards')),
+							array('value' => 'none',   'label' => __("None", 'woorewards')),
+							array('value' => 'solid',  'label' => __("Solid", 'woorewards')),
+							array('value' => 'hidden', 'label' => __("Hidden", 'woorewards')),
+							array('value' => 'dotted', 'label' => __("Dotted", 'woorewards')),
+							array('value' => 'dashed', 'label' => __("Dashed", 'woorewards')),
+							array('value' => 'double', 'label' => __("Double", 'woorewards')),
+							array('value' => 'groove', 'label' => __("Groove", 'woorewards')),
+							array('value' => 'ridge',  'label' => __("Ridge", 'woorewards')),
+							array('value' => 'inset',  'label' => __("Inset", 'woorewards')),
+							array('value' => 'outset', 'label' => __("Outset", 'woorewards')),
 						),
 					)
 				),
 				'--wr-button-border-radius' => array(
 					'id'    => 'lws_wr_styling[--wr-button-border-radius]',
-					'title' => __('Button Border Radius', 'woorewards-lite'),
+					'title' => __('Button Border Radius', 'woorewards'),
 					'type'  => 'input',
 					'extra' => array(
 						'gizmo'       => true,
 						'size'        => '30',
 						'placeholder' => '0px',
-						'tooltips'    => sprintf(__("Define the blocks border radius. Set 0px for no radius. You can set up to 4 values. %s works, %s also works", 'woorewards-lite'), "<b>2px</b>", "<b>0px 1px 0px 2px</b>"),
+						/* translators: %1$s: example value, %2$s: example value */
+						'tooltips'    => sprintf(__('Define the blocks border radius. Set 0px for no radius. You can set up to 4 values. %1$s works, %2$s also works', 'woorewards'), "<b>2px</b>", "<b>0px 1px 0px 2px</b>"),
 						'pattern'     => self::SIZE_PATTERN,
 					)
 				),
 				'--wr-button-border-color' => array(
 					'id'    => 'lws_wr_styling[--wr-button-border-color]',
-					'title' => __('Button Border Color', 'woorewards-lite'),
+					'title' => __('Button Border Color', 'woorewards'),
 					'type'  => 'color',
 					'extra' => array(
 						'gizmo'    => true,
-						'tooltips' => __("Define the blocks border color", 'woorewards-lite'),
+						'tooltips' => __("Define the blocks border color", 'woorewards'),
 					)
 				),
 				'--wr-button-background-color' => array(
 					'id'    => 'lws_wr_styling[--wr-button-background-color]',
-					'title' => __('Button Background Color', 'woorewards-lite'),
+					'title' => __('Button Background Color', 'woorewards'),
 					'type'  => 'color',
 					'extra' => array(
 						'gizmo'    => true,
-						'tooltips' => __("Define the blocks background color", 'woorewards-lite'),
+						'tooltips' => __("Define the blocks background color", 'woorewards'),
 					)
 				),
 				'--wr-button-font-size' => array(
 					'id'    => 'lws_wr_styling[--wr-button-font-size]',
-					'title' => __('Button Font Size', 'woorewards-lite'),
+					'title' => __('Button Font Size', 'woorewards'),
 					'type'  => 'input',
 					'extra' => array(
 						'gizmo'       => true,
@@ -266,55 +274,56 @@ EOT;
 				),
 				'--wr-button-font-color' => array(
 					'id'    => 'lws_wr_styling[--wr-button-font-color]',
-					'title' => __('Button Text Color', 'woorewards-lite'),
+					'title' => __('Button Text Color', 'woorewards'),
 					'type'  => 'color',
 					'extra' => array(
 						'gizmo'    => true,
-						'tooltips' => __("Define the text color", 'woorewards-lite'),
+						'tooltips' => __("Define the text color", 'woorewards'),
 					)
 				),
 				'--wr-button-border-over-color' => array(
 					'id'    => 'lws_wr_styling[--wr-button-border-over-color]',
-					'title' => __('Mouseover Border Color', 'woorewards-lite'),
+					'title' => __('Mouseover Border Color', 'woorewards'),
 					'type'  => 'color',
 					'extra' => array(
 						'gizmo'    => true,
-						'tooltips' => __("Define the blocks border color on mouse over", 'woorewards-lite'),
+						'tooltips' => __("Define the blocks border color on mouse over", 'woorewards'),
 					)
 				),
 				'--wr-button-background-over-color' => array(
 					'id'    => 'lws_wr_styling[--wr-button-background-over-color]',
-					'title' => __('Mouseover Background Color', 'woorewards-lite'),
+					'title' => __('Mouseover Background Color', 'woorewards'),
 					'type'  => 'color',
 					'extra' => array(
 						'gizmo'    => true,
-						'tooltips' => __("Define the blocks background color on mouse over", 'woorewards-lite'),
+						'tooltips' => __("Define the blocks background color on mouse over", 'woorewards'),
 					)
 				),
 				'--wr-button-font-over-color' => array(
 					'id'    => 'lws_wr_styling[--wr-button-font-over-color]',
-					'title' => __('Mouseover Text Color', 'woorewards-lite'),
+					'title' => __('Mouseover Text Color', 'woorewards'),
 					'type'  => 'color',
 					'extra' => array(
 						'gizmo'    => true,
-						'tooltips' => __("Define the text color on mouse over", 'woorewards-lite'),
+						'tooltips' => __("Define the text color on mouse over", 'woorewards'),
 					)
 				),
 				'--wr-button-padding' => array(
 					'id'    => 'lws_wr_styling[--wr-button-padding]',
-					'title' => __('Button Padding', 'woorewards-lite'),
+					'title' => __('Button Padding', 'woorewards'),
 					'type'  => 'input',
 					'extra' => array(
 						'gizmo'       => true,
 						'size'        => '30',
 						'placeholder' => '10px',
-						'tooltips'    => sprintf(__("Define the button inner padding. Set 0px for no padding. You can set up to 4 values. %s works, %s also works", 'woorewards-lite'), "<b>2px</b>", "<b>0px 1px 0px 2px</b>"),
+						/* translators: %1$s: example value, %2$s: example value */
+						'tooltips'    => sprintf(__('Define the button inner padding. Set 0px for no padding. You can set up to 4 values. %1$s works, %2$s also works', 'woorewards'), "<b>2px</b>", "<b>0px 1px 0px 2px</b>"),
 						'pattern'     => self::SIZE_PATTERN,
 					)
 				),
 				'preview' => array(
 					'id'    => 'button-preview',
-					'title' => __('Preview', 'woorewards-lite'),
+					'title' => __('Preview', 'woorewards'),
 					'type'  => 'custom',
 					'extra' => array(
 						'content' => $preview,

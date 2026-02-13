@@ -12,6 +12,11 @@ class Sponsorships extends \LWS\Adminpanel\EditList\Source
 {
 	const ROW_ID = 'sponsorship_id';
 
+	public function getEditCapability(): string
+	{
+		return 'manage_rewards';
+	}
+
 	public static function instanciate()
 	{
 		return \lws_editlist(
@@ -20,7 +25,7 @@ class Sponsorships extends \LWS\Adminpanel\EditList\Source
 			new self(),
 			\LWS\Adminpanel\EditList::FIX,
 			array(
-				'user' => new \LWS\Adminpanel\EditList\FilterSimpleField('u', __('Search Users...', 'woorewards-lite')),
+				'user' => new \LWS\Adminpanel\EditList\FilterSimpleField('u', __('Search Users...', 'woorewards')),
 			)
 		);
 	}
@@ -28,8 +33,8 @@ class Sponsorships extends \LWS\Adminpanel\EditList\Source
 	public function labels()
 	{
 		$labels = array(
-			'sponsor_name' => array(__("Referrer", 'woorewards-lite'), 'auto'),
-			'sponsee_name' => array(__("Referee", 'woorewards-lite'), 'auto'),
+			'sponsor_name' => array(__("Referrer", 'woorewards'), 'auto'),
+			'sponsee_name' => array(__("Referee", 'woorewards'), 'auto'),
 		);
 		return $labels;
 	}
@@ -59,8 +64,9 @@ class Sponsorships extends \LWS\Adminpanel\EditList\Source
 		$request->innerJoin($wpdb->users, 'sponsee', 'meta.user_id=sponsee.ID');
 		$request->where('meta.meta_key = "lws_woorewards_sponsored_by"');
 
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- admin editlist search
 		if (isset($_REQUEST['u']) && trim($_REQUEST['u'])) {
-			$val = \esc_sql(\trim(\stripslashes($_REQUEST['u'])));
+			$val = \esc_sql(\sanitize_text_field(\wp_unslash($_REQUEST['u']))); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$filter = array(
 				'condition' => 'OR',
 				"sponsor.user_login LIKE '%{$val}%'",
@@ -84,27 +90,23 @@ class Sponsorships extends \LWS\Adminpanel\EditList\Source
 	{
 		$sponsor = \get_user_by('ID', $sponsorship['sponsor_id']);
 		$sponsorship['sponsor_id'] = $sponsor->ID;
-		$sponsorship['sponsor_name'] = <<<EOT
-		<div class="lws-wre-sponsor-line">
-			<div class="user-login">{$sponsor->user_login}</div>
-			<div class="sep">-</div>
-			<div class="user-name">{$sponsor->display_name}</div>
-			<div class="sep">-</div>
-			<div class="user-email">{$sponsor->user_email}</div>
-		</div>
-EOT;
+		$sponsorship['sponsor_name'] = "<div class='lws-wre-sponsor-line'>"
+			. "<div class='user-login'>{$sponsor->user_login}</div>"
+			. "<div class='sep'>-</div>"
+			. "<div class='user-name'>{$sponsor->display_name}</div>"
+			. "<div class='sep'>-</div>"
+			. "<div class='user-email'>{$sponsor->user_email}</div>"
+			. "</div>";
 
 		$sponsee = \get_user_by('ID', $sponsorship['sponsee_id']);
 		$sponsorship['sponsee_id'] = $sponsee->ID;
-		$sponsorship['sponsee_name'] = <<<EOT
-		<div class="lws-wre-sponsor-line">
-			<div class="user-login">{$sponsee->user_login}</div>
-			<div class="sep">-</div>
-			<div class="user-name">{$sponsee->display_name}</div>
-			<div class="sep">-</div>
-			<div class="user-email">{$sponsee->user_email}</div>
-		</div>
-EOT;
+		$sponsorship['sponsee_name'] = "<div class='lws-wre-sponsor-line'>"
+			. "<div class='user-login'>{$sponsee->user_login}</div>"
+			. "<div class='sep'>-</div>"
+			. "<div class='user-name'>{$sponsee->display_name}</div>"
+			. "<div class='sep'>-</div>"
+			. "<div class='user-email'>{$sponsee->user_email}</div>"
+			. "</div>";
 	}
 
 	public function total()
@@ -117,10 +119,11 @@ EOT;
 	protected function getDisclamer()
 	{
 		return sprintf(
-			__('Not available here. Please take a look at our PRO version and its free Referral addon %s!', 'woorewards-lite'),
+			/* translators: %s: link to PRO version */
+			__('Not available here. Please take a look at our PRO version and its free Referral addon %s!', 'woorewards'),
 			sprintf('<a target="_blank" href="%s">%s</a>',
 				\esc_attr('https://plugins.longwatchstudio.com/product/woorewards/'),
-				__("here", 'woorewards-lite')
+				__("here", 'woorewards')
 			)
 		);
 	}

@@ -24,20 +24,20 @@ class PointsValue
 	{
 		$fields['pointsvalue'] = array(
 			'id' => 'lws_woorewards_sc_points_value',
-			'title' => __("Points Value", 'woorewards-lite'),
+			'title' => __("Points Value", 'woorewards'),
 			'type' => 'shortcode',
 			'extra' => array(
 				'shortcode' => '[wr_points_value]',
-				'description' =>  __("This simple shortcode is used to display how much his points are worth.", 'woorewards-lite') . "<br/>" .
-				__("This only works if your points and rewards system is set to points on cart.", 'woorewards-lite'),
+				'description' =>  __("This simple shortcode is used to display how much his points are worth.", 'woorewards') . "<br/>" .
+				__("This only works if your points and rewards system is set to points on cart.", 'woorewards'),
 				'options' => array(
 					array(
 						'option' => 'text',
-						'desc' => __("The text displayed before the points value.", 'woorewards-lite'),
+						'desc' => __("The text displayed before the points value.", 'woorewards'),
 					),
 					array(
 						'option' => 'raw',
-						'desc' => __("(Optional) If set to true, the result will be displayed as a simple text. Otherwise, it will be wrapped in stylable elements", 'woorewards-lite'),
+						'desc' => __("(Optional) If set to true, the result will be displayed as a simple text. Otherwise, it will be wrapped in stylable elements", 'woorewards'),
 					),
 				),
 				'flags' => array('current_user_id'),
@@ -53,7 +53,7 @@ class PointsValue
 			array(
 				'system' => array(
 					'option' => 'system',
-					'desc'   => __("The points and rewards system you want to display. You can find this value in <strong>MyRewards → Points and Rewards</strong>, in the <b>Shortcode Attribute</b> column. If you don’t set this value, nothing will be displayed.", 'woorewards-lite'),
+					'desc'   => __("The points and rewards system you want to display. You can find this value in <strong>MyRewards → Points and Rewards</strong>, in the <b>Shortcode Attribute</b> column. If you don’t set this value, nothing will be displayed.", 'woorewards'),
 				),
 			),
 			$fields['pointsvalue']['extra']['options']

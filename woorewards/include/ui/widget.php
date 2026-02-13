@@ -51,14 +51,20 @@ class Widget extends \WP_Widget
 	/** echo a checkbox */
 	protected function eFormFieldCheckbox($id, $label, $name, $value)
 	{
-		$selected = $value ? ' checked' : '';
-		$input = "<input class='checkbox' id='$id' name='$name' type='checkbox' $selected/>";
-		echo "<p>$input<label for='$id'>$label</label></p>";
+		echo sprintf(
+			'<p><input class="checkbox" id="%s" name="%s" type="checkbox" %s/>',
+			\esc_attr($id),
+			\esc_attr($name),
+			$value ? ' checked' : ''
+		);
+		echo "<label for='" . esc_attr($id) . "'>" . esc_html($label) . "</label></p>";
 	}
 
 	/** echo a form entry line */
 	protected function eFormField($id, $label, $input)
 	{
-		echo "<p><label for='$id'>$label</label>$input</p>";
+		echo "<p><label for='" . esc_attr($id) . "'>" . esc_html($label) . "</label>";
+		echo $input;  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo "</p>";
 	}
 }

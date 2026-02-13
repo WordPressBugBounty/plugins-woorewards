@@ -712,10 +712,10 @@ msgstr "Vérifiez à nouveau."
 #: include/pages/wizard.php:193
 #, php-format
 msgid ""
-"If you can see this, an error occured. Click %s here %s to resolve. Then "
+"If you can see this, an error occured. Click %1$s here %2$s to resolve. Then "
 "restart the wizard."
 msgstr ""
-"Si vous pouvez voir cela, une erreur s'est produite. Cliquez sur %s ici %s "
+"Si vous pouvez voir cela, une erreur s'est produite. Cliquez sur %1$s ici %2$s "
 "pour résoudre. Redémarrez ensuite le magicien."
 
 #: include/pages/wizard.php:206
@@ -733,8 +733,8 @@ msgstr "Une erreur s'est produite lors de la validation du formulaire."
 #: include/pages/wizard.php:785
 #, php-format
 msgctxt "wizard critical path tab title with loop count"
-msgid "%s (%s)"
-msgstr "%s (%s)"
+msgid "%1$s (%2$s)"
+msgstr "%1$s (%2$s)"
 
 #: include/pages/wizard.php:849
 msgid "Step : "
@@ -1247,7 +1247,7 @@ msgstr "https://longwatchstudio.com"
 #~ msgstr "Clé de Licence"
 
 #~ msgid "Deactivate my license"
-#~ msgstr "Activer votre licence"
+#~ msgstr "Désactiver votre licence"
 
 #~ msgid "Activate license"
 #~ msgstr "Activer la licence"

@@ -152,7 +152,7 @@ class Trace
 		if( $translate && $args )
 		{
 			$domain = array_pop($args);
-			$format = __($format, $domain);
+			$format = __($format, $domain); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText,WordPress.WP.I18n.NonSingularStringLiteralDomain -- dynamic reason strings stored in DB
 		}
 		if( $args )
 			$format = vsprintf($format, $args);

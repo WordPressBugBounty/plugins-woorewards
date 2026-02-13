@@ -98,7 +98,9 @@ abstract class Field
 			$inst->internalType = $type;
 		}
 		else
-			error_log(__NAMESPACE__ . ' : field type "' . $type . '" is not supported.');
+		{
+			if (defined('WP_DEBUG') && WP_DEBUG) error_log(__NAMESPACE__ . ' : field type "' . $type . '" is not supported.'); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+		}
 		return $inst;
 	}
 
@@ -121,7 +123,7 @@ abstract class Field
 
 		if( !$this->isGizmo() )
 		{
-			\register_setting( $page, $this->id() );
+			\register_setting( $page, $this->id(), array('sanitize_callback' => $this->get_sanitation_method()) );
 
 			if( isset($this->extra['wpml']) && !empty($this->extra['wpml']) )
 			{
@@ -142,7 +144,7 @@ abstract class Field
 			foreach( $subids as $k => $v )
 			{
 				$sub = is_string($k) ? $k : $v;
-				\register_setting($page, $sub);
+				\register_setting($page, $sub, array('sanitize_callback' => $this->get_sanitation_method()));
 
 				$wpmlTitle = $v;
 				\add_action(
@@ -156,6 +158,20 @@ abstract class Field
 		}
 
 		return $this;
+	}
+
+	protected function get_sanitation_method()
+	{
+		$method = $this->extra['sanitize_callback'] ?? null;
+		return $method ?: [$this, 'sanitize_field'];
+	}
+
+	public function sanitize_field($value) {
+		if (\is_array($value)) {
+			return array_map([$this, 'sanitize_field'], $value);
+		} else {
+			return \sanitize_textarea_field($value);
+		}
 	}
 
 	public function __construct($id, $title, $extra=null)
@@ -444,11 +460,13 @@ abstract class Field
 			if( !\in_array($this->requirement['cmp'], array('==', '!=', 'match')) )
 			{
 				$this->requirement['cmp'] = '==';
-				error_log("In field [{$this->m_Id}], 'require.cmp' expect a string in [==, !=, match]. Default is ==.");
+				if (defined('WP_DEBUG') && WP_DEBUG) error_log("In field [{$this->m_Id}], 'require.cmp' expect a string in [==, !=, match]. Default is ==."); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 			}
 		}
 		else
-			error_log("In field [{$this->m_Id}], 'require' expect an array with a css selector to an input and the required value ['selector' => '.example', 'value'=> 'yes']. If condition is not fullfilled, all the line is hidden.");
+		{
+			if (defined('WP_DEBUG') && WP_DEBUG) error_log("In field [{$this->m_Id}], 'require' expect an array with a css selector to an input and the required value ['selector' => '.example', 'value'=> 'yes']. If condition is not fullfilled, all the line is hidden."); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+		}
 	}
 
 	public function getRequirementClass($prefix=' ')

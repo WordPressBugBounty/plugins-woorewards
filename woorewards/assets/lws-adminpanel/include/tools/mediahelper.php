@@ -34,16 +34,16 @@ class MediaHelper
 
 		if( !file_exists($uploadDir) )
 		{
-			if( false === @mkdir($uploadDir, 0777, true) )
+			if( false === @wp_mkdir_p($uploadDir) )
 			{
-				error_log("Cannot create directory in ./uploads");
+				if (defined('WP_DEBUG') && WP_DEBUG) error_log("Cannot create directory in ./uploads"); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 				return false;
 			}
 		}
 
 		if( !@copy($path, $uploadFile) )
 		{
-			error_log("Cannot copy image from $path to $uploadFile");
+			if (defined('WP_DEBUG') && WP_DEBUG) error_log("Cannot copy image from $path to $uploadFile"); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 			return false;
 		}
 

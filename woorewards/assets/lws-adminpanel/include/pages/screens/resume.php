@@ -46,30 +46,28 @@ class Resume extends \LWS\Adminpanel\Pages\Page
 						$buttons .= "<a href='{$url}' class='resume-tab-button'>" . $tab['title'] . "</a>";
 					}
 					$buttons .= "</div>";
-					echo <<<EOT
-					<div class='resume-item'$style>
-						<a href='$link' class='resume-top'>
-							$icon
-							<div class='resume-item-title'>$title</div>
-						</a>
-						<div class='resume-content'>
-							$page->description
-							$buttons
-						</div>
-					</div>
-EOT;
+					$content = '<div class="resume-item"' . $style . '>'
+						. '<a href="' . $link . '" class="resume-top">'
+						. $icon
+						. '<div class="resume-item-title">' . $title . '</div>'
+						. '</a>'
+						. '<div class="resume-content">'
+						. $page->description
+						. $buttons
+						. '</div>'
+						. '</div>';
+					echo wp_kses_post($content);
 				} else {
-					echo <<<EOT
-					<a href='$link' class='resume-item'$style>
-						<div class='resume-top'>
-							$icon
-							<div class='resume-item-title'>$title</div>
-						</div>
-						<div class='resume-content'>
-							$page->description
-						</div>
-					</a>
-EOT;
+					$content = '<a href="' . $link . '" class="resume-item"' . $style . '>'
+						. '<div class="resume-top">'
+						. $icon
+						. '<div class="resume-item-title">' . $title . '</div>'
+						. '</div>'
+						. '<div class="resume-content">'
+						. $page->description
+						. '</div>'
+						. '</a>';
+					echo wp_kses_post($content);
 				}
 			}
 		}

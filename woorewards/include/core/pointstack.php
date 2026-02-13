@@ -41,6 +41,7 @@ class PointStack
 		{
 			if ($force) {
 				global $wpdb;
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 				$val = $wpdb->get_var($wpdb->prepare(
 					"SELECT `meta_value` FROM {$wpdb->usermeta} WHERE `user_id`=%d AND `meta_key`=%s",
 					$this->userId, $this->metaKey()
@@ -113,10 +114,11 @@ class PointStack
 			$args[] = $this->name;
 			$args[] = $threshold->format('Y-m-d');
 		}
-		$wpdb->query($wpdb->prepare($update, $args)); // phpcs:ignore WordPressDotOrg.sniffs.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
+		$wpdb->query($wpdb->prepare($update, $args));
 
 		// insert reset line for customers with '' as point value
-		$reason = $reason ? $this->formatReason($reason) : \LWS\WOOREWARDS\Core\Trace::byReason("Lost due to inactivity", 'woorewards-lite');
+		$reason = $reason ? $this->formatReason($reason) : \LWS\WOOREWARDS\Core\Trace::byReason("Lost due to inactivity", 'woorewards');
 		$fields = array('new_total', 'stack', 'commentar', 'blog_id', 'origin', 'mvt_date');
 		$values =  array('%d', '%s', '%s', '%d', '%s', \gmdate("'Y-m-d H:i:s'", \time()));
 		$args = array(
@@ -131,15 +133,13 @@ class PointStack
 
 		$fields = implode(', ', $fields);
 		$values = implode(', ', $values);
-		$insert = <<<EOT
-INSERT INTO $table (user_id, {$fields})
-SELECT DISTINCT pts.user_id, {$values} FROM {$wpdb->usermeta} as pts WHERE pts.meta_key=%s AND pts.meta_value=''
-EOT;
 		$args[] = $this->metaKey();
-		$wpdb->query($wpdb->prepare($insert, $args)); // phpcs:ignore WordPressDotOrg.sniffs.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
+		$wpdb->query($wpdb->prepare("INSERT INTO $table (user_id, {$fields}) SELECT DISTINCT pts.user_id, {$values} FROM {$wpdb->usermeta} as pts WHERE pts.meta_key=%s AND pts.meta_value=''", $args));
 
 		if( $getAffectedUserIds )
 		{
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$affected = $wpdb->get_col($wpdb->prepare(
 				"SELECT user_id FROM {$wpdb->usermeta} as raz WHERE raz.meta_key=%s AND raz.meta_value=''",
 				$this->metaKey()
@@ -147,6 +147,7 @@ EOT;
 		}
 
 		// clean points amounts values (replace '' by zero)
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$wpdb->query($wpdb->prepare(
 			"UPDATE {$wpdb->usermeta} as raz SET raz.meta_value=%d WHERE raz.meta_key=%s AND raz.meta_value=''",
 			$resetTo,
@@ -170,7 +171,9 @@ EOT;
 	public function delete()
 	{
 		global $wpdb;
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$wpdb->query($wpdb->prepare("DELETE FROM {$wpdb->usermeta} WHERE meta_key=%s", $this->metaKey()));
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$wpdb->query($wpdb->prepare("DELETE FROM {$wpdb->lwsWooRewardsHistoric} WHERE stack=%s", $this->name));
 
 		$this->amount = false;
@@ -180,6 +183,7 @@ EOT;
 	public function isUsed()
 	{
 		global $wpdb;
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$c = $wpdb->get_var($wpdb->prepare(
 			"SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE meta_key='wre_pool_point_stack' AND meta_value=%s",
 			$this->name
@@ -194,45 +198,36 @@ EOT;
 		global $wpdb;
 
 		// mark the merge in history, let stack empty for futur reference
-		$insert = <<<EOT
-INSERT INTO {$wpdb->lwsWooRewardsHistoric} (user_id, new_total, points_moved, stack, commentar, origin, blog_id, mvt_date)
-SELECT m.user_id, SUM(m.meta_value), SUM(m.diff), '', %s, 'merge', %d, %s
-FROM (
-	SELECT s.user_id, s.meta_value, 0 as diff FROM {$wpdb->usermeta} as s
-	WHERE s.meta_key=%s
-	UNION
-	SELECT d.user_id, d.meta_value, d.meta_value as diff FROM {$wpdb->usermeta} as d
-	WHERE d.meta_key=%s
-) as m GROUP BY m.user_id
-EOT;
-		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPressDotOrg.sniffs.DirectDB.UnescapedDBParameter
-		$wpdb->query($wpdb->prepare(
-			$insert,
-			\LWS\WOOREWARDS\Core\Trace::serializeReason(array("Points merged from %s", $otherStackName), 'woorewards-lite'),
-			\get_current_blog_id(),
+		$insert = "INSERT INTO {$wpdb->lwsWooRewardsHistoric} (user_id, new_total, points_moved, stack, commentar, origin, blog_id, mvt_date)"
+			. " SELECT m.user_id, SUM(m.meta_value), SUM(m.diff), '', %s, 'merge', %d, %s"
+			. " FROM ("
+			. " SELECT s.user_id, s.meta_value, 0 as diff FROM {$wpdb->usermeta} as s"
+			. " WHERE s.meta_key=%s"
+			. " UNION"
+			. " SELECT d.user_id, d.meta_value, d.meta_value as diff FROM {$wpdb->usermeta} as d"
+			. " WHERE d.meta_key=%s"
+			. " ) as m GROUP BY m.user_id";
+		$args = [
+			\LWS\WOOREWARDS\Core\Trace::serializeReason(array("Points merged from %s", $otherStackName), 'woorewards'),
+			\get_current_blog_id(), // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			\gmdate('Y-m-d H:i:s', \time()),
 			$this->metaKey(),
-			$this->metaKey($otherStackName)
-		));
+			$this->metaKey($otherStackName),
+		];
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
+		$wpdb->query($wpdb->prepare($insert, $args));
 
 		// copy points in history back to usermeta
-		$update = <<<EOT
-UPDATE {$wpdb->usermeta} as d
-INNER JOIN {$wpdb->lwsWooRewardsHistoric} as s ON s.user_id=d.user_id AND s.stack=''
-SET d.meta_value=s.new_total
-WHERE d.meta_key=%s
-EOT;
-		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPressDotOrg.sniffs.DirectDB.UnescapedDBParameter
-		$wpdb->query($wpdb->prepare(
-			$update,
-			$this->metaKey()
-		));
+		$update = "UPDATE {$wpdb->usermeta} as d"
+			. " INNER JOIN {$wpdb->lwsWooRewardsHistoric} as s ON s.user_id=d.user_id AND s.stack=''"
+			. " SET d.meta_value=s.new_total"
+			. " WHERE d.meta_key=%s";
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
+		$wpdb->query($wpdb->prepare($update, $this->metaKey()));
 
 		// clean history, restore stack name
-		$wpdb->query($wpdb->prepare(
-			"UPDATE {$wpdb->lwsWooRewardsHistoric} SET stack=%s WHERE stack=''",
-			$this->name
-		));
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$wpdb->query($wpdb->prepare("UPDATE {$wpdb->lwsWooRewardsHistoric} SET stack=%s WHERE stack=''", $this->name));
 
 		$this->amount = false;
 	}
@@ -245,10 +240,8 @@ EOT;
 	{
 		global $wpdb;
 		$table = self::table();
-		$wpdb->query($wpdb->prepare(
-			"DELETE FROM $table WHERE date(mvt_date)<date(%s)",
-			$threshold->format('Y-m-d')
-		));
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- $table from self::table()
+		$wpdb->query($wpdb->prepare("DELETE FROM $table WHERE date(mvt_date)<date(%s)", $threshold->format('Y-m-d')));
 	}
 
 	public function metaKey($name=false)
@@ -289,7 +282,7 @@ EOT;
 		$timezone_string = get_option( 'timezone_string' );
 
 		if ( $timezone_string ) {
-				return $timezone_string;
+			return $timezone_string;
 		}
 
 		$offset  = (float) get_option( 'gmt_offset' );
@@ -336,12 +329,10 @@ EOT;
 	function getHistory($force = false, $translate=true, $offset=false, $limit=false)
 	{
 		global $wpdb;
-		$sql = <<<EOT
-SELECT id, mvt_date as op_date, points_moved as op_value, new_total as op_result, commentar as op_reason, `origin`
-FROM $wpdb->lwsWooRewardsHistoric
-WHERE user_id=%d AND stack=%s
-ORDER BY mvt_date DESC, id DESC
-EOT;
+		$sql = "SELECT id, mvt_date as op_date, points_moved as op_value, new_total as op_result, commentar as op_reason, `origin`"
+			. " FROM $wpdb->lwsWooRewardsHistoric"
+			. " WHERE user_id=%d AND stack=%s"
+			. " ORDER BY mvt_date DESC, id DESC";
 		$args = array(
 			$this->userId,
 			$this->name
@@ -353,6 +344,7 @@ EOT;
 			$args[] = max(\intval($limit), 1);
 		}
 
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- $sql built from wpdb table name
 		$history = $wpdb->get_results($wpdb->prepare($sql, $args), ARRAY_A);
 
 		if( $translate )
@@ -390,6 +382,130 @@ EOT;
 			}
 		}
 		return $history;
+	}
+
+	/**
+	 * Retrieve history for multiple stacks in a single query
+	 * @param int $userId
+	 * @param array $stackNames Array of stack names
+	 * @param int $offset
+	 * @param int $limit
+	 * @param bool $translate
+	 * @return array Grouped by stack name
+	 */
+	public static function getHistoryBulk($userId, $stackNames, $offset = 0, $limit = 15, $translate = true)
+	{
+		global $wpdb;
+
+		if (empty($stackNames)) {
+			return array();
+		}
+
+		$placeholders = implode(',', array_fill(0, count($stackNames), '%s'));
+		$sql = "
+        SELECT
+            id,
+            mvt_date as op_date,
+            points_moved as op_value,
+            new_total as op_result,
+            commentar as op_reason,
+            origin,
+            stack
+        FROM {$wpdb->lwsWooRewardsHistoric}
+        WHERE user_id = %d AND stack IN ($placeholders)
+        ORDER BY mvt_date DESC, id DESC
+        LIMIT %d OFFSET %d
+    ";
+
+		$args = array_merge(
+			array($userId),
+			$stackNames,
+			array($limit, $offset)
+		);
+
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
+		$history = $wpdb->get_results($wpdb->prepare($sql, $args), ARRAY_A);
+
+		if ($translate && $history) {
+			$pools = array();
+			foreach ($stackNames as $stackName) {
+				$pool = \apply_filters('lws_woorewards_get_pools_by_stack', false, $stackName);
+				$pools[$stackName] = $pool ? $pool->sort()->first() : false;
+			}
+
+			$originIds = array_filter(
+				array_column($history, 'origin'),
+				function($val) { return $val && \is_numeric($val); }
+			);
+			$originTitles = !empty($originIds) ? self::bulkGetOriginTitles($originIds) : array();
+
+			foreach ($history as &$row) {
+				$pool = $pools[$row['stack']] ?? false;
+
+				if ($pool) {
+					if (\is_numeric($row['op_value'])) {
+						$row['op_value'] = $pool->formatPoints($row['op_value'], false);
+					}
+					if (\is_numeric($row['op_result'])) {
+						$row['op_result'] = $pool->formatPoints($row['op_result'], false);
+					}
+				}
+
+				if ($row['origin'] && ($originTitles[$row['origin']] ?? false)) {
+					$row['op_reason'] = $originTitles[$row['origin']];
+				} elseif ($row['op_reason'] && \is_serialized($row['op_reason'])) {
+					$reason = @unserialize($row['op_reason']);
+					if ($reason && is_array($reason)) {
+						$row['op_reason'] = \LWS\WOOREWARDS\Core\Trace::reasonToString($reason, true);
+					}
+				}
+			}
+		}
+
+		return $history;
+	}
+
+	protected static function bulkGetOriginTitles($originIds)
+	{
+		static $replaceReason = null;
+		if (null === $replaceReason) {
+			$replaceReason = \apply_filters('lws_woorewards_stack_history_prefers_origin_title', true);
+		}
+
+		$titles = array();
+		if (!$replaceReason) {
+			return $titles;
+		}
+
+		global $wpdb;
+		$placeholders = implode(',', array_fill(0, count($originIds), '%d'));
+		$sql = "SELECT ID, post_type FROM {$wpdb->posts} WHERE ID IN ($placeholders)";
+
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$results = $wpdb->get_results($wpdb->prepare($sql, $originIds), OBJECT_K);
+
+		foreach ($results as $id => $row) {
+			$object = null;
+			$post = \get_post($id);
+			if (!$post) {
+				continue;
+			}
+
+			if ($row->post_type === \LWS\WOOREWARDS\Abstracts\Event::POST_TYPE) {
+				$object = \LWS\WOOREWARDS\Abstracts\Event::fromPost($post);
+			} elseif ($row->post_type === \LWS\WOOREWARDS\Abstracts\Unlockable::POST_TYPE) {
+				$object = \LWS\WOOREWARDS\Abstracts\Unlockable::fromPost($post);
+			}
+
+			if ($object) {
+				$title = $object->getTitleAsReason();
+				if ($title) {
+					$titles[$id] = $title;
+				}
+			}
+		}
+
+		return $titles;
 	}
 
 	/** overwrite \LWS\WOOREWARDS\Core\Trace reason with origin and origin2
@@ -446,6 +562,7 @@ EOT;
 			$formats[] = '%d';
 		}
 
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
 		$wpdb->insert($wpdb->lwsWooRewardsHistoric, $values, $formats);
 		$this->lastLogId = $wpdb->insert_id;
 		return $this;
@@ -606,16 +723,18 @@ EOT;
 			}
 		}
 
-		if( !$where )
-			error_log("Read point history with any WHERE clause could lead to too many result.");
+		if( !$where ) {
+			if (defined('WP_DEBUG') && WP_DEBUG) error_log("Read point history with any WHERE clause could lead to too many result."); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+		}
 		else
 			$sql .= (' WHERE ' . implode(' AND ', $where));
 
 		$sql .= " ORDER BY mvt_date DESC, id DESC";
-		$traces = $wpdb->get_results($prepare ? $wpdb->prepare($sql, $prepare) : $sql); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPressDotOrg.sniffs.DirectDB.UnescapedDBParameter, WordPress.DB.DirectDatabaseQuery.DirectQuery
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
+		$traces = $wpdb->get_results($prepare ? $wpdb->prepare($sql, $prepare) : $sql);
 		if( false === $traces )
 		{
-			error_log("An error occured during point history table read.");
+			if (defined('WP_DEBUG') && WP_DEBUG) error_log("An error occured during point history table read."); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 			return array();
 		}
 		return $traces;
@@ -682,7 +801,8 @@ EOT;
 	/** Never call, only to have poedit/wpml able to extract the sentance. */
 	private function poeditDeclare()
 	{
-		__("Points merged from %s", 'woorewards-lite');
-		__("Lost due to inactivity", 'woorewards-lite');
+		/* translators: %s: source stack name */
+		__("Points merged from %s", 'woorewards');
+		__("Lost due to inactivity", 'woorewards');
 	}
 }

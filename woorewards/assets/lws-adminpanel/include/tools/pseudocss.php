@@ -1,4 +1,7 @@
 <?php
+namespace LWS\Adminpanel\Tools;
+if( !defined( 'ABSPATH' ) ) exit();
+
 /**
  * Provide an easy way to let user customize predefined CSS.
  *
@@ -90,10 +93,6 @@
  * If such a php file is not generated, check the server writing rights to the directory.
  * If the lwss changed and you want to regenerate a new php translation file, simply remove the previous one.
  */
-namespace LWS\Adminpanel\Tools;
-if( !defined( 'ABSPATH' ) ) exit();
-
-
 class CSSSection
 {
 	public $ID;
@@ -105,6 +104,8 @@ class CSSSection
 	public $Values;
 	public $Title = '';
 	public $Important = false;
+	public $isAtRule = false;
+	public $subSections = [];
 
 	public function __construct($selector, $defaults=array(), $id='', $type='', $help='', $ref='', $important=array())
 	{
@@ -117,6 +118,7 @@ class CSSSection
 		$this->Values = array();
 		$this->Title = '';
 		$this->Important = $important;
+		$this->isAtRule = \substr($selector, 0, 1) === '@';
 	}
 
 	public function isEditable()
@@ -163,7 +165,7 @@ class CSSSection
 		return $this->Values;
 	}
 
-	public function toString()
+	public function toString(string $indent='')
 	{
 		$str = '';
 		$props = array_merge($this->Defaults, $this->Values);
@@ -180,13 +182,27 @@ class CSSSection
 			else
 				$str .= "$k:$v;";
 		}
-		$css = $this->Selector . '{' . $str . '}';
+		foreach ($this->subSections as $subSection) {
+			$str .= $subSection->toString($indent . "\t");
+		}
+
+		$css = $indent . $this->Selector;
+		$css .= ($this->subSections ? " {\n" : '{');
+		$css .= $str;
+		$css .= ($this->subSections ? " \n{$indent}}" : '}');
+
 		if( $this->Type == 'button' )
 		{
-			$css .= "\n" . $this->Selector . ':hover{' . $hover . '}';
-			$css .= "\n" . $this->Selector . ':active{' . $active . '}';
+			$css .= "\n" . $indent . $this->Selector . ':hover{' . $hover . '}';
+			$css .= "\n" . $indent . $this->Selector . ':active{' . $active . '}';
 		}
-		return $css;
+		return $css . "\n";
+	}
+
+	public function flatten()
+	{
+		foreach ($this->subSections as &$subSection) $subSection->flatten();
+		$this->subSections = \array_values($this->subSections);
 	}
 }
 
@@ -242,13 +258,13 @@ class PseudoCss
 		{
 			$fields = array_merge( array(array(
 					'id' => $me->MasterID,
-					'title' => __("Default CSS values", 'lws-adminpanel'),
+					'title' => __("Default CSS values", 'woorewards'),
 					'type' => 'button',
 					'extra' => array(
 						'master' => $me->MasterID,
 						'class' => 'lwss-reset-btn',
-						'text' => _x("Reset", "Default css values", 'lws-adminpanel')
-						//,'help' => _x("", "Help about reset css to default values", 'lws-adminpanel')
+						'text' => _x("Reset", "Default css values", 'woorewards')
+						//,'help' => _x("", "Help about reset css to default values", 'woorewards')
 					)
 				)),
 				$fields
@@ -271,9 +287,11 @@ class PseudoCss
 	/** run from post value, usually from ajax request */
 	public function tryRequest()
 	{
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if( isset($_REQUEST[self::ARG]) )
 		{
-			$url = \esc_url_raw(\sanitize_text_field($_REQUEST[self::ARG]));
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$url = \esc_url_raw(\sanitize_text_field(wp_unslash($_REQUEST[self::ARG])));
 			$this->toCss($url);
 		}
 	}
@@ -282,9 +300,11 @@ class PseudoCss
 	 * provided for experiment purpose. */
 	public static function tryGet()
 	{
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if( isset($_GET[self::ARG]) )
 		{
-			$url = esc_url_raw(\sanitize_text_field($_GET[self::ARG]));
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$url = esc_url_raw(\sanitize_text_field(wp_unslash($_GET[self::ARG])));
 			$me = new PseudoCss();
 			$me->toCss($url);
 		}
@@ -327,7 +347,7 @@ class PseudoCss
 	}
 
 	/** @return array of Balise
-	 * @param $textDomain the text-domain of the current plugin for translation,
+	 * @param string $textDomain the text-domain of the current plugin for translation,
 	 * let it false to do not care about titles. */
 	public function extract($url, $textDomain=false, $loadValues=true)
 	{
@@ -335,15 +355,18 @@ class PseudoCss
 		{
 			if( $this->interpret() )
 			{
-				if( $textDomain !== false && is_string($textDomain) && !empty($textDomain) )
-					$this->prepareTitles($textDomain);
+				//if( $textDomain !== false && is_string($textDomain) && !empty($textDomain) )
+					//$this->prepareTitles($textDomain);
 				if( $loadValues )
 					$this->loadValues();
 				return $this->Sections;
 			}
 		}
-		else
-			error_log("Cannot extract balise from pseudo-css $url");
+		else {
+			if (defined('WP_DEBUG') && WP_DEBUG) {
+				error_log("Cannot extract balise from pseudo-css $url"); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+			}
+		}
 		return array();
 	}
 
@@ -352,13 +375,17 @@ class PseudoCss
 		$buffer = preg_replace('/\/\*.*\*\//Us', '', $css);
 		if( $this->build($buffer) )
 			return $this->Sections;
-		else
-			error_log("Cannot extract balise from pseudo-css string");
+		else {
+			if (defined('WP_DEBUG') && WP_DEBUG) {
+				error_log("Cannot extract balise from pseudo-css string"); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+			}
+		}
 		return array();
 	}
 
 	public function getBalises()
 	{
+		foreach ($this->Sections as $section) $section->flatten();
 		return $this->Sections;
 	}
 
@@ -379,6 +406,7 @@ class PseudoCss
 		{
 			global $wpdb;
 			// phpcs:ignore WordPressDotOrg.sniffs.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$vals = $wpdb->get_results($wpdb->prepare("SELECT option_name, option_value FROM {$wpdb->options} WHERE option_name LIKE %s", $this->MasterID.'%'), ARRAY_N);
 			if( is_array($vals) )
 			{
@@ -392,7 +420,7 @@ class PseudoCss
 		}
 	}
 
-	/** @param $addUnknown if true and a selector is unknown in this, then it is added; if false, it is ignored.  */
+	/** @param bool $addUnknown not used  */
 	public function merge($pseudocss, $addUnknown=true)
 	{
 		if( is_a($pseudocss, __CLASS__) )
@@ -407,54 +435,12 @@ class PseudoCss
 					$this->Sections[$prop] = $val;
 			}
 		}
-		else
-			error_log(__CLASS__ . __FUNCTION__ . " expect a " . __CLASS__ . " instance as argument.");
-		return $this->Sections;
-	}
-
-	/** load the traduction array or generate it if possible.
-	 * @param string textDomain the text-domain of the current plugin for translation. */
-	public function prepareTitles($textDomain)
-	{
-		if( defined( 'ABSPATH' ) ) // translation require to be in wordpress
-		{
-			$titleFile = basename(basename($this->Url, self::EXT), '.css');
-			$titleFile = dirname($this->Url) . '/' . $titleFile . '.php';
-
-			if( !file_exists($titleFile) )
-				$this->generateTitlesAndHelp($textDomain, $titleFile);
-
-			if( file_exists($titleFile) )
-				$this->loadTitlesAndHelp($textDomain, $titleFile);
-		}
-	}
-
-	public function generateTitlesAndHelp($textDomain, $titleFile)
-	{
-		// generate it
-		$textDomain = addslashes($textDomain);
-		$context = addslashes(basename($this->Url));
-
-		$titles = array();
-		$helps = array();
-		foreach( $this->Sections as $uid => $b )
-		{
-			if( $b->isEditable() )
-			{
-				$id = addslashes($uid);
-				$titles[] = "\n\t'$id' => _x('$id', '$context', '$textDomain')";
-				if( !empty($b->Help) )
-					$helps[] = "\n\t'$id' => _x({$b->Help}, '$context', '$textDomain')";
+		else {
+			if (defined('WP_DEBUG') && WP_DEBUG) {
+				error_log(__CLASS__ . __FUNCTION__ . " expect a " . __CLASS__ . " instance as argument."); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 			}
 		}
-		$content = '$pseudoCssTitles = array(' . implode(",", $titles) . ');' . "\n";
-		if( !empty($helps) )
-			$content .= '$pseudoCssHelps = array(' . implode(",", $helps) . ');' . "\n";
-
-		if( false === @file_put_contents($titleFile, "<?php\n$content?>", LOCK_EX) )
-			error_log("Generation of pseudo-css title translation file failed (check permission) on " . $titleFile);
-		else if( false === @chmod($titleFile, 444) ) // set readonly for anyone
-			error_log("Cannot restrict permission to pseudo-css title translation file. It is a potential cross-site-scripting risk. Check " . $titleFile);
+		return $this->Sections;
 	}
 
 	public function loadTitlesAndHelp($textDomain, $titleFile)
@@ -547,7 +533,7 @@ class PseudoCss
 	{
 		$part = explode('?', $src, 2);
 		$args = array();
-		$query = \parse_url((string)$src, PHP_URL_QUERY);
+		$query = \wp_parse_url((string)$src, PHP_URL_QUERY);
 		if ($query)
 			\parse_str($query, $args);
 
@@ -635,70 +621,103 @@ class PseudoCss
 			$buffer = preg_replace('/\/\*.*\*\//Us', '', $buffer);
 			$ok = $this->build($buffer);
 		}
-		else
-			error_log( "Read error of {$this->Url}" );
+		else {
+			if (defined('WP_DEBUG') && WP_DEBUG) {
+				error_log( "Read error of {$this->Url}" ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+			}
+		}
 		return 	$ok;
 	}
 
 	/** read the pseudo-css content in $buffer and grab the balise info. */
 	protected function build($buffer)
 	{
-		$pos = 0;
-		$bufferLen = strlen($buffer);
-		$match = array();
-
-		while( preg_match('/([^\s][^\{]*){/Us', $buffer, $match, PREG_OFFSET_CAPTURE, $pos) )
-		{
-			$pos = strlen($match[0][0]) + $match[0][1];
-			$selector = trim($match[1][0]);
-
-			if( preg_match('/((?:[^\}\'"]|(?:"(?:[^"\\\\]|\\\\.)*")|(?:\'(?:[^\'\\\\]|\\\\.)*\'))*)(?:\}|$)/Us', $buffer, $match, PREG_OFFSET_CAPTURE, $pos) )
-			{
-				$pos = strlen($match[0][0]) + $match[0][1];
-				$this->readCSSSection($selector, $match[1][0]);
+		try {
+			$pos = 0;
+			$this->Sections = \array_merge($this->Sections, $this->_build($buffer, $pos));
+		} catch (\Exception $e) {
+			if (defined('WP_DEBUG') && WP_DEBUG) {
+				error_log($e->getMessage()); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 			}
-			else
-			{
-				error_log("Cannot find selector property end '}' in:{$this->Url}\nafter :\n$selector {" . substr($buffer, $pos-1, 128));
-				return false;
-			}
+			return false;
 		}
 		return true;
 	}
 
+	/**
+	 * @throws \Exception
+	 */
+	protected function _build(string $buffer, int &$pos): array
+	{
+		$flat = [];
+		$match = [];
+		$startPattern = '/([^\s][^\{]*){/Us';
+		$endPattern = '/((?:[^\}\'"]|(?:"(?:[^"\\\\]|\\\\.)*")|(?:\'(?:[^\'\\\\]|\\\\.)*\'))*)(?:\}|$)/Us';
+
+		while( preg_match($startPattern, $buffer, $match, PREG_OFFSET_CAPTURE, $pos) )
+		{
+			$selector = trim($match[1][0]);
+
+			if (\substr($selector, 0, 1) === '}') {
+				// end of media query
+				$shift = strlen($selector) - \strlen(ltrim(substr($selector, 1)));
+				$pos += $shift;
+				return $flat;
+			}
+
+			// move cursor after the selector
+			$pos = strlen($match[0][0]) + $match[0][1];
+
+			if (\substr($selector, 0, 1) === '@') {
+				// start of media query, look inside
+				$media = new CSSSection($selector);
+				$media->subSections = $this->_build($buffer, $pos);
+				$flat[$selector] = $media;
+
+			} elseif (preg_match($endPattern, $buffer, $match, PREG_OFFSET_CAPTURE, $pos) ) {
+				// css properties
+				$pos = strlen($match[0][0]) + $match[0][1];
+				$props = $this->extractProps($match[1][0], $selector);
+				if ($props) {
+					if (isset($flat[$props->uid])) {
+						$flat[$props->uid]->merge($props->props, $props->type, $props->help, $props->ref, $props->important);
+					} else {
+						$flat[$props->uid] = new CSSSection($selector, $props->props, $props->id, $props->type, $props->help, $props->ref, $props->important);
+					}
+				}
+			} else {
+				throw new \Exception(\esc_html("Cannot find selector property end '}' in:{$this->Url}\nafter :\n$selector {" . substr($buffer, $pos-1, 128)));
+			}
+		}
+		return $flat;
+	}
+
 	/** harvest properties in a CSS section */
-	protected function readCSSSection($selector, $section)
+	private function extractProps($section, $selector)
 	{
 		$props = $this->cssPropsToArray($section);
-		if( !empty($props) )
-		{
-			$id = '';
-			$help = '';
-			$type = '';
-			$ref = '';
-			$important = array();
-			foreach( $props as $k => &$v )
-			{
-				if( $k == '$id' )
-					$id = $v;
-				else if( $k == '$type' )
-					$type = $v;
-				else if( $k == '$help' )
-					$help = $v;
-				else if( $k == '$ref' )
-					$ref = $v;
-				else if( substr($v, -10) === '!important' )
-				{
-					$important[] = $k;
-					$v = trim(substr($v, 0, strlen($v)-10));
-				}
+		if (!$props) return false;
+		$data = (object) [
+			'props'     => $props,
+			'id'        => '',
+			'help'      => '',
+			'type'      => '',
+			'ref'       => '',
+			'important' => [],
+			'$uid'      => '',
+		];
+		foreach ($props as $k => &$v) {
+			if( $k == '$id' ) $data->id = $v;
+			else if( $k == '$type' ) $data->type = $v;
+			else if( $k == '$help' ) $data->help = $v;
+			else if( $k == '$ref' ) $data->ref = $v;
+			else if( substr($v, -10) === '!important' ) {
+				$data->important[] = $k;
+				$v = trim(substr($v, 0, strlen($v)-10));
 			}
-			$uid = $this->MasterID . "$type-" . preg_replace('/[^[:alnum:]_-]/i', '_', urlencode(empty($id)?$selector:$id));
-			if( array_key_exists($uid, $this->Sections) )
-				$this->Sections[$uid]->merge($props, $type, $help, $ref, $important);
-			else
-				$this->Sections[$uid] = new CSSSection($selector, $props, $id, $type, $help, $ref, $important);
 		}
+		$data->uid = $this->MasterID . $data->type . '-' . preg_replace('/[^[:alnum:]_-]/i', '_', urlencode($data->id ?: $selector));
+		return $data;
 	}
 
 	protected function cssPropsToArray($str)
@@ -717,7 +736,9 @@ class PseudoCss
 			}
 			else
 			{
-				error_log("Cannot read a css property in:{$this->Url}\nnear :\n" . $str);
+				if (defined('WP_DEBUG') && WP_DEBUG) {
+					error_log("Cannot read a css property in:{$this->Url}\nnear :\n" . $str); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+				}
 				break;
 			}
 		}
@@ -788,8 +809,11 @@ class PseudoCss
 						$css .= wp_remote_retrieve_body( $response );
 						$css .= "\n";
 					}
-					else
-						error_log("Font face query return an error $code : $query");
+					else {
+						if (defined('WP_DEBUG') && WP_DEBUG) {
+							error_log("Font face query return an error $code : $query"); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+						}
+					}
 				}
 			}
 		}
@@ -826,11 +850,11 @@ class PseudoCss
 
 	/** echo out what was interpreted.
 	 * then exit(0) */
-	protected function echoAndQuit($css)
+	protected function echoAndQuit($safe_css)
 	{
 		header("Content-type: text/css");
 		header("X-Content-Type-Options: nosniff"); /// @see https://blogs.msdn.microsoft.com/ie/2008/09/02/ie8-security-part-vi-beta-2-update/
-		echo $css;
+		echo $safe_css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		die();
 	}
 
@@ -844,7 +868,7 @@ class PseudoCss
 				$refs[$balise->ID] = $balise;
 			if( !empty($balise->Ref) && array_key_exists($balise->Ref, $refs) )
 				$balise->mergeValues($refs[$balise->Ref]);
-			$css .= $balise->toString() . "\n";
+			$css .= $balise->toString();
 		}
 		return $css;
 	}
@@ -870,11 +894,16 @@ class PseudoCss
 					$this->echoAndQuit($css);
 				}
 				else
-					@header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
+				{
+					$protocol = isset($_SERVER['SERVER_PROTOCOL']) ? sanitize_text_field(wp_unslash($_SERVER['SERVER_PROTOCOL'])) : 'HTTP/1.1';
+					@header($protocol . ' 500 Internal Server Error', true, 500);
+				}
 			}
 		}
-		else
-			@header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden', true, 403);
+		else {
+			$protocol = isset($_SERVER['SERVER_PROTOCOL']) ? sanitize_text_field(wp_unslash($_SERVER['SERVER_PROTOCOL'])) : 'HTTP/1.1';
+			@header($protocol . ' 403 Forbidden', true, 403);
+		}
 		die();
 	}
 

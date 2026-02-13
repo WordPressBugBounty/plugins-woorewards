@@ -26,7 +26,7 @@ class ReferralLink
 
 	function registerScripts()
 	{
-		\wp_register_script('wr-referral-link', LWS_WOOREWARDS_JS . '/shortcodes/referral-link.js', array('jquery'), LWS_WOOREWARDS_VERSION);
+		\wp_register_script('wr-referral-link', LWS_WOOREWARDS_JS . '/shortcodes/referral-link.js', array('jquery'), LWS_WOOREWARDS_VERSION, true);
 		\wp_register_style('wr-referral-link', LWS_WOOREWARDS_CSS . '/shortcodes/referral-link.min.css', array(), LWS_WOOREWARDS_VERSION);
 	}
 
@@ -42,58 +42,58 @@ class ReferralLink
 	{
 		$fields['referrallink'] = array(
 			'id' => 'lws_woorewards_referral_link',
-			'title' => __("Referral Link", 'woorewards-lite'),
+			'title' => __("Referral Link", 'woorewards'),
 			'type' => 'shortcode',
 			'extra' => array(
 				'shortcode' => '[wr_referral_link]',
-				'description' =>  __("Use this shortcode to show a referral link button.", 'woorewards-lite') . "<br/>" .
-					__("Customers can use then share this link with their friends.", 'woorewards-lite'),
+				'description' =>  __("Use this shortcode to show a referral link button.", 'woorewards') . "<br/>" .
+					__("Customers can use then share this link with their friends.", 'woorewards'),
 				'options' => array(
 					'mode' => array(
 						'option' => 'mode',
 						'desc' => array(
-							__("Select the type of referral link your customers will get :", 'woorewards-lite'),
+							__("Select the type of referral link your customers will get :", 'woorewards'),
 							array(
 								'tag' => 'ul',
-								array('link', __("(Default Value) Customers will get an url link", 'woorewards-lite')),
-								array('qrcode', __("Customers will get a QR Code link", 'woorewards-lite')),
+								array('link', __("(Default Value) Customers will get an url link", 'woorewards')),
+								array('qrcode', __("Customers will get a QR Code link", 'woorewards')),
 							),
 						),
 						'example' => '[wr_referral_link mode="link"]',
 					),
 					'showlink' => array(
 						'option' => 'showlink',
-						'desc' => __("(Optional) If set, customers will see the referral link or QR-Code above the copy button", 'woorewards-lite'),
+						'desc' => __("(Optional) If set, customers will see the referral link or QR-Code above the copy button", 'woorewards'),
 						'example' => '[wr_referral_link showlink="true"]',
 					),
 					'showbutton' => array(
 						'option' => 'showbutton',
-						'desc' => __("(Optional, default is 'true') Show or hide the copy button", 'woorewards-lite'),
+						'desc' => __("(Optional, default is 'true') Show or hide the copy button", 'woorewards'),
 						'example' => '[wr_referral_link showbutton="true"]',
 					),
 					'url' => array(
 						'option' => 'url',
-						'desc' => __("(Optional) By default, the shortcode shares the url of the page it’s displayed on. You can override that setting by setting an url in this option.", 'woorewards-lite'),
+						'desc' => __("(Optional) By default, the shortcode shares the url of the page it’s displayed on. You can override that setting by setting an url in this option.", 'woorewards'),
 						'example' => '[wr_referral_link url="https://mywebsite.com/nameofapage"]',
 					),
 					'button' => array(
 						'option' => 'button',
-						'desc' => __("(Optional) Set the text customers will see on the copy button", 'woorewards-lite'),
+						'desc' => __("(Optional) Set the text customers will see on the copy button", 'woorewards'),
 						'example' => '[wr_referral_link button="Copy my referral link"]',
 					),
 					'copied' => array(
 						'option' => 'copied',
-						'desc' => __("(Optional) Set the text customers will see when the code is copied to the clipboard", 'woorewards-lite'),
+						'desc' => __("(Optional) Set the text customers will see when the code is copied to the clipboard", 'woorewards'),
 						'example' => '[wr_referral_link copied="Your link has been copied"]',
 					),
 					'layout' => array(
 						'option' => 'layout',
 						'desc' => array(
-							__("Select the type of referral link your customers will get :", 'woorewards-lite'),
+							__("Select the type of referral link your customers will get :", 'woorewards'),
 							array(
 								'tag' => 'ul',
-								array('default', __("The default layout displays a block", 'woorewards-lite')),
-								array('inline', __("Try to follow the text flow", 'woorewards-lite')),
+								array('default', __("The default layout displays a block", 'woorewards')),
+								array('inline', __("Try to follow the text flow", 'woorewards')),
 							),
 						),
 					),
@@ -167,7 +167,7 @@ class ReferralLink
 				\htmlentities($url)
 			);
 			if (!$atts['button']) {
-				$atts['button'] = __('Get your referral link', 'woorewards-lite');
+				$atts['button'] = __('Get your referral link', 'woorewards');
 			}
 		} else {
 			// QR Code
@@ -177,23 +177,21 @@ class ReferralLink
 				\esc_attr($url)
 			);
 			if (!$atts['button']) {
-				$atts['button'] = __('Get your referral QR Code', 'woorewards-lite');
+				$atts['button'] = __('Get your referral QR Code', 'woorewards');
 			}
 		}
 		if (!$atts['copied']) {
-			$atts['copied'] = __('Your code has been copied !', 'woorewards-lite');
+			$atts['copied'] = __('Your code has been copied !', 'woorewards');
 		}
 
 		// Use a real <button> element to meet iOS Safari's user interaction requirement
-		$content = <<<EOT
-		<div class='wr-referral-code-wrapper%s'>
-			%s
-			<button type="button" class='link-button-wrapper wr_refl_button_copy%s' data-url="%s">
-				<div class='copy-button wr_refl_button_copy'>%s</div>
-				<div class='copied-message'>%s</div>
-			</button>
-		</div>
-EOT;
+		$content = "<div class='wr-referral-code-wrapper%s'>"
+			. "%s"
+			. "<button type='button' class='link-button-wrapper wr_refl_button_copy%s' data-url='%s'>"
+			. "<div class='copy-button wr_refl_button_copy'>%s</div>"
+			. "<div class='copied-message'>%s</div>"
+			. "</button>"
+			. "</div>";
 		return sprintf(
 			$content,
 			'i' === \substr($atts['layout'], 0, 1) ? ' refinline' : '',
@@ -210,16 +208,21 @@ EOT;
 	{
 		if (\is_admin())
 			return;
-		if (!(isset($_GET, $_GET['~']) && $_GET['~']))
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- public redirect URL
+		if (!isset($_GET)) {
 			return;
+		}
+		$short = \sanitize_text_field(\wp_unslash($_GET['~'] ?? '')); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- public redirect URL
+		if (!\strlen($short)) {
+			return;
+		}
 
-		$short = $_GET['~'];
 		global $wpdb;
-		$sql = "SELECT `longurl` FROM {$wpdb->base_prefix}lws_wr_tinyurls WHERE `shorturl` = %s";
-		$redirect = $wpdb->get_var($wpdb->prepare($sql, $short));
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$redirect = $wpdb->get_var($wpdb->prepare("SELECT `longurl` FROM {$wpdb->base_prefix}lws_wr_tinyurls WHERE `shorturl` = %s", $short));
 
 		if ($redirect) {
-			if (\wp_redirect($redirect))
+			if (\wp_safe_redirect($redirect))
 				exit;
 		}
 	}
@@ -233,22 +236,18 @@ EOT;
 			$base = \site_url();
 
 		global $wpdb;
-		$sql = <<<EOT
-SELECT `shorturl`
-FROM {$wpdb->base_prefix}lws_wr_tinyurls
-WHERE `longref` = %s AND `longurl` = %s
-EOT;
-		$short = $wpdb->get_var($wpdb->prepare($sql, $ref, $url));
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$short = $wpdb->get_var($wpdb->prepare("SELECT `shorturl` FROM {$wpdb->base_prefix}lws_wr_tinyurls WHERE `longref` = %s AND `longurl` = %s", $ref, $url));
 
 		if (!$short) {
 			$unique = $short = \LWS\Adminpanel\Tools\Conveniences::rebaseNumber(substr($ref, 0, 16), 16, 64);
 			// unicity
-			$sql = "SELECT COUNT(*) FROM {$wpdb->base_prefix}lws_wr_tinyurls WHERE `shorturl` = '%s'";
-			$index = 0;
-			while($wpdb->get_var(sprintf($sql, $short))) {
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+			while($wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->base_prefix}lws_wr_tinyurls WHERE `shorturl` = %s", $short))) {
 				$short = ($unique . $index++);
 			}
 			// keep it
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$wpdb->query($wpdb->prepare(
 				"INSERT INTO {$wpdb->base_prefix}lws_wr_tinyurls (shorturl, longurl, longref) VALUES (%s, %s, %s)",
 				$short, $url, $ref
@@ -299,7 +298,7 @@ EOT;
 			$sponsorship->setCurrentReferral($ref->user_id, $ref->hash, 'referral');
 			if( \get_option('lws_woorewards_redirect_after_referral_grab', 'on') )
 			{
-				\wp_redirect(\remove_query_arg('referral'));
+				\wp_safe_redirect(\remove_query_arg('referral'));
 				exit();
 			}
 		}
@@ -308,9 +307,10 @@ EOT;
 	protected function getUserByReferral($referral)
 	{
 		global $wpdb;
-		$metakey = 'lws_woorewards_user_referral_token';
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$refId = $wpdb->get_var($wpdb->prepare(
-			"SELECT user_id FROM {$wpdb->usermeta} WHERE meta_key='{$metakey}' AND meta_value=%s",
+			"SELECT user_id FROM {$wpdb->usermeta} WHERE meta_key=%s AND meta_value=%s",
+			'lws_woorewards_user_referral_token',
 			$referral
 		));
 		return $refId;
@@ -322,7 +322,7 @@ EOT;
 		if (!$token) {
 			$user = \get_user_by('ID', $userId);
 			if ($user && $user->ID) {
-				$token = \sanitize_key(\wp_hash(json_encode($user) . \rand()));
+				$token = \sanitize_key(\wp_hash(json_encode($user) . \wp_rand()));
 				\update_user_meta($userId, 'lws_woorewards_user_referral_token', $token);
 			}
 		}

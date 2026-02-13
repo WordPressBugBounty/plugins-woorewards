@@ -1,0 +1,239 @@
+.lwss_selectable.wr-history-grid {
+	display: grid;
+}
+
+.header-line,
+.content-line {
+	display: contents;
+}
+
+.lwss_selectable.history-grid-title {
+	background-color: #eee;
+	font-weight: bold;
+	padding: 5px;
+}
+
+.lwss_selectable.cell {
+	padding: 8px 5px;
+	border-bottom: 1px solid #eee;
+	background-color: #fff;
+}
+
+.lwss_selectable.history-grid-system,
+.lwss_selectable.cell.system {
+	text-align: left;
+}
+
+.lwss_selectable.history-grid-date,
+.lwss_selectable.cell.date {
+	text-align: left;
+}
+
+.lwss_selectable.history-grid-descr,
+.lwss_selectable.cell.descr {
+	text-align: left;
+}
+
+.lwss_selectable.history-grid-points,
+.lwss_selectable.cell.points {
+	text-align: right;
+	font-weight: 600;
+}
+
+.lwss_selectable.history-grid-total,
+.lwss_selectable.cell.total {
+	text-align: right;
+	font-weight: 600;
+	color: #0073aa;
+}
+
+/* pagination */
+.lwss_selectable.wr-history-wrapper {
+    position: relative;
+}
+
+.wr-history-wrapper.loading {
+    pointer-events: none;
+}
+
+.wr-history-error {
+    background-color: #dc3232;
+    color: #ffffff;
+    padding: 12px 20px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.wr-history-no-results {
+    text-align: center;
+    padding: 30px;
+    color: #666;
+    font-size: 14px;
+}
+
+.lwss_selectable.wr-history-pagination {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	margin-top: 25px;
+	padding: 20px 0;
+	flex-wrap: wrap;
+}
+
+.wr-history-pagination.loading {
+	opacity: 0.5;
+	pointer-events: none;
+}
+
+.lwss_selectable.wr-history-page-numbers {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.lwss_selectable.wr-history-page-btn {
+	min-width: 40px;
+	height: 40px;
+	padding: 8px 12px;
+	background-color: #ffffff;
+	color: #333;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: 500;
+	transition: all 0.2s ease;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.lwss_selectable.wr-history-page-btn:hover:not(.active):not(:disabled) {
+	background-color: #f5f5f5;
+	border-color: #999;
+	transform: translateY(-1px);
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.lwss_selectable.wr-history-page-btn:active:not(.active):not(:disabled) {
+	transform: translateY(0);
+	box-shadow: none;
+}
+
+.lwss_selectable.wr-history-page-btn.active {
+	background-color: #0073aa;
+	color: #ffffff;
+	border-color: #0073aa;
+	cursor: default;
+	box-shadow: 0 2px 4px rgba(0, 115, 170, 0.3);
+}
+
+.lwss_selectable.wr-history-page-btn:disabled {
+	opacity: 0.4;
+	cursor: not-allowed;
+}
+
+.lwss_selectable.wr-history-prev,
+.lwss_selectable.wr-history-next {
+	padding: 8px 16px;
+	font-weight: 600;
+}
+
+.lwss_selectable.wr-history-ellipsis {
+	padding: 0 5px;
+	color: #666;
+	font-size: 16px;
+	line-height: 40px;
+}
+
+@media (max-width: 768px) {
+	.lwss_selectable.wr-history-pagination {
+		gap: 5px;
+		padding: 15px 0;
+	}
+
+	.lwss_selectable.wr-history-page-btn {
+		min-width: 35px;
+		height: 35px;
+		padding: 6px 10px;
+		font-size: 13px;
+	}
+
+	.lwss_selectable.wr-history-prev,
+	.lwss_selectable.wr-history-next {
+		padding: 6px 12px;
+	}
+
+	.lwss_selectable.wr-history-ellipsis {
+		line-height: 35px;
+		font-size: 14px;
+	}
+
+	.lwss_selectable.wr-history-page-numbers {
+		gap: 3px;
+	}
+}
+
+@media (max-width: 480px) {
+	.lwss_selectable.wr-history-page-btn {
+		min-width: 32px;
+		height: 32px;
+		padding: 5px 8px;
+		font-size: 12px;
+	}
+
+	.lwss_selectable.wr-history-prev,
+	.lwss_selectable.wr-history-next {
+		padding: 5px 10px;
+		font-size: 12px;
+	}
+}
+
+/* Mobile-only: Column collapse functionality */
+@media (max-width: 768px) {
+	.wr-tap-hint {
+		display: inline-block;
+		margin-left: 6px;
+		font-size: 11px;
+		opacity: 0.6;
+	}
+
+	/* Change to right arrow when grid is collapsed */
+	.wr-history-grid.collapsed .wr-tap-hint {
+		font-size: 0;
+	}
+
+	.wr-history-grid.collapsed .wr-tap-hint::before {
+		content: '►';
+		font-size: 11px;
+		opacity: 0.6;
+	}
+
+	/* All column headers - clickable on mobile only */
+	.history-grid-title {
+		cursor: pointer;
+		user-select: none;
+		background-color: #f5f5f5;
+		transition: background-color 0.2s ease;
+	}
+
+	/* Header hover effect on mobile */
+	.history-grid-title:hover {
+		background-color: #e0e0e0;
+	}
+
+	/* Collapsed column header - narrow to save space */
+	.history-grid-title.column-collapsed {
+		width: 30px;
+		min-width: 30px;
+		max-width: 30px;
+		padding: 8px 5px;
+		text-align: center;
+		background-color: #fff3cd;
+	}
+}
+

@@ -146,66 +146,66 @@ class Extension {
 	{
 		$schema = [
 			'systems' => [
-				'description' => __('List of Loyalty systems.', 'woorewards-lite'),
+				'description' => __('List of Loyalty systems.', 'woorewards'),
 				'context'     => ['view', 'edit'],
 				'readonly'    => false,
 				'type'        => 'array',
 				'items'       => \array_fill_keys(\array_keys($this->getSystems()), [
-					'description' => __('System description.', 'woorewards-lite'),
+					'description' => __('System description.', 'woorewards'),
 					'context'     => ['view', 'edit'],
 					'readonly'    => false,
 					'type'        => 'array',
 					'items'       => [
 						'used' => [
-							'description' => __('Points used in Cart.', 'woorewards-lite'),
+							'description' => __('Points used in Cart.', 'woorewards'),
 							'type'        => ['integer', 'null'],
 							'context'     => ['view', 'edit'],
 							'readonly'    => false,
 						],
 						'used_formated' => [
-							'description' => __('Points used in Cart for display.', 'woorewards-lite'),
+							'description' => __('Points used in Cart for display.', 'woorewards'),
 							'type'        => ['string', 'null'],
 							'context'     => ['view', 'edit'],
 							'readonly'    => false,
 						],
 						'amount' => [
-							'description' => __('Available Points.', 'woorewards-lite'),
+							'description' => __('Available Points.', 'woorewards'),
 							'type'        => ['integer', 'null'],
 							'context'     => ['view', 'edit'],
 							'readonly'    => false,
 						],
 						'amount_formated' => [
-							'description' => __('Available Points for display.', 'woorewards-lite'),
+							'description' => __('Available Points for display.', 'woorewards'),
 							'type'        => ['string', 'null'],
 							'context'     => ['view', 'edit'],
 							'readonly'    => false,
 						],
 						'min'    => [
-							'description' => __('Minimum Points to use in Cart.', 'woorewards-lite'),
+							'description' => __('Minimum Points to use in Cart.', 'woorewards'),
 							'type'        => ['integer', 'null'],
 							'context'     => ['view', 'edit'],
 							'readonly'    => false,
 						],
 						'max'    => [
-							'description' => __('Maximum Points to use in Cart.', 'woorewards-lite'),
+							'description' => __('Maximum Points to use in Cart.', 'woorewards'),
 							'type'        => ['integer', 'null'],
 							'context'     => ['view', 'edit'],
 							'readonly'    => false,
 						],
 						'max_formated' => [
-							'description' => __('Maximum Points to use in Cart for display.', 'woorewards-lite'),
+							'description' => __('Maximum Points to use in Cart for display.', 'woorewards'),
 							'type'        => ['string', 'null'],
 							'context'     => ['view', 'edit'],
 							'readonly'    => false,
 						],
 						'stack'  => [
-							'description' => __('Points reserve.', 'woorewards-lite'),
+							'description' => __('Points reserve.', 'woorewards'),
 							'type'        => ['string', 'null'],
 							'context'     => ['view', 'edit'],
 							'readonly'    => false,
 						],
 						'name'   => [
-							'description' => __('Loyalty system.', 'woorewards-lite'),
+							'description' => __('Loyalty system.', 'woorewards'),
 							'type'        => ['string', 'null'],
 							'context'     => ['view', 'edit'],
 							'readonly'    => false,

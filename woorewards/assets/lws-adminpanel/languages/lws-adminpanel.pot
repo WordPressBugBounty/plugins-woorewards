@@ -700,7 +700,7 @@ msgstr ""
 #: include/pages/wizard.php:193
 #, php-format
 msgid ""
-"If you can see this, an error occured. Click %s here %s to resolve. Then "
+"If you can see this, an error occured. Click %1$s here %2$s to resolve. Then "
 "restart the wizard."
 msgstr ""
 
@@ -719,7 +719,7 @@ msgstr ""
 #: include/pages/wizard.php:785
 #, php-format
 msgctxt "wizard critical path tab title with loop count"
-msgid "%s (%s)"
+msgid "%1$s (%2$s)"
 msgstr ""
 
 #: include/pages/wizard.php:849

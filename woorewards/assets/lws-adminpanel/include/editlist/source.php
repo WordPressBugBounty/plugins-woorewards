@@ -20,7 +20,7 @@ abstract class Source
 	abstract function labels();
 
 	/**	get the list content and return it as an array.
-	 * @param $limit an instance of RowLimit class or null if deactivated (if EditList::setPageDisplay(false) called).
+	 * @param $limit RowLimit|null instance of RowLimit class or null if deactivated (if EditList::setPageDisplay(false) called).
 	 *	@return array of line array. array( array( key => value ) ) */
 	abstract function read($limit);
 
@@ -47,10 +47,15 @@ abstract class Source
 		return "";
 	}
 
+	public function getEditCapability(): string
+	{
+		return 'manage_options';
+	}
+
 	/** Override to add a title line over the popup dialog. */
 	public function getPopupTitle()
 	{
-		return __("Settings", 'lws-adminpanel');
+		return __("Settings", 'woorewards');
 	}
 
 	/** @return array LAC source format [[value, label], etc.]
@@ -65,6 +70,7 @@ abstract class Source
 	public function getSortValue($guid)
 	{
 		$sortId = 'sort_' . $guid;
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		return isset($_REQUEST[$sortId]) ? \sanitize_key($_REQUEST[$sortId]) : false;
 	}
 
@@ -73,7 +79,8 @@ abstract class Source
 	public function isSortDescsending($guid)
 	{
 		$descId = 'desc_' . $guid;
-		return (isset($_REQUEST[$descId]) && 'on' == $_REQUEST[$descId]);
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		return (isset($_REQUEST[$descId]) && 'on' === sanitize_text_field(wp_unslash($_REQUEST[$descId])));
 	}
 
 	/** @deprecated use 'lws_adminpanel_arg_parse' filter instead.
@@ -114,9 +121,9 @@ abstract class Source
 			$ph = apply_filters(
 				'lws_ap_editlist_item_action_names_' . $editlistSlug,
 				array(
-					\LWS\Adminpanel\EditList\Modes::MOD => __('Quick Edit', 'lws-adminpanel'),
-					\LWS\Adminpanel\EditList\Modes::DUP => __('Copy', 'lws-adminpanel'),
-					\LWS\Adminpanel\EditList\Modes::DEL => __('Delete', 'lws-adminpanel'),
+					\LWS\Adminpanel\EditList\Modes::MOD => __('Quick Edit', 'woorewards'),
+					\LWS\Adminpanel\EditList\Modes::DUP => __('Copy', 'woorewards'),
+					\LWS\Adminpanel\EditList\Modes::DEL => __('Delete', 'woorewards'),
 				),
 				$rowId,
 				$data

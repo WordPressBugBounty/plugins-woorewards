@@ -16,7 +16,7 @@ class IconPicker extends \LWS\Adminpanel\Pages\Field
 
 	public function input()
 	{
-		echo $this->html();
+		echo $this->html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	private function html()
@@ -28,11 +28,11 @@ class IconPicker extends \LWS\Adminpanel\Pages\Field
 
 		$content = \file_get_contents($file);
 		if (!$content) {
-			error_log("<h1>No icons CSS file found or no content</h1><h2>{$file}</h2>");
+			if (defined('WP_DEBUG') && WP_DEBUG) error_log("<h1>No icons CSS file found or no content</h1><h2>{$file}</h2>"); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 		} else {
 			$selectors = $this->getIconSelectors($content, $prefix);
 			if (!$selectors) {
-				error_log("<h1>No icons found in CSS file</h1><h2>{$file}</h2>");
+				if (defined('WP_DEBUG') && WP_DEBUG) error_log("<h1>No icons found in CSS file</h1><h2>{$file}</h2>"); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 			}
 		}
 
@@ -45,26 +45,35 @@ class IconPicker extends \LWS\Adminpanel\Pages\Field
 
 		\wp_enqueue_script('lws-icon-picker');
 		$filled = ($value ? ' filled' : '');
-		$buttonlabel = __("Pick an Icon", 'lws-adminpanel');
 
 		$position = $this->getExtraValue('position', 'below');
 
-		return <<<EOT
+?>
 		<div class='lws-icon-picker lwsip_master'>
-			<input type='hidden' class='lws_adminpanel_icon_value lws-force-confirm' name='{$this->m_Id}' value='{$value}' />
+			<input
+				type='hidden'
+				class='lws_adminpanel_icon_value lws-force-confirm'
+				name='<?php echo esc_attr($this->m_Id) ?>'
+				value='<?php echo esc_attr($value) ?>'
+			/>
 			<div class='lwsip-wrapper'>
 				<div class='lwsip-main'>
-					<div class='lwsip-show-icon{$filled} {$value}'><div class='remove-btn lws-icon-cross'></div></div>
-					<div class='lwsip-popup-btn lwsip_button'>{$buttonlabel}</div>
+					<div class='lwsip-show-icon <?php echo esc_attr($value) . ($value ? ' filled' : '') ?>'>
+						<div class='remove-btn lws-icon-cross'></div>
+					</div>
+					<div class='lwsip-popup-btn lwsip_button'><?php \esc_html_e("Pick an Icon", 'woorewards') ?></div>
 				</div>
-				<div class='lwsip-popup-wrapper hidden {$position}'>
+				<div class='lwsip-popup-wrapper hidden <?php echo esc_attr($position) ?>'>
 					<div class='lwsip-popup'>
-						{$icons}
+						<?php
+							// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo $icons
+						?>
 					</div>
 				</div>
 			</div>
 		</div>
-EOT;
+<?php
 	}
 
 	private function getIconSelectors($css, $iconpattern = 'lws-icon-')

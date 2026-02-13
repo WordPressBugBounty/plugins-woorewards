@@ -23,13 +23,13 @@ class Conveniences
 			else
 			{
 				$orderStatusList = array(
-					array('value' => 'pending', 'label' => __("Pending payment", 'lws-adminpanel')),
-					array('value' => 'processing', 'label' => __("Processing", 'lws-adminpanel')),
-					array('value' => 'on-hold', 'label' => __("On hold", 'lws-adminpanel')),
-					array('value' => 'completed', 'label' => __("Completed", 'lws-adminpanel')),
-					array('value' => 'cancelled', 'label' => __("Cancelled", 'lws-adminpanel')),
-					array('value' => 'refunded', 'label' => __("Refunded", 'lws-adminpanel')),
-					array('value' => 'failed', 'label' => __("Failed", 'lws-adminpanel')),
+					array('value' => 'pending', 'label' => __("Pending payment", 'woorewards')),
+					array('value' => 'processing', 'label' => __("Processing", 'woorewards')),
+					array('value' => 'on-hold', 'label' => __("On hold", 'woorewards')),
+					array('value' => 'completed', 'label' => __("Completed", 'woorewards')),
+					array('value' => 'cancelled', 'label' => __("Cancelled", 'woorewards')),
+					array('value' => 'refunded', 'label' => __("Refunded", 'woorewards')),
+					array('value' => 'failed', 'label' => __("Failed", 'woorewards')),
 				);
 			}
 			$orderStatusList = \apply_filters('lws_adminpanel_order_status_list', $orderStatusList);
@@ -57,9 +57,9 @@ class Conveniences
 		static $currentPage = false;
 		if (false !== $currentPage)
 			return $currentPage;
-		if (isset($_REQUEST['page']) && ($currentPage = \sanitize_text_field($_REQUEST['page'])))
+		if (isset($_REQUEST['page']) && ($currentPage = \sanitize_text_field(\wp_unslash($_REQUEST['page'])))) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return $currentPage;
-		if (isset($_REQUEST['option_page']) && ($currentPage = \sanitize_text_field($_REQUEST['option_page'])))
+		if (isset($_REQUEST['option_page']) && ($currentPage = \sanitize_text_field(\wp_unslash($_REQUEST['option_page'])))) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return $currentPage;
 		return false;
 	}
@@ -114,7 +114,7 @@ class Conveniences
 		if( (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] == 1)) || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') )
 			$protocol = 'https://';
 
-		$url = ($protocol . $_SERVER['HTTP_HOST'] . \add_query_arg($args, false));
+		$url = ($protocol . (isset($_SERVER['HTTP_HOST']) ? sanitize_text_field(wp_unslash($_SERVER['HTTP_HOST'])) : 'localhost') . \add_query_arg($args, false));
 		return $url;
 	}
 
@@ -233,7 +233,7 @@ class Conveniences
 		$charactersLength = strlen($characters);
 		$randomString     = '';
 		for( $i = 0; $i < $length; $i++ ) {
-			$randomString .= $characters[rand(0, $charactersLength - 1)];
+			$randomString .= $characters[wp_rand(0, $charactersLength - 1)];
 		}
 		return $randomString;
 	}
@@ -378,18 +378,18 @@ class Conveniences
 		if (self::isHPOS()) {
 			global $wpdb;
 			if ($single) {
-				return \maybe_unserialize($wpdb->get_var($wpdb->prepare(
+				return \maybe_unserialize($wpdb->get_var($wpdb->prepare( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 					"SELECT `meta_value` FROM `{$wpdb->prefix}wc_orders_meta` WHERE `order_id`=%d AND meta_key=%s",
 					$orderId, $key
 				)));
 			} else {
 				if ($key) {
-					$col = $wpdb->get_col($wpdb->prepare(
+					$col = $wpdb->get_col($wpdb->prepare( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 						"SELECT `meta_value` FROM `{$wpdb->prefix}wc_orders_meta` WHERE `order_id`=%d AND meta_key=%s",
 						$orderId, $key
 					));
 				} else {
-					$col = $wpdb->get_col($wpdb->prepare(
+					$col = $wpdb->get_col($wpdb->prepare( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 						"SELECT `meta_value` FROM `{$wpdb->prefix}wc_orders_meta` WHERE `order_id`=%d",
 						$orderId
 					));
@@ -431,23 +431,23 @@ class Conveniences
 			$clause = \implode(' AND ', \array_map(function($c) {
 				return "`{$c[0]}`={$c[2]}";
 			}, $where));
-			// phpcs:ignore WordPressDotOrg.sniffs.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$exists = (int)$wpdb->get_var($wpdb->prepare(
-				"SELECT COUNT(*) FROM {$wpdb->prefix}wc_orders_meta WHERE {$clause}",
+				"SELECT COUNT(*) FROM {$wpdb->prefix}wc_orders_meta WHERE {$clause}", // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 				\array_column($where, 1)
 			));
 			if ($exists) {
-				return $wpdb->update(
+				return $wpdb->update( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 					$wpdb->prefix . 'wc_orders_meta', array(
-						'meta_value' => \maybe_serialize($metaValue),
+						'meta_value' => \maybe_serialize($metaValue), // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
 					), \array_column($where, 1, 0), '%s', \array_column($where, 2, 0)
 				);
 			} else {
-				return $wpdb->insert(
+				return $wpdb->insert( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 					$wpdb->prefix . 'wc_orders_meta', array(
 						'order_id'   => $orderId,
-						'meta_key'   => $metaKey,
-						'meta_value' => \maybe_serialize($metaValue),
+						'meta_key'   => $metaKey, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+						'meta_value' => \maybe_serialize($metaValue), // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
 					), array(
 						'%d', '%s', '%s',
 					)
@@ -584,7 +584,7 @@ class Conveniences
 	static public function getCurrentURL()
 	{
 		if (\is_multisite()) {
-			$parts = \parse_url(\home_url());
+			$parts = \wp_parse_url(\home_url());
 			$uri   = ($parts['scheme'] . '://' . $parts['host']);
 			if (isset($parts['port']) && $parts['port']) $uri .= (':' . $parts['port']);
 			return $uri . \add_query_arg([], false);
@@ -604,12 +604,12 @@ class Conveniences
 		$orig_scheme = $scheme;
 		$url = \get_option('home');
 		if (!\in_array($scheme, array('http', 'https', 'relative'), true)) {
-			$scheme = \is_ssl() ? 'https' : \parse_url($url, PHP_URL_SCHEME);
+			$scheme = \is_ssl() ? 'https' : \wp_parse_url($url, PHP_URL_SCHEME);
 		}
 		$url = \set_url_scheme($url, $scheme);
 
 		if (\is_multisite()) {
-			$parts = \parse_url($url);
+			$parts = \wp_parse_url($url);
 			$url   = ($parts['scheme'] . '://' . $parts['host']);
 			if (isset($parts['port']) && $parts['port']) $url .= (':' . $parts['port']);
 		}
@@ -672,7 +672,7 @@ class Conveniences
 				return (string)\reset($cross);
 			}
 		}
-		return (string)($capability ?? 'manage_options');
+		return (string)($capability ?: 'manage_options');
 	}
 
 	/** @param $roles array of array [role => [capability]] */

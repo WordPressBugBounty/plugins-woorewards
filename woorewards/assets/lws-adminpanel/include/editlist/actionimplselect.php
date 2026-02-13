@@ -41,9 +41,9 @@ class ActionImplSelect extends Action
 
 	function apply( $itemsIds )
 	{
-		if( isset($_POST[$this->UID]) && is_array($this->choices) )
+		if( isset($_POST[$this->UID]) && is_array($this->choices) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		{
-			$action = \sanitize_text_field($_POST[$this->UID]);
+			$action = \sanitize_text_field(wp_unslash($_POST[$this->UID])); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			if( isset($this->choices[$action]) && $this->callback != null && is_callable($this->callback) )
 			{
 				call_user_func( $this->callback, $this->UID, $action, $itemsIds );

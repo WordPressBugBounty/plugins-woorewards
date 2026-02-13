@@ -6,14 +6,12 @@
  * Plugin URI: https://plugins.longwatchstudio.com/product/woorewards/
  * Author: Long Watch Studio
  * Author URI: https://longwatchstudio.com
- * Version: 5.5.0
- * License: Copyright LongWatchStudio 2022
- * Text Domain: woorewards-lite
+ * Version: 5.7.0
+ * License: GPLv2 or later
+ * Text Domain: woorewards
  * Domain Path: /languages
- * WC requires at least: 7.1.0
- * WC tested up to: 10.1
- *
- * Copyright (c) 2022 Long Watch Studio (email: plugins@longwatchstudio.com). All rights reserved.
+ * WC requires at least: 7.3.0
+ * WC tested up to: 10.5
  *
  *
  */
@@ -33,7 +31,8 @@ final class LWS_WooRewards
 			$instance = new self();
 			$instance->defineConstants();
 			\add_action('after_setup_theme', function() {
-				\load_plugin_textdomain('woorewards-lite', FALSE, basename(dirname(__FILE__)) . '/languages/');
+				// phpcs:ignore PluginCheck.CodeAnalysis.DiscouragedFunctions.load_plugin_textdomainFound, WordPress.WP.DeprecatedParameters.Load_plugin_textdomainParam2Found
+				\load_plugin_textdomain('woorewards', false, \plugin_basename(\dirname(__FILE__)) . '/languages/');
 			});
 
 			\add_action('before_woocommerce_init', function() { // HPOS support
@@ -85,7 +84,7 @@ final class LWS_WooRewards
 			\update_option('lws_woorewards_redirect_to_licence', 0);
 
 			if ($page) {
-				$exit = \wp_redirect(\add_query_arg($page, admin_url('admin.php')));
+				$exit = \wp_safe_redirect(\add_query_arg($page, admin_url('admin.php')));
 				if ($exit)
 					exit;
 			}
@@ -110,9 +109,9 @@ final class LWS_WooRewards
 	 */
 	private function defineConstants()
 	{
-		define('LWS_WOOREWARDS_VERSION', '5.5.0');
+		define('LWS_WOOREWARDS_VERSION', '5.7.0');
 		define('LWS_WOOREWARDS_FILE', __FILE__);
-		define('LWS_WOOREWARDS_DOMAIN', 'woorewards-lite');
+		define('LWS_WOOREWARDS_DOMAIN', 'woorewards');
 		define('LWS_WOOREWARDS_PAGE', 'woorewards');
 		define('LWS_WOOREWARDS_UUID', '072f0512659060939ec5047e24ef2be3');
 
@@ -132,10 +131,10 @@ final class LWS_WooRewards
 
 	public function extensionListActions($links, $file)
 	{
-		$label = __('Settings'); // use standart wp sentence, no text domain
+		$label = __('Settings', 'woorewards');
 		$url = add_query_arg(array('page' => LWS_WOOREWARDS_PAGE . '.loyalty'), admin_url('admin.php'));
 		array_unshift($links, "<a href='$url'>$label</a>");
-		$label = __('Help'); // use standart wp sentence, no text domain
+		$label = __('Help', 'woorewards');
 		$url = esc_attr($this->addDocUrl(''));
 		$links[] = "<a href='$url'>$label</a>";
 		return $links;
@@ -143,12 +142,12 @@ final class LWS_WooRewards
 
 	public function addPurchaseUrl($url)
 	{
-		return __("https://plugins.longwatchstudio.com/product/woorewards/", 'woorewards-lite');
+		return __("https://plugins.longwatchstudio.com/product/woorewards/", 'woorewards');
 	}
 
 	public function addPluginVersion($url)
 	{
-		return '5.5.0';
+		return '5.7.0';
 	}
 
 	public function addDocUrl($url)
@@ -230,7 +229,7 @@ final class LWS_WooRewards
 		$sym = \apply_filters('lws_woorewards_point_symbol_translation', false, $count, $poolName);
 		if ($sym === false) // default symbol
 		{
-			$sym = ($count == 1 ? __("Point", 'woorewards-lite') : __("Points", 'woorewards-lite'));
+			$sym = (\apply_filters('lws_woorewards_should_use_singular', 1 === (int)$count, $count) ? __("Point", 'woorewards') : __("Points", 'woorewards'));
 		}
 		return $sym;
 	}
@@ -295,8 +294,8 @@ final class LWS_WooRewards
 		});
 		\add_filter('image_size_names_choose', function ($sizes) {
 			return array_merge($sizes, array(
-				'lws_wr_thumbnail' => __("MyRewards Thumbnail", 'woorewards-lite'),
-				'lws_wr_thumbnail_small' => __("MyRewards Thumbnail Small", 'woorewards-lite')
+				'lws_wr_thumbnail' => __("MyRewards Thumbnail", 'woorewards'),
+				'lws_wr_thumbnail_small' => __("MyRewards Thumbnail Small", 'woorewards')
 			));
 		});
 
@@ -328,8 +327,8 @@ final class LWS_WooRewards
 		\LWS\WOOREWARDS\Ui\Shortcodes\AvailableCoupons::install();
 		require_once LWS_WOOREWARDS_INCLUDES . '/ui/shortcodes/pointsvalue.php';
 		\LWS\WOOREWARDS\Ui\Shortcodes\PointsValue::install();
-		require_once LWS_WOOREWARDS_INCLUDES . '/ui/shortcodes/userhistory.php';
-		\LWS\WOOREWARDS\Ui\Shortcodes\UserHistory::install();
+		require_once LWS_WOOREWARDS_INCLUDES . '/ui/shortcodes/userpointshistory.php';
+		\LWS\WOOREWARDS\Ui\Shortcodes\UserPointsHistory::install();
 
 		require_once LWS_WOOREWARDS_INCLUDES . '/pointdiscount.php';
 		\LWS\WOOREWARDS\PointDiscount::install();
@@ -357,7 +356,7 @@ final class LWS_WooRewards
 		\add_action('block_categories_all', function($categories) {
 			return \array_merge($categories, [[
 				'slug'  => 'lws-wr-blocks',
-				'title' => __("WooRewards Blocks", 'woorewards-lite'),
+				'title' => __("WooRewards Blocks", 'woorewards'),
 			]]);
 		}, 10, 2);
 
@@ -379,7 +378,13 @@ final class LWS_WooRewards
 		\add_action('wp_head', function() {
 			require_once LWS_WOOREWARDS_INCLUDES . '/ui/adminscreens/styling.php';
 			if ($style = \LWS\WOOREWARDS\Ui\AdminScreens\Styling::getInline())
-				echo $style;
+				echo wp_kses($style, [
+					'style' => [
+						'id'    => true,
+						'type'  => true,
+						'media' => true,
+					],
+				]);
 		});
 
 		// hide some meta from admin
@@ -398,6 +403,12 @@ final class LWS_WooRewards
 		// import/export
 		require_once LWS_WOOREWARDS_INCLUDES . '/pointsflow/action.php';
 		\LWS\WOOREWARDS\PointsFlow\Action::register();
+
+		if ('fr' === \substr((string)\get_locale(), 0, 2)) {
+			\add_filter('lws_woorewards_should_use_singular', function($yes, $count) {
+				return \is_numeric($count) && 1 >= \abs((int)$count);
+			}, 10, 2);
+		}
 
 		\do_action('lws_woorewards_init');
 	}
@@ -427,8 +438,8 @@ final class LWS_WooRewards
 			'show_in_rest' => true,
 			'hierarchical' => true,
 			'labels' => array(
-				'name' => __("Loyalty Systems", 'woorewards-lite'),
-				'singular_name' => __("Loyalty System", 'woorewards-lite')
+				'name' => __("Loyalty Systems", 'woorewards'),
+				'singular_name' => __("Loyalty System", 'woorewards')
 			),
 			'supports' => array('title', 'custom-fields'),
 		));
@@ -436,8 +447,8 @@ final class LWS_WooRewards
 			'show_in_rest' => true,
 			'hierarchical' => true,
 			'labels' => array(
-				'name' => __("Earning Points Methods", 'woorewards-lite'),
-				'singular_name' => __("Earning Points Method", 'woorewards-lite')
+				'name' => __("Earning Points Methods", 'woorewards'),
+				'singular_name' => __("Earning Points Method", 'woorewards')
 			),
 			'supports' => array('title', 'custom-fields'),
 		));
@@ -445,8 +456,8 @@ final class LWS_WooRewards
 			'show_in_rest' => true,
 			'hierarchical' => true,
 			'labels' => array(
-				'name' => __("Rewards", 'woorewards-lite'),
-				'singular_name' => __("Reward", 'woorewards-lite')
+				'name' => __("Rewards", 'woorewards'),
+				'singular_name' => __("Reward", 'woorewards')
 			),
 			'supports' => array('title', 'custom-fields'),
 		));
@@ -477,7 +488,7 @@ final class LWS_WooRewards
 	static function getPrefabPools($enabledOnly=true)
 	{
 		$args = array(
-			'meta_query'  => array(
+			'meta_query'  => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- required for pool identification
 				array(
 					'key'     => 'wre_pool_prefab',
 					'value'   => 'yes',
@@ -508,16 +519,13 @@ final class LWS_WooRewards
 	function testPoolCompletion()
 	{
 		require_once LWS_WOOREWARDS_INCLUDES . '/updater.php';
-		if (\LWS\WOOREWARDS\Updater::isMissingPrefabEventsAndUnlockables()) {
-			$content = __("We detect a MyRewards licence downgrade: Click here to restore missing configuration.", 'woorewards-lite');
-			$button = esc_attr(__("Restore", 'woorewards-lite'));
-			$formId = 'lws-wr-missing-form';
-
+		if (current_user_can('manage_options') && \LWS\WOOREWARDS\Updater::isMissingPrefabEventsAndUnlockables()) {
 			echo "<div class='notice notice-error lws-adminpanel-notice is-dismissible'><p>";
-			echo "<form id='$formId' name='$formId' method='post'>";
-			\wp_nonce_field($formId, 'lws-wr-missing-nonce', true, true);
-			echo "<input type='hidden' name='lws-wr-missing-restore' value='restore'/>" . $content;
-			echo "<input type='submit' value='$button' class='lws-adm-btn lws-wr-missing-restore-submit'/>";
+			echo "<form id='lws-wr-missing-form' name='lws-wr-missing-form' method='post'>";
+			\wp_nonce_field('lws-wr-missing-form', 'lws-wr-missing-nonce', true, true);
+			echo "<input type='hidden' name='lws-wr-missing-restore' value='restore'/>";
+			esc_html_e("We detect a MyRewards licence downgrade: Click here to restore missing configuration.", 'woorewards');
+			echo "<input type='submit' value='" . esc_attr(__("Restore", 'woorewards')) . "' class='lws-adm-btn lws-wr-missing-restore-submit'/>";
 			echo "</form></p></div>";
 		}
 	}
@@ -527,10 +535,12 @@ final class LWS_WooRewards
 	{
 		$formId = 'lws-wr-missing-form';
 		if (
-			isset($_POST['lws-wr-missing-restore'])
-			&& trim($_POST['lws-wr-missing-restore']) == 'restore'
+			isset($_POST['lws-wr-missing-restore']) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			&& 'restore' === \sanitize_text_field(\wp_unslash($_POST['lws-wr-missing-restore'])) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			&& isset($_POST['lws-wr-missing-nonce']) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			&& \wp_verify_nonce(\sanitize_text_field(\wp_unslash($_POST['lws-wr-missing-nonce'])), $formId) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			&& \check_admin_referer($formId, 'lws-wr-missing-nonce')
-			&& \wp_verify_nonce($_POST['lws-wr-missing-nonce'], $formId)
+			&& current_user_can('manage_options')
 		) {
 			require_once LWS_WOOREWARDS_INCLUDES . '/updater.php';
 			\LWS\WOOREWARDS\Updater::addMissingPrefabEventsAndUnlockables();
@@ -590,18 +600,20 @@ final class LWS_WooRewards
 	{
 		if ('woorewards' != $slug)
 			return $msg;
-		$msg  = "<h2>" . __('Your MyRewards Premium trial period is about to expire', 'woorewards-lite') . "</h2>";
-		$msg .= "<p>" . sprintf(__('Thank you for trying MyRewards Premium. The trial period will end on <b>%s</b>', 'woorewards-lite'), $date) . "</p>";
-		$msg .= "<h4><b>" . sprintf(__('If you want to keep using all Pro Features, please purchase a %s License', 'woorewards-lite'), $link) . "</b></h4>";
-		$msg .= "<p>" . __('Premium Version features include :', 'woorewards-lite') . "</p>";
-		$msg .= "<ul style='list-style-type:square;padding-left:20px;'><li>" . __('Referrals', 'woorewards-lite') . "</li>";
-		$msg .= "<li>" . __('Free products rewards', 'woorewards-lite') . "</li>";
-		$msg .= "<li>" . __('WooCommerce integration tools', 'woorewards-lite') . "</li>";
-		$msg .= "<li>" . __('Multiple points and rewards systems', 'woorewards-lite') . "</li>";
-		$msg .= "<li>" . __('Lots of widgets and shortcodes', 'woorewards-lite') . "</li>";
-		$msg .= "<li>" . __('And a lot more ...', 'woorewards-lite') . "</li>";
+		$msg  = "<h2>" . __('Your MyRewards Premium trial period is about to expire', 'woorewards') . "</h2>";
+		/* translators: %s: trial end date */
+		$msg .= "<p>" . sprintf(__('Thank you for trying MyRewards Premium. The trial period will end on <b>%s</b>', 'woorewards'), $date) . "</p>";
+		/* translators: %s: purchase link */
+		$msg .= "<h4><b>" . sprintf(__('If you want to keep using all Pro Features, please purchase a %s License', 'woorewards'), $link) . "</b></h4>";
+		$msg .= "<p>" . __('Premium Version features include :', 'woorewards') . "</p>";
+		$msg .= "<ul style='list-style-type:square;padding-left:20px;'><li>" . __('Referrals', 'woorewards') . "</li>";
+		$msg .= "<li>" . __('Free products rewards', 'woorewards') . "</li>";
+		$msg .= "<li>" . __('WooCommerce integration tools', 'woorewards') . "</li>";
+		$msg .= "<li>" . __('Multiple points and rewards systems', 'woorewards') . "</li>";
+		$msg .= "<li>" . __('Lots of widgets and shortcodes', 'woorewards') . "</li>";
+		$msg .= "<li>" . __('And a lot more ...', 'woorewards') . "</li>";
 		$msg .= "</ul>";
-		$msg .= "<p>" . __('Purchase WooRewads Premium today to keep the most powerful and customizable loyalty program', 'woorewards-lite') . "</p>";
+		$msg .= "<p>" . __('Purchase WooRewads Premium today to keep the most powerful and customizable loyalty program', 'woorewards') . "</p>";
 		return $msg;
 	}
 
@@ -609,18 +621,19 @@ final class LWS_WooRewards
 	{
 		if ('woorewards' != $slug)
 			return $msg;
-		$msg  = "<h2>" . __('Welcome to your MyRewards Premium trial', 'woorewards-lite') . "</h2>";
-		$msg .= "<p>" . sprintf(__('Thank you for trying MyRewards Premium. The trial period will end on <b>%s</b>', 'woorewards-lite'), $date) . "</p>";
-		$msg .= "<p>" . __('Premium Version features include :', 'woorewards-lite') . "</p>";
-		$msg .= "<ul style='list-style-type:square;padding-left:20px;'><li>" . __('Referrals', 'woorewards-lite') . "</li>";
-		$msg .= "<li>" . __('Free products rewards', 'woorewards-lite') . "</li>";
-		$msg .= "<li>" . __('WooCommerce integration tools', 'woorewards-lite') . "</li>";
-		$msg .= "<li>" . __('Multiple points and rewards systems', 'woorewards-lite') . "</li>";
-		$msg .= "<li>" . __('Lots of widgets and shortcodes', 'woorewards-lite') . "</li>";
-		$msg .= "<li>" . __('And a lot more ...', 'woorewards-lite') . "</li>";
+		$msg  = "<h2>" . __('Welcome to your MyRewards Premium trial', 'woorewards') . "</h2>";
+		/* translators: %s: trial end date */
+		$msg .= "<p>" . sprintf(__('Thank you for trying MyRewards Premium. The trial period will end on <b>%s</b>', 'woorewards'), $date) . "</p>";
+		$msg .= "<p>" . __('Premium Version features include :', 'woorewards') . "</p>";
+		$msg .= "<ul style='list-style-type:square;padding-left:20px;'><li>" . __('Referrals', 'woorewards') . "</li>";
+		$msg .= "<li>" . __('Free products rewards', 'woorewards') . "</li>";
+		$msg .= "<li>" . __('WooCommerce integration tools', 'woorewards') . "</li>";
+		$msg .= "<li>" . __('Multiple points and rewards systems', 'woorewards') . "</li>";
+		$msg .= "<li>" . __('Lots of widgets and shortcodes', 'woorewards') . "</li>";
+		$msg .= "<li>" . __('And a lot more ...', 'woorewards') . "</li>";
 		$msg .= "</ul>";
-		$msg .= "<p>" . __('Try all these premium features and create the perfect loyalty program for your website', 'woorewards-lite') . "</p>";
-		$msg .= "<h4><b>" . __('At the end of your trial, consider purchasing a MyRewards License', 'woorewards-lite') . "</b></h4>";
+		$msg .= "<p>" . __('Try all these premium features and create the perfect loyalty program for your website', 'woorewards') . "</p>";
+		$msg .= "<h4><b>" . __('At the end of your trial, consider purchasing a MyRewards License', 'woorewards') . "</b></h4>";
 		return $msg;
 	}
 }

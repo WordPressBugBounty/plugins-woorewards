@@ -17,6 +17,6 @@ class IgniteWoo extends \LWS\WOOREWARDS\PointsFlow\Methods\MetaKey
 	/** @return (string) human readable name */
 	public function getTitle()
 	{
-		return __("IgniteWoo", 'woorewards-lite');
+		return __("IgniteWoo", 'woorewards');
 	}
 }

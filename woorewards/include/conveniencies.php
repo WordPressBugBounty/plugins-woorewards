@@ -46,7 +46,7 @@ class Conveniences
 		if (false === $pools) {
 			$pools = \LWS\WOOREWARDS\Collections\Pools::instanciate()->load(array(
 				'numberposts' => 1,
-				'meta_query'  => array(
+				'meta_query'  => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 					array(
 						'key'     => 'wre_pool_prefab',
 						'value'   => 'yes',
@@ -89,7 +89,7 @@ class Conveniences
 			"(u.meta_value < l.meta_value OR u.meta_value IS NULL OR l.meta_value IS NULL OR l.meta_value=0)",
 		]);
 		$query->arg(\serialize([$user->user_email]));
-		$query->arg(\strtotime(\date('Y-m-d')));
+		$query->arg(\strtotime(\gmdate('Y-m-d')));
 		if ($where) {
 			$query->where($where);
 		}
@@ -98,15 +98,14 @@ class Conveniences
 		if (!$result) return [];
 
 		$ids = implode(",", array_map('intval', array_keys($result)));
-		$query = <<<EOT
-			SELECT p.ID, v.meta_value AS coupon_amount, f.meta_value AS wr_prod_ids, o.meta_value AS product_ids, w.meta_value AS discount_type
-			FROM {$wpdb->posts} as p
-			LEFT JOIN {$wpdb->postmeta} as w ON p.ID = w.post_id AND w.meta_key='discount_type'
-			LEFT JOIN {$wpdb->postmeta} as v ON p.ID = v.post_id AND v.meta_key='coupon_amount'
-			LEFT JOIN {$wpdb->postmeta} as o ON p.ID = o.post_id AND o.meta_key='product_ids'
-			LEFT JOIN {$wpdb->postmeta} as f ON p.ID = f.post_id AND f.meta_key='woorewards_product_list'
-			WHERE p.ID IN ({$ids})
-EOT;
+		$query = "SELECT p.ID, v.meta_value AS coupon_amount, f.meta_value AS wr_prod_ids, o.meta_value AS product_ids, w.meta_value AS discount_type"
+			. " FROM {$wpdb->posts} as p"
+			. " LEFT JOIN {$wpdb->postmeta} as w ON p.ID = w.post_id AND w.meta_key='discount_type'"
+			. " LEFT JOIN {$wpdb->postmeta} as v ON p.ID = v.post_id AND v.meta_key='coupon_amount'"
+			. " LEFT JOIN {$wpdb->postmeta} as o ON p.ID = o.post_id AND o.meta_key='product_ids'"
+			. " LEFT JOIN {$wpdb->postmeta} as f ON p.ID = f.post_id AND f.meta_key='woorewards_product_list'"
+			. " WHERE p.ID IN ({$ids})";
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- $query built from wpdb tables and intval'd IDs
 		$sub = $wpdb->get_results($query, OBJECT_K);
 		foreach ($sub as $id => $info) {
 			foreach ($info as $k => $v)
@@ -313,19 +312,16 @@ EOT;
 
 			$wOrder = \implode(' AND ', $wOrder);
 			if ($union) {
-				$union  = \implode("\nUNION\n", $union);
-				$query = <<<EOT
-SELECT COUNT(p.ID) FROM (
-{$union}
-) as a
-INNER JOIN {$wpdb->posts} as p ON p.ID=a.order_id AND {$wOrder}
-EOT;
+				$union  = \implode(" UNION ", $union);
+				$query = "SELECT COUNT(p.ID) FROM ("
+					. " {$union}"
+					. " ) as a"
+					. " INNER JOIN {$wpdb->posts} as p ON p.ID=a.order_id AND {$wOrder}";
 			} else {
-				$query = <<<EOT
-SELECT COUNT(p.ID) FROM {$wpdb->posts} as p
-WHERE {$wOrder}
-EOT;
+				$query = "SELECT COUNT(p.ID) FROM {$wpdb->posts} as p"
+					. " WHERE {$wOrder}";
 			}
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- dynamic query built from sanitized parts
 			return $cache[$transient] = (int)$wpdb->get_var($query);
 		}
 	}

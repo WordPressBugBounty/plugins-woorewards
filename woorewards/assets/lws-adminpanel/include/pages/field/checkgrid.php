@@ -23,7 +23,7 @@ class CheckGrid extends \LWS\Adminpanel\Pages\Field
 		}
 		//error_log(print_r($value,true));
 		$ddclass = ($this->getExtraValue('dragndrop')) ? 'lws_checkgrid_sortable' : '';
-		echo "<div class='lws_checkgrid lws-checkgrid {$ddclass}' id='sort-{$name}'>";
+		$html = "<div class='lws_checkgrid lws-checkgrid {$ddclass}' id='sort-{$name}'>";
 		$rang = 0;
 		foreach ($value as $opt) {
 			$val = $opt['value'];
@@ -31,17 +31,16 @@ class CheckGrid extends \LWS\Adminpanel\Pages\Field
 			$active = (isset($opt['active'])) ? $opt['active'] : '';
 			$checkIcon = ($active) ? 'lws-icon-checkbox-checked' : 'lws-icon-checkbox-unchecked';
 			$actClass = ($active) ? 'checked' : '';
-			echo <<<EOT
-<div class='lws_checkgrid_item checkgrid-item {$actClass}'>
-	<input type='hidden' name='{$name}[value][]' value='{$val}'/>
-	<input type='hidden' name='{$name}[label][]' value='{$label}'/>
-	<input type='hidden' class='lws_cg_active' name='{$name}[active][]' value='{$active}'/>
-	<div class='checkbox {$checkIcon}'></div>
-	<div class='label'>$label</div>
-</div>
-EOT;
+			$html .= "<div class='lws_checkgrid_item checkgrid-item " . esc_attr($actClass) . "'>"
+				. "<input type='hidden' name='" . esc_attr($name) . "[value][]' value='" . esc_attr($val) . "'/>"
+				. "<input type='hidden' name='" . esc_attr($name) . "[label][]' value='" . esc_attr($label) . "'/>"
+				. "<input type='hidden' class='lws_cg_active' name='" . esc_attr($name) . "[active][]' value='" . esc_attr($active) . "'/>"
+				. "<div class='checkbox " . esc_attr($checkIcon) . "'></div>"
+				. "<div class='label'>" . esc_html($label) . "</div>"
+				. "</div>";
 			$rang += 1 ;
 		}
-		echo "</div>";
+		$html .= "</div>";
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }

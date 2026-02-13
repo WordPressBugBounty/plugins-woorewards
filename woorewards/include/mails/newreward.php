@@ -29,16 +29,16 @@ class NewReward
 		$settings['domain']        = 'woorewards';
 		$settings['settings']      = 'New Reward';
 		$settings['icon']          = 'lws-icon-present';
-		$settings['settings_name'] = __("New Reward", 'woorewards-lite');
-		$settings['about']         = __("Sent to customers when they receive a new reward", 'woorewards-lite');
-		$settings['subject']       = __("You've received a new reward", 'woorewards-lite');
-		$settings['title']         = __("New Reward", 'woorewards-lite');
-		$settings['header']        = __("You just got a new reward !", 'woorewards-lite');
-		$settings['footer']        = __("Powered by MyRewards", 'woorewards-lite');
+		$settings['settings_name'] = __("New Reward", 'woorewards');
+		$settings['about']         = __("Sent to customers when they receive a new reward", 'woorewards');
+		$settings['subject']       = __("You've received a new reward", 'woorewards');
+		$settings['title']         = __("New Reward", 'woorewards');
+		$settings['header']        = __("You just got a new reward !", 'woorewards');
+		$settings['footer']        = __("Powered by MyRewards", 'woorewards');
 		$settings['css_file_url']  = LWS_WOOREWARDS_CSS . '/mails/newreward.css';
 		$settings['fields']['enabled'] = array(
 			'id' => 'lws_woorewards_enabled_mail_' . $this->template,
-			'title' => __("Enabled", 'woorewards-lite'),
+			'title' => __("Enabled", 'woorewards'),
 			'type' => 'box',
 			'extra' => array(
 				'layout' => 'toggle',
@@ -58,7 +58,7 @@ class NewReward
 
 		if( false === $data['reward'] )
 		{
-			return __("That feature requires WooCommerce.", 'woorewards-lite');
+			return __("That feature requires WooCommerce.", 'woorewards');
 		}
 
 		$code = $data['reward']->get_code();
@@ -74,14 +74,14 @@ class NewReward
 			$value = \wc_price($value, array('currency' => \get_option('woocommerce_currency')));
 
 		$labels = array(
-			'date'   => __("Expiration Date", 'woorewards-lite'),
-			'detail' => __("Coupon Details", 'woorewards-lite'),
-			'code'   => __("Coupon Code", 'woorewards-lite'),
-			'value'  => __("Coupon Value", 'woorewards-lite')
+			'date'   => __("Expiration Date", 'woorewards'),
+			'detail' => __("Coupon Details", 'woorewards'),
+			'code'   => __("Coupon Code", 'woorewards'),
+			'value'  => __("Coupon Value", 'woorewards')
 		);
 
 		if (empty($data['reward']->get_usage_limit('edit')))
-			$value .= (' ' . _x("(reusable)", "permanent coupon", 'woorewards-lite'));
+			$value .= (' ' . _x("(reusable)", "permanent coupon", 'woorewards'));
 
 		$expDivs = array('', '');
 		if( !empty($expiry) )
@@ -101,24 +101,22 @@ class NewReward
 				$img = $labels['detail'];
 		}
 
-		return <<<EOT
-<tr><td class='lws-middle-cell'>
-	<table class='lwss_selectable lws-rewards-table' data-type='Rewards Table'>
-		<tr>
-			<td><div class='lwss_selectable lws-reward-desc' data-type='Reward Description'>{$img}</div></td>
-			<td>
-				<div class='lwss_selectable lws-reward-desc' data-type='Reward Description'>{$labels['code']}</div>
-				<div class='lwss_selectable lws-reward-desc' data-type='Reward Description'>{$labels['value']}</div>
-				{$expDivs[0]}
-			</td><td>
-				<div class='lwss_selectable lws-reward-code' data-type='Reward Code'>{$code}</div>
-				<div class='lwss_selectable lws-reward-value' data-type='Reward Value'>{$value}</div>
-				{$expDivs[1]}
-			</td>
-		</tr>
-	</table>
-</td></tr>
-EOT;
+		return "<tr><td class='lws-middle-cell'>"
+			. "<table class='lwss_selectable lws-rewards-table' data-type='Rewards Table'>"
+			. "<tr>"
+			. "<td><div class='lwss_selectable lws-reward-desc' data-type='Reward Description'>{$img}</div></td>"
+			. "<td>"
+			. "<div class='lwss_selectable lws-reward-desc' data-type='Reward Description'>{$labels['code']}</div>"
+			. "<div class='lwss_selectable lws-reward-desc' data-type='Reward Description'>{$labels['value']}</div>"
+			. $expDivs[0]
+			. "</td><td>"
+			. "<div class='lwss_selectable lws-reward-code' data-type='Reward Code'>{$code}</div>"
+			. "<div class='lwss_selectable lws-reward-value' data-type='Reward Value'>{$value}</div>"
+			. $expDivs[1]
+			. "</td>"
+			. "</tr>"
+			. "</table>"
+			. "</td></tr>";
 	}
 
 	protected function placeholders()

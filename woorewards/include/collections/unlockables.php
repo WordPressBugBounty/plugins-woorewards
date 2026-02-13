@@ -37,7 +37,7 @@ class Unlockables extends \LWS\WOOREWARDS\Abstracts\Collection
 		$posts = isset($args['post_parent']) ? \get_children($args) : \get_posts($args);
 		if( !is_array($posts) )
 		{
-			error_log("Fail to load unlockables, check posts for ".print_r($args, true));
+			if (defined('WP_DEBUG') && WP_DEBUG) \error_log("Fail to load unlockables, check posts for " . \print_r($args, true)); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log, WordPress.PHP.DevelopmentFunctions.error_log_print_r
 		}
 		else
 		{
@@ -65,10 +65,11 @@ class Unlockables extends \LWS\WOOREWARDS\Abstracts\Collection
 		else
 		{
 			$reg = \LWS\WOOREWARDS\Abstracts\Unlockable::getRegisteredByName($ref);
-			if( !empty($reg) && !empty($unlockable = \LWS\WOOREWARDS\Abstracts\Unlockable::instanciate($reg)) )
+			if( !empty($reg) && !empty($unlockable = \LWS\WOOREWARDS\Abstracts\Unlockable::instanciate($reg)) ) {
 				$this->add($unlockable);
-			else
-				error_log("Cannot found MyRewards Unlockable type: ".print_r($ref, true));
+			} else {
+				if (defined('WP_DEBUG') && WP_DEBUG) \error_log("Cannot found MyRewards Unlockable type: " . \print_r($ref, true)); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log, WordPress.PHP.DevelopmentFunctions.error_log_print_r
+			}
 		}
 		return $this;
 	}

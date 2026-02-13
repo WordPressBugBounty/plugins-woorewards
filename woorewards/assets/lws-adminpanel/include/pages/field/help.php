@@ -38,11 +38,10 @@ class Help extends \LWS\Adminpanel\Pages\Field
 			$this->content = \LWS\Adminpanel\Tools\Conveniences::array2html($this->content);
 
 		$id = \esc_attr(empty($this->id()) ? \md5($this->content) : $this->id());
-		echo <<<EOT
-<div class='{$class}' id='{$id}'>
-	<div class='drop-cap lws-icon {$icon}'></div>
-	<div class='content'>{$this->content}</div>
-</div>
-EOT;
+		$html = "<div class='" . esc_attr($class) . "' id='" . esc_attr($id) . "'>"
+			. "<div class='drop-cap lws-icon " . esc_attr($icon) . "'></div>"
+			. "<div class='content'>" . $this->content . "</div>"
+			. "</div>";
+		echo wp_kses_post($html);
 	}
 }

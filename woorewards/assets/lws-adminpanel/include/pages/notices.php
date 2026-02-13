@@ -81,8 +81,8 @@ class Notices
 
 			if( isset($notice['d']) && isset($notice['n']) )
 			{
-				$d = (\is_numeric($notice['d']) && 0<$notice['d']) ? \date_i18n(\get_option( 'date_format' ), \strtotime($notice['d'])) : print_r($notice['d'], true);
-				error_log(sprintf('v3 trial expired %s: %s', $notice['n'], $d));
+				$d = (\is_numeric($notice['d']) && 0<$notice['d']) ? \date_i18n(\get_option( 'date_format' ), \strtotime($notice['d'])) : print_r($notice['d'], true); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+				if (defined('WP_DEBUG') && WP_DEBUG) error_log(sprintf('v3 trial expired %s: %s', $notice['n'], $d)); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 				if( isset($remaining[$key]) )
 					unset($remaining[$key]);
 			}
@@ -118,7 +118,7 @@ class Notices
 	/** dismiss is done by javascript only, but we can force a form submit to ignore some */
 	protected function filterOutDismissed($items)
 	{
-		$dismissed = isset($_POST['lws_notice_dismiss']) && \is_array($_POST['lws_notice_dismiss']) ? \array_map('sanitize_text_field', $_POST['lws_notice_dismiss']) : array();
+		$dismissed = isset($_POST['lws_notice_dismiss']) && \is_array($_POST['lws_notice_dismiss']) ? \array_map('sanitize_text_field', wp_unslash($_POST['lws_notice_dismiss'])) : array(); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		return \array_diff_key($items, \array_combine($dismissed, $dismissed));
 	}
 
@@ -137,7 +137,7 @@ class Notices
 		if (!$item->dismissible)
 			return '';
 
-		$html = __("Dismiss this notice", 'lws-adminpanel');
+		$html = __("Dismiss this notice", 'woorewards');
 		$html = "<button type='submit' class='lws-notice-dismiss'><span class='screen-reader-text'>{$html}</span></button>";
 		if( $this->isReloadingForced() )
 		{

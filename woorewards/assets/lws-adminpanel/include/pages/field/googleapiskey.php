@@ -21,14 +21,19 @@ class GoogleAPIsKey extends \LWS\Adminpanel\Pages\Field
 	{
 		parent::__construct($id, $title, $extra);
 		$this->m_Id = self::ID;
-		$this->m_Title = __("Your Google API key", 'lws-adminpanel');
+		$this->m_Title = __("Your Google API key", 'woorewards');
 	}
 
 	public function input()
 	{
 		$value = esc_attr(get_option($this->m_Id, ''));
-		echo "<input class='{$this->style}' type='text' name='{$this->m_Id}' value='$value' />";
+		echo sprintf(
+			"<input class='%s' type='text' name='%s' value='%s' />",
+			\esc_attr($this->style),
+			\esc_attr($this->m_Id),
+			\esc_attr($value)
+		);
 		if( !$value )
-			\lws_admin_add_notice_once(self::ID, __("You should define a Google API key in this settings.", 'lws-adminpanel'), array('level'=>'info', 'dismissible'=>true));
+			\lws_admin_add_notice_once(self::ID, __("You should define a Google API key in this settings.", 'woorewards'), array('level'=>'info', 'dismissible'=>true));
 	}
 }

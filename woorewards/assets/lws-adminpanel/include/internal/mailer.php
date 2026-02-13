@@ -163,11 +163,9 @@ class Mailer
 		$from = $this->getMailProvider($slug);
 		if ($from) $headers[] = $from;
 
-		$body = <<<EOT
-<!DOCTYPE html><html xmlns='http://www.w3.org/1999/xhtml'>
-<head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8' /></head>
-<body leftmargin='0' marginwidth='0' topmargin='0' marginheight='0' offset='0'>
-EOT;
+		$body = "<!DOCTYPE html><html xmlns='http://www.w3.org/1999/xhtml'>"
+			. "<head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8' /></head>"
+			. "<body leftmargin='0' marginwidth='0' topmargin='0' marginheight='0' offset='0'>";
 		$body .= $this->inlineCSS($content->body, $content->style);
 		$body .= '</body></html>';
 
@@ -569,47 +567,43 @@ EOT;
 	function getDemo($template)
 	{
 		$settings = $this->getSettings($template, true);
-		$data = new \WP_Error('gizmo', __("This is a test."));
+		$data = new \WP_Error('gizmo', "This is a test.");
 		return $this->content($template, $settings, $data);
 	}
 
 	protected function banner($template, $data, $settings)
 	{
-		$html = <<<EOT
-	<div class='lwss_selectable lws-mail-wrapper' style='width:100%; height:100%' data-type='Email Wrapper'>
-	<center>
-		<center>{$settings['logo_url']}</center>
-		<table class='lwss_selectable lws-main-conteneur $template' data-type='Main Border'>
-			<thead>
-				<tr>
-					<td class='lwss_selectable lws-top-cell lwss_modify $template' data-id='lws_mail_title_$template' data-type='Title'>
-						<div class='lwss_modify_content'>{$settings['title']}</div>
-					</td>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td class='lwss_selectable lws-middle-cell lwss_modify $template' data-id='lws_mail_header_$template' data-type='Header'>
-						<div class='lwss_modify_content'>{$settings['header']}</div>
-					</td>
-				</tr>
-EOT;
+		$html = "<div class='lwss_selectable lws-mail-wrapper' style='width:100%; height:100%' data-type='Email Wrapper'>"
+			. "<center>"
+			. "<center>" . $settings['logo_url'] . "</center>"
+			. "<table class='lwss_selectable lws-main-conteneur " . \esc_attr($template) . "' data-type='Main Border'>"
+			. "<thead>"
+			. "<tr>"
+			. "<td class='lwss_selectable lws-top-cell lwss_modify " . \esc_attr($template) . "' data-id='lws_mail_title_" . \esc_attr($template) . "' data-type='Title'>"
+			. "<div class='lwss_modify_content'>" . $settings['title'] . "</div>"
+			. "</td>"
+			. "</tr>"
+			. "</thead>"
+			. "<tbody>"
+			. "<tr>"
+			. "<td class='lwss_selectable lws-middle-cell lwss_modify " . \esc_attr($template) . "' data-id='lws_mail_header_" . \esc_attr($template) . "' data-type='Header'>"
+			. "<div class='lwss_modify_content'>" . $settings['header'] . "</div>"
+			. "</td>"
+			. "</tr>";
 		return apply_filters('lws_mail_head_' . $template, $html, $settings, $data);
 	}
 
 	protected function footer($template, $data, $settings)
 	{
-		$html = <<<EOT
-			</tbody>
-			<tfoot>
-				<tr>
-					<td class='lwss_selectable lws-bottom-cell $template' data-type='Footer'>{$settings['footer']}</td>
-				</tr>
-				</tfoot>
-		</table>
-	</center>
-	</div>
-EOT;
+		$html = '</tbody>'
+			. '<tfoot>'
+			. '<tr>'
+			. '<td class="lwss_selectable lws-bottom-cell ' . esc_attr($template) . '" data-type="Footer">' . $settings['footer'] . '</td>'
+			. '</tr>'
+			. '</tfoot>'
+			. '</table>'
+			. '</center>'
+			. '</div>';
 		return apply_filters('lws_mail_foot_' . $template, $html, $settings, $data);
 	}
 
@@ -643,13 +637,14 @@ EOT;
 		return array(
 			'id' => 'lws_mail_d_' . $domain,
 			'icon' => 'lws-icon-letter',
-			'title' => empty($title) ? __("Email Settings", 'lws-adminpanel') : sprintf(__("%s Email Settings", 'lws-adminpanel'), $title),
+			/* translators: 1: The email section title */
+			'title' => empty($title) ? __("Email Settings", 'woorewards') : sprintf(__("%s Email Settings", 'woorewards'), $title),
 			'extra' => array('doclink' => 'https://plugins.longwatchstudio.com/kb/wr-email-header-and-footer/'),
-			'text'=> __("Once you've finished the email settings, <b>save your changes</b><br/>You will then see the result in the style editor below<br/>Select the elements you wish to change and have fun!", 'lws-adminpanel'),
+			'text'=> __("Once you've finished the email settings, <b>save your changes</b><br/>You will then see the result in the style editor below<br/>Select the elements you wish to change and have fun!", 'woorewards'),
 			'fields' => array(
 				array(
 					'type'  => 'media',
-					'title' => __("Header picture", 'lws-adminpanel'),
+					'title' => __("Header picture", 'woorewards'),
 					'id'    => $prefix.'headerpic',
 					'extra' => array(
 						'size' => 'medium',
@@ -657,7 +652,7 @@ EOT;
 				),
 				array(
 					'type'  => 'wpeditor',
-					'title' => __("Footer text", 'lws-adminpanel'),
+					'title' => __("Footer text", 'woorewards'),
 					'id'    => $prefix.'footer',
 					'extra' => array(
 						'editor_height' => 30,
@@ -678,12 +673,12 @@ EOT;
 		$mail = array(
 			'id'    => $mailId,
 			'icon'  => $settings['icon'],
-			'title' => $settings['settings_name'] ? $settings['settings_name'] : __("Email details", 'lws-adminpanel'),
+			'title' => $settings['settings_name'] ? $settings['settings_name'] : __("Email details", 'woorewards'),
 			'text'  => $settings['about'] ? $settings['about'] : '',
 			'fields' => array(
 				array(
 					'id'    => 'lws_mail_subject_'.$template,
-					'title' => __("Subject", 'lws-adminpanel'),
+					'title' => __("Subject", 'woorewards'),
 					'type'  => 'text',
 					'extra' => array(
 						'maxlength'   => 350,
@@ -694,7 +689,7 @@ EOT;
 				),
 				array(
 					'id'    => 'lws_mail_preheader_'.$template,
-					'title' => __("Preheader", 'lws-adminpanel'),
+					'title' => __("Preheader", 'woorewards'),
 					'type'  => 'text',
 					'extra' => array(
 						'maxlength'   => 350,
@@ -715,7 +710,7 @@ EOT;
 				'id' => 'lws_mail_bcc_admin_' . $template,
 				'type' => 'input',
 				'extra' => array('type' => 'email'),
-				'title' => __("Blind carbon copy to (bcc)", 'lws-adminpanel'),
+				'title' => __("Blind carbon copy to (bcc)", 'woorewards'),
 			);
 		}
 
@@ -748,17 +743,17 @@ EOT;
 
 		$mail['fields'][] = array(
 			'id' => 'lws_adminpanel_mail_tester_'.$template,
-			'title' => __("Receiver Email", 'lws-adminpanel'),
+			'title' => __("Receiver Email", 'woorewards'),
 			'type' => 'text',
 			'extra' => array(
-				'help' => __("Test your email to see how it looks", 'lws-adminpanel'),
+				'help' => __("Test your email to see how it looks", 'woorewards'),
 				'noconfirm' => true,
 				'size' => '40'
 			)
 		);
 		$mail['fields'][] = array(
 			'id' => 'lws_adminpanel_mail_tester_btn_'.$template,
-			'title' => __("Send test email", 'lws-adminpanel'),
+			'title' => __("Send test email", 'woorewards'),
 			'type' => 'button',
 			'extra' => array('callback' => array($this, 'test'))
 		);
@@ -776,10 +771,10 @@ EOT;
 			if( \is_email($email) )
 			{
 				do_action('lws_mail_send', $email, $template, new \WP_Error());
-				return __("Test email sent.", 'lws-adminpanel');
+				return __("Test email sent.", 'woorewards');
 			}
 			else
-				return __("Test email is not valid.", 'lws-adminpanel');
+				return __("Test email is not valid.", 'woorewards');
 		}
 		return false;
 	}

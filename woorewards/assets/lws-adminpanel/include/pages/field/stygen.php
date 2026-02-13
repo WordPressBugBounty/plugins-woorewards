@@ -1,5 +1,6 @@
 <?php
 namespace LWS\Adminpanel\Pages\Field;
+if (!defined('ABSPATH')) exit();
 
 /** Provide a CSS graphic editor.
  * User is shepherded by a html demo with selectable and editable elements.
@@ -43,9 +44,9 @@ class StyGen extends \LWS\Adminpanel\Pages\Field
 			$dftvalues = base64_encode(json_encode(array_values($balises->file)));
 
 			$labels = array(
-				__("Available Elements", 'lws-adminpanel'),
-				__("Select an element to start modifying its style", 'lws-adminpanel'),
-				esc_attr(_x("Reset Style", "Stygen button", 'lws-adminpanel'))
+				__("Available Elements", 'woorewards'),
+				__("Select an element to start modifying its style", 'woorewards'),
+				esc_attr(_x("Reset Style", "Stygen button", 'woorewards'))
 			);
 			$lwsseditor = null;
 			$lwsseditor = "<div class='lwss_editor lwss-editor' data-cssvalues='{$cssvalues}' data-dftvalues='{$dftvalues}'>";
@@ -80,7 +81,7 @@ class StyGen extends \LWS\Adminpanel\Pages\Field
 			$lwsseditor .= "<input class='lwss-reset' data-id='{$this->m_Id}' type='button' value='{$labels[2]}' />";
 			$lwsseditor .= "</div>";
 			$lwsseditor .= '</div>';
-			echo $lwsseditor;
+			echo $lwsseditor; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 
@@ -127,7 +128,7 @@ class StyGen extends \LWS\Adminpanel\Pages\Field
 			$page = \apply_filters('lws_adminpanel_stygen_content_get_'.$template, '');
 		}
 		else
-			return __("Snippet unknown", 'lws-adminpanel');
+			return __("Snippet unknown", 'woorewards');
 
 		$d = new \DOMDocument;
 		@$d->loadHTML('<?xml encoding="utf-8" ?>'.$page, LIBXML_NOERROR|LIBXML_NOWARNING);
@@ -138,8 +139,9 @@ class StyGen extends \LWS\Adminpanel\Pages\Field
 			foreach( $body->childNodes as $child )
 				$innerHTML .= $body->ownerDocument->saveHTML($child);
 		}
-		else
-			error_log("stygen {$this->m_Id} got no content.");
+		else {
+			if (defined('WP_DEBUG') && WP_DEBUG) error_log("stygen {$this->m_Id} got no content."); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+		}
 		return $innerHTML;
 	}
 
@@ -147,12 +149,12 @@ class StyGen extends \LWS\Adminpanel\Pages\Field
 	{
 		if(!isset($this->extra['html']))
 		{
-			error_log("No html file provided");
+			if (defined('WP_DEBUG') && WP_DEBUG) error_log("No html file provided"); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 			return false;
 		}
 		if(!isset($this->extra['css']))
 		{
-			error_log("No lwss file provided");
+			if (defined('WP_DEBUG') && WP_DEBUG) error_log("No lwss file provided"); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 			return false;
 		}
 		return true;
@@ -200,7 +202,7 @@ class StyGen extends \LWS\Adminpanel\Pages\Field
 	public function reset($force=false)
 	{
 		$resetId = "lws-stygen-reset-{$this->m_Id}";
-		if( $force || (isset($_POST[$resetId]) && boolval($_POST[$resetId])) )
+		if( $force || (isset($_POST[$resetId]) && boolval($_POST[$resetId])) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		{
 			delete_option($this->m_Id);
 			$this->revokeCache('', '', $this->m_Id);

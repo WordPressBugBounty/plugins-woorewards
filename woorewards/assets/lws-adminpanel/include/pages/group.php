@@ -166,10 +166,14 @@ class Group
 			if (!\in_array($this->requirement['cmp'], array('==', '!=', 'match')))
 			{
 				$this->requirement['cmp'] = '==';
-				error_log("In field [{$this->id}], 'require.cmp' expect a string in [==, !=, match]. Default is ==.");
+				if (defined('WP_DEBUG') && WP_DEBUG) {
+					error_log("In field [{$this->id}], 'require.cmp' expect a string in [==, !=, match]. Default is ==."); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+				}
 			}
 		} else {
-			error_log("In field [{$this->id}], 'require' expect an array with a css selector to an input and the required value ['selector' => '.example', 'value'=> 'yes']. If condition is not fullfilled, all the line is hidden.");
+			if (defined('WP_DEBUG') && WP_DEBUG) {
+				error_log("In field [{$this->id}], 'require' expect an array with a css selector to an input and the required value ['selector' => '.example', 'value'=> 'yes']. If condition is not fullfilled, all the line is hidden."); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+			}
 		}
 	}
 
@@ -212,14 +216,14 @@ class Group
 		{
 			$colorStyle = " style='" . \lws_get_theme_colors("--group-color", $this->color) . "'";
 		}
-		echo "<div class='lws-form-div group-item$class'$colorStyle id='{$txtid}'{$args}>";
+		echo wp_kses_post("<div class='lws-form-div group-item$class'$colorStyle id='{$txtid}'{$args}>");
 
-		echo $this->groupTitleLine();
+		echo wp_kses_post($this->groupTitleLine());
 		if ($this->helpBanner)
 		{
 			if (\is_array($this->helpBanner))
 				$this->helpBanner = \LWS\Adminpanel\Tools\Conveniences::array2html((array)$this->helpBanner);
-			echo "<div class='group-help'>{$this->helpBanner}</div>";
+			echo wp_kses_post("<div class='group-help'>{$this->helpBanner}</div>");
 		}
 
 		echo "<div class='group-content fields-grid'>";
@@ -245,7 +249,7 @@ class Group
 		{
 			if (!$field->isHidden())
 			{
-				echo sprintf("<div %s>", $field->getExtraCss('row_class', 'class', false, 'lws-group-row'));
+				echo wp_kses_post(sprintf("<div %s>", $field->getExtraCss('row_class', 'class', false, 'lws-group-row')));
 				$id = esc_attr($field->id());
 				$class = '';
 				//$class .= ($field->isAdvanced() ? " lws_advanced_option" : '');
@@ -259,16 +263,16 @@ class Group
 				if (!$help)
 					$help = $field->getTooltips();
 				if ($help)
-					echo "<div class='field-help'$args>{$help}</div>";
+					echo wp_kses_post("<div class='field-help'$args>{$help}</div>");
 
 				if ($field->title())
 				{
 					$label = $field->label();
-					echo sprintf(
+					echo wp_kses_post(sprintf(
 						"<div class='%s'%s><label for='%s'>%s</label>",
 						$field->addStrongClass('field-label' . $class),
 						$args, $id, $label
-					);
+					));
 					if ($help)
 						echo "<div class='bt-field-help'>?</div>"; // button to display help above
 					echo "</div>";
@@ -278,7 +282,7 @@ class Group
 					$class .= ' group-spanned';
 				}
 
-				echo "<div class='field-input{$class}'$args>";
+				echo wp_kses_post("<div class='field-input{$class}'$args>");
 				$field->input();
 				echo "</div>";
 				echo "</div>";
@@ -306,9 +310,9 @@ class Group
 
 		echo "</div>";
 		if (isset($this->extra['doclink']) && $this->extra['doclink']) {
-			$label = __("Documentation", 'lws-adminpanel');
+			$label = __("Documentation", 'woorewards');
 			echo "<div class='doc-line'><div class='doc-left'></div><div class='doc-right'>";
-			echo "<a href='{$this->extra['doclink']}'  target='_blank' class='group-doc'>{$label}</a>";
+			echo wp_kses_post("<a href='{$this->extra['doclink']}'  target='_blank' class='group-doc'>{$label}</a>");
 			echo "</div></div>";
 		}
 
@@ -324,12 +328,10 @@ class Group
 				$class .= ' has-icon';
 			$expandIcon = ($this->collapsed ? 'lws-icon-plus' : 'lws-icon-minus');
 
-			return <<<EOT
-<div class='{$class}'>
-	{$icon}<div class='group-title'>{$this->title}</div>
-	<div class='group-expand {$expandIcon}'></div>
-</div>
-EOT;
+			return "<div class='" . esc_attr($class) . "'>"
+				. $icon . "<div class='group-title'>" . $this->title . "</div>"
+				. "<div class='group-expand " . esc_attr($expandIcon) . "'></div>"
+				. "</div>";
 		} else {
 			return sprintf("<div id='%s'></div>", $this->titleId());
 		}

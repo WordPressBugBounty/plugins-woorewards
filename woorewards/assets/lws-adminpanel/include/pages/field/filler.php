@@ -17,6 +17,6 @@ class Filler extends \LWS\Adminpanel\Pages\Field
 	public function input()
 	{
 		$height = $this->extra['height'];
-		echo "<div class='' style='height:$height'></div>";
+		echo wp_kses_post("<div class='' style='height:$height'></div>");
 	}
 }

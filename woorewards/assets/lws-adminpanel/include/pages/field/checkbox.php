@@ -12,7 +12,7 @@ class Checkbox extends \LWS\Adminpanel\Pages\Field
 
 	public function input()
 	{
-		echo $this->html();
+		echo $this->html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	private function html()
@@ -94,35 +94,29 @@ class Checkbox extends \LWS\Adminpanel\Pages\Field
 
 		switch ($layout) {
 			case 'switch':
-				$checkbox = <<<EOT
-				<div class='lws-switch-bigwrapper{$disableclass}'$colorstring>
-					$leftlabel
-					<label class='lws-switch-wrapper$leftright'>
-						<input type='checkbox' name='$name' $value$class$disabled$id$attrs$ac />
-						<div class='knobs'></div>
-						<div class='layer'></div>
-					</label>
-					$rightlabel
-				</div>
-EOT;
+				$checkbox = "<div class='lws-switch-bigwrapper" . $disableclass . "'" . $colorstring . ">"
+					. $leftlabel
+					. "<label class='lws-switch-wrapper" . $leftright . "'>"
+					. "<input type='checkbox' name='" . \esc_attr($name) . "' " . $value . $class . $disabled . $id . $attrs . $ac . " />"
+					. "<div class='knobs'></div>"
+					. "<div class='layer'></div>"
+					. "</label>"
+					. $rightlabel
+					. "</div>";
 				break;
 			case 'toggle':
-				$checkbox = <<<EOT
-				<div class='lws-toggle-wrapper'$colorstring>
-					<label class='lws-toggle{$disableclass}'>
-						<input type='checkbox' name='$name' $value$class$disabled$id$attrs$ac />
-						<div class='inner'><span class='bullet'></span></div>
-					</label>
-				</div>
-EOT;
+				$checkbox = "<div class='lws-toggle-wrapper'" . $colorstring . ">"
+					. "<label class='lws-toggle" . $disableclass . "'>"
+					. "<input type='checkbox' name='" . \esc_attr($name) . "' " . $value . $class . $disabled . $id . $attrs . $ac . " />"
+					. "<div class='inner'><span class='bullet'></span></div>"
+					. "</label>"
+					. "</div>";
 				break;
 			default:
-				$checkbox = <<<EOT
-				<label class='lws-checkbox-wrapper{$disableclass}'>
-					<input type='checkbox' name='$name' $value$class$disabled$id$attrs$ac />
-					<div class='lws-checkbox$size'></div>
-				</label>
-EOT;
+				$checkbox = "<label class='lws-checkbox-wrapper" . $disableclass . "'>"
+					. "<input type='checkbox' name='" . \esc_attr($name) . "' " . $value . $class . $disabled . $id . $attrs . $ac . " />"
+					. "<div class='lws-checkbox" . $size . "'></div>"
+					. "</label>";
 				break;
 		};
 

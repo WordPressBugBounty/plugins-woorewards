@@ -42,7 +42,7 @@ class Pools extends \LWS\WOOREWARDS\Abstracts\Collection
 
 		if( !is_array($posts) )
 		{
-			error_log("Fail to load pools, check posts with post_type=".\LWS\WOOREWARDS\Core\Pool::POST_TYPE);
+			if (defined('WP_DEBUG') && WP_DEBUG) error_log("Fail to load pools, check posts with post_type=".\LWS\WOOREWARDS\Core\Pool::POST_TYPE); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 		}
 		else if( count($posts) > 0 )
 		{

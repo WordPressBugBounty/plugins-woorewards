@@ -37,15 +37,15 @@ class Cache
 	{
 		if( !file_exists($this->cache) )
 		{
-			if( false === @mkdir($this->cache, 0755, true) )
+			if( false === @wp_mkdir_p($this->cache) ) // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_mkdir
 			{
-				error_log("Cannot create cache directory : " . $this->cache);
+				if (defined('WP_DEBUG') && WP_DEBUG) error_log("Cannot create cache directory : " . $this->cache); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 				return false;
 			}
 		}
 		if( !is_dir($this->cache) )
 		{
-			error_log("Cache path is already used : " . $this->cache);
+			if (defined('WP_DEBUG') && WP_DEBUG) error_log("Cache path is already used : " . $this->cache); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 			return false;
 		}
 		if( $this->protectDir )
@@ -53,8 +53,10 @@ class Cache
 			$htaccess = dirname($this->path) . '/.htaccess';
 			if( !file_exists($htaccess) )
 			{
-				if( false === file_put_contents($htaccess, "deny from all") )
-					error_log("Cannot restrict access to cache dir : " . $htaccess);
+				if( false === file_put_contents($htaccess, "deny from all") ) // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents
+				{
+					if (defined('WP_DEBUG') && WP_DEBUG) error_log("Cannot restrict access to cache dir : " . $htaccess); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+				}
 			}
 		}
 		return true;
@@ -68,18 +70,21 @@ class Cache
 
 		if( file_exists($this->path) )
 		{
-			if( false == unlink($this->path) )
+			wp_delete_file($this->path);
+			if( file_exists($this->path) )
 			{
-				error_log("Old cached file version cannot be removed. See " . $this->path);
+				if (defined('WP_DEBUG') && WP_DEBUG) error_log("Old cached file version cannot be removed. See " . $this->path); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 				return false;
 			}
 		}
 
-		if( false === @file_put_contents($this->path, $content, LOCK_EX) )
-			error_log("Writing cached file failed (check permission) on " . $this->path);
+		if( false === @file_put_contents($this->path, $content, LOCK_EX) ) // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents
+		{
+			if (defined('WP_DEBUG') && WP_DEBUG) error_log("Writing cached file failed (check permission) on " . $this->path); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+		}
 		else
 		{
-			@chmod($this->path, 444); // set readonly for anyone
+			@chmod($this->path, 0444); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_chmod -- set readonly for anyone
 			return true;
 		}
 		return false;
@@ -92,7 +97,7 @@ class Cache
 
 		if( !is_readable($this->path) )
 		{
-			error_log("Cannot read cached file : " . $this->path);
+			if (defined('WP_DEBUG') && WP_DEBUG) error_log("Cannot read cached file : " . $this->path); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 			return false;
 		}
 
@@ -121,7 +126,7 @@ class Cache
 
 		if( !is_readable($this->path) )
 		{
-			error_log("Cannot read cached file : " . $this->path);
+			if (defined('WP_DEBUG') && WP_DEBUG) error_log("Cannot read cached file : " . $this->path); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 			return false;
 		}
 
@@ -145,9 +150,10 @@ class Cache
 	{
 		if( file_exists($this->path) )
 		{
-			if( false == unlink($this->path) )
+			wp_delete_file($this->path);
+			if( file_exists($this->path) )
 			{
-				error_log("Cached file cannot be removed. See " . $this->path);
+				if (defined('WP_DEBUG') && WP_DEBUG) error_log("Cached file cannot be removed. See " . $this->path); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 				return false;
 			}
 		}

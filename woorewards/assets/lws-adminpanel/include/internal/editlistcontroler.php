@@ -9,6 +9,7 @@ class EditlistControler
 	private $KeyAction  = 'action-uid';
 	private $hasActions = false;
 	private $columns = array();
+	/** @var bool|array @groupBy */
 	private $groupBy = false;
 	private $css = '';
 	private $actionResult = false;
@@ -27,9 +28,9 @@ class EditlistControler
 	/**
 	 * @param $editionId (string) is a unique id which refer to this EditList.
 	 * @param $recordUIdKey (string) is the key which will be used to ensure record unicity.
-	 * @param $source instance which etends EditListSource.
-	 * @param $mode allows list for modification (use bitwise operation, @see ALL)
-	 * @param $filtersAndActions an array of instance of \LWS\Adminpanel\EditList\Action or \LWS\Adminpanel\EditList\Filter. */
+	 * @param $source \LWS\Adminpanel\EditList\Source instance which etends EditListSource.
+	 * @param $mode int allows list for modification (use bitwise operation, @see ALL)
+	 * @param $filtersAndActions array instances of \LWS\Adminpanel\EditList\Action or \LWS\Adminpanel\EditList\Filter. */
 	public function __construct( $editionId, $recordUIdKey, $source, $mode = \LWS\Adminpanel\EditList::ALL, $filtersAndActions=array() )
 	{
 		$this->slug = sanitize_key($editionId);
@@ -37,14 +38,16 @@ class EditlistControler
 		$this->m_UId = esc_attr($recordUIdKey);
 		$this->columnTitles = array();
 
-		if( $this->m_UId != $recordUIdKey )
-			error_log("!!! $recordUIdKey is not safe to be used as record key (html escape = {$this->m_UId}).");
+		if( $this->m_UId != $recordUIdKey ) {
+			if (defined('WP_DEBUG') && WP_DEBUG) error_log("!!! $recordUIdKey is not safe to be used as record key (html escape = {$this->m_UId})."); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+		}
 
 		$sourceClass = '\LWS\Adminpanel\EditList\Source';
-		if( !is_a($source, $sourceClass) )
-			error_log("!!! EditList data source is not a $sourceClass");
-		else
+		if( !is_a($source, $sourceClass) ) {
+			if (defined('WP_DEBUG') && WP_DEBUG) error_log("!!! EditList data source is not a $sourceClass"); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+		} else {
 			$this->m_Source = $source;
+		}
 
 		$this->m_Mode = $mode;
 		$this->m_PageDisplay = new \LWS\Adminpanel\EditList\Pager($this->m_Id);
@@ -75,21 +78,28 @@ class EditlistControler
 
 	public function ajax()
 	{
+		// Nonce and capability check is done just a little bit later
+		// We first test if our instance is concerned or not
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if( isset($_REQUEST['id']) && isset($_REQUEST['method']) && isset($_REQUEST['line']) )
 		{
-			$method = \sanitize_key($_REQUEST['method']);
+			$method = \sanitize_key(\wp_unslash($_REQUEST['method'])); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			if( !in_array($method, self::methods()) )
 				exit(0);
 
-			$id = \sanitize_text_field($_REQUEST['id']);
-			$line = \sanitize_text_field($_REQUEST['line']);
+			$id = \sanitize_text_field(\wp_unslash($_REQUEST['id'])); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$line = \sanitize_text_field(\wp_unslash($_REQUEST['line'])); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			if( empty($id) || empty($line) )
 				exit(0);
 
 			$up = $this->accept($id, $method, $line);
 			if( !is_null($up) )
 			{
-				wp_send_json($up);
+				if (\is_wp_error($up)) {
+					wp_send_json_error($up);
+				} else {
+					wp_send_json( $up );
+				}
 				exit();
 			}
 		}
@@ -115,12 +125,12 @@ class EditlistControler
 					'add'  => true,
 					'activated' => true
 				));
+			} else {
+				if (defined('WP_DEBUG') && WP_DEBUG) error_log("Require an grouped by editlist[{$this->slug}] without any grouping key."); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 			}
-			else
-				error_log("Require an grouped by editlist[{$this->slug}] without any grouping key.");
-		}
-		else
+		} else {
 			$this->groupBy = false;
+		}
 		return $this;
 	}
 
@@ -154,7 +164,7 @@ class EditlistControler
 			if( !empty($this->groupBy['form']) && $this->groupBy['add'] && ($this->m_Mode & \LWS\Adminpanel\EditList\Modes::ADD) ) // no edit -> no add
 			{
 				if( $this->groupBy['add'] === true )
-					$this->groupBy['add'] = _x("Add a group", "editlist groupby", 'lws-adminpanel');
+					$this->groupBy['add'] = _x("Add a group", "editlist groupby", 'woorewards');
 				$add = (" data-add='" . \esc_attr($this->groupBy['add']) . "'");
 			}
 
@@ -163,32 +173,28 @@ class EditlistControler
 			$actionbuttons = '';
 			/** Group Edition */
 			if (!empty($this->groupBy['form']) && ($this->m_Mode & \LWS\Adminpanel\EditList\Modes::MOD)) {
-				$actionbuttons .= "<button class='lws-editlist-group-btn lws_editlist_modal_edit_button lws_editlist_group_head_edit edit'><div class='icon lws-icon-pencil'></div><div class='label'>" . __('Edit', 'lws-adminpanel') . "</div></button>";
+				$actionbuttons .= "<button class='lws-editlist-group-btn lws_editlist_modal_edit_button lws_editlist_group_head_edit edit'><div class='icon lws-icon-pencil'></div><div class='label'>" . __('Edit', 'woorewards') . "</div></button>";
 			}
 			/** Group Deletion */
 			if ($this->m_Mode & \LWS\Adminpanel\EditList\Modes::DEL) {
-				$actionbuttons .= "<button class='lws-editlist-group-btn lws_editlist_modal_edit_button lws_editlist_group_del del'><div class='icon lws-icon-bin'></div><div class='label'>" . __('Delete', 'lws-adminpanel') . "</div></button>";
+				$actionbuttons .= "<button class='lws-editlist-group-btn lws_editlist_modal_edit_button lws_editlist_group_del del'><div class='icon lws-icon-bin'></div><div class='label'>" . __('Delete', 'woorewards') . "</div></button>";
 			}
 			if ($actionbuttons != '') {
-				$actionbuttons = <<<EOT
-				<div class='lws-editlist-action-button lws-icon-menu-5'>
-					<div class="editlist-actions-popup hidden">
-						<div class="lws-el-buttons-wrapper">
-							$actionbuttons
-						</div>
-					</div>
-				</div>
-EOT;
+				$actionbuttons = '<div class="lws-editlist-action-button lws-icon-menu-5">'
+					. '<div class="editlist-actions-popup hidden">'
+					. '<div class="lws-el-buttons-wrapper">'
+					. $actionbuttons
+					. '</div>'
+					. '</div>'
+					. '</div>';
 			}
 
-			$str .= <<<EOT
-			<div class='lws_editlist_groupby_head'>
-				<div class='lws-editlist-groupby-header'>
-					{$this->groupBy['head']}
-					$actionbuttons
-				</div>
-			</div>
-EOT;
+			$str .= '<div class="lws_editlist_groupby_head">'
+				. '<div class="lws-editlist-groupby-header">'
+				. $this->groupBy['head']
+				. $actionbuttons
+				. '</div>'
+				. '</div>';
 
 
 			if( !empty($this->groupBy['form']) )
@@ -209,18 +215,22 @@ EOT;
 	/**	Echo the list as a grid */
 	public function display()
 	{
-		$dataGrpBy = ($this->groupBy && $this->groupBy['activated']) ? " data-groupby='on'" : '';
 		$class = 'lws_editlist lws-master-editlist';
 		if ($this->css)
 			$class .= (' ' . $this->css);
 
-		echo "<div id='{$this->m_Id}' class='$class'$dataGrpBy>";
+		echo sprintf(
+			"<div id='%s' class='%s'%s>",
+			esc_attr($this->m_Id),
+			esc_attr($class),
+			($this->groupBy && $this->groupBy['activated']) ? " data-groupby='on'" : ''
+		);
 		if ($this->groupBy)
-			echo $this->getGroupByForm();
+			echo $this->getGroupByForm(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		$rcount = -1;  // in|out
 		$limit = null; // in|out
-		echo $this->displayFilters($rcount, $limit, true);
+		echo $this->displayFilters($rcount, $limit, true); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		/// if the execution off an action has something to say
 		/// open a  dialog with it at page loaded @see editlistfilters.js
@@ -238,34 +248,49 @@ EOT;
 		if( $this->repeatHead ) // default true
 			$rows .= $this->getHead(false);
 
-		$style = $this->getColumnsStyle();
-		$template = $this->getRow(false); // template line
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo sprintf('<div %s class="lws_editlist_table lws-editlist" data-editlist="%s" uid="%s"%s>%s</div>',
+			$this->getColumnsStyle(), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			esc_attr($this->m_Id),
+			esc_attr($this->m_UId),
+			$actionReport, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			$rows // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		);
 
-		echo <<<EOT
-<div {$style} class='lws_editlist_table lws-editlist' data-editlist='{$this->m_Id}' uid='{$this->m_UId}'{$actionReport}>
-	{$rows}
-</div>
-<div style='display:none;' class='lws_editlist_row_template' data-editlist='{$this->m_Id}'>
-	{$template}
-</div>
-EOT;
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo sprintf('<div style="display:none;" class="lws_editlist_row_template" data-editlist="%s">%s</div>',
+			esc_attr($this->m_Id),
+			$this->getRow(false) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		);
 
-		echo $this->getEditionForm();
+		echo $this->getEditionForm(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		echo "<div class='lws-editlist-bottom-line'>";
-		echo $this->getAddButton();
+		echo $this->getAddButton(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		if( $this->m_Actions )
 			$this->displayActions();
 		echo "</div>";
 
-		foreach( ($deps = array('jquery', 'jquery-ui-core', 'jquery-ui-dialog' , 'lws-base64', 'lws-tools')) as $dep )
-			\wp_enqueue_script($dep);
+		foreach( ($deps = array('jquery', 'jquery-ui-core', 'jquery-ui-dialog' , 'lws-base64', 'lws-tools')) as $dep ) {
+			\wp_enqueue_script( $dep );
+		}
+		$nonce = \wp_create_nonce('lws_adminpanel_editlist');
 		\wp_register_script('lws-adminpanel-editlist', LWS_ADMIN_PANEL_JS.'/controls/editlist/editlist.js', $deps, LWS_ADMIN_PANEL_VERSION, true);
 		\wp_localize_script('lws-adminpanel-editlist', 'lws_editlist_ajax', array(
-			'url' => \add_query_arg('action', 'lws_adminpanel_editlist', \admin_url('/admin-ajax.php')),
+			'url' => \add_query_arg([
+				'action' => 'lws_adminpanel_editlist',
+				'_lws_editlist_nonce' => $nonce,
+			], \admin_url('/admin-ajax.php')),
+			'nonce' => $nonce,
 		));
 		\wp_enqueue_script('lws-adminpanel-editlist');
-		\wp_enqueue_script('lws-adminpanel-editlist-filters', LWS_ADMIN_PANEL_JS.'/controls/editlist/editlistfilters.js', $deps, LWS_ADMIN_PANEL_VERSION, true);
+		\wp_enqueue_script(
+			'lws-adminpanel-editlist-filters',
+			LWS_ADMIN_PANEL_JS.'/controls/editlist/editlistfilters.js',
+			\array_merge($deps, ['lws-adminpanel-editlist']),
+			LWS_ADMIN_PANEL_VERSION,
+			true
+		);
 
 		echo "</div>";
 	}
@@ -316,20 +341,20 @@ EOT;
 
 	protected function displayActions()
 	{
-		$ph = __('Apply', 'lws-adminpanel');
+		$ph = __('Apply', 'woorewards');
 		echo "<div class='lws_editlist_actions'>";
 		echo "<div class='lws-editlist-actions-cont'>";
 		echo "<div class='lws-editlist-actions-left'><div class='lws-editlist-actions-icon lws-icon lws-icon-arrow-right'></div></div>";
 		echo "<div class='lws-editlist-actions-right'>";
-		$first = true;
+		//$first = true;
 		foreach( $this->m_Actions as $action )
 		{
 			//if($first){$first=false;}else{echo "<div class='lws-editlist-action-sep'></div>";}
-			echo "<div class='lws-editlist-action' data-id='{$this->m_Id}'>";
+			echo "<div class='lws-editlist-action' data-id='" . esc_attr($this->m_Id) . "'>";
 			/** @var \LWS\Adminpanel\EditList\Action $action */
-			echo "<input type='hidden' name='{$this->KeyAction}' value='{$action->UID}'>";
-			echo $action->input();
-			echo "<button class='lws-adm-btn lws-editlist-action-trigger'>$ph</button>";
+			echo "<input type='hidden' name='" . esc_attr($this->KeyAction) . "' value='" . esc_attr($action->UID) . "'>";
+			echo $action->input(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo "<button class='lws-adm-btn lws-editlist-action-trigger'>" . esc_html($ph) . "</button>";
 			echo "</div>";
 		}
 		echo "</div></div></div>";
@@ -360,7 +385,7 @@ EOT;
 				$lab[$k][] = $width;
 		}
 		if ($hasActions) {
-			$lab[\LWS\Adminpanel\EditList\Source::ACTION_CELL_KEY] = array(__('Action', 'lws-adminpanel'), 'min-content');
+			$lab[\LWS\Adminpanel\EditList\Source::ACTION_CELL_KEY] = array(__('Action', 'woorewards'), 'min-content');
 		}
 		return $lab;
 	}
@@ -373,7 +398,7 @@ EOT;
 			$buttons['add'] = sprintf(
 				"<button class='lws-adm-btn lws_editlist_modal_edit_button lws-editlist-add lws_editlist_item_add' data-id='%s'>%s</button>",
 				$this->m_Id,
-				__("Add", 'lws-adminpanel')
+				__("Add", 'woorewards')
 			);
 		}
 		$buttons = \apply_filters('lws_ap_editlist_button_add_value_'.$this->slug, $buttons, $this);
@@ -523,7 +548,7 @@ EOT;
 					$str[] = sprintf(
 						"<div class='lws-small-media-cell lws-editlist-cell lws_deep_cell{$head}' style='grid-column:span %d;'>%s</div>",
 						$colspan,
-						$head ? __("Values", 'lws-adminpanel') : $this->getSmallEditableRow($cells)
+						$head ? __("Values", 'woorewards') : $this->getSmallEditableRow($cells)
 					);
 				}
 				$cell['class'] .= ' large-media-cell-content';
@@ -552,12 +577,10 @@ EOT;
 					$title = reset($title);
 			}
 
-			$str .= <<<EOT
-<div class='small-media-subcell subtd'{$cell['atts']}>
-	<div class='cell-title'>{$title}</div>
-	<div class='cell-content'>{$cell['content']}</div>
-</div>
-EOT;
+			$str .= '<div class="small-media-subcell subtd"' . $cell['atts'] . '>'
+				. '<div class="cell-title">' . $title . '</div>'
+				. '<div class="cell-content">' . $cell['content'] . '</div>'
+				. '</div>';
 		}
 		return $str;
 	}
@@ -565,42 +588,39 @@ EOT;
 	protected function getEditionForm()
 	{
 		$ph = array(
-			'cancel' => __('Cancel', 'lws-adminpanel'),
-			'save'   => __('Save', 'lws-adminpanel')
+			'cancel' => __('Cancel', 'woorewards'),
+			'save'   => __('Save', 'woorewards')
 		);
 		$form = \apply_filters('lws_adminpanel_editlist_input_' . $this->slug, $this->m_Source->input());
-		$next = _x("Next", 'Confirm event/unlockable type choice', 'lws-adminpanel');
-		$back = _x("Back", 'Undo event/unlockable type choice', 'lws-adminpanel');
+		//$next = _x("Next", 'Confirm event/unlockable type choice', 'woorewards');
+		//$back = _x("Back", 'Undo event/unlockable type choice', 'woorewards');
 
-		$title = $this->m_Source ? $this->m_Source->getPopupTitle() : __("Settings", 'lws-adminpanel');
+		$title = $this->m_Source ? $this->m_Source->getPopupTitle() : __("Settings", 'woorewards');
 
-		$popup = <<<EOT
-<div class='lws-editlist-form-container lws_editlist_form_hidden lws_editlist_line_form' data-editlist='{$this->m_Id}'>
-	<div class='lws-editlist-form-popup lws_editlist_modal_form'>
-		<div class='upper-container'>
-			<div class='editlist-title'>{$title}</div>
-			<div class='cancel-button btn-cancel'>
-				<div class='icon lws-icon-e-remove'></div>
-				<div class='text'>{$ph['cancel']}</div>
-			</div>
-		</div>
-		<div class='lws-editlist-line-inputs lws-popup'>
-			{$form}
-		</div>
-		<div class='buttons-container'>
-			<button class='el-popup-btn btn-cancel'>
-				<div class='icon lws-icon-c-remove'></div>
-				<div class='text'>{$ph['cancel']}</div>
-			</button>
-			<button class='el-popup-btn btn-save'>
-				<div class='text'>{$ph['save']}</div>
-				<div class='icon lws-icon-c-check'></div>
-			</button>
-		</div>
-	</div>
-</div>
-EOT;
-		return $popup;
+		return '<div class="lws-editlist-form-container lws_editlist_form_hidden lws_editlist_line_form" data-editlist="' . esc_attr($this->m_Id) . '">'
+			. '<div class="lws-editlist-form-popup lws_editlist_modal_form">'
+			. '<div class="upper-container">'
+			. '<div class="editlist-title">' . esc_html($title) . '</div>'
+			. '<div class="cancel-button btn-cancel">'
+			. '<div class="icon lws-icon-e-remove"></div>'
+			. '<div class="text">' . esc_html($ph['cancel']) . '</div>'
+			. '</div>'
+			. '</div>'
+			. '<div class="lws-editlist-line-inputs lws-popup">'
+			. $form
+			. '</div>'
+			. '<div class="buttons-container">'
+			. '<button class="el-popup-btn btn-cancel">'
+			. '<div class="icon lws-icon-c-remove"></div>'
+			. '<div class="text">' . esc_html($ph['cancel']) . '</div>'
+			. '</button>'
+			. '<button class="el-popup-btn btn-save">'
+			. '<div class="text">' . esc_html($ph['save']) . '</div>'
+			. '<div class="icon lws-icon-c-check"></div>'
+			. '</button>'
+			. '</div>'
+			. '</div>'
+			. '</div>';
 	}
 
 	// the button line which appear under each line.
@@ -632,7 +652,7 @@ EOT;
 		return array("put", "del");
 	}
 
-	/**	Test if this instance is concerne (based on $editionId),
+	/**	Test if this instance is concerned (based on $editionId),
 	 *	then save the $line. @see write().
 	 * 	or return a list of the lines. @see read().
 	 * 	or delete a line. @see erase().
@@ -642,6 +662,13 @@ EOT;
 	{
 		if( $editionId === $this->m_Id )
 		{
+			if (!$this->currentUserCan()) {
+				return new \WP_Error(403, __( "You do not have enough capabilities to do that", 'woorewards' ));
+			}
+			if (!\wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['_lws_editlist_nonce'] ?? '')), 'lws_adminpanel_editlist')) {
+				return new \WP_Error(403, __( "Expired token. Please reload the page and retry.", 'woorewards' ));
+			}
+
 			$data = json_decode( base64_decode($line), true );
 			if( $method === "put" )
 			{
@@ -684,17 +711,25 @@ EOT;
 	protected function applyActions()
 	{
 		$keyItems = 'action-items';
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce is verified below
 		if( isset($_POST[$this->KeyAction]) && !empty($_POST[$this->KeyAction])
 			&& isset($_POST[$keyItems]) && !empty($_POST[$keyItems]) )
 		{
-			$uid = sanitize_key($_POST[$this->KeyAction]);
-			$items = json_decode( base64_decode($_POST[$keyItems]), true );
+			$uid = sanitize_key(wp_unslash($_POST[$this->KeyAction])); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			$items = json_decode( base64_decode(sanitize_text_field(wp_unslash($_POST[$keyItems]))), true ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			foreach( $this->m_Actions as $action )
 			{
 				/** @var \LWS\Adminpanel\EditList\Action $action */
 				if( $uid == $action->UID )
 				{
-					$ret = $action->apply($items);
+
+					if (!\wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['_lws_editlist_nonce'] ?? '')), 'lws_adminpanel_editlist')) {
+						$ret = __( "Expired token. Please reload the page and retry.", 'woorewards' );
+					} elseif (!$this->currentUserCan()) {
+						$ret = __("You do not have enough capabilities to do that", 'woorewards');
+					} else {
+						$ret = $action->apply( $items );
+					}
 					if( !empty($ret) && is_string($ret) )
 						$this->actionResult = $ret;
 					unset($_POST[$this->KeyAction]);
@@ -704,4 +739,9 @@ EOT;
 		}
 	}
 
+	protected function currentUserCan(): bool
+	{
+		$capability = \LWS\Adminpanel\Tools\Conveniences::getCapOnRole($this->m_Source->getEditCapability());
+		return \current_user_can($capability);
+	}
 }

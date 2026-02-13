@@ -131,7 +131,7 @@ class Pool
 		$uCount = 0;
 		if( empty($user = \get_user_by('ID', $userId)) )
 		{
-			error_log("Unlock reward attempt for unknown user ($userId). Pool ".$this->getId());
+			if (defined('WP_DEBUG') && WP_DEBUG) error_log("Unlock reward attempt for unknown user ($userId). Pool ".$this->getId()); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 			return $uCount;
 		}
 
@@ -561,6 +561,7 @@ class Pool
 		{
 			// get all existant pointStackId
 			global $wpdb;
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$stackIds = $wpdb->get_col("SELECT DISTINCT(meta_value) FROM {$wpdb->postmeta} WHERE meta_key='wre_pool_point_stack'");
 			$stackIds = \array_filter($stackIds);
 			// default name is pool name, but we ensure a not empty name
@@ -608,8 +609,10 @@ class Pool
 	{
 		global $wpdb;
 		$post_id = intval($this->getId());
-		$typeCond = ("post_type IN ('" . implode("','", $this->getSimilarPostTypes()) . "')");
-		$names = $wpdb->get_col($wpdb->prepare("SELECT DISTINCT(post_name) FROM {$wpdb->posts} WHERE {$typeCond} AND ID<>%d", $post_id)); // phpcs:ignore WordPressDotOrg.sniffs.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$types = $this->getSimilarPostTypes();
+		$placeholders = \implode(',', \array_fill(0, \count($types), '%s'));
+		$args = \array_merge($types, array($post_id));
+		$names = $wpdb->get_col($wpdb->prepare("SELECT DISTINCT(post_name) FROM {$wpdb->posts} WHERE post_type IN ({$placeholders}) AND ID<>%d", $args)); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$this->setName(\LWS\WOOREWARDS\Abstracts\Collection::getNewName($this->getName(), $names));
 	}
 
@@ -717,8 +720,8 @@ class Pool
 		$postId = $data['ID'] ? \wp_update_post($data, true) : \wp_insert_post($data, true);
 		if( \is_wp_error($postId) )
 		{
-			error_log("Error occured during pool saving: " . $postId->get_error_message());
-			\lws_admin_add_notice_once('lws-wre-pool-save', __("Error occured during reward system saving.", 'woorewards-lite'), array('level'=>'error'));
+			if (defined('WP_DEBUG') && WP_DEBUG) error_log("Error occured during pool saving: " . $postId->get_error_message()); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+			\lws_admin_add_notice_once('lws-wre-pool-save', __("Error occured during reward system saving.", 'woorewards'), array('level'=>'error'));
 			return $this;
 		}
 		$this->id = intval($postId);
@@ -726,7 +729,7 @@ class Pool
 			\lws_admin_delete_notice('lws-wre-pool-nothing-loaded');
 		}
 
-		\do_action('wpml_register_string', $this->title, 'title', $this->getPackageWPML(true), __("Title", 'woorewards-lite'), 'LINE');
+		\do_action('wpml_register_string', $this->title, 'title', $this->getPackageWPML(true), __("Title", 'woorewards'), 'LINE');
 
 		if( $withEvents )
 			$this->events->save($this);
@@ -761,7 +764,7 @@ class Pool
 		\do_action('lws_woorewards_core_pool_delete_before', $this);
 		if( !($this->isDeletable() || $force) )
 		{
-			error_log("Try to delete a prefab pool: " . $this->getName());
+			if (defined('WP_DEBUG') && WP_DEBUG) error_log("Try to delete a prefab pool: " . $this->getName()); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 		}
 		else if ($this->id)
 		{
@@ -775,11 +778,12 @@ class Pool
 
 			if( empty(\wp_delete_post($this->id, true)) )
 			{
-				error_log("Failed to delete the pool {$this->id}");
+				if (defined('WP_DEBUG') && WP_DEBUG) error_log("Failed to delete the pool {$this->id}"); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 				\lws_admin_add_notice_once(
 					'lws-wre-pool-delete-error',
+					/* translators: %1$s: pool title, %2$s: pool name */
 					sprintf(
-						__("Failed to delete the reward system <b>%s</b>/%s.", 'woorewards-lite'),
+						__("Failed to delete the reward system <b>%1\$s</b>/%2\$s.", 'woorewards'),
 						$this->title,
 						$this->name
 					),
@@ -798,8 +802,9 @@ class Pool
 				$this->id = false;
 				\lws_admin_add_notice_once(
 					'lws-wre-pool-delete',
+					/* translators: %1$s: pool title, %2$s: pool name */
 					sprintf(
-						__("The reward system <b>%s</b>/%s successfully deleted.", 'woorewards-lite'),
+						__("The reward system <b>%1\$s</b>/%2\$s successfully deleted.", 'woorewards'),
 						$this->title,
 						$this->name
 					),
@@ -887,7 +892,7 @@ class Pool
 		$onceFlag = \LWS\Adminpanel\Tools\Conveniences::getOrderMeta($order_id, $onceKey, true);
 		if (!\apply_filters('lws_woorewards_wc_order_get_processed_flag', $onceFlag, $order, $this)) {
 			//$order->update_meta_data($onceKey, \date(DATE_W3C)); $order->save_meta_data();
-			\LWS\Adminpanel\Tools\Conveniences::updateOrderMeta($order, $onceKey, \date(DATE_W3C));
+			\LWS\Adminpanel\Tools\Conveniences::updateOrderMeta($order, $onceKey, \gmdate(DATE_W3C));
 
 			$action = \apply_filters('lws_woorewards_wc_order_parse_points', self::parseOrder($order_id, $order), $order, $this);
 			\do_action('lws_woorewards_wc_order_trigger_order_done', $action, $order, $this);
@@ -904,14 +909,16 @@ class Pool
 						$name = sprintf('user[%d]', $userId);
 					}
 					\LWS\WOOREWARDS\Core\OrderNote::add($order, sprintf(
-						__('<b>%1$s</b> earned <b>%2$s</b> in <b>%3$s</b> for this order', 'woorewards-lite'),
+						/* translators: %1$s: user name, %2$s: points earned, %3$s: pool title */
+						__('<b>%1$s</b> earned <b>%2$s</b> in <b>%3$s</b> for this order', 'woorewards'),
 						$name, $this->formatPoints($data->points), $this->getOption('title')
 					), $this);
 				}
 			} elseif ($this->getEvents()->filterByCategories('order')->count()) {
 				// only show no points if an event is about order
 				\LWS\WOOREWARDS\Core\OrderNote::add($order, sprintf(
-					__('No %1$s earned in <b>%2$s</b> for this order', 'woorewards-lite'),
+					/* translators: %1$s: point symbol, %2$s: pool title */
+					__('No %1$s earned in <b>%2$s</b> for this order', 'woorewards'),
 					$this->getSymbol(), $this->getOption('title')
 				), $this);
 			}
@@ -928,11 +935,10 @@ class Pool
 		$origins = $eventCollection->map(function($e) {return (int)$e->getId();});
 		if ($origins) {
 			global $wpdb;
-			$origins = \implode(',', $origins);
-			// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPressDotOrg.sniffs.DirectDB.UnescapedDBParameter, WordPress.DB.DirectDatabaseQuery.DirectQuery
-			return $wpdb->get_results($wpdb->prepare("SELECT `user_id`, SUM(`points_moved`) as `points` FROM {$wpdb->lwsWooRewardsHistoric}
-WHERE `origin` IN ({$origins}) AND `order_id`=%d AND `points_moved` IS NOT NULL AND `blog_id`=%d
-GROUP BY `user_id`", (int)$order->get_id(), (int)\get_current_blog_id()), OBJECT_K);
+			$placeholders = \implode(',', \array_fill(0, \count($origins), '%d'));
+			$args = \array_merge($origins, array((int) $order->get_id(), (int) \get_current_blog_id()));
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber
+			return $wpdb->get_results($wpdb->prepare("SELECT `user_id`, SUM(`points_moved`) as `points` FROM {$wpdb->lwsWooRewardsHistoric} WHERE `origin` IN ({$placeholders}) AND `order_id`=%d AND `points_moved` IS NOT NULL AND `blog_id`=%d GROUP BY `user_id`", $args), OBJECT_K);
 		}
 		return array();
 	}

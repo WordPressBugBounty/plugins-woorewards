@@ -1,6 +1,7 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit();
+if ( !defined('LWS_WOOREWARDS_INCLUDES') ) exit();
 /** Register all event and unlockables */
-if( !defined('LWS_WOOREWARDS_INCLUDES') ) exit();
 
 require_once LWS_WOOREWARDS_INCLUDES . '/events/t_sponsorshiporigin.php';
 

@@ -48,7 +48,7 @@ abstract class Page
 		if( isset($this->data['subtext']) ){
 			if( \is_array($this->data['subtext']) )
 				$this->data['subtext'] = \LWS\Adminpanel\Tools\Conveniences::array2html($this->data['subtext']);
-			echo "<div class='lws-description'>{$this->data['subtext']}</div>";
+			echo wp_kses_post("<div class='lws-description'>{$this->data['subtext']}</div>");
 		}
 
 		$this->content();
@@ -56,7 +56,7 @@ abstract class Page
 		if (isset($this->data['footer'])){
 			if (\is_array($this->data['footer']))
 				$this->data['footer'] = \LWS\Adminpanel\Tools\Conveniences::array2html($this->data['footer']);
-			echo "<div class='lws-page-footer'>{$this->data['footer']}</div>";
+			echo wp_kses_post("<div class='lws-page-footer'>{$this->data['footer']}</div>");
 		}
 		echo "</div>";
 	}
@@ -80,7 +80,7 @@ abstract class Page
 		else if( isset($data['singular_edit']) && isset($data['singular_edit']['key']) )
 		{
 			$key = $data['singular_edit']['key'];
-			if( $key && isset($_REQUEST[$key]) )
+			if( $key && isset($_REQUEST[$key]) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				$page = new \LWS\Adminpanel\Pages\Screens\Singular();
 		}
 
@@ -326,13 +326,13 @@ abstract class Page
 			// compute base URL
 			$arg = array();
 			if( isset($_SERVER['QUERY_STRING']) )
-				parse_str($_SERVER['QUERY_STRING'], $arg);
+				parse_str(sanitize_text_field(wp_unslash($_SERVER['QUERY_STRING'])), $arg);
 			$arg['tab'] = true;
 			$this->baseURL = \remove_query_arg(array_keys($arg));
 
 			$arg = array('page' => $this->id);
-			if( isset($_GET['post_type']) )
-				$arg['post_type'] = \sanitize_key($_GET['post_type']);
+			if( isset($_GET['post_type']) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				$arg['post_type'] = \sanitize_key(wp_unslash($_GET['post_type'])); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 			$this->baseURL = \add_query_arg($arg, $this->baseURL);
 		}
@@ -485,8 +485,9 @@ abstract class Page
 		{
 			$this->path = array();
 
-			// follow queried path
-			$path = (isset($_REQUEST['tab']) && $_REQUEST['tab']) ? explode('.', \sanitize_text_field($_REQUEST['tab'])) : array();
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- follow queried path
+			$esc_tab = \sanitize_text_field(\wp_unslash($_REQUEST['tab'] ?? ''));
+			$path = $esc_tab ? explode('.', $esc_tab) : [];
 			$level = $this->getData();
 			foreach( $path as $slug )
 			{

@@ -9,6 +9,11 @@ class URL extends \LWS\Adminpanel\Pages\Field
 	{
 		$name = $this->m_Id;
 		$value = $this->readOption();
-		echo "<input class='{$this->style}' type='url' name='$name' value='$value' placeholder='URL' />";
+		echo sprintf(
+			"<input class='%s' type='url' name='%s' value='%s' placeholder='URL' />",
+			\esc_attr($this->style),
+			\esc_attr($name),
+			\esc_attr($value)
+		);
 	}
 }

@@ -22,13 +22,13 @@ abstract class FieldCSSGroup extends \LWS\Adminpanel\Pages\Field
 	public function eHSeparator($width=null)
 	{
 		$w = is_null($width) ? '' :  " style='width:{$width}px'";
-		echo "<div class='lwss-font-hor-sep'$w></div>";
+		echo wp_kses_post("<div class='lwss-font-hor-sep'$w></div>");
 	}
 
 	public function eVSeparator($height=null)
 	{
 		$h = is_null($height) ? '' :  " style='height:{$height}px'";
-		echo "<div class='lwss-bloc-vertical-separator'$h></div>";
+		echo wp_kses_post("<div class='lwss-bloc-vertical-separator'$h></div>");
 	}
 
 	/** @return string an html property with saved values for this field. */

@@ -40,9 +40,9 @@ class PointsDisplayer extends \LWS\WOOREWARDS\Ui\Widget
 		if ($asWidget) {
 			parent::__construct(
 				'lws_woorewards_pointsdisplayer',
-				__("MyRewards Points Displayer", 'woorewards-lite'),
+				__("MyRewards Points Displayer", 'woorewards'),
 				array(
-					'description' => __("Let your customers see their points.", 'woorewards-lite')
+					'description' => __("Let your customers see their points.", 'woorewards')
 				)
 			);
 		}
@@ -90,16 +90,16 @@ class PointsDisplayer extends \LWS\WOOREWARDS\Ui\Widget
 		// title
 		$this->eformFieldText(
 			$this->get_field_id('title'),
-			__("Title", 'woorewards-lite'),
+			__("Title", 'woorewards'),
 			$this->get_field_name('title'),
 			\esc_attr($instance['title']),
-			\esc_attr(_x("Current Points", "frontend", 'woorewards-lite'))
+			\esc_attr(_x("Current Points", "frontend", 'woorewards'))
 		);
 
 		// description
 		$this->eformFieldText(
 			$this->get_field_id('description'),
-			__("Header", 'woorewards-lite'),
+			__("Header", 'woorewards'),
 			$this->get_field_name('description'),
 			\esc_attr($instance['description']),
 			\esc_attr(\get_option('lws_woorewards_displaypoints_title'))
@@ -114,7 +114,7 @@ class PointsDisplayer extends \LWS\WOOREWARDS\Ui\Widget
 			// pool
 			$this->eformFieldSelect(
 				$this->get_field_id('system'),
-				__("Select a Loyalty System", 'woorewards-lite'),
+				__("Select a Loyalty System", 'woorewards'),
 				$this->get_field_name('system'),
 				$options,
 				$instance['system']
@@ -123,7 +123,7 @@ class PointsDisplayer extends \LWS\WOOREWARDS\Ui\Widget
 			// force display
 			$this->eformFieldCheckbox(
 				$this->get_field_id('force'),
-				__("Force display for all users", 'woorewards-lite'),
+				__("Force display for all users", 'woorewards'),
 				$this->get_field_name('force'),
 				\esc_attr($instance['force'])
 			);
@@ -131,7 +131,7 @@ class PointsDisplayer extends \LWS\WOOREWARDS\Ui\Widget
 
 			$this->eformFieldText(
 				$this->get_field_id('more_details_url'),
-				__("A <i>More details</i> page URL", 'woorewards-lite'),
+				__("A <i>More details</i> page URL", 'woorewards'),
 				$this->get_field_name('more_details_url'),
 				\esc_attr($instance['more_details_url']),
 				\esc_attr(\LWS\Adminpanel\Tools\Conveniences::isWC() ? \wc_get_endpoint_url('lws_woorewards', '', \wc_get_page_permalink('myaccount')) : '')
@@ -140,7 +140,7 @@ class PointsDisplayer extends \LWS\WOOREWARDS\Ui\Widget
 		// display currency
 		$this->eformFieldCheckbox(
 			$this->get_field_id('show_currency'),
-			__("Display the Points currency", 'woorewards-lite'),
+			__("Display the Points currency", 'woorewards'),
 			$this->get_field_name('show_currency'),
 			\esc_attr($instance['show_currency'])
 		);
@@ -159,12 +159,12 @@ class PointsDisplayer extends \LWS\WOOREWARDS\Ui\Widget
 		$atts['title'] = $instance['description'];
 		$content = $this->showPoints($atts);
 		if ($content) {
-			echo $args['before_widget'];
-			echo $args['before_title'];
-			echo \apply_filters('widget_title', $instance['title'] ? $instance['title'] : _x("Current Points", "frontend", 'woorewards-lite'), $instance);
-			echo $args['after_title'];
-			echo $content;
-			echo $args['after_widget'];
+			echo $args['before_widget']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Standard WP widget args
+			echo $args['before_title']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Standard WP widget args
+			echo wp_kses_post(\apply_filters('widget_title', $instance['title'] ? $instance['title'] : _x("Current Points", "frontend", 'woorewards'), $instance));
+			echo $args['after_title']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Standard WP widget args
+			echo wp_kses_post($content);
+			echo $args['after_widget']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Standard WP widget args
 		}
 	}
 
@@ -192,7 +192,7 @@ class PointsDisplayer extends \LWS\WOOREWARDS\Ui\Widget
 			$atts = $this->parseArgs($atts);
 
 			if ($this->stygen) {
-				$pointstotal = rand(42, 128) . __('Points', 'woorewards-lite');
+				$pointstotal = wp_rand(42, 128) . __('Points', 'woorewards');
 				$poolname = '';
 			} else {
 				$pools = \apply_filters('lws_woorewards_get_pools_by_args', false, $atts);
@@ -216,11 +216,9 @@ class PointsDisplayer extends \LWS\WOOREWARDS\Ui\Widget
 			}
 			if ($displaytitle || $this->stygen) {
 				$displaytitle = \wp_kses_post($displaytitle);
-				$displaytitle = <<<EOT
-				<div class='lwss_selectable lwss_modify lws-displaypoints-label' data-id='lws_woorewards_displaypoints_title' data-type='Header'>
-					<div class='lwss_modify_content'>{$displaytitle}</div>
-				</div>
-EOT;
+				$displaytitle = "<div class='lwss_selectable lwss_modify lws-displaypoints-label' data-id='lws_woorewards_displaypoints_title' data-type='Header'>"
+					. "<div class='lwss_modify_content'>{$displaytitle}</div>"
+					. "</div>";
 			}
 
 			$details = '';
@@ -231,29 +229,25 @@ EOT;
 				}
 				if ($atts['more_details_url']) {
 					$href = ($this->stygen ? '#' : \esc_attr(\sanitize_url($atts['more_details_url'])));
-					$label = \lws_get_option('lws_woorewards_button_more_details', __("More Details", 'woorewards-lite'));
+					$label = \lws_get_option('lws_woorewards_button_more_details', __("More Details", 'woorewards'));
 					if (!$this->stygen) {
 						$label = \apply_filters('wpml_translate_single_string', $label, 'Widgets', "WooRewards Show Points - details");
 					}
 
-					$details = <<<EOT
-					<div class='lwss_selectable lws-displaypoints-bcont' data-type='Button Line'>
-						<a class='lwss_selectable lwss_modify lws-displaypoints-button' data-id='lws_woorewards_button_more_details' data-type='Button' href='{$href}'>
-							<span class='lwss_modify_content'>{$label}</span>
-						</a>
-					</div>
-EOT;
+					$details = "<div class='lwss_selectable lws-displaypoints-bcont' data-type='Button Line'>"
+						. "<a class='lwss_selectable lwss_modify lws-displaypoints-button' data-id='lws_woorewards_button_more_details' data-type='Button' href='{$href}'>"
+						. "<span class='lwss_modify_content'>{$label}</span>"
+						. "</a>"
+						. "</div>";
 				}
 			}
-			$content = <<<EOT
-			<div class='lwss_selectable lws-displaypoints-main' data-type='Main Div'>
-				{$displaytitle}
-				<div class='lwss_selectable lws-displaypoints-points' data-type='Points'>{$pointstotal}</div>
-				{$details}
-			</div>
-EOT;
+			$content = "<div class='lwss_selectable lws-displaypoints-main' data-type='Main Div'>"
+				. $displaytitle
+				. "<div class='lwss_selectable lws-displaypoints-points' data-type='Points'>{$pointstotal}</div>"
+				. $details
+				. "</div>";
 		} else {
-			$content = \lws_get_option('lws_wooreward_showpoints_nouser', __("Please log in if you want to see your loyalty points", 'woorewards-lite'));
+			$content = \lws_get_option('lws_wooreward_showpoints_nouser', __("Please log in if you want to see your loyalty points", 'woorewards'));
 		}
 		return $content;
 	}

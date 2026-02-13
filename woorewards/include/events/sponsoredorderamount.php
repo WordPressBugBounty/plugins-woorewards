@@ -13,8 +13,8 @@ class SponsoredOrderAmount extends \LWS\WOOREWARDS\Events\OrderAmount
 	{
 		return array_merge(parent::getInformation(), array(
 			'icon'  => 'lws-icon-coins',
-			'short' => __("The customer will earn points when a person he referred spends money on your shop.", 'woorewards-lite'),
-			'help'  => __("This method will only reward the Referrer, not the Referee", 'woorewards-lite'),
+			'short' => __("The customer will earn points when a person he referred spends money on your shop.", 'woorewards'),
+			'help'  => __("This method will only reward the Referrer, not the Referee", 'woorewards'),
 		));
 	}
 
@@ -25,7 +25,7 @@ class SponsoredOrderAmount extends \LWS\WOOREWARDS\Events\OrderAmount
 
 	public function getDisplayType()
 	{
-		return _x("Referee spends money", "getDisplayType", 'woorewards-lite');
+		return _x("Referee spends money", "getDisplayType", 'woorewards');
 	}
 
 	/** override */
@@ -69,14 +69,15 @@ class SponsoredOrderAmount extends \LWS\WOOREWARDS\Events\OrderAmount
 					$price,
 					$order->get_order_number(),
 					$order->get_billing_email()
-				), 'woorewards-lite'
+				), 'woorewards'
 			);
 	}
 
 	/** Never call, only to have poedit/wpml able to extract the sentance. */
 	private function poeditDeclare()
 	{
-		__('Referred friend %3$s spent %1$s from order #%2$s', 'woorewards-lite');
+		/* translators: %1$s: amount spent, %2$s: order number, %3$s: friend name */
+		__('Referred friend %3$s spent %1$s from order #%2$s', 'woorewards');
 	}
 
 	/**	Event categories, used to filter out events from pool options.
@@ -84,12 +85,12 @@ class SponsoredOrderAmount extends \LWS\WOOREWARDS\Events\OrderAmount
 	public function getCategories()
 	{
 		return array(
-			\LWS\WOOREWARDS\Core\Pool::T_STANDARD  => __("Standard", 'woorewards-lite'),
-			\LWS\WOOREWARDS\Core\Pool::T_LEVELLING => __("Levelling", 'woorewards-lite'),
-			'achievement' => __("Achievement", 'woorewards-lite'),
-			'custom'      => __("Events", 'woorewards-lite'),
-			'woocommerce' => __("WooCommerce", 'woorewards-lite'),
-			'sponsorship' => __("Available for referred", 'woorewards-lite')
+			\LWS\WOOREWARDS\Core\Pool::T_STANDARD  => __("Standard", 'woorewards'),
+			\LWS\WOOREWARDS\Core\Pool::T_LEVELLING => __("Levelling", 'woorewards'),
+			'achievement' => __("Achievement", 'woorewards'),
+			'custom'      => __("Events", 'woorewards'),
+			'woocommerce' => __("WooCommerce", 'woorewards'),
+			'sponsorship' => __("Available for referred", 'woorewards')
 		);
 	}
 }

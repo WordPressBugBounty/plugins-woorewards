@@ -8,12 +8,12 @@ class Input extends \LWS\Adminpanel\Pages\Field
 	public static function compose($id, $extra=null)
 	{
 		$me = new self($id, '', $extra);
-		return $me->html();
+		return $me->html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	public function input()
 	{
-		echo $this->html();
+		echo $this->html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	private function html()

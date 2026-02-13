@@ -59,8 +59,10 @@ class Pages
 	/** Take an array to build a set of pages. */
 	public static function makePages( $pagesArray )
 	{
-		if( !is_array($pagesArray) )
-			return error_log(__CLASS__ . ":" . __FUNCTION__ . "(Argument must be an array.)");
+		if( !is_array($pagesArray) ) {
+			if (defined('WP_DEBUG') && WP_DEBUG) error_log(__CLASS__ . ":" . __FUNCTION__ . "(Argument must be an array.)"); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+			return;
+		}
 		return new Pages($pagesArray);
 	}
 
@@ -84,9 +86,11 @@ class Pages
 			}
 			else
 			{
-				error_log(__CLASS__ . ": A page is set without ['id']");
-				error_log("\nRead ===>\n" . print_r($pages, true));
-				error_log("\nExpect ===>\n" . print_r(\LWS\Adminpanel\Pages\Page::format(), true));
+				if (defined('WP_DEBUG') && WP_DEBUG) { // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log, WordPress.PHP.DevelopmentFunctions.error_log_print_r
+					error_log(__CLASS__ . ": A page is set without ['id']"); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+					error_log("\nRead ===>\n" . print_r($pages, true)); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log, WordPress.PHP.DevelopmentFunctions.error_log_print_r
+					error_log("\nExpect ===>\n" . print_r(\LWS\Adminpanel\Pages\Page::format(), true)); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log, WordPress.PHP.DevelopmentFunctions.error_log_print_r
+				}
 			}
 		}
 
@@ -239,7 +243,7 @@ class Pages
 	{
 		if( !is_array($array) )
 		{
-			error_log("Error near '$id' : expect an array");
+			if (defined('WP_DEBUG') && WP_DEBUG) error_log("Error near '$id' : expect an array"); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 			return false;
 		}
 
@@ -261,14 +265,14 @@ class Pages
 				else if( substr($type, 0, 6) == 'class:' ) $error = !is_a($array[$k], substr($type, 6));
 				if( $error )
 				{
-					error_log("Error near '$errId' : wrong item type " . print_r($f, true));
+					if (defined('WP_DEBUG') && WP_DEBUG) error_log("Error near '$errId' : wrong item type " . print_r($f, true)); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log, WordPress.PHP.DevelopmentFunctions.error_log_print_r
 					return false;
 				}
 			}
 			else if( !boolval($f['optional']) )
 			{
-				error_log(json_encode($array,  JSON_PRETTY_PRINT|JSON_PARTIAL_OUTPUT_ON_ERROR, 1));
-				error_log("Error near '$errId' : missing item " . print_r($f, true));
+				if (defined('WP_DEBUG') && WP_DEBUG) error_log(json_encode($array,  JSON_PRETTY_PRINT|JSON_PARTIAL_OUTPUT_ON_ERROR, 1)); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+				if (defined('WP_DEBUG') && WP_DEBUG) error_log("Error near '$errId' : missing item " . print_r($f, true)); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log, WordPress.PHP.DevelopmentFunctions.error_log_print_r
 				return false;
 			}
 		}
@@ -277,7 +281,7 @@ class Pages
 		{
 			if( !isset($format[$k]) )
 			{
-				error_log("Error near '$errId' : unknow item '$k'.\nExpect " . print_r($format, true));
+				if (defined('WP_DEBUG') && WP_DEBUG) error_log("Error near '$errId' : unknow item '$k'.\nExpect " . print_r($format, true)); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log, WordPress.PHP.DevelopmentFunctions.error_log_print_r
 				return false;
 			}
 		}
@@ -317,10 +321,10 @@ class Pages
 		static $lws_adminpanel_page = null;
 		if( is_null($lws_adminpanel_page) )
 		{
-			if( isset($_GET['page']) )
-				$lws_adminpanel_page = \sanitize_text_field($_GET['page']);
-			else if( isset($_POST['option_page']) )
-				$lws_adminpanel_page = \sanitize_text_field($_POST['option_page']);
+			if( isset($_GET['page']) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				$lws_adminpanel_page = \sanitize_text_field(\wp_unslash($_GET['page'])); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			else if( isset($_POST['option_page']) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing
+				$lws_adminpanel_page = \sanitize_text_field(\wp_unslash($_POST['option_page'])); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			else if( function_exists('\get_current_screen') && !empty($screen = \get_current_screen()) )
 				$lws_adminpanel_page = $screen->id;
 		}
@@ -427,32 +431,32 @@ class Pages
 			\wp_register_script('lws-adminpanel-autocomplete', LWS_ADMIN_PANEL_JS . '/controls/autocomplete.js', array('lws-tools', 'lws-base64', 'jquery','jquery-ui-tooltip','jquery-ui-autocomplete'), LWS_ADMIN_PANEL_VERSION, true);
 
 			\wp_localize_script('lws-adminpanel-fields', 'lws_adminpanel', array(
-				'confirmLeave' => __("Changes not commited.", 'lws-adminpanel'),
-				'editlistOnHold' => __("Please confirm or cancel the active form before submit that page.", 'lws-adminpanel'),
-				'confirmDel' => __("Do you really want to delete the line?", 'lws-adminpanel'),
-				'updateAlert' => __("Update error, please check the values.", 'lws-adminpanel'),
-				'triggerError' => __("An error occured, please try later.", 'lws-adminpanel'),
-				'noSelection' => __("Please, select an item.", 'lws-adminpanel'),
-				'fontPlaceHolder' => __("Select a font", 'lws-adminpanel'),
-				'fontToggleMore' => _x("Show more", "Font list", 'lws-adminpanel'),
-				'fontToggleLess' => _x("Show less", "Font list", 'lws-adminpanel'),
+				'confirmLeave' => __("Changes not commited.", 'woorewards'),
+				'editlistOnHold' => __("Please confirm or cancel the active form before submit that page.", 'woorewards'),
+				'confirmDel' => __("Do you really want to delete the line?", 'woorewards'),
+				'updateAlert' => __("Update error, please check the values.", 'woorewards'),
+				'triggerError' => __("An error occured, please try later.", 'woorewards'),
+				'noSelection' => __("Please, select an item.", 'woorewards'),
+				'fontPlaceHolder' => __("Select a font", 'woorewards'),
+				'fontToggleMore' => _x("Show more", "Font list", 'woorewards'),
+				'fontToggleLess' => _x("Show less", "Font list", 'woorewards'),
 				'fontWeightTr' => array(
-					'100' => _x("Thin", "Font weight", 'lws-adminpanel'),
-					'200' => _x("Extra Light", "Font weight", 'lws-adminpanel'),
-					'300' => _x("Light", "Font weight", 'lws-adminpanel'),
-					'400' => _x("Normal", "Font weight", 'lws-adminpanel'),
-					'regular' => _x("Normal", "Font weight", 'lws-adminpanel'),
-					'500' => _x("Medium", "Font weight", 'lws-adminpanel'),
-					'600' => _x("Semi Bold", "Font weight", 'lws-adminpanel'),
-					'700' => _x("Bold", "Font weight", 'lws-adminpanel'),
-					'800' => _x("Extra Bold", "Font weight", 'lws-adminpanel'),
-					'900' => _x("Black", "Font weight", 'lws-adminpanel')
+					'100' => _x("Thin", "Font weight", 'woorewards'),
+					'200' => _x("Extra Light", "Font weight", 'woorewards'),
+					'300' => _x("Light", "Font weight", 'woorewards'),
+					'400' => _x("Normal", "Font weight", 'woorewards'),
+					'regular' => _x("Normal", "Font weight", 'woorewards'),
+					'500' => _x("Medium", "Font weight", 'woorewards'),
+					'600' => _x("Semi Bold", "Font weight", 'woorewards'),
+					'700' => _x("Bold", "Font weight", 'woorewards'),
+					'800' => _x("Extra Bold", "Font weight", 'woorewards'),
+					'900' => _x("Black", "Font weight", 'woorewards')
 				)
 			));
 
 			\wp_localize_script('lws-adminpanel-autocomplete', 'lws_autocomplete_localize', array(
-				'notMatch'=>__(" didn't match any items", 'lws-adminpanel'),
-				'btnTitle'=>__("Show All Items", 'lws-adminpanel')
+				'notMatch'=>__(" didn't match any items", 'woorewards'),
+				'btnTitle'=>__("Show All Items", 'woorewards')
 			));
 
 			\wp_enqueue_script('lws-adminpanel-fields');
@@ -462,14 +466,15 @@ class Pages
 
 	public function ajaxButton()
 	{
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if( isset($_REQUEST['button']) && isset($_REQUEST['form']) )
 		{
-			$button = sanitize_key($_REQUEST['button']);
+			$button = sanitize_key(wp_unslash($_REQUEST['button'])); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			if( empty($button) )
 				exit(0);
-			if( empty($_REQUEST['form']) )
+			if( empty($_REQUEST['form']) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				exit(0);
-			$data = @base64_decode($_REQUEST['form']);
+			$data = @base64_decode(sanitize_text_field(wp_unslash($_REQUEST['form']))); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			if( $data === false )
 				exit(0);
 			$data = @json_decode( $data, true );

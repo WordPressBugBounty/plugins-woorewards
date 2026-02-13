@@ -1,18 +1,18 @@
-﻿=== MyRewards - Loyalty Points and Rewards for WooCommerce - Reward orders, referrals, product reviews and more ===
+﻿=== MyRewards ===
 Contributors: lwsdevelopers
 Tags: loyalty, points, referrals, rewards, coupons
 Requires at least: 5.3
-Tested up to: 6.8
+Tested up to: 6.9
 Requires PHP: 7.3.0
-Stable tag: 5.5.0
+Stable tag: 5.7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Free top-rated points and rewards program to retain your customers, grow your sales and get new customers
+Free top-rated points and rewards program to retain your customers, grow your sales and get new customers.
 
 == Description ==
 
-== MYREWARDS 5.0 Release :  New interface and referrals feature ==
+Loyalty Points and Rewards for WooCommerce - Reward orders, referrals, product reviews and more.
 
 TOP RATED AND MOST POWERFUL POINTS AND REWARDS PROGRAM FOR WOOCOMMERCE
 
@@ -108,6 +108,38 @@ Yes, High-Performance Order Storage is supported.
 5. Styling options
 
 == Changelog ==
+
+= 5.7.0 =
+* Fix - Vulnerability: Arbitrary Loyalty Rule Modification
+* Dev - Full code review
+
+= 5.6.1 =
+* Fix - CusRev comments support
+* Fix - Fix point history values to preserve thousand separator
+* Update - User points history is more responsive
+* Feature - Implements the French plural rule for formatting points based on the current locale
+
+= 5.6.0 =
+* Update - Embedded styling tool supports media query
+* Feature - Add paging to User points history shortcode
+* Dev - Add filter to force arbitrary price on free product
+* Fix - Auto-apply coupon case sensitivity
+* Fix - Edit WC React cart failed with points on cart
+* Fix - Points-on-cart Coupon duplication in Order edition page after a status update
+
+= 5.5.3 =
+* Tag - WooCommerce 10.3
+* Fix - Duplication Points-on-cart coupon on order edition
+
+= 5.5.2 =
+* Fix - supports php7.3 again
+
+= 5.5.1 =
+* Tag - WooCommerce 10.2
+* Fix - Sponsorship origin with first order event
+* MyRewards Pro :
+	* Feature - new alternative to free product pricing to support plugin conflicts
+	* Fix - Free product selector with Block version of wc cart/checkout
 
 = 5.5.0 =
 * Fix - Patchstack PSID 9ac113201d6c minor XSS vulnerability

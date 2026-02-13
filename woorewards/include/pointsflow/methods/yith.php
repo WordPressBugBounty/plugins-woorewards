@@ -14,13 +14,8 @@ class Yith extends \LWS\WOOREWARDS\PointsFlow\ExportMethod
 	{
 		global $wpdb;
 		$table = $wpdb->prefix . 'yith_ywpar_points_log';
-		$sql = <<<EOT
-SELECT u.user_email as `email`, SUM((yith.amount)) as `points`
-FROM {$table} as yith
-INNER JOIN {$wpdb->users} as u ON u.ID=yith.user_id
-GROUP BY yith.user_id
-EOT;
-		$results = $wpdb->get_results($sql);
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- third-party table name
+		$results = $wpdb->get_results("SELECT u.user_email as `email`, SUM((yith.amount)) as `points` FROM {$table} as yith INNER JOIN {$wpdb->users} as u ON u.ID=yith.user_id GROUP BY yith.user_id");
 		if ($wpdb->last_error) {
 			\wp_die("Yith Points and Rewards must be installed and active", 410);
 		}
@@ -30,6 +25,6 @@ EOT;
 	/** @return (string) human readable name */
 	public function getTitle()
 	{
-		return __("Yith Points and rewards", 'woorewards-lite');
+		return __("Yith Points and rewards", 'woorewards');
 	}
 }

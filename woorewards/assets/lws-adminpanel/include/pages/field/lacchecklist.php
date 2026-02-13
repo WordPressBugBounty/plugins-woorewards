@@ -59,8 +59,8 @@ class LacChecklist extends \LWS\Adminpanel\Pages\LAC
 			$name = esc_attr($this->m_Id);
 			$source = $this->data('source');
 			$spec = $this->data('spec');
-			$placeholder = __("Select...", 'lws-adminpanel');
-			$inputph = __("Search...", 'lws-adminpanel');
+			$placeholder = __("Select...", 'woorewards');
+			$inputph = __("Search...", 'woorewards');
 			if( empty($source) && $this->hasExtra('prebuild') )
 			{
 				$source = $this->prebuild($originalValue, $this->hasExtra('spec', 'a') ? $this->extra['spec'] : array());
@@ -71,28 +71,26 @@ class LacChecklist extends \LWS\Adminpanel\Pages\LAC
 				$inputClass .= (' ' . $ic);
 			}
 			$id = isset($this->extra['id']) ? (" id='".\esc_attr($this->extra['id'])."'") : '';
-			$input = <<<EOT
-			<input class='{$inputClass}' name='{$name}' data-value='{$value}'$attrs$source$spec data-lw_name='{$name}'{$id}>
-			<div class='lac-checklist-wrapper'>
-				<div class='top-line'>
-					<div class='selector'>
-						<div class='anim-icon lws-icon-nav-down'></div>
-						<div class='text'>{$placeholder}</div>
-					</div>
-					<div class='search-div'>
-						<div class='search-btn lws-icon-search'></div>
-						<div class='search-input' contenteditable='true' data-placeholder='{$inputph}'>
-							<div class="lac-loading"></div>
-						</div>
-						<div class='reset-btn lws-icon-undo'></div>
-					</div>
-					<div class='close-btn lws-icon-checkmark'></div>
-					<div class='result-list'></div>
-					</div>
-				<div class='values-list'></div>
-				<div class='values'></div>
-			</div>
-EOT;
+			$input = "<input class='" . esc_attr($inputClass) . "' name='" . esc_attr($name) . "' data-value='" . esc_attr($value) . "'" . $attrs . $source . $spec . " data-lw_name='" . esc_attr($name) . "'" . $id . ">"
+				. "<div class='lac-checklist-wrapper'>"
+				. "<div class='top-line'>"
+				. "<div class='selector'>"
+				. "<div class='anim-icon lws-icon-nav-down'></div>"
+				. "<div class='text'>" . esc_html($placeholder) . "</div>"
+				. "</div>"
+				. "<div class='search-div'>"
+				. "<div class='search-btn lws-icon-search'></div>"
+				. "<div class='search-input' contenteditable='true' data-placeholder='" . esc_attr($inputph) . "'>"
+				. "<div class='lac-loading'></div>"
+				. "</div>"
+				. "<div class='reset-btn lws-icon-undo'></div>"
+				. "</div>"
+				. "<div class='close-btn lws-icon-checkmark'></div>"
+				. "<div class='result-list'></div>"
+				. "</div>"
+				. "<div class='values-list'></div>"
+				. "<div class='values'></div>"
+				. "</div>";
 			return $input;
 
 		}

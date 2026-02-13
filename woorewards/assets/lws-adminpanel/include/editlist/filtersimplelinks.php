@@ -20,7 +20,7 @@ class FilterSimpleLinks extends Filter
 		if( !empty($cssclass) )
 			$this->_class .= " $cssclass";
 		$href = array();
-		if(empty($label)) $label = __("Filter the results", 'lws-adminpanel');
+		if(empty($label)) $label = __("Filter the results", 'woorewards');
 		$retour = "<div class='lws-editlist-filter-box'><div class='lws-editlist-filter-box-title'>{$label}</div>";
 		$retour .= "<div class='lws-editlist-filter-box-content'>";
 		$str = '';
@@ -35,7 +35,8 @@ class FilterSimpleLinks extends Filter
 			$add = (count($suffixes) > $index ? $suffixes[$index] : '');
 			$title = !empty($titles) && isset($titles[$a]) ? $titles[$a] : $a;
 
-			if( !empty($name) && (isset($_GET[$name]) ? $_GET[$name] : '') == $a )
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			if( !empty($name) && (isset($_GET[$name]) ? sanitize_text_field(wp_unslash($_GET[$name])) : '') === $a )
 				$str .= "<span class='lws-editlist-filter-selected'>$title</span> $add";
 			else
 				$str .= "<a href='$href'>$title</a> $add";
@@ -45,9 +46,9 @@ class FilterSimpleLinks extends Filter
 		$retour .= $str."</div></div>";
 		$this->_content = $retour;
 
-		if( !empty($name) && isset($_GET[$name]) )
+		if( !empty($name) && isset($_GET[$name]) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		{
-			$lastValue = \sanitize_text_field($_GET[$name]);
+			$lastValue = \sanitize_text_field(wp_unslash($_GET[$name])); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$lastValue = esc_attr($lastValue); // repeat it in the form
 			$this->_content .= "<input type='hidden' name='{$name}' value='{$lastValue}' />";
 		}

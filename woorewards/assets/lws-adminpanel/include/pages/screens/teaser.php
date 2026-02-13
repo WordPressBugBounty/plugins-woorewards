@@ -8,7 +8,7 @@ if( !defined( 'ABSPATH' ) ) exit();
 class Teaser extends \LWS\Adminpanel\Pages\Page
 {
 	public $uuid = false;
-	
+
 	public function __construct($uniquePluginId)
 	{
 		$this->uuid = $uniquePluginId;
@@ -21,6 +21,7 @@ class Teaser extends \LWS\Adminpanel\Pages\Page
 		echo '<div class="teaser-div">';
 
 		$key = ('lws_teaser_' . $this->uuid);
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$force = isset($_GET['force-check']) ? \boolval($_GET['force-check']) : false;
 		$lastCheck = \get_option('lws_last_teaser_' . $this->uuid, 0);
 		if ($lastCheck && (\time() - $lastCheck) < MINUTE_IN_SECONDS)
@@ -44,7 +45,7 @@ class Teaser extends \LWS\Adminpanel\Pages\Page
 			$data = \wp_remote_get($request, array('timeout' => 60, 'user-agent'  => $agent));
 
 			if (!$this->isValidResponse($data)) {
-				$transiant = sprintf('<h1>%s</h1>', __("No data loaded.", 'lws-adminpanel'));
+				$transiant = sprintf('<h1>%s</h1>', __("No data loaded.", 'woorewards'));
 				\set_site_transient($key, $transiant, MINUTE_IN_SECONDS * 5);
 			} else {
 				$transiant = \wp_remote_retrieve_body($data);
@@ -52,22 +53,23 @@ class Teaser extends \LWS\Adminpanel\Pages\Page
 			}
 		}
 
-		echo $transiant;
+		echo wp_kses_post($transiant);
 
 		echo '</div>';
 		if ($lastCheck && \function_exists('wp_timezone')) {
 			$lastCheck += \date_create('now', \wp_timezone())->getOffset();
 		}
-		echo sprintf(
+		echo wp_kses_post(sprintf(
 			'<div id="lws-teaser-force-link"><small>%s <a href="%s">%s</a></small></div>',
 			sprintf(
-				__('Last checked on %1$s at %2$s.'),
+				/* translators: 1: date, 2: time. */
+				__('Last checked on %1$s at %2$s.', 'woorewards'),
 				\date_i18n(\get_option('date_format', 'F j, Y'), $lastCheck),
 				\date_i18n(\get_option('time_format', 'g:i a'), $lastCheck)
 			),
 			\add_query_arg(array('force-check' => 1)),
-			__("Check again.", 'lws-adminpanel')
-		);
+			__("Check again.", 'woorewards')
+		));
 		echo '</div>';
 	}
 

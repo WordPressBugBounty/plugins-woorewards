@@ -16,10 +16,11 @@ class Pager
 	public function readLimit($max=false)
 	{
 		$limit = new RowLimit();
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if( isset($_REQUEST[$this->keyPage]) && isset($_REQUEST[$this->keyCount]) )
 		{
-			$p = \sanitize_text_field($_REQUEST[$this->keyPage]);
-			$c = \sanitize_text_field($_REQUEST[$this->keyCount]);
+			$p = \sanitize_text_field(wp_unslash($_REQUEST[$this->keyPage])); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$c = \sanitize_text_field(wp_unslash($_REQUEST[$this->keyCount])); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			if( !empty($p) && is_numeric($p) && !empty($c) && is_numeric($c) )
 			{
 				$limit->offset = (($p-1) * $c);
@@ -79,7 +80,7 @@ class Pager
 
 	protected function getSortDiv($sort)
 	{
-		$label = __("Order By", 'lws-adminpanel');
+		$label = __("Order By", 'woorewards');
 		$sortId = 'sort_' . $this->guid;
 		$input = \LWS\Adminpanel\Pages\Field\LacSelect::compose($sortId, array(
 			'name'      => $sortId,
@@ -87,14 +88,14 @@ class Pager
 			'mode'      => 'select',
 			'noconfirm' => true,
 			'source'    => $sort,
-			'value'     => isset($_REQUEST[$sortId]) ? \sanitize_key($_REQUEST[$sortId]) : '',
+			'value'     => isset($_REQUEST[$sortId]) ? \sanitize_key($_REQUEST[$sortId]) : '', // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		));
 		$descId = \esc_attr('desc_' . $this->guid);
 		$checkbox = \LWS\Adminpanel\Pages\Field\Checkbox::compose($descId, array(
 			'noconfirm' => true,
 			'layout'    => 'box',
 			'class'     => 'filter lws_editlist_onchange_filter',
-			'checked'   => (isset($_REQUEST[$descId]) && 'on' == $_REQUEST[$descId]) ? 'checked' : '',
+			'checked'   => (isset($_REQUEST[$descId]) && 'on' === \sanitize_key($_REQUEST[$descId])) ? 'checked' : '', // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		));
 		return "<div class='lws-sort-input'><div class='lws-label-sort'>{$label}</div>{$input}{$checkbox}</div>";
 	}
@@ -102,14 +103,15 @@ class Pager
 	/// return html snippet for total of element
 	protected function snippetTotal($rcount)
 	{
-		$strCount = sprintf( _n("%d item", "%d items", $rcount, 'lws-adminpanel'), $rcount );
+		/* translators: 1: number of items in the page. */
+		$strCount = sprintf( _n("%d item", "%d items", $rcount, 'woorewards'), $rcount );
 		return "<div class='lws-displaying-num'>$strCount</div>";
 	}
 
 	/// return html snippet for number of element per page input
 	protected function snippetPerPage($perpage)
 	{
-		$ph = __("Items per page", 'lws-adminpanel');
+		$ph = __("Items per page", 'woorewards');
 		$pp = self::PP;
 		$countPages = array(10,20,40,80);
 		$str = "<div class='lws-perpage-input'>";
@@ -129,7 +131,8 @@ class Pager
 		$max = "";
 		if( $last !== false )
 		{
-			$ph = sprintf(_nx("/ %d", "/ %d", $last, "Total page number", 'lws-adminpanel'), $last);
+			/* translators: 1: number of pages. */
+			$ph = sprintf(_nx("/ %d", "/ %d", $last, "Total page number", 'woorewards'), $last);
 			$max = " max='$last'";
 		}
 		$str = "<label class='lws-paging-input'><input type='text' value='$index' name='{$this->keyPage}' class='lws-input lws-input-enter-submit lws-ignore-confirm' min='1'$max> <span>$ph</span></label>";

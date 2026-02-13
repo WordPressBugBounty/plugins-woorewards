@@ -17,8 +17,8 @@ class SponsoredOrder extends \LWS\WOOREWARDS\Abstracts\Event
 	{
 		return array_merge(parent::getInformation(), array(
 			'icon'  => 'lws-icon-shop',
-			'short' => __("The customer will earn points when a person he referred placed an order. You can restrict this to the first referee order.", 'woorewards-lite'),
-			'help'  => __("This method will only reward the Referrer, not the Referee", 'woorewards-lite'),
+			'short' => __("The customer will earn points when a person he referred placed an order. You can restrict this to the first referee order.", 'woorewards'),
+			'help'  => __("This method will only reward the Referrer, not the Referee", 'woorewards'),
 		));
 	}
 
@@ -39,23 +39,21 @@ class SponsoredOrder extends \LWS\WOOREWARDS\Abstracts\Event
 
 		// just hidden since we do not want to reset the value on save
 		$noPri = (\get_option('lws_woorewards_show_loading_order_and_priority') ? '' : ' style="display: none;"');
-		$label = __("Priority", 'woorewards-lite');
-		$tooltip = __("Customer orders will run by ascending priority value.", 'woorewards-lite');
-		$str = <<<EOT
-		<div class='field-help'{$noPri}>$tooltip</div>
-		<div class='lws-$context-opt-title label'{$noPri}>$label<div class='bt-field-help'>?</div></div>
-		<div class='lws-$context-opt-input value'{$noPri}>
-			<input type='text' id='{$prefix}event_priority' name='{$prefix}event_priority' placeholder='10' size='5' />
-		</div>
-EOT;
+		$label = __("Priority", 'woorewards');
+		$tooltip = __("Customer orders will run by ascending priority value.", 'woorewards');
+		$str = "<div class='field-help'{$noPri}>$tooltip</div>"
+			. "<div class='lws-$context-opt-title label'{$noPri}>$label<div class='bt-field-help'>?</div></div>"
+			. "<div class='lws-$context-opt-input value'{$noPri}>"
+			. "<input type='text' id='{$prefix}event_priority' name='{$prefix}event_priority' placeholder='10' size='5' />"
+			. "</div>";
 		$phb0 = $this->getFieldsetPlaceholder(false, 0);
 		$form = str_replace($phb0, $str.$phb0, $form);
 
-		$form .= $this->getFieldsetBegin(2, __("Options", 'woorewards-lite'));
+		$form .= $this->getFieldsetBegin(2, __("Options", 'woorewards'));
 
 		// First Order Only
-		$label   = _x("First order only", "Referral Order Event", 'woorewards-lite');
-		$tooltip = __("If checked, only the first order placed by each referee will give points.", 'woorewards-lite');
+		$label   = _x("First order only", "Referral Order Event", 'woorewards');
+		$tooltip = __("If checked, only the first order placed by each referee will give points.", 'woorewards');
 		$toggle = \LWS\Adminpanel\Pages\Field\Checkbox::compose($prefix . 'first_order_only', array(
 			'id'      => $prefix . 'first_order_only',
 			'layout'  => 'toggle',
@@ -83,8 +81,8 @@ EOT;
 				$prefix . 'event_priority'   => $this->getEventPriority(),
 			),
 			'labels'   => array(
-				$prefix . 'first_order_only' => __("First order only", 'woorewards-lite'),
-				$prefix . 'event_priority'   => __("Event priority", 'woorewards-lite'),
+				$prefix . 'first_order_only' => __("First order only", 'woorewards'),
+				$prefix . 'event_priority'   => __("Event priority", 'woorewards'),
 			)
 		));
 		if( !(isset($values['valid']) && $values['valid']) )
@@ -142,7 +140,7 @@ EOT;
 		$descr = parent::getDescription($context);
 		if( $this->isFirstOrderOnly() )
 		{
-			$descr .= __(" (first order only)", 'woorewards-lite');
+			$descr .= __(" (first order only)", 'woorewards');
 		}
 		return $descr;
 	}
@@ -150,7 +148,7 @@ EOT;
 	/** @return string a human readable type for UI */
 	public function getDisplayType()
 	{
-		return _x("Referee orders", "getDisplayType", 'woorewards-lite');
+		return _x("Referee orders", "getDisplayType", 'woorewards');
 	}
 
 	function getEventPriority()
@@ -202,11 +200,11 @@ EOT;
 				->setProvider($order->order->get_customer_id('edit'))
 				->setReason(
 					array(
-					"Referred friend %s order #%s completed",
+					"Referred friend %1\$s order #%2\$s completed",
 						$this->sponsorship->sponsored_email,
 						$order->order->get_order_number()
 					),
-					'woorewards-lite'
+					'woorewards'
 				);
 
 			$this->addPoint(array(
@@ -221,7 +219,8 @@ EOT;
 	/** Never call, only to have poedit/wpml able to extract the sentance. */
 	private function poeditDeclare()
 	{
-		__("Referred friend %s order #%s completed", 'woorewards-lite');
+		/* translators: %1$s: friend name, %2$s: order number */
+		__("Referred friend %1\$s order #%2\$s completed", 'woorewards');
 	}
 
 	/**	Event categories, used to filter out events from pool options.
@@ -229,8 +228,8 @@ EOT;
 	public function getCategories()
 	{
 		return array_merge(parent::getCategories(), array(
-			'woocommerce' => __("WooCommerce", 'woorewards-lite'),
-			'sponsorship' => __("Available for referees", 'woorewards-lite')
+			'woocommerce' => __("WooCommerce", 'woorewards'),
+			'sponsorship' => __("Available for referees", 'woorewards')
 		));
 	}
 }

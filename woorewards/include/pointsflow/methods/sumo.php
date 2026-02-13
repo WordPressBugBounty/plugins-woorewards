@@ -15,14 +15,8 @@ class Sumo extends \LWS\WOOREWARDS\PointsFlow\ExportMethod
 	{
 		global $wpdb;
 		$table = $wpdb->prefix . 'rspointexpiry';
-		$sql = <<<EOT
-SELECT u.user_email as `email`, SUM((sumo.earnedpoints-sumo.usedpoints)) as `points`
-FROM {$table} as sumo
-INNER JOIN {$wpdb->users} as u ON u.ID=sumo.userid
-WHERE sumo.expiredpoints IN(0)
-GROUP BY sumo.userid
-EOT;
-		$results = $wpdb->get_results($sql);
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- third-party table name
+		$results = $wpdb->get_results("SELECT u.user_email as `email`, SUM((sumo.earnedpoints-sumo.usedpoints)) as `points` FROM {$table} as sumo INNER JOIN {$wpdb->users} as u ON u.ID=sumo.userid WHERE sumo.expiredpoints IN(0) GROUP BY sumo.userid");
 		if ($wpdb->last_error) {
 			\wp_die("SUMO must be installed and active", 410);
 		}
@@ -32,6 +26,6 @@ EOT;
 	/** @return (string) human readable name */
 	public function getTitle()
 	{
-		return __("Sumo", 'woorewards-lite');
+		return __("Sumo", 'woorewards');
 	}
 }

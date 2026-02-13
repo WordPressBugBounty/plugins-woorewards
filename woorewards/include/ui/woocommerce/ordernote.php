@@ -15,7 +15,7 @@ class OrderNote
 				$me = new \LWS\WOOREWARDS\Ui\Woocommerce\OrderNote();
 				\add_meta_box(
 					'woorewards-order-notes',
-					__('Loyalty system notes', 'woorewards-lite'),
+					__('Loyalty system notes', 'woorewards'),
 					array($me, 'eContent'),
 					$screen,
 					'side', 'default'
@@ -50,32 +50,31 @@ class OrderNote
 			$content = '';
 			foreach ($notes as $note) {
 				$css = \implode(' ', \apply_filters('lws_woorewards_metabox_order_note_class', array('lws-wr-note'), $note));
-				$row = <<<EOT
-<li rel="%1\$s" class="{$css}">
-	<div class="lws-wr-note-content">%4\$s</div>
-	<p class="meta">
-		<abbr class="exact-date" title="%2\$s">%3\$s</abbr>
-	</p>
-</li>
-EOT;
+				$row = "<li rel='%1\$s' class='{$css}'>"
+				. "<div class='lws-wr-note-content'>%4\$s</div>"
+				. "<p class='meta'>"
+				. "<abbr class='exact-date' title='%2\$s'>%3\$s</abbr>"
+				. "</p>"
+				. "</li>";
 				$date = \wc_string_to_datetime($note->comment_date);
 				$content .= \apply_filters('lws_woorewards_metabox_order_note_item', sprintf(
 					$row,
 					\absint($note->comment_ID),
 					\esc_attr($date->date('Y-m-d H:i:s')),
 					\esc_html(sprintf(
-						__('%1$s at %2$s', 'woorewards-lite'),
+						/* translators: %1$s: date, %2$s: time */
+						__('%1$s at %2$s', 'woorewards'),
 						$date->date_i18n(\wc_date_format()),
 						$date->date_i18n(\wc_time_format())
 					)),
 					\wpautop(\wptexturize(\wp_kses_post($note->comment_content)))
 				), $note);
 			}
-			echo "<ul class='woorewards-notes'>{$content}</ul>";
+			echo wp_kses_post("<ul class='woorewards-notes'>{$content}</ul>");
 		} else {
 			echo sprintf(
 				'<ul class="woorewards-notes"><li class="no-items">%s</li></ul>',
-				__( 'There are no notes yet.', 'woorewards-lite')
+				esc_html__( 'There are no notes yet.', 'woorewards')
 			);
 		}
 	}

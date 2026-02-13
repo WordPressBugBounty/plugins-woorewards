@@ -28,7 +28,8 @@ class Options
 	/** @return bool */
 	function isOptionPage()
 	{
-		if( !isset($_POST['tab']) || false === strpos($_POST['tab'], 'wr_loyalty') )
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- called inside WP settings API
+		if( !isset($_POST['tab']) || false === strpos(\sanitize_text_field(\wp_unslash($_POST['tab'])), 'wr_loyalty') )
 			return false;
 
 		$vars = array(
@@ -75,8 +76,8 @@ class Options
 
 			if( empty($pool) )
 			{
-				error_log("Requested pool cannot be loaded or created ($poolId).");
-				\lws_admin_add_notice_once('wr-pool-option-update-failure', __("Requested loyalty system cannot be loaded or created.", 'woorewards-lite'), array('level'=>'error'));
+				if (defined('WP_DEBUG') && WP_DEBUG) error_log("Requested pool cannot be loaded or created ($poolId)."); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+				\lws_admin_add_notice_once('wr-pool-option-update-failure', __("Requested loyalty system cannot be loaded or created.", 'woorewards'), array('level'=>'error'));
 			}
 			else
 			{
@@ -85,7 +86,7 @@ class Options
 				foreach( $this->whitelist as $option )
 				{
 					$option = trim($option);
-					$value  = isset($_POST[$option]) ? \wp_unslash($_POST[$option]) : null;
+					$value  = isset($_POST[$option]) ? \wp_unslash($_POST[$option]) : null; // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- nonce verified by WP settings API, value sanitized by pool setOption
 
 					if( substr($option, 0, strlen($this->poolOptionPrefix)) == $this->poolOptionPrefix )
 					{
@@ -105,11 +106,11 @@ class Options
 					$pool->ensureNameUnicity();
 				else
 				{
-					\lws_admin_add_notice_once('wr-pool-no-name', __("Please, set a <b>Title</b> for this Points and Rewards System.", 'woorewards-lite'), array('level' => 'warning'));
+					\lws_admin_add_notice_once('wr-pool-no-name', __("Please, set a <b>Title</b> for this Points and Rewards System.", 'woorewards'), array('level' => 'warning'));
 					if( !$pool->getOption('disabled') )
 					{
 						$pool->setOption('disabled', true);
-						\lws_admin_add_notice_once('wr-pool-no-name', __("A Points and Rewards System without a <b>Title</b> cannot be turned <b>On</b>.", 'woorewards-lite'), array('level' => 'warning'));
+						\lws_admin_add_notice_once('wr-pool-no-name', __("A Points and Rewards System without a <b>Title</b> cannot be turned <b>On</b>.", 'woorewards'), array('level' => 'warning'));
 					}
 				}
 				$pool->save(false, false);

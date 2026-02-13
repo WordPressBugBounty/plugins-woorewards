@@ -11,12 +11,13 @@ class Radio extends \LWS\Adminpanel\Pages\Field
 		$name = $this->m_Id;
 		$value = $this->readOption(false);
 
-		echo "<div class='{$this->style}-radio-group'>";
+		$html = "<div class='{$this->style}-radio-group'>";
 		foreach( (($this->hasExtra('options') && is_array($this->extra['options'])) ? $this->extra['options'] : $this->extra) as $key => $opt )
 		{
 			$checked = ($key == $value ? 'checked' : '');
-			echo "<label><input class='{$this->style}' type='radio' name='$name' value='$key' $checked> $opt</label><br/>";
+			$html .= "<label><input class='{$this->style}' type='radio' name='$name' value='$key' $checked> $opt</label><br/>";
 		}
-		echo "</div>";
+		$html .= "</div>";
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }

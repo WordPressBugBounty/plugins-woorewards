@@ -223,7 +223,7 @@ class Head
 
 		if( $html )
 		{
-			echo "<div class='lws-adminpanel-transient-notices'>{$html}</div>";
+			echo wp_kses_post("<div class='lws-adminpanel-transient-notices'>{$html}</div>");
 		}
 	}
 
@@ -251,7 +251,7 @@ class Head
 					}
 					$link .= "</ul>";
 				}
-				echo "<li class='particle'>{$link}</li>";
+				echo wp_kses_post("<li class='particle'>{$link}</li>");
 			}
 		}
 		echo "</ul>";
@@ -265,55 +265,67 @@ class Head
 		if ($middle) {
 			if (\is_array($middle))
 				$middle = \LWS\Adminpanel\Tools\Conveniences::array2html($middle);
-			echo $middle;
+			echo $middle; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
-		if ($type == 'admin') {
-			/** Second Line */
-			$secondLine = false;
-			$submit = '';
-			$expand = '';
-			$hasTabs = ($this->getTabCount($this->page->getData()) > 1);
-			$tabs = '';
-			if ($this->page->allowSubmit()) {
-				$submit = $this->getSubmitButtons();
-				$secondLine = true;
+		if ($type == 'admin' && $this->hasSecondLine()) {
+			echo "<div class='second-row'>";
+
+			if ( $this->getTabCount( $this->page->getData() ) > 1 ) {
+				?>
+				<div class='tab-menu'>
+					<div class='small-screen-tabs lws-icon-menu'><div class='vertical-wrapper'></div></div>
+					<?php echo wp_kses_post($this->getTabs()) ?>
+				</div>
+				<?php
+			} else {
+				echo "<div class='tab-menu'></div>";
 			}
-			if ($this->page->getGroups() && count($this->page->getGroups()) > 1) {
-				$expand = $this->getExpandButton();
-				$secondLine = true;
+
+			if ( $this->page->allowSubmit() ) {
+				?>
+				<button id='save_changes' class='second-row-button save' type='submit' form='<?php echo \esc_attr($this->id) ?>'>
+					<div class='button-icon lws-icon-floppy-disk-2'></div>
+					<div class='button-text'><?php \esc_html_e( 'Save Changes', 'woorewards' ) ?></div>
+				</button>
+				<?php
 			}
-			if ($hasTabs) {
-				$tabs = "<div class='tab-menu'>";
-				$tabs .= "<div class='small-screen-tabs lws-icon-menu'><div class='vertical-wrapper'></div></div>";
-				$tabs .= $this->getTabs();
-				$tabs .= "</div>";
-				$secondLine = true;
-			} else if ($secondLine) {
-				$tabs = "<div class='tab-menu'></div>";
+
+			if ( $this->page->getGroups() && count( $this->page->getGroups() ) > 1 ) {
+				?>
+				<div id='expand_groups' class='second-row-button expand'>
+					<div class='button-icon lws-icon-plus'></div>
+					<div class='button-text'><?php \esc_html_e( 'Expand All', 'woorewards' ) ?></div>
+				</div>
+				<?php
 			}
-			if ($secondLine) {
-				echo "<div class='second-row'>";
-				echo $tabs . $expand . $submit;
-				echo "</div>";
-			}
+
+			echo "</div>";
 		}
 		echo "</div>";
+	}
+
+	private function hasSecondLine(): bool
+	{
+		if ($this->getTabCount($this->page->getData()) > 1) return true;
+		if ($this->page->allowSubmit()) return true;
+		if ($this->page->getGroups() && count($this->page->getGroups()) > 1) return true;
+		return false;
 	}
 
 	/** Echo the Header Admin Menu */
 	function showAdminMenu()
 	{
 		$labels = \apply_filters('lws_adminpanel_topbar_labels_' . $this->id, array(
-			'amenu'    => __("Admin Menu", 'lws-adminpanel'),
-			'asettings'=> __("Advanced Settings", 'lws-adminpanel'),
-			'support'  => __("Support", 'lws-adminpanel'),
-			'tshooting'=> __("Troubleshooting", 'lws-adminpanel'),
-		//	'chat'     => __("Live Chat", 'lws-adminpanel'),
-			'doc'      => __("Documentation", 'lws-adminpanel'),
-			'patch'    => __("Patch Notes", 'lws-adminpanel'),
-			'lic'      => __("License Information", 'lws-adminpanel'),
-			'trialtext'=> __("Try Premium for Free", 'lws-adminpanel'),
+			'amenu'    => __("Admin Menu", 'woorewards'),
+			'asettings'=> __("Advanced Settings", 'woorewards'),
+			'support'  => __("Support", 'woorewards'),
+			'tshooting'=> __("Troubleshooting", 'woorewards'),
+		//	'chat'     => __("Live Chat", 'woorewards'),
+			'doc'      => __("Documentation", 'woorewards'),
+			'patch'    => __("Patch Notes", 'woorewards'),
+			'lic'      => __("License Information", 'woorewards'),
+			'trialtext'=> __("Try Premium for Free", 'woorewards'),
 		));
 
 		$settings = $this->getAdminMenuSettings();
@@ -322,94 +334,67 @@ class Head
 
 		// Show Start Trial Button
 		if( $licUrl && isset($settings['trial_available']) && $settings['trial_available'] )
-			echo "<a href='{$licUrl}' class='start-trial-button'>{$labels['trialtext']}</a>";
+			echo wp_kses_post("<a href='{$licUrl}' class='start-trial-button'>{$labels['trialtext']}</a>");
 
-		echo "<div class='admin-menu'>";
-		echo <<<EOT
-	<div id='lws_am_top_item' class='top-item'>
-		<div class='item-icon lws-icon-menu'>
-			<div class='notif-counter' style='display:none;' id='lws_am_top_notif_counter'></div>
-		</div>
-		<div class='item-name'>
-			<div class='item-text'>{$labels['amenu']}</div>
-			<div class='item-info'>
-				<div class='info-icon $activecolor'></div><div class='info-icon $subcolor'></div>
+?>
+		<div class='admin-menu'>
+			<div id='lws_am_top_item' class='top-item'>
+				<div class='item-icon lws-icon-menu'>
+					<div class='notif-counter' style='display:none;' id='lws_am_top_notif_counter'></div>
+				</div>
+				<div class='item-name'>
+					<div class='item-text'><?php echo \esc_html($labels['amenu']) ?></div>
+					<div class='item-info'>
+						<div class='info-icon <?php echo \esc_attr($activecolor) ?>'></div><div class='info-icon <?php echo \esc_attr($subcolor) ?>'></div>
+					</div>
+				</div>
 			</div>
-		</div>
-	</div>
-EOT;
-		echo "<div id='lws_am_top_menu' class='top-menu'>";
 
-		/** Plugin Name and version */
-		echo <<<EOT
-	<div class='top-menu-item separator no-pointer'>
-		<div class='top-menu-item-icon lws-icon-version'></div>
-		<div class='top-menu-item-text upper'>{$settings['title']} {$settings['version']}</div>
-	</div>
-EOT;
+			<div id='lws_am_top_menu' class='top-menu'>
+				<div class='top-menu-item separator no-pointer'>
+					<div class='top-menu-item-icon lws-icon-version'></div>
+					<div class='top-menu-item-text upper'><?php echo \esc_html($settings['title'] . '&nbsp;' . $settings['version']) ?></div>
+				</div>
+<?php
 
 		/** Notifications */
-		echo $this->getNoticeMenuItem(
+		echo wp_kses_post($this->getNoticeMenuItem(
 			\LWS\Adminpanel\Pages\Notices::instance()->getNotices('persistant'),
-			__("Plugin Notifications", 'lws-adminpanel'),
+			__("Plugin Notifications", 'woorewards'),
 			'',
 			'internal'
-		);
-		echo $this->getNoticeMenuItem(
+		));
+		echo wp_kses_post($this->getNoticeMenuItem(
 			\LWS\Adminpanel\Pages\Page::getAdminNotices(),
-			__("Other Notifications", 'lws-adminpanel'),
+			__("Other Notifications", 'woorewards'),
 			'separator',
 			'external'
-		);
-
-		/** Advanced Settings */
-		//echo "<div id='lws_advanced_settings' class='top-menu-item separator'><div class='top-menu-item-icon lws-icon-adv-settings'></div>";
-		//echo "<div class='top-menu-item-text'>{$labels['asettings']}</div></div>";
+		));
 
 		/** Support */
-		echo sprintf("<a href='%s' class='top-menu-item'>", \esc_attr($this->getSupportUrl($settings['mailto'])));
-		echo "<div class='top-menu-item-icon lws-icon-support'></div>";
-		echo "<div class='top-menu-item-text'>{$labels['support']}</div></a>";
-
-		/** Troubleshooting */
-		/*
-		echo "<a href='{$settings['tshooting']}' class='top-menu-item'>";
-		echo "<div class='top-menu-item-icon lws-icon-debug'></div>";
-		echo "<div class='top-menu-item-text'>{$labels['tshooting']}</div></a>";
-		*/
-
-		// Live Chat
-		// echo "<a href='{$settings['chat']}' target='_blank' class='top-menu-item'>";
-		// echo "<div class='top-menu-item-icon lws-icon-discord'></div>";
-		// echo "<div class='top-menu-item-text'>{$labels['chat']}</div></a>";
+		echo sprintf(
+			"<a href='%s' class='top-menu-item'><div class='top-menu-item-icon lws-icon-support'></div><div class='top-menu-item-text'>%s</div></a>",
+			\esc_attr($this->getSupportUrl($settings['mailto'])), \esc_html($labels['support'])
+		);
 
 		/** Web documentation */
-		echo "<a href='{$settings['doc']}' target='_blank' class='top-menu-item separator'>";
-		echo "<div class='top-menu-item-icon lws-icon-books'></div>";
-		echo "<div class='top-menu-item-text'>{$labels['doc']}</div></a>";
-
-		/* // Patch Notes
-		echo "<div class='top-menu-item separator'>";
-		$classeNotes = '';
-		if (isset($patchNotes)) {
-			$classeNotes = ' show_patchnotes';
-			echo "<div class='top-menu-item-icon lws-icon-notes{$classeNotes}'><div class='notif-counter'></div></div>";
-		} else {
-			echo "<div class='top-menu-item-icon lws-icon-notes'></div>";
-		}
-		echo "<div class='top-menu-item-text{$classeNotes}'>{$labels['patch']}</div></div>";*/
+		echo sprintf(
+			"<a href='%s' target='_blank' class='top-menu-item separator'><div class='top-menu-item-icon lws-icon-books'></div><div class='top-menu-item-text'>%s</div></a>",
+			\esc_attr($settings['doc']), \esc_html($labels['doc'])
+		);
 
 		/** Manager information */
-		if( $licUrl )
-		{
-			$licUrl = \esc_attr($licUrl);
-			$licText  = "<a href='{$licUrl}' class='top-menu-item'><div class='top-menu-item-icon lws-icon-key'></div>";
-			$licText .= "<div class='top-menu-item-text'>{$labels['lic']}</div></a>";
-			echo $licText; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		if( $licUrl ) {
+			echo sprintf(
+				"<a href='%s' class='top-menu-item'><div class='top-menu-item-icon lws-icon-key'></div><div class='top-menu-item-text'>%s</div></a>",
+				\esc_attr($licUrl), \esc_html($labels['lic'])
+			);
 		}
 
-		echo "</div>";
-		echo "</div>";
+?>
+			</div>
+		</div>
+<?php
 	}
 
 	protected function getNoticeMenuItem($notices, $label='Notices', $class='', $type='')
@@ -427,7 +412,7 @@ EOT;
 					if($notice->dismissible || $notice->forgettable)
 					{
 						$key = \esc_attr($notice->key);
-						$text = __("Dismiss", 'lws-adminpanel');
+						$text = __("Dismiss", 'woorewards');
 						$close = "<div class='dismiss-btn' data-forget='{$key}'>{$text}</div>";
 					}
 					$wrapper .= "<div class='lws-notice {$notice->level}'><div class='text'>{$notice->message}</div>{$close}</div>";
@@ -447,30 +432,10 @@ EOT;
 			$wrapper = "<div class='top-menu-item-icon lws-icon-notifs-off'></div>";
 		}
 
-		return <<<EOT
-<div class='top-menu-item' data-type='{$type}'>
-	{$wrapper}
-	<div class='top-menu-item-text check_notices_count_at_start{$class}'>{$label}</div>
-</div>
-EOT;
-	}
-
-	/** Submit and Cancel buttons */
-	function getSubmitButtons()
-	{
-		$buttons = "<button id='save_changes' class='second-row-button save' type='submit' form='{$this->id}'>";
-		$buttons .= "<div class='button-icon lws-icon-floppy-disk-2'></div>";
-		$buttons .= "<div class='button-text'>" . __('Save Changes', 'lws-adminpanel') . "</div></button>";
-		return $buttons;
-	}
-
-	/** Groups Expand Button */
-	function getExpandButton()
-	{
-		$buttons  = "<div id='expand_groups' class='second-row-button expand'>";
-		$buttons .= "<div class='button-icon lws-icon-plus'></div>";
-		$buttons .= "<div class='button-text'>".__('Expand All', 'lws-adminpanel')."</div></div>";
-		return $buttons;
+		return "<div class='top-menu-item' data-type='" . esc_attr($type) . "'>"
+			. $wrapper
+			. "<div class='top-menu-item-text check_notices_count_at_start" . esc_attr($class) . "'>" . esc_html($label) . "</div>"
+			. "</div>";
 	}
 
 	/** Tabs Menu */
@@ -555,10 +520,10 @@ EOT;
 			'title'      => $this->getMainTitle(),
 			'subtitle'   => isset($this->data['subtitle']) ? $this->data['subtitle'] : '',
 			'pagetitle'   => isset($this->data['pagetitle']) ? $this->data['pagetitle'] : '',
-			'url'        => __("https://plugins.longwatchstudio.com/", 'lws-adminpanel'),
+			'url'        => __("https://plugins.longwatchstudio.com/", 'woorewards'),
 			'version'    => \apply_filters('lws_adminpanel_plugin_version_'     . $id, '', $this->id),
 			'origin'     => \apply_filters('lws_adminpanel_plugin_origin_'      . $id, array('LWS', 'Long Watch Studio'), $this->id),
-			'doc'        => \apply_filters('lws_adminpanel_documentation_url_'  . $id, __('https://plugins.longwatchstudio.com/knowledge-base/', 'lws-adminpanel'), $this->id),
+			'doc'        => \apply_filters('lws_adminpanel_documentation_url_'  . $id, __('https://plugins.longwatchstudio.com/knowledge-base/', 'woorewards'), $this->id),
 		//	'chat'       => \apply_filters('lws_adminpanel_plugin_chat_url_'    . $id, self::CHAT, $this->id),
 			'mailto'     => \apply_filters('lws_adminpanel_plugin_support_email'. $id, self::MAILTO, $this->id),
 			'purchase'   => false,

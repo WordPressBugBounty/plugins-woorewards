@@ -21,8 +21,8 @@ class Coupon extends \LWS\WOOREWARDS\Abstracts\Unlockable
 	{
 		return array_merge(parent::getInformation(), array(
 			'icon'  => 'lws-icon-coupon',
-			'short' => __("The customer will receive a WooCommerce Coupon, either for a fix discount or a percentage one.", 'woorewards-lite'),
-			'help'  => __("The generated coupon can be used like any other WooCommerce coupon.", 'woorewards-lite'),
+			'short' => __("The customer will receive a WooCommerce Coupon, either for a fix discount or a percentage one.", 'woorewards'),
+			'help'  => __("The generated coupon can be used like any other WooCommerce coupon.", 'woorewards'),
 		));
 	}
 
@@ -42,14 +42,14 @@ class Coupon extends \LWS\WOOREWARDS\Abstracts\Unlockable
 	{
 		$prefix = $this->getDataKeyPrefix();
 		$form = parent::getForm($context);
-		$form .= $this->getFieldsetBegin(2, __("Coupon options", 'woorewards-lite'));
+		$form .= $this->getFieldsetBegin(2, __("Coupon options", 'woorewards'));
 
 		// percent or fixed
-		$label = _x("Discount type", "Coupon Unlockable", 'woorewards-lite');
+		$label = _x("Discount type", "Coupon Unlockable", 'woorewards');
 		$value = $this->getInPercent() ? 'per' : 'fix';
 		$form .= "<div class='lws-$context-opt-title label'>$label</div>";
 		$form .= "<div class='lws-$context-opt-input value'><select id='{$prefix}percent' name='{$prefix}percent' class='lac_select' data-mode='select'>";
-		foreach (array('fix' => __("Fixed cart discount", 'woorewards-lite'), 'per' => __("Percentage discount", 'woorewards-lite')) as $v => $l) {
+		foreach (array('fix' => __("Fixed cart discount", 'woorewards'), 'per' => __("Percentage discount", 'woorewards')) as $v => $l) {
 			$selected = ($v == $value ? ' selected' : '');
 			$form .= "<option value='$v'$selected>$l</option>";
 		}
@@ -57,14 +57,14 @@ class Coupon extends \LWS\WOOREWARDS\Abstracts\Unlockable
 		$form .= "</div>";
 
 		// value
-		$label = _x("Coupon amount", "Coupon Unlockable", 'woorewards-lite');
+		$label = _x("Coupon amount", "Coupon Unlockable", 'woorewards');
 		$currency = \LWS\Adminpanel\Tools\Conveniences::isWC() ? \get_woocommerce_currency_symbol() : '$';
 		$value = empty($this->getValue()) ? '' : \esc_attr($this->getValue());
 		$form .= "<div class='lws-$context-opt-title label bold'>$label (<span class='{$prefix}currency_hide currency_fix'>$currency</span><span class='{$prefix}currency_hide currency_per'>%</span>)</div>";
 		$form .= "<div class='lws-$context-opt-input value'><input type='text' id='{$prefix}value' name='{$prefix}value' value='$value' placeholder='5' pattern='\\d*(\\.|,)?\\d*' /></div>";
 
 		// timeout
-		$label = _x("Validity period", "Coupon Unlockable", 'woorewards-lite');
+		$label = _x("Validity period", "Coupon Unlockable", 'woorewards');
 		$value = $this->getTimeout()->toString();
 		$form .= "<div class='lws-$context-opt-title label'>$label</div>";
 		$form .= "<div class='lws-$context-opt-input value'>";
@@ -72,17 +72,15 @@ class Coupon extends \LWS\WOOREWARDS\Abstracts\Unlockable
 		$form .= "</div>";
 
 		if ($this->grantExclCat() && \apply_filters('lwsdev_coupon_individual_use_solver_exists', false)) {
-			$label   = _x("Exclusive categories", "Coupon category", 'woorewards-lite');
-			$tooltip = __("Exclusive categories that the coupon will be applied to. Extends the <i>“Individual use only”</i> rule.", 'woorewards-lite');
+			$label   = _x("Exclusive categories", "Coupon category", 'woorewards');
+			$tooltip = __("Exclusive categories that the coupon will be applied to. Extends the <i>“Individual use only”</i> rule.", 'woorewards');
 			$input = \LWS\Adminpanel\Pages\Field\LacChecklist::compose($prefix . 'coupon_cat', array(
 				'comprehensive' => true,
 				'ajax'          => 'lwsdev_coupon_individual_use_solver_categories',
 			));
-			$form .= <<<EOT
-<div class='field-help'>{$tooltip}</div>
-<div class='lws-{$context}-opt-title label'>{$label}<div class='bt-field-help'>?</div></div>
-<div class='lws-{$context}-opt-input value'>{$input}</div>
-EOT;
+			$form .= "<div class='field-help'>{$tooltip}</div>"
+				. "<div class='lws-{$context}-opt-title label'>{$label}<div class='bt-field-help'>?</div></div>"
+				. "<div class='lws-{$context}-opt-input value'>{$input}</div>";
 		}
 
 		$form .= $this->getFieldsetPlaceholder(false, 2);
@@ -106,15 +104,15 @@ EOT;
 				$prefix . 'percent' => 'fix',
 			),
 			'labels'   => array(
-				$prefix . 'timeout' => __("Validity period", 'woorewards-lite'),
-				$prefix . 'value'   => __("Coupon amount", 'woorewards-lite'),
-				$prefix . 'percent' => __("Discount in percent or fixed price", 'woorewards-lite'),
+				$prefix . 'timeout' => __("Validity period", 'woorewards'),
+				$prefix . 'value'   => __("Coupon amount", 'woorewards'),
+				$prefix . 'percent' => __("Discount in percent or fixed price", 'woorewards'),
 			)
 		);
 		if ($this->grantExclCat()) {
 			$args['format'][$prefix . 'coupon_cat']   = array('D');
 			$args['defaults'][$prefix . 'coupon_cat'] = array();
-			$args['labels'][$prefix . 'coupon_cat']   = __("Exclusive categories", 'woorewards-lite');
+			$args['labels'][$prefix . 'coupon_cat']   = __("Exclusive categories", 'woorewards');
 		}
 		$values = \apply_filters('lws_adminpanel_arg_parse', $args);
 		if (!(isset($values['valid']) && $values['valid']))
@@ -146,8 +144,8 @@ EOT;
 
 	public function setTestValues()
 	{
-		$this->setValue(rand(15, 50) / 10.0);
-		$this->setTimeout(rand(5, 78) . 'D');
+		$this->setValue(wp_rand(15, 50) / 10.0);
+		$this->setTimeout(wp_rand(5, 78) . 'D');
 		return $this;
 	}
 
@@ -185,7 +183,7 @@ EOT;
 
 	public function getDisplayType()
 	{
-		return _x("Fixed/Percentage discount", "getDisplayType", 'woorewards-lite');
+		return _x("Fixed/Percentage discount", "getDisplayType", 'woorewards');
 	}
 
 	/**	Provided to be overriden.
@@ -209,24 +207,17 @@ EOT;
 			$value = self::getPriceTaxStatus($value);
 		}
 
-		$str = sprintf(
-			__("%s discount on an order", 'woorewards-lite'),
-			$value
-		);
+		/* translators: %s: discount value */
+		$str = sprintf(__("%s discount on an order", 'woorewards'), $value);
 
 		if (!$this->getTimeout()->isNull()) {
 			$str .= ' - ';
 			if ($date) {
-				$str .= sprintf(
-					__('valid up to %s', 'woorewards-lite'),
-					\date_i18n(\get_option('date_format'), $this->getTimeout()->getEndingDate($date)->getTimestamp())
-				);
+				/* translators: %s: expiration date */
+				$str .= sprintf(__('valid up to %s', 'woorewards'), \date_i18n(\get_option('date_format'), $this->getTimeout()->getEndingDate($date)->getTimestamp()));
 			} else {
-				$str .= sprintf(
-					__('valid for %1$d %2$s', 'woorewards-lite'),
-					$this->getTimeout()->getCount(),
-					$this->getTimeout()->getPeriodText()
-				);
+				/* translators: %1$d: duration count, %2$s: period text (days, weeks...) */
+				$str .= sprintf(__('valid for %1$d %2$s', 'woorewards'), $this->getTimeout()->getCount(), $this->getTimeout()->getPeriodText());
 			}
 		}
 		return $str;
@@ -250,9 +241,9 @@ EOT;
 		}
 		if (!$omitSuffix) {
 			if ($dispTax && $priceWithoutTax) {
-				$price .= __(" (excl. tax)", 'woorewards-lite');
+				$price .= __(" (excl. tax)", 'woorewards');
 			} else if (!($dispTax || $priceWithoutTax)) {
-				$price .= __(" (incl. tax)", 'woorewards-lite');
+				$price .= __(" (incl. tax)", 'woorewards');
 			}
 		}
 		return $price;
@@ -296,7 +287,7 @@ EOT;
 	public function getCost($context = 'edit')
 	{
 		if (empty($this->getValue()) && ($context == 'view' || $context == 'front'))
-			return _x("No discount", "Cannot be bought cause no discount", 'woorewards-lite');
+			return _x("No discount", "Cannot be bought cause no discount", 'woorewards');
 		else
 			return parent::getCost($context);
 	}
@@ -320,13 +311,13 @@ EOT;
 			return false;
 
 		if (!\is_email($user->user_email)) {
-			error_log(__CLASS__ . "::apply - invalid email for user {$user->ID}");
+			if (defined('WP_DEBUG') && WP_DEBUG) error_log(__CLASS__ . "::apply - invalid email for user {$user->ID}"); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 			return false;
 		}
 
 		$this->lastCode = '';
 		if ($demo) {
-			$this->lastCode = strtoupper(__('TESTCODE', 'woorewards-lite'));
+			$this->lastCode = strtoupper(__('TESTCODE', 'woorewards'));
 		} else if (empty($this->lastCode = apply_filters('lws_woorewards_new_coupon_label', '', $user, $this))) {
 			$this->lastCode = self::uniqueCode($user);
 		}
@@ -344,7 +335,8 @@ EOT;
 	public function getReason($context = 'backend')
 	{
 		if ($this->lastCode) {
-			$reason = sprintf(__("Coupon code : %s", 'woorewards-lite'), $this->lastCode);
+			/* translators: %s: coupon code */
+			$reason = sprintf(__("Coupon code : %s", 'woorewards'), $this->lastCode);
 			if ($context == 'frontend')
 				$reason .= '<br/>' . $this->getDescription($context);
 			//			unset($this->lastCode);
@@ -365,8 +357,10 @@ EOT;
 			$coupon->save();
 			if (empty($coupon->get_id())) {
 				\do_action('wpml_restore_language_from_email');
-				error_log("Cannot generate a shop_coupon: WC error");
-				error_log(print_r($coupon, true));
+				if (defined('WP_DEBUG') && WP_DEBUG) {
+					error_log("Cannot generate a shop_coupon: WC error"); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+					error_log(print_r($coupon, true)); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log, WordPress.PHP.DevelopmentFunctions.error_log_print_r
+				}
 				return false;
 			}
 
@@ -430,11 +424,13 @@ EOT;
 		$prefix = \get_option('lws_woorewards_reward_coupon_code_prefix', '');
 		global $wpdb;
 		$code = $prefix . \LWS\Adminpanel\Tools\Conveniences::randString($length);
-		$sql = "select count(*) from {$wpdb->posts} as p";
-		$sql .= " LEFT JOIN {$wpdb->postmeta} as m ON m.post_id=p.ID AND m.meta_key='customer_email' AND m.meta_value=%s";
-		$sql .= " where post_title=%s AND post_type='shop_coupon'";
-		while (0 < $wpdb->get_var($wpdb->prepare($sql, serialize(array($user->user_email)), $code)))
-			$code = $prefix . \LWS\Adminpanel\Tools\Conveniences::randString($length);
+		$sql = "SELECT count(*) FROM {$wpdb->posts} as p"
+			. " LEFT JOIN {$wpdb->postmeta} as m ON m.post_id=p.ID AND m.meta_key='customer_email' AND m.meta_value=%s"
+			. " WHERE post_title=%s AND post_type='shop_coupon'";
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- $sql is built from wpdb table names only
+		while (0 < $wpdb->get_var($wpdb->prepare($sql, serialize(array($user->user_email)), $code))) {
+			$code = $prefix . \LWS\Adminpanel\Tools\Conveniences::randString( $length );
+		}
 		return \wc_format_coupon_code($code);
 	}
 
@@ -461,8 +457,9 @@ EOT;
 	/** Show coupon custom filter wher applied. */
 	static function showQueryParsing($postType)
 	{
-		if ($postType == 'shop_coupon' && isset($_REQUEST['customer_email']) && !empty($email = \sanitize_email($_REQUEST['customer_email']))) {
-			echo "<label for='customer_email' class='lws-wr-coupon-filter-customer_email'>" . __("Customer Email", 'woorewards-lite') . "</label>";
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- WP admin list filter
+		if ($postType == 'shop_coupon' && isset($_REQUEST['customer_email']) && !empty($email = \sanitize_email(\wp_unslash($_REQUEST['customer_email'])))) {
+			echo "<label for='customer_email' class='lws-wr-coupon-filter-customer_email'>" . esc_html(__("Customer Email", 'woorewards')) . "</label>";
 			echo "<input  id='customer_email' class='lws-wr-coupon-filter-customer_email' type='email' name='customer_email' value='" . \esc_attr($email) . "' aria-describedby='customer email'>";
 		}
 	}
@@ -489,18 +486,19 @@ EOT;
 		if (!empty($user)) {
 			global $wpdb;
 			$sql = "SELECT COUNT(ID) FROM {$wpdb->posts} as p INNER JOIN {$wpdb->postmeta} as c ON p.ID=c.post_id AND c.meta_key='customer_email' AND c.meta_value=%s WHERE p.post_type='shop_coupon' AND post_status='publish'";
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared -- $sql uses only wpdb table names
 			$c = $wpdb->get_var($wpdb->prepare($sql, serialize(array($user['user_email']))));
 			if (empty($c)) {
 				static $disp = false;
 				if ($disp === false)
-					$disp = __("No coupon", 'woorewards-lite');
+					$disp = __("No coupon", 'woorewards');
 				$content[] = "<div class='lws-adm-btn disabled lws_wre_rewards_no_link'>$disp</div>";
 			} else {
 				$url = \esc_attr(\add_query_arg(array('post_type' => 'shop_coupon', 'customer_email' => $user['user_email']), \admin_url('edit.php')));
 				if (!empty($url)) {
 					static $link = false;
 					if ($link === false)
-						$link = __("See coupons", 'woorewards-lite');
+						$link = __("See coupons", 'woorewards');
 					$content[] = sprintf("<a class='lws-adm-btn lws_wre_rewards_link' href='$url' target='_blank'>$link (%d)</a>", $c);
 				}
 			}
@@ -513,9 +511,9 @@ EOT;
 	public function getCategories()
 	{
 		return array_merge(parent::getCategories(), array(
-			'woocommerce' => __("WooCommerce", 'woorewards-lite'),
-			'shop_coupon' => __("Coupon", 'woorewards-lite'),
-			'sponsorship' => _x("Referred", "unlockable category", 'woorewards-lite')
+			'woocommerce' => __("WooCommerce", 'woorewards'),
+			'shop_coupon' => __("Coupon", 'woorewards'),
+			'sponsorship' => _x("Referred", "unlockable category", 'woorewards')
 		));
 	}
 

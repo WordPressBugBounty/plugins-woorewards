@@ -37,75 +37,76 @@ class AvailableCoupons
 	{
 		$fields['availablecoupons'] = array(
 			'id' => 'lws_woorewards_available_coupons',
-			'title' => __("Available Coupons", 'woorewards-lite'),
+			'title' => __("Available Coupons", 'woorewards'),
 			'type' => 'shortcode',
 			'extra' => array(
 				'shortcode' => '[wr_available_coupons]',
-				'description' =>  __("Use this shortcode to display a list of their available coupons to your customers.", 'woorewards-lite') . "<br/>" .
-				__("This shortcode is better used on the cart or checkout page.", 'woorewards-lite'),
+				'description' =>  __("Use this shortcode to display a list of their available coupons to your customers.", 'woorewards') . "<br/>" .
+				__("This shortcode is better used on the cart or checkout page.", 'woorewards'),
 				'options' => array(
 					array(
 						'option' => 'layout',
-						'desc' => __("(Optional) Select how the coupons list is displayed. 4 possible values :", 'woorewards-lite'),
+						'desc' => __("(Optional) Select how the coupons list is displayed. 4 possible values :", 'woorewards'),
 						'options' => array(
 							array(
 								'option' => 'vertical',
-								'desc'   => __("Default value. Elements are displayed on top of each other", 'woorewards-lite'),
+								'desc'   => __("Default value. Elements are displayed on top of each other", 'woorewards'),
 							),
 							array(
 								'option' => 'horizontal',
-								'desc'   => __("Elements are displayed in row", 'woorewards-lite'),
+								'desc'   => __("Elements are displayed in row", 'woorewards'),
 							),
 							array(
 								'option' => 'grid',
-								'desc'   => __("Elements are displayed in a responsive grid", 'woorewards-lite'),
+								'desc'   => __("Elements are displayed in a responsive grid", 'woorewards'),
 							),
 							array(
 								'option' => 'none',
-								'desc'   => __("Elements are not wrapped in a container", 'woorewards-lite'),
+								'desc'   => __("Elements are not wrapped in a container", 'woorewards'),
 							),
 						),
 						'example' => '[wr_available_coupons layout="vertical"]'
 					),
 					array(
 						'option' => 'element',
-						'desc' => __("(Optional) Select how a coupon element is displayed. 3 possible values :", 'woorewards-lite'),
+						'desc' => __("(Optional) Select how a coupon element is displayed. 3 possible values :", 'woorewards'),
 						'options' => array(
 							array(
 								'option' => 'line',
-								'desc'   => __("Default Value. Horizontal display in stylable elements", 'woorewards-lite'),
+								'desc'   => __("Default Value. Horizontal display in stylable elements", 'woorewards'),
 							),
 							array(
 								'option' => 'tile',
-								'desc'   => __("Stylable tile with a background color", 'woorewards-lite'),
+								'desc'   => __("Stylable tile with a background color", 'woorewards'),
 							),
 							array(
 								'option' => 'none',
-								'desc'   => __("Simple text without stylable elements", 'woorewards-lite'),
+								'desc'   => __("Simple text without stylable elements", 'woorewards'),
 							),
 						),
 						'example' => '[wr_available_coupons element="tile"]'
 					),
 					array(
 						'option' => 'buttons',
-						'desc' => __("(Optional) If set to true, apply buttons are added on each element to apply the coupon on the cart. Default is false", 'woorewards-lite'),
+						'desc' => __("(Optional) If set to true, apply buttons are added on each element to apply the coupon on the cart. Default is false", 'woorewards'),
 						'example' => '[wr_available_coupons buttons="true"]'
 					),
 					array(
 						'option' => 'expire-html',
-						'desc' => __("(Optional) Override the expiration label if any. Use the <b>%s</b> placeholder for the date. You can set an empty string to display nothing.", 'woorewards-lite'),
+						/* translators: %s: placeholder name */
+						'desc' => __("(Optional) Override the expiration label if any. Use the <b>%s</b> placeholder for the date. You can set an empty string to display nothing.", 'woorewards'),
 						'example' => '[wr_available_coupons expire-html=" (Expires on %s)"]'
 					),
 					array(
 						'option' => 'in-the-last',
 						'desc' => [
-							__("(Optional) Show only coupons created in the last given period.", 'woorewards-lite'),
-							__("A period is defined by a number and a duration unit.", 'woorewards-lite'),
-							__("Accepted units are:", 'woorewards-lite'), ['tag' => 'ul',
-								['D', __("for Days", 'woorewards-lite')],
-								['W', __("for Weeks", 'woorewards-lite')],
-								['M', __("for Months", 'woorewards-lite')],
-								['Y', __("for Years", 'woorewards-lite')],
+							__("(Optional) Show only coupons created in the last given period.", 'woorewards'),
+							__("A period is defined by a number and a duration unit.", 'woorewards'),
+							__("Accepted units are:", 'woorewards'), ['tag' => 'ul',
+								['D', __("for Days", 'woorewards')],
+								['W', __("for Weeks", 'woorewards')],
+								['M', __("for Months", 'woorewards')],
+								['Y', __("for Years", 'woorewards')],
 							],
 						],
 						'example' => '[wr_available_coupons in-the-last="1M"]'
@@ -113,9 +114,10 @@ class AvailableCoupons
 					array(
 						'option' => 'reset-day',
 						'desc' => [
-							sprintf(__("(Optional) Works with %s attribute to build an incremental period instead the default shift date.", 'woorewards-lite'), '`<i>in-the-last</i>`'),
-							__("Expect the day of the month the period should reset within the original rolling period.", 'woorewards-lite'),
-							__("The value is automatically clamped to the last day of the month if necessary.", 'woorewards-lite'),
+							/* translators: %s: attribute name */
+							sprintf(__("(Optional) Works with %s attribute to build an incremental period instead the default shift date.", 'woorewards'), '`<i>in-the-last</i>`'),
+							__("Expect the day of the month the period should reset within the original rolling period.", 'woorewards'),
+							__("The value is automatically clamped to the last day of the month if necessary.", 'woorewards'),
 						],
 						'example' => '[wr_available_coupons in-the-last="1Y" reset-day="1"]'
 					),
@@ -126,7 +128,7 @@ class AvailableCoupons
 		if (defined('LWS_WOOREWARDS_ACTIVATED') && LWS_WOOREWARDS_ACTIVATED) {
 			$fields['availablecoupons']['extra']['options'][] = array(
 				'option' => 'reload',
-				'desc' => __("(Optional) Only applies if buttons is set to true. If set to true, clicking an apply button will refresh the page.", 'woorewards-lite'),
+				'desc' => __("(Optional) Only applies if buttons is set to true. If set to true, clicking an apply button will refresh the page.", 'woorewards'),
 				'example' => '[wr_available_coupons buttons="true" reload="true"]'
 			);
 		}
@@ -250,7 +252,7 @@ class AvailableCoupons
 				$reloadNonce = " data-reload='wrac_n={$nonce}&wrac_c=%s'";
 			}
 			// button template
-			$text = \apply_filters('wpml_translate_single_string', __("Apply", 'woorewards-lite'), 'Shortcode', "MyRewards - Available Coupons - Button");
+			$text = \apply_filters('wpml_translate_single_string', __("Apply", 'woorewards'), 'Shortcode', "MyRewards - Available Coupons - Button");
 			$btemplate = "<div class='button coupon-button lws_woorewards_add_coupon' data-id='lws_woorewards_cart_coupons_button' data-coupon='%s'%s>{$text}</div>";
 		}
 
@@ -262,7 +264,8 @@ class AvailableCoupons
 			if ($coupon->expiry_date) {
 				if ($atts['expire-html'] === false) {
 					$date = \wp_date(\get_option('date_format'), $coupon->expiry_date, \wp_timezone());
-					$descr .= sprintf(__(' (Expires on %s)', 'woorewards-lite'), $date);
+					/* translators: %s: expiration date */
+					$descr .= sprintf(__(' (Expires on %s)', 'woorewards'), $date);
 				} else if ($atts['expire-html']) {
 					$date = \wp_date(\get_option('date_format'), $coupon->expiry_date, \wp_timezone());
 					$descr .= \str_replace('%s', $date, $atts['expire-html']);
@@ -279,13 +282,11 @@ class AvailableCoupons
 			// item
 			if ($atts['element'] == 'tile' || $atts['element'] == 'line') {
 				$hidden = in_array(strtolower($coupon->post_title), $done) ? " style='display:none;'" : '';
-				$elements .= <<<EOT
-				<div class='item {$atts['element']} coupon-{$code}'{$hidden}>
-					<div class='coupon-code'>{$coupon->post_title}</div>
-					<div class='coupon-desc'>{$descr}</div>
-					$button
-				</div>
-EOT;
+				$elements .= "<div class='item {$atts['element']} coupon-{$code}'{$hidden}>"
+					. "<div class='coupon-code'>{$coupon->post_title}</div>"
+					. "<div class='coupon-desc'>{$descr}</div>"
+					. $button
+					. "</div>";
 			} else {
 				$elements .= ($coupon->post_title . " " . $descr);
 				if ($button)

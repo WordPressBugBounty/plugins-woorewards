@@ -12,18 +12,14 @@ class MetaKey extends \LWS\WOOREWARDS\PointsFlow\ExportMethod
 	public function export($value, $arg)
 	{
 		global $wpdb;
-		$sql = <<<EOT
-SELECT user_email as `email`, meta_value as `points` FROM {$wpdb->usermeta}
-INNER JOIN {$wpdb->users} ON ID=user_id
-WHERE `meta_key`=%s
-EOT;
-		return $wpdb->get_results($wpdb->prepare($sql, $value));
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		return $wpdb->get_results($wpdb->prepare("SELECT user_email as `email`, meta_value as `points` FROM {$wpdb->usermeta} INNER JOIN {$wpdb->users} ON ID=user_id WHERE `meta_key`=%s", $value));
 	}
 
 	/** @return (string) human readable name */
 	public function getTitle()
 	{
-		return __("By User Meta Key", 'woorewards-lite');
+		return __("By User Meta Key", 'woorewards');
 	}
 
 	/** @return (bool) appear in method combobox */

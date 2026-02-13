@@ -67,12 +67,12 @@ class CartCheckoutContent
 			),
 		);
 		if ($withTexts) {
-			$settings['woocommerce_after_cart_table']['title'] = __("Between Products and Totals", 'woorewards-lite');
-			$settings['woocommerce_cart_collaterals']['title'] = __("Aside From Totals", 'woorewards-lite');
-			$settings['woocommerce_before_checkout_form']['title'] = __("Top of the page", 'woorewards-lite');
-			$settings['woocommerce_before_checkout_billing_form']['title'] = __("Before Customer Details", 'woorewards-lite');
-			$settings['woocommerce_checkout_before_order_review']['title'] = __("Before Order Review", 'woorewards-lite');
-			$settings['woocommerce_checkout_order_review']['title'] = __("Inside Order Review", 'woorewards-lite');
+			$settings['woocommerce_after_cart_table']['title'] = __("Between Products and Totals", 'woorewards');
+			$settings['woocommerce_cart_collaterals']['title'] = __("Aside From Totals", 'woorewards');
+			$settings['woocommerce_before_checkout_form']['title'] = __("Top of the page", 'woorewards');
+			$settings['woocommerce_before_checkout_billing_form']['title'] = __("Before Customer Details", 'woorewards');
+			$settings['woocommerce_checkout_before_order_review']['title'] = __("Before Order Review", 'woorewards');
+			$settings['woocommerce_checkout_order_review']['title'] = __("Inside Order Review", 'woorewards');
 		}
 		if ($withPriorities) {
 			$settings['woocommerce_checkout_order_review']['priority'] = 15;

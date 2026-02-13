@@ -21,17 +21,17 @@ class Media extends \LWS\Adminpanel\Pages\Field
 
 	public function input()
 	{
-		echo $this->html();
+		echo $this->html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	private function html()
 	{
 		$img = '';
-		$del = esc_attr(__("Remove", 'lws-adminpanel'));
-		$title = esc_attr(__("Select a media", 'lws-adminpanel'));
-		$pick = esc_attr(__("Use the selected item", 'lws-adminpanel'));
-		$add = esc_attr(__("Select a media", 'lws-adminpanel'));
-		$edit = esc_attr(__("Edit...", 'lws-adminpanel'));
+		$del = esc_attr(__("Remove", 'woorewards'));
+		$title = esc_attr(__("Select a media", 'woorewards'));
+		$pick = esc_attr(__("Use the selected item", 'woorewards'));
+		$add = esc_attr(__("Select a media", 'woorewards'));
+		$edit = esc_attr(__("Edit...", 'woorewards'));
 
 		$value = $this->readOption();
 		$size = $this->getExtraValue('size', 'small');
@@ -43,8 +43,9 @@ class Media extends \LWS\Adminpanel\Pages\Field
 			if( !empty($value) && is_numeric($value) )
 				$img = wp_get_attachment_image($value, $size);
 		}
-		else
-			error_log("No other media than image is managed yet. Sorry.");
+		else {
+			if (defined('WP_DEBUG') && WP_DEBUG) error_log("No other media than image is managed yet. Sorry."); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+		}
 
 		$aspect = $this->getExtraValue('aspect', $size);
 		if( !in_array($aspect, array('small', 'medium')) )

@@ -44,9 +44,9 @@ class OrderNote
 		if (!$order)
 			return $commentId;
 
-		$author = __("MyRewards", 'woorewards-lite');
+		$author = __("MyRewards", 'woorewards');
 		if ($domain = \strtolower(\site_url()))
-			$domain = \str_replace('www.', '', \parse_url($domain, PHP_URL_HOST));
+			$domain = \str_replace('www.', '', \wp_parse_url($domain, PHP_URL_HOST));
 
 		$commentId = \wp_insert_comment(apply_filters(
 			'lws_woorewards_add_order_note',

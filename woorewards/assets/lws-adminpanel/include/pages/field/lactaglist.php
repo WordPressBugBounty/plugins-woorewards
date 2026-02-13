@@ -50,7 +50,7 @@ class LacTaglist extends \LWS\Adminpanel\Pages\LAC
 				$this->getExtraCss('class', 'data-class'),
 				$this->getExtraAttr('name', 'data-name'),
 				$this->getExtraAttr('shared', 'data-shared'),
-				$this->getExtraAttr('addlabel', 'data-addlabel', _x('Add', 'lac-taglist "add" button', 'lws-adminpanel')),
+				$this->getExtraAttr('addlabel', 'data-addlabel', _x('Add', 'lac-taglist "add" button', 'woorewards')),
 				$this->getExtraAttr('minsearch', 'data-minsearch'),
 				$this->getExtraAttr('minoption', 'data-minoption'),
 				$this->getExtraAttr('delay', 'data-delay'),
