@@ -32,7 +32,7 @@ class WooRewards extends \LWS\WOOREWARDS\PointsFlow\ExportMethod
 	/** @return (string) human readable name */
 	public function getTitle()
 	{
-		return __("MyRewards", 'woorewards');
+		return __("MyRewards", 'woorewards-lite');
 	}
 
 	/** @return (bool) appear in method combobox */

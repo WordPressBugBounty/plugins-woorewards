@@ -15,14 +15,14 @@ class FirstOrder extends \LWS\WOOREWARDS\Abstracts\Event
 	{
 		return array_merge(parent::getInformation(), array(
 			'icon'  => 'lws-icon-shop',
-			'short' => __("The customer will receive points when placing his first order.", 'woorewards'),
-			'help'  => __("Triggered only for registered customers", 'woorewards'),
+			'short' => __("The customer will receive points when placing his first order.", 'woorewards-lite'),
+			'help'  => __("Triggered only for registered customers", 'woorewards-lite'),
 		));
 	}
 
 	public function getDisplayType()
 	{
-		return _x("Place a first order", "getDisplayType", 'woorewards');
+		return _x("Place a first order", "getDisplayType", 'woorewards-lite');
 	}
 
 	function getData()
@@ -41,8 +41,8 @@ class FirstOrder extends \LWS\WOOREWARDS\Abstracts\Event
 
 		// just hidden since we do not want to reset the value on save
 		$noPri = (\get_option('lws_woorewards_show_loading_order_and_priority') ? '' : ' style="display: none;"');
-		$label = __("Priority", 'woorewards');
-		$tooltip = __("Customer orders will run by ascending priority value.", 'woorewards');
+		$label = __("Priority", 'woorewards-lite');
+		$tooltip = __("Customer orders will run by ascending priority value.", 'woorewards-lite');
 		$str = "<div class='field-help'{$noPri}>$tooltip</div>"
 			. "<div class='lws-$context-opt-title label'{$noPri}>$label<div class='bt-field-help'>?</div></div>"
 			. "<div class='lws-$context-opt-input value'{$noPri}>"
@@ -68,7 +68,7 @@ class FirstOrder extends \LWS\WOOREWARDS\Abstracts\Event
 				$prefix.'event_priority'   => $this->getEventPriority(),
 			),
 			'labels'   => array(
-				$prefix.'event_priority'   => __("Event Priority", 'woorewards'),
+				$prefix.'event_priority'   => __("Event Priority", 'woorewards-lite'),
 			)
 		));
 		if( !(isset($values['valid']) && $values['valid']) )
@@ -129,7 +129,7 @@ class FirstOrder extends \LWS\WOOREWARDS\Abstracts\Event
 		{
 			$reason = \LWS\WOOREWARDS\Core\Trace::byOrder($order->order)
 				->setProvider($order->order->get_customer_id('edit'))
-				->setReason(array("First customer order #%s", $order->order->get_order_number()), 'woorewards');
+				->setReason(array("First customer order #%s", $order->order->get_order_number()), 'woorewards-lite');
 
 			$this->addPoint(array(
 					'user'  => $userId,
@@ -150,8 +150,8 @@ class FirstOrder extends \LWS\WOOREWARDS\Abstracts\Event
 	public function getCategories()
 	{
 		return array_merge(parent::getCategories(), array(
-			'woocommerce' => __("WooCommerce", 'woorewards'),
-			'order' => __("Order", 'woorewards')
+			'woocommerce' => __("WooCommerce", 'woorewards-lite'),
+			'order' => __("Order", 'woorewards-lite')
 		));
 	}
 
@@ -159,7 +159,7 @@ class FirstOrder extends \LWS\WOOREWARDS\Abstracts\Event
 	private function poeditDeclare()
 	{
 		/* translators: %s: order number */
-		__("First customer order #%s", 'woorewards');
+		__("First customer order #%s", 'woorewards-lite');
 	}
 
 	function isGuestAllowed()

@@ -374,32 +374,32 @@ namespace LWS\WOOREWARDS\Core{
 		public function addRelationship($sponsor, $sponsored, $lazy=false, $override=false)
 		{
 			if( empty($sponsor) )
-				return new \WP_Error('unauthorized', __("You must be logged in.", 'woorewards'));
+				return new \WP_Error('unauthorized', __("You must be logged in.", 'woorewards-lite'));
 			if( !is_a($sponsor, 'WP_User') && empty($sponsor = \get_user_by('ID', $sponsor)) )
-				return new \WP_Error('unknown', __("Unknown user.", 'woorewards'));
+				return new \WP_Error('unknown', __("Unknown user.", 'woorewards-lite'));
 			if( empty($sponsor->ID) )
-				return new \WP_Error('unauthorized', __("You must be logged in.", 'woorewards'));
+				return new \WP_Error('unauthorized', __("You must be logged in.", 'woorewards-lite'));
 			if( empty(trim(str_replace(array(',', ';'), '', $sponsored))) )
-				return new \WP_Error('bad-argument', __("Referee email is empty.", 'woorewards'));
+				return new \WP_Error('bad-argument', __("Referee email is empty.", 'woorewards-lite'));
 
 			if( empty(\get_option('lws_woorewards_event_enabled_sponsorship', 'on')) )
-			return new \WP_Error('disabled', __("Referral has been temporary disabled.", 'woorewards'));
+			return new \WP_Error('disabled', __("Referral has been temporary disabled.", 'woorewards-lite'));
 
 			if( !($max = $this->userCan($sponsor->ID)) )
-			return new \WP_Error('locked', __("Maximum referrals reached.", 'woorewards'));
+			return new \WP_Error('locked', __("Maximum referrals reached.", 'woorewards-lite'));
 
 			$emails = \preg_split('/\s*[;,]\s*/', $sponsored, -1, PREG_SPLIT_NO_EMPTY);
 			if( !$emails )
-				return new \WP_Error('split', __("An error occured during referees emails reading.", 'woorewards'));
+				return new \WP_Error('split', __("An error occured during referees emails reading.", 'woorewards-lite'));
 
 			foreach( $emails as $email )
 			{
 				if( \is_wp_error($email = $this->isEligible($email, $lazy, $override)) )
 					return $email;
 				if( $email == $sponsor->user_email )
-					return new \WP_Error('forbidden', __("You cannot refer yourself.", 'woorewards'));
+					return new \WP_Error('forbidden', __("You cannot refer yourself.", 'woorewards-lite'));
 				if( $max !== true && --$max < 0 )
-					return new \WP_Error('locked', __("Some emails was omitted, maximum referrals reached.", 'woorewards'));
+					return new \WP_Error('locked', __("Some emails was omitted, maximum referrals reached.", 'woorewards-lite'));
 
 				if ($override) {
 					// remove any previous one
@@ -447,19 +447,19 @@ namespace LWS\WOOREWARDS\Core{
 			$email = trim($sponsored);
 			if( !\is_email($email) ) {
 				/* translators: %s: email address */
-				return new \WP_Error('bad-format', sprintf(__("'%s' Email address is not valid.", 'woorewards'), $email));
+				return new \WP_Error('bad-format', sprintf(__("'%s' Email address is not valid.", 'woorewards-lite'), $email));
 			}
 
 			global $wpdb;
 			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			if (!$override && $wpdb->get_var($wpdb->prepare("SELECT COUNT(umeta_id) FROM {$wpdb->usermeta} WHERE meta_key='lws_wooreward_used_sponsorship' AND meta_value=%s LIMIT 0, 1", $email)) > 0) {
 				/* translators: %s: email address */
-				return new \WP_Error('already-sponsored', sprintf(__("%s is already referred.", 'woorewards'), $email));
+				return new \WP_Error('already-sponsored', sprintf(__("%s is already referred.", 'woorewards-lite'), $email));
 			}
 
 			if( !$lazy && \LWS\WOOREWARDS\Conveniences::getOrderCount($email, false, 'sponsorship', true) > 0 ) {
 				/* translators: %s: email address */
-				return new \WP_Error('already-customer', sprintf(__("%s is already an active customer.", 'woorewards'), $email));
+				return new \WP_Error('already-customer', sprintf(__("%s is already an active customer.", 'woorewards-lite'), $email));
 			}
 			return $email;
 		}

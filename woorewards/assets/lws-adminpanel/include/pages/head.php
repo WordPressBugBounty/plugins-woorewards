@@ -286,7 +286,7 @@ class Head
 				?>
 				<button id='save_changes' class='second-row-button save' type='submit' form='<?php echo \esc_attr($this->id) ?>'>
 					<div class='button-icon lws-icon-floppy-disk-2'></div>
-					<div class='button-text'><?php \esc_html_e( 'Save Changes', 'woorewards' ) ?></div>
+					<div class='button-text'><?php \esc_html_e( 'Save Changes', 'lws-adminpanel' ) ?></div>
 				</button>
 				<?php
 			}
@@ -295,7 +295,7 @@ class Head
 				?>
 				<div id='expand_groups' class='second-row-button expand'>
 					<div class='button-icon lws-icon-plus'></div>
-					<div class='button-text'><?php \esc_html_e( 'Expand All', 'woorewards' ) ?></div>
+					<div class='button-text'><?php \esc_html_e( 'Expand All', 'lws-adminpanel' ) ?></div>
 				</div>
 				<?php
 			}
@@ -317,15 +317,15 @@ class Head
 	function showAdminMenu()
 	{
 		$labels = \apply_filters('lws_adminpanel_topbar_labels_' . $this->id, array(
-			'amenu'    => __("Admin Menu", 'woorewards'),
-			'asettings'=> __("Advanced Settings", 'woorewards'),
-			'support'  => __("Support", 'woorewards'),
-			'tshooting'=> __("Troubleshooting", 'woorewards'),
-		//	'chat'     => __("Live Chat", 'woorewards'),
-			'doc'      => __("Documentation", 'woorewards'),
-			'patch'    => __("Patch Notes", 'woorewards'),
-			'lic'      => __("License Information", 'woorewards'),
-			'trialtext'=> __("Try Premium for Free", 'woorewards'),
+			'amenu'    => __("Admin Menu", 'lws-adminpanel'),
+			'asettings'=> __("Advanced Settings", 'lws-adminpanel'),
+			'support'  => __("Support", 'lws-adminpanel'),
+			'tshooting'=> __("Troubleshooting", 'lws-adminpanel'),
+		//	'chat'     => __("Live Chat", 'lws-adminpanel'),
+			'doc'      => __("Documentation", 'lws-adminpanel'),
+			'patch'    => __("Patch Notes", 'lws-adminpanel'),
+			'lic'      => __("License Information", 'lws-adminpanel'),
+			'trialtext'=> __("Try Premium for Free", 'lws-adminpanel'),
 		));
 
 		$settings = $this->getAdminMenuSettings();
@@ -360,13 +360,13 @@ class Head
 		/** Notifications */
 		echo wp_kses_post($this->getNoticeMenuItem(
 			\LWS\Adminpanel\Pages\Notices::instance()->getNotices('persistant'),
-			__("Plugin Notifications", 'woorewards'),
+			__("Plugin Notifications", 'lws-adminpanel'),
 			'',
 			'internal'
 		));
 		echo wp_kses_post($this->getNoticeMenuItem(
 			\LWS\Adminpanel\Pages\Page::getAdminNotices(),
-			__("Other Notifications", 'woorewards'),
+			__("Other Notifications", 'lws-adminpanel'),
 			'separator',
 			'external'
 		));
@@ -412,7 +412,7 @@ class Head
 					if($notice->dismissible || $notice->forgettable)
 					{
 						$key = \esc_attr($notice->key);
-						$text = __("Dismiss", 'woorewards');
+						$text = __("Dismiss", 'lws-adminpanel');
 						$close = "<div class='dismiss-btn' data-forget='{$key}'>{$text}</div>";
 					}
 					$wrapper .= "<div class='lws-notice {$notice->level}'><div class='text'>{$notice->message}</div>{$close}</div>";
@@ -520,10 +520,10 @@ class Head
 			'title'      => $this->getMainTitle(),
 			'subtitle'   => isset($this->data['subtitle']) ? $this->data['subtitle'] : '',
 			'pagetitle'   => isset($this->data['pagetitle']) ? $this->data['pagetitle'] : '',
-			'url'        => __("https://plugins.longwatchstudio.com/", 'woorewards'),
+			'url'        => __("https://plugins.longwatchstudio.com/", 'lws-adminpanel'),
 			'version'    => \apply_filters('lws_adminpanel_plugin_version_'     . $id, '', $this->id),
 			'origin'     => \apply_filters('lws_adminpanel_plugin_origin_'      . $id, array('LWS', 'Long Watch Studio'), $this->id),
-			'doc'        => \apply_filters('lws_adminpanel_documentation_url_'  . $id, __('https://plugins.longwatchstudio.com/knowledge-base/', 'woorewards'), $this->id),
+			'doc'        => \apply_filters('lws_adminpanel_documentation_url_'  . $id, __('https://plugins.longwatchstudio.com/knowledge-base/', 'lws-adminpanel'), $this->id),
 		//	'chat'       => \apply_filters('lws_adminpanel_plugin_chat_url_'    . $id, self::CHAT, $this->id),
 			'mailto'     => \apply_filters('lws_adminpanel_plugin_support_email'. $id, self::MAILTO, $this->id),
 			'purchase'   => false,

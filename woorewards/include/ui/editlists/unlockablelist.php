@@ -15,9 +15,9 @@ class UnlockableList extends \LWS\WOOREWARDS\Ui\Editlists\MultiFormList
 	{
 		$labels = array();
 		if( $this->pool->getOption('type') != \LWS\WOOREWARDS\Core\Pool::T_LEVELLING )
-			$labels['purchasing']  = array(__("Points cost", 'woorewards'), 'max-content');
-		$labels['title']       = __("Public title", 'woorewards');
-		$labels['description'] = __("Reward description", 'woorewards');
+			$labels['purchasing']  = array(__("Points cost", 'woorewards-lite'), 'max-content');
+		$labels['title']       = __("Public title", 'woorewards-lite');
+		$labels['description'] = __("Reward description", 'woorewards-lite');
 		return \apply_filters('lws_woorewards_unlockablelist_labels', $labels);
 	}
 
@@ -37,12 +37,12 @@ class UnlockableList extends \LWS\WOOREWARDS\Ui\Editlists\MultiFormList
 	{
 		return array(
 			array(
-				'idle' 		=> __("Select a reward category", 'woorewards'),
-				'selected' 	=> __("Reward Category : ", 'woorewards')
+				'idle' 		=> __("Select a reward category", 'woorewards-lite'),
+				'selected' 	=> __("Reward Category : ", 'woorewards-lite')
 			),
 			array(
-				'idle' 		=> __("Select a Reward", 'woorewards'),
-				'selected' 	=> __("Reward : ", 'woorewards')
+				'idle' 		=> __("Select a Reward", 'woorewards-lite'),
+				'selected' 	=> __("Reward : ", 'woorewards-lite')
 			)
 		);
 	}
@@ -50,7 +50,7 @@ class UnlockableList extends \LWS\WOOREWARDS\Ui\Editlists\MultiFormList
 	protected function getStepInfo()
 	{
 		if (!$this->stepInfo) {
-			$this->stepInfo = __("Reward Settings", 'woorewards');
+			$this->stepInfo = __("Reward Settings", 'woorewards-lite');
 		}
 		return $this->stepInfo;
 	}
@@ -92,11 +92,11 @@ class UnlockableList extends \LWS\WOOREWARDS\Ui\Editlists\MultiFormList
 	{
 		$dftIcon = 'lws-icon-present';
 		return \apply_filters('lws_woorewards_system_item_type_groups', array(
-			'shop_coupon'      => array('label' => _x("Coupons", "Option  Group", 'woorewards'),         'descr' => __("Rewards that will generate WooCommerce Coupons",'woorewards'),'color' => '#cc1d25', 'icon' => 'lws-icon-coupon'),
-			'wp_user'          => array('label' => _x("User's status", "Option Group", 'woorewards'),    'descr' => __("Rewards that will change the user's status",'woorewards'),    'color' => '#0136a7', 'icon' => 'lws-icon-circle-09-2'),
-			'woovirtualwallet' => array('label' => _x("WooVirtualWallet", "Option  Group", 'woorewards'), 'descr' => __("Wallet Credit rewards",'woorewards'),                         'color' => '#cd7627', 'icon' => 'lws-icon-wallet-44'),
-			'woovip'           => array('label' => _x("WooVIP", "Option  Group", 'woorewards'),          'descr' => __("Memberships rewards",'woorewards'),                           'color' => '#c79648', 'icon' => 'lws-icon-crown'),
-			'miscellaneous'    => array('label' => _x("Miscellaneous", "Option Group", 'woorewards'),    'descr' => __("Other types of rewards",'woorewards'),                        'color' => '#7801a7', 'icon' => 'lws-icon-gift'),
+			'shop_coupon'      => array('label' => _x("Coupons", "Option  Group", 'woorewards-lite'),         'descr' => __("Rewards that will generate WooCommerce Coupons",'woorewards-lite'),'color' => '#cc1d25', 'icon' => 'lws-icon-coupon'),
+			'wp_user'          => array('label' => _x("User's status", "Option Group", 'woorewards-lite'),    'descr' => __("Rewards that will change the user's status",'woorewards-lite'),    'color' => '#0136a7', 'icon' => 'lws-icon-circle-09-2'),
+			'woovirtualwallet' => array('label' => _x("WooVirtualWallet", "Option  Group", 'woorewards-lite'), 'descr' => __("Wallet Credit rewards",'woorewards-lite'),                         'color' => '#cd7627', 'icon' => 'lws-icon-wallet-44'),
+			'woovip'           => array('label' => _x("WooVIP", "Option  Group", 'woorewards-lite'),          'descr' => __("Memberships rewards",'woorewards-lite'),                           'color' => '#c79648', 'icon' => 'lws-icon-crown'),
+			'miscellaneous'    => array('label' => _x("Miscellaneous", "Option Group", 'woorewards-lite'),    'descr' => __("Other types of rewards",'woorewards-lite'),                        'color' => '#7801a7', 'icon' => 'lws-icon-gift'),
 		), 'unlockable');
 	}
 
@@ -128,15 +128,15 @@ class UnlockableList extends \LWS\WOOREWARDS\Ui\Editlists\MultiFormList
 		{
 			$item = $this->pool->getUnlockables()->find($id);
 			if( empty($item) )
-				return new \WP_Error('404', __("The selected reward cannot be found.", 'woorewards'));
+				return new \WP_Error('404', __("The selected reward cannot be found.", 'woorewards-lite'));
 			if( $type != $item->getType() )
-				return new \WP_Error('403', __("The reward type cannot be changed. Delete this and create a new one instead.", 'woorewards'));
+				return new \WP_Error('403', __("The reward type cannot be changed. Delete this and create a new one instead.", 'woorewards-lite'));
 		}
 		else if( !empty($type) )
 		{
 			$item = \LWS\WOOREWARDS\Collections\Unlockables::instanciate()->create($type)->last();
 			if( empty($item) )
-				return new \WP_Error('404', __("The selected reward type cannot be found.", 'woorewards'));
+				return new \WP_Error('404', __("The selected reward type cannot be found.", 'woorewards-lite'));
 		}
 
 		if( !empty($item) )
@@ -164,7 +164,7 @@ class UnlockableList extends \LWS\WOOREWARDS\Ui\Editlists\MultiFormList
 			$item = $this->pool->getUnlockables()->find($id);
 			if( empty($item) )
 			{
-				return new \WP_Error('404', __("The selected reward cannot be found.", 'woorewards'));
+				return new \WP_Error('404', __("The selected reward cannot be found.", 'woorewards-lite'));
 			}
 			else
 			{

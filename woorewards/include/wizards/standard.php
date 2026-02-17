@@ -24,13 +24,13 @@ class Standard extends \LWS\WOOREWARDS\Wizards\Subwizard
 		switch ($slug)
 		{
 			case 'ini':
-				return __("Standard System", 'woorewards');
+				return __("Standard System", 'woorewards-lite');
 			case 'met':
-				return __("Methods to earn points", 'woorewards');
+				return __("Methods to earn points", 'woorewards-lite');
 			case 'rew':
-				return __("Reward", 'woorewards');
+				return __("Reward", 'woorewards-lite');
 			case 'sum':
-				return __("Summary", 'woorewards');
+				return __("Summary", 'woorewards-lite');
 		}
 		return $slug;
 	}
@@ -42,19 +42,19 @@ class Standard extends \LWS\WOOREWARDS\Wizards\Subwizard
 			case 'ini':
 				return array(
 					'title' => $this->getStepTitle($slug),
-					'help'  => __("Welcome to this Wizard. This tool will help you configure your first loyalty system in less than 5 minutes.", 'woorewards') . "<br/>" .
-						__("This wizard is limited for MyRewards Standard.", 'woorewards') . "<br/>" .
-						__("If you want to have access to all methods and rewards, please consider trying MyRewards Pro.", 'woorewards'),
+					'help'  => __("Welcome to this Wizard. This tool will help you configure your first loyalty system in less than 5 minutes.", 'woorewards-lite') . "<br/>" .
+						__("This wizard is limited for MyRewards Standard.", 'woorewards-lite') . "<br/>" .
+						__("If you want to have access to all methods and rewards, please consider trying MyRewards Pro.", 'woorewards-lite'),
 					'groups' => array(
 						array(
 							'fields'  => array(
 								array(
 									'id'    => 'system_title',
-									'title' => __('Loyalty system name', 'woorewards'),
+									'title' => __('Loyalty system name', 'woorewards-lite'),
 									'type'  => 'text',
 									'extra' => array(
-										'placeholder' => __('Standard System', 'woorewards'),
-										'help' => __("Name your loyalty system. If you leave it empty, it will be named automatically", 'woorewards'),
+										'placeholder' => __('Standard System', 'woorewards-lite'),
+										'help' => __("Name your loyalty system. If you leave it empty, it will be named automatically", 'woorewards-lite'),
 									),
 								),
 							)
@@ -64,65 +64,65 @@ class Standard extends \LWS\WOOREWARDS\Wizards\Subwizard
 			case 'met':
 				return array(
 					'title' => $this->getStepTitle($slug),
-					'help'  => __("Your customers will earn points every time they perform the actions defined here.", 'woorewards') . "<br/>" .
-						__("Set points for all the methods you want and ignore the ones you don't want. You can change all these settings later.", 'woorewards') . "</br>" .
-						__("Some categories are not accessible in the free version of MyRewards.", 'woorewards'),
+					'help'  => __("Your customers will earn points every time they perform the actions defined here.", 'woorewards-lite') . "<br/>" .
+						__("Set points for all the methods you want and ignore the ones you don't want. You can change all these settings later.", 'woorewards-lite') . "</br>" .
+						__("Some categories are not accessible in the free version of MyRewards.", 'woorewards-lite'),
 					'groups' => array(
 						array(
 							'fields'  => array(
 								array(
 									'id'    => 'spent_earn',
 									/* translators: %s: currency symbol */
-									'title' => sprintf(__("Points for each %s spent", 'woorewards'), \LWS\Adminpanel\Tools\Conveniences::isWC() ? \get_woocommerce_currency_symbol() : '?'),
+									'title' => sprintf(__("Points for each %s spent", 'woorewards-lite'), \LWS\Adminpanel\Tools\Conveniences::isWC() ? \get_woocommerce_currency_symbol() : '?'),
 									'type'  => 'text',
 									'extra' => array(
 										//'pattern' => "\\d*",
-										'placeholder' => __('Number | Empty to ignore', 'woorewards'),
+										'placeholder' => __('Number | Empty to ignore', 'woorewards-lite'),
 									),
 								),
 								array(
 									'id'    => 'order_earn',
-									'title' => sprintf(__("Points on order placed", 'woorewards'), \LWS\Adminpanel\Tools\Conveniences::isWC() ? \get_woocommerce_currency_symbol() : '?'),
+									'title' => sprintf(__("Points on order placed", 'woorewards-lite'), \LWS\Adminpanel\Tools\Conveniences::isWC() ? \get_woocommerce_currency_symbol() : '?'),
 									'type'  => 'text',
 									'extra' => array(
 										//'pattern' => "\\d*",
-										'placeholder' => __('Number | Empty to ignore', 'woorewards'),
+										'placeholder' => __('Number | Empty to ignore', 'woorewards-lite'),
 									),
 								),
 								array(
 									'id'    => 'first_order_earn',
-									'title' => sprintf(__("Extra points on first order", 'woorewards'), \LWS\Adminpanel\Tools\Conveniences::isWC() ? \get_woocommerce_currency_symbol() : '?'),
+									'title' => sprintf(__("Extra points on first order", 'woorewards-lite'), \LWS\Adminpanel\Tools\Conveniences::isWC() ? \get_woocommerce_currency_symbol() : '?'),
 									'type'  => 'text',
 									'extra' => array(
 										//'pattern' => "\\d*",
-										'placeholder' => __('Number | Empty to ignore', 'woorewards'),
+										'placeholder' => __('Number | Empty to ignore', 'woorewards-lite'),
 									),
 								),
 								array(
 									'id'    => 'product_review',
-									'title' => __("Points on product review", 'woorewards'),
+									'title' => __("Points on product review", 'woorewards-lite'),
 									'type'  => 'text',
 									'extra' => array(
-										'placeholder' => __('Number | Empty to ignore', 'woorewards'),
+										'placeholder' => __('Number | Empty to ignore', 'woorewards-lite'),
 									),
 								),
 								array(
 									'id'    => 'sponsored_spent',
 									/* translators: %s: currency symbol */
-									'title' => sprintf(__("Points for each %s spent by Referee", 'woorewards'), \LWS\Adminpanel\Tools\Conveniences::isWC() ? \get_woocommerce_currency_symbol() : '?'),
+									'title' => sprintf(__("Points for each %s spent by Referee", 'woorewards-lite'), \LWS\Adminpanel\Tools\Conveniences::isWC() ? \get_woocommerce_currency_symbol() : '?'),
 									'type'  => 'text',
 									'extra' => array(
 										//'pattern' => "\\d*",
-										'placeholder' => __('Number | Empty to ignore', 'woorewards'),
+										'placeholder' => __('Number | Empty to ignore', 'woorewards-lite'),
 									),
 								),
 								array(
 									'id'    => 'sponsored_order',
-									'title' => sprintf(__("Points on Referee orders", 'woorewards'), \LWS\Adminpanel\Tools\Conveniences::isWC() ? \get_woocommerce_currency_symbol() : '?'),
+									'title' => sprintf(__("Points on Referee orders", 'woorewards-lite'), \LWS\Adminpanel\Tools\Conveniences::isWC() ? \get_woocommerce_currency_symbol() : '?'),
 									'type'  => 'text',
 									'extra' => array(
 										//'pattern' => "\\d*",
-										'placeholder' => __('Number | Empty to ignore', 'woorewards'),
+										'placeholder' => __('Number | Empty to ignore', 'woorewards-lite'),
 									),
 								),
 							),
@@ -132,28 +132,28 @@ class Standard extends \LWS\WOOREWARDS\Wizards\Subwizard
 			case 'rew':
 				return array(
 					'title' => $this->getStepTitle($slug),
-					'help'  => __("Select the reward for your customers. The rewards types are limited in the standard version. You can change these settings later.", 'woorewards'),
+					'help'  => __("Select the reward for your customers. The rewards types are limited in the standard version. You can change these settings later.", 'woorewards-lite'),
 					'groups' => array(
 						array(
 							'fields' => array(
 								array(
 									'id'    => 'reward',
-									'title' => __("Select a reward", 'woorewards'),
+									'title' => __("Select a reward", 'woorewards-lite'),
 									'type'  => 'radiogrid', // radiogrid is specific to the wizard
 									'extra' => array(
 										'type' => 'auto-cols',
 										'columns' => 'repeat(auto-fit, minmax(120px, 1fr))',
 										'source' => array(
-											array('value' => 'pointsoncart', 'icon' => 'lws-icon lws-icon-cart-2', 'label' => __("Points on Cart", 'woorewards')),
+											array('value' => 'pointsoncart', 'icon' => 'lws-icon lws-icon-cart-2', 'label' => __("Points on Cart", 'woorewards-lite')),
 											/* translators: %s: currency symbol */
-											array('value' => 'coupon', 'icon' => 'lws-icon lws-icon-coins', 'label' => sprintf(_x("Coupon (%s)", "Coupon Unlockable", 'woorewards'), \LWS\Adminpanel\Tools\Conveniences::isWC() ? \get_woocommerce_currency_symbol() : '?')),
-											array('value' => 'discount', 'icon' => 'lws-icon lws-icon-discount', 'label' => __("Discount (%)", 'woorewards')),
-											array('value' => 'product', 'class' => 'inactive', 'icon' => 'lws-icon lws-icon-gift', 'label' => __("Free Product", 'woorewards')),
-											array('value' => 'shipping', 'class' => 'inactive', 'icon' => 'lws-icon lws-icon-supply', 'label' => __("Free Shipping", 'woorewards')),
-											array('value' => 'variable', 'class' => 'inactive', 'icon' => 'lws-icon lws-icon-discount', 'label' => __("Variable Discount", 'woorewards')),
-											array('value' => 'badgge', 'class' => 'inactive', 'icon' => 'lws-icon lws-icon-reward', 'label' => __("Badge", 'woorewards')),
-											array('value' => 'role', 'class' => 'inactive', 'icon' => 'lws-icon lws-icon-users', 'label' => __("User Role", 'woorewards')),
-											array('value' => 'role', 'class' => 'inactive', 'icon' => 'lws-icon lws-icon-crown', 'label' => __("VIP Membership", 'woorewards')),
+											array('value' => 'coupon', 'icon' => 'lws-icon lws-icon-coins', 'label' => sprintf(_x("Coupon (%s)", "Coupon Unlockable", 'woorewards-lite'), \LWS\Adminpanel\Tools\Conveniences::isWC() ? \get_woocommerce_currency_symbol() : '?')),
+											array('value' => 'discount', 'icon' => 'lws-icon lws-icon-discount', 'label' => __("Discount (%)", 'woorewards-lite')),
+											array('value' => 'product', 'class' => 'inactive', 'icon' => 'lws-icon lws-icon-gift', 'label' => __("Free Product", 'woorewards-lite')),
+											array('value' => 'shipping', 'class' => 'inactive', 'icon' => 'lws-icon lws-icon-supply', 'label' => __("Free Shipping", 'woorewards-lite')),
+											array('value' => 'variable', 'class' => 'inactive', 'icon' => 'lws-icon lws-icon-discount', 'label' => __("Variable Discount", 'woorewards-lite')),
+											array('value' => 'badgge', 'class' => 'inactive', 'icon' => 'lws-icon lws-icon-reward', 'label' => __("Badge", 'woorewards-lite')),
+											array('value' => 'role', 'class' => 'inactive', 'icon' => 'lws-icon lws-icon-users', 'label' => __("User Role", 'woorewards-lite')),
+											array('value' => 'role', 'class' => 'inactive', 'icon' => 'lws-icon lws-icon-crown', 'label' => __("VIP Membership", 'woorewards-lite')),
 										),
 										'default' => 'pointsoncart',
 									),
@@ -166,11 +166,11 @@ class Standard extends \LWS\WOOREWARDS\Wizards\Subwizard
 								array(
 									'id'    => 'point_value',
 									/* translators: %s: currency symbol */
-									'title' => sprintf(_x("Point value in %s", "Points on Cart Reward", 'woorewards'), \LWS\Adminpanel\Tools\Conveniences::isWC() ? \get_woocommerce_currency_symbol() : '?'),
+									'title' => sprintf(_x("Point value in %s", "Points on Cart Reward", 'woorewards-lite'), \LWS\Adminpanel\Tools\Conveniences::isWC() ? \get_woocommerce_currency_symbol() : '?'),
 									'type'  => 'text',
 									'extra' => array(
 										'placeholder' => '1',
-										'help' => __("Set the monetary value of a point. Each point used on a cart will discount the total by that value.", 'woorewards'),
+										'help' => __("Set the monetary value of a point. Each point used on a cart will discount the total by that value.", 'woorewards-lite'),
 									),
 								),
 							),
@@ -180,7 +180,7 @@ class Standard extends \LWS\WOOREWARDS\Wizards\Subwizard
 							'fields' => array(
 								array(
 									'id'    => 'needed',
-									'title' => __("Points Needed", 'woorewards'),
+									'title' => __("Points Needed", 'woorewards-lite'),
 									'type'  => 'text',
 								),
 							),
@@ -191,11 +191,11 @@ class Standard extends \LWS\WOOREWARDS\Wizards\Subwizard
 								array(
 									'id'    => 'coupon_amount',
 									/* translators: %s: currency symbol */
-									'title' => sprintf(_x("Coupon Amount (%s)", "Coupon Unlockable", 'woorewards'), \LWS\Adminpanel\Tools\Conveniences::isWC() ? \get_woocommerce_currency_symbol() : '?'),
+									'title' => sprintf(_x("Coupon Amount (%s)", "Coupon Unlockable", 'woorewards-lite'), \LWS\Adminpanel\Tools\Conveniences::isWC() ? \get_woocommerce_currency_symbol() : '?'),
 									'type'  => 'text',
 									'extra' => array(
 										'placeholder' => '1',
-										'help' => __("Every time customers have enough points, those points will be used to generate a coupon of that amount.", 'woorewards'),
+										'help' => __("Every time customers have enough points, those points will be used to generate a coupon of that amount.", 'woorewards-lite'),
 									),
 								),
 							),
@@ -205,11 +205,11 @@ class Standard extends \LWS\WOOREWARDS\Wizards\Subwizard
 							'fields' => array(
 								array(
 									'id'    => 'discount_amount',
-									'title' => __("Discount (%)", 'woorewards'),
+									'title' => __("Discount (%)", 'woorewards-lite'),
 									'type'  => 'text',
 									'extra' => array(
 										'placeholder' => '1',
-										'help' => __("Every time customers have enough points, those points will be used to generate a discount coupon with that percentage.", 'woorewards'),
+										'help' => __("Every time customers have enough points, those points will be used to generate a discount coupon with that percentage.", 'woorewards-lite'),
 									),
 								),
 							),
@@ -219,47 +219,47 @@ class Standard extends \LWS\WOOREWARDS\Wizards\Subwizard
 			case 'sum':
 				return array(
 					'title' => $this->getStepTitle($slug),
-					'help'  => __("You're almost done. Check your settings below and submit if you're satisfied with the settings.", 'woorewards'),
+					'help'  => __("You're almost done. Check your settings below and submit if you're satisfied with the settings.", 'woorewards-lite'),
 					'groups' => array(
 						array(
 							'fields' => array(
 								array(
 									'id'    => 'summary',
-									'title' => __("Settings Summary", 'woorewards'),
+									'title' => __("Settings Summary", 'woorewards-lite'),
 									'type'  => 'custom', // radiogrid is specific to the wizard
 									'extra' => array(
 										'content' => $this->getSummary(),
-										'help' => __("Do you want to start your loyalty system at the end of this wizard ? If you select No, you'll have to start it manually later.", 'woorewards'),
+										'help' => __("Do you want to start your loyalty system at the end of this wizard ? If you select No, you'll have to start it manually later.", 'woorewards-lite'),
 									),
 								),
 								array(
 									'id'    => 'emails',
-									'title' => __("Enable rewards emails ?", 'woorewards'),
+									'title' => __("Enable rewards emails ?", 'woorewards-lite'),
 									'type'  => 'radiogrid', // radiogrid is specific to the wizard
 									'extra' => array(
 										'type' => 'auto-cols',
 										'columns' => 'repeat(auto-fit, minmax(120px, 1fr))',
 										'source' => array(
-											array('value' => 'yes', 'label' => __("Yes", 'woorewards')),
-											array('value' => 'no', 'label' => __("No", 'woorewards')),
+											array('value' => 'yes', 'label' => __("Yes", 'woorewards-lite')),
+											array('value' => 'no', 'label' => __("No", 'woorewards-lite')),
 										),
 										'default' => 'no',
-										'help' => __("By setting this option to Yes, customers will receive an email every time they receive a new coupon reward.", 'woorewards'),
+										'help' => __("By setting this option to Yes, customers will receive an email every time they receive a new coupon reward.", 'woorewards-lite'),
 									),
 								),
 								array(
 									'id'    => 'start',
-									'title' => __("Start the program ?", 'woorewards'),
+									'title' => __("Start the program ?", 'woorewards-lite'),
 									'type'  => 'radiogrid', // radiogrid is specific to the wizard
 									'extra' => array(
 										'type' => 'auto-cols',
 										'columns' => 'repeat(auto-fit, minmax(120px, 1fr))',
 										'source' => array(
-											array('value' => 'yes', 'label' => __("Yes", 'woorewards')),
-											array('value' => 'no', 'label' => __("No", 'woorewards')),
+											array('value' => 'yes', 'label' => __("Yes", 'woorewards-lite')),
+											array('value' => 'no', 'label' => __("No", 'woorewards-lite')),
 										),
 										'default' => 'yes',
-										'help' => __("Do you want to start your loyalty system at the end of this wizard ? If you select No, you'll have to start it manually later.", 'woorewards'),
+										'help' => __("Do you want to start your loyalty system at the end of this wizard ? If you select No, you'll have to start it manually later.", 'woorewards-lite'),
 									),
 								)
 							),
@@ -293,80 +293,80 @@ class Standard extends \LWS\WOOREWARDS\Wizards\Subwizard
 		/* Loyalty system name */
 		$usedData = $this->getDataValue($data, 'ini', false, $exists);
 		$system = reset($usedData);
-		$summary .= "<div class='summary-title'>" . __("Loyalty System", 'woorewards') . "</div>";
-		$value = ($system['system_title']) ? $system['system_title'] : __("Standard System", 'woorewards');
-		$summary .= "<div class='lws-wizard-summary-label'>" . __("Loyalty System Name", 'woorewards') . "</div>";
+		$summary .= "<div class='summary-title'>" . __("Loyalty System", 'woorewards-lite') . "</div>";
+		$value = ($system['system_title']) ? $system['system_title'] : __("Standard System", 'woorewards-lite');
+		$summary .= "<div class='lws-wizard-summary-label'>" . __("Loyalty System Name", 'woorewards-lite') . "</div>";
 		$summary .= "<div class='lws-wizard-summary-value'>{$value}</div>";
 
 		/* Earning methods */
 		$usedData = $this->getDataValue($data, 'met', false, $exists);
 		$methods = reset($usedData);
-		$summary .= "<div class='summary-title'>" . __("Methods to earn points", 'woorewards') . "</div>";
+		$summary .= "<div class='summary-title'>" . __("Methods to earn points", 'woorewards-lite') . "</div>";
 		if ($methods['spent_earn'] && $methods['spent_earn'] > 0)
 		{
 			/* translators: %1$s: number of points, %2$s: currency symbol */
-			$value = sprintf(__(' %1$s points earned for each %2$s spent', 'woorewards'), $methods['spent_earn'], $currency);
-			$summary .= "<div class='lws-wizard-summary-label'>" . __("Spend Money", 'woorewards') . "</div>";
+			$value = sprintf(__(' %1$s points earned for each %2$s spent', 'woorewards-lite'), $methods['spent_earn'], $currency);
+			$summary .= "<div class='lws-wizard-summary-label'>" . __("Spend Money", 'woorewards-lite') . "</div>";
 			$summary .= "<div class='lws-wizard-summary-value'>{$value}</div>";
 		}
 		if ($methods['order_earn'] && $methods['order_earn'] > 0)
 		{
 			/* translators: %s: number of points */
-			$value = sprintf(__(' %s points for each placed order', 'woorewards'), $methods['order_earn']);
-			$summary .= "<div class='lws-wizard-summary-label'>" . __("Place an order", 'woorewards') . "</div>";
+			$value = sprintf(__(' %s points for each placed order', 'woorewards-lite'), $methods['order_earn']);
+			$summary .= "<div class='lws-wizard-summary-label'>" . __("Place an order", 'woorewards-lite') . "</div>";
 			$summary .= "<div class='lws-wizard-summary-value'>{$value}</div>";
 		}
 		if ($methods['first_order_earn'] && $methods['first_order_earn'] > 0)
 		{
 			/* translators: %s: number of points */
-			$value = sprintf(__(' %s extra points for the first order', 'woorewards'), $methods['first_order_earn']);
-			$summary .= "<div class='lws-wizard-summary-label'>" . __("Place a first order", 'woorewards') . "</div>";
+			$value = sprintf(__(' %s extra points for the first order', 'woorewards-lite'), $methods['first_order_earn']);
+			$summary .= "<div class='lws-wizard-summary-label'>" . __("Place a first order", 'woorewards-lite') . "</div>";
 			$summary .= "<div class='lws-wizard-summary-value'>{$value}</div>";
 		}
 		if ($methods['product_review'] && $methods['product_review'] > 0)
 		{
 			/* translators: %s: number of points */
-			$value = sprintf(__(' %s points for a product review', 'woorewards'), $methods['product_review']);
-			$summary .= "<div class='lws-wizard-summary-label'>" . __("Product Review", 'woorewards') . "</div>";
+			$value = sprintf(__(' %s points for a product review', 'woorewards-lite'), $methods['product_review']);
+			$summary .= "<div class='lws-wizard-summary-label'>" . __("Product Review", 'woorewards-lite') . "</div>";
 			$summary .= "<div class='lws-wizard-summary-value'>{$value}</div>";
 		}
 		if ($methods['sponsored_spent'] && $methods['sponsored_spent'] > 0)
 		{
 			/* translators: %1$s: number of points, %2$s: currency symbol */
-			$value = sprintf(__(' %1$s points earned for each %2$s spent by a Referee', 'woorewards'), $methods['sponsored_spent'], $currency);
-			$summary .= "<div class='lws-wizard-summary-label'>" . __("Referee Spends Money", 'woorewards') . "</div>";
+			$value = sprintf(__(' %1$s points earned for each %2$s spent by a Referee', 'woorewards-lite'), $methods['sponsored_spent'], $currency);
+			$summary .= "<div class='lws-wizard-summary-label'>" . __("Referee Spends Money", 'woorewards-lite') . "</div>";
 			$summary .= "<div class='lws-wizard-summary-value'>{$value}</div>";
 		}
 		if ($methods['sponsored_order'] && $methods['sponsored_order'] > 0)
 		{
 			/* translators: %s: number of points */
-			$value = sprintf(__(' %s points for each time a Referee places order', 'woorewards'), $methods['sponsored_order']);
-			$summary .= "<div class='lws-wizard-summary-label'>" . __("Referee places an order", 'woorewards') . "</div>";
+			$value = sprintf(__(' %s points for each time a Referee places order', 'woorewards-lite'), $methods['sponsored_order']);
+			$summary .= "<div class='lws-wizard-summary-label'>" . __("Referee places an order", 'woorewards-lite') . "</div>";
 			$summary .= "<div class='lws-wizard-summary-value'>{$value}</div>";
 		}
 		/* Rewards */
 		$usedData = $this->getDataValue($data, 'rew', false, $exists);
 		$rewards = reset($usedData);
-		$summary .= "<div class='summary-title'>" . __("Reward", 'woorewards') . "</div>";
+		$summary .= "<div class='summary-title'>" . __("Reward", 'woorewards-lite') . "</div>";
 		if ($rewards['reward'] == "discount")
 		{
 			/* translators: %1$s: discount percentage, %2$s: points required */
-			$value = sprintf(__(' %1$s percent discount for %2$s points', 'woorewards'), $rewards['discount_amount'], $rewards['needed']);
-			$summary .= "<div class='lws-wizard-summary-label'>" . __("Percentage Discount", 'woorewards') . "</div>";
+			$value = sprintf(__(' %1$s percent discount for %2$s points', 'woorewards-lite'), $rewards['discount_amount'], $rewards['needed']);
+			$summary .= "<div class='lws-wizard-summary-label'>" . __("Percentage Discount", 'woorewards-lite') . "</div>";
 			$summary .= "<div class='lws-wizard-summary-value'>{$value}</div>";
 		}
 		if ($rewards['reward'] == "coupon")
 		{
 			/* translators: %1$s: discount amount, %2$s: currency symbol, %3$s: points required */
-			$value = sprintf(__(' %1$s%2$s discount for %3$s points', 'woorewards'), $rewards['coupon_amount'], $currency, $rewards['needed']);
-			$summary .= "<div class='lws-wizard-summary-label'>" . __("Fixed Discount", 'woorewards') . "</div>";
+			$value = sprintf(__(' %1$s%2$s discount for %3$s points', 'woorewards-lite'), $rewards['coupon_amount'], $currency, $rewards['needed']);
+			$summary .= "<div class='lws-wizard-summary-label'>" . __("Fixed Discount", 'woorewards-lite') . "</div>";
 			$summary .= "<div class='lws-wizard-summary-value'>{$value}</div>";
 		}
 		if ($rewards['reward'] == "pointsoncart")
 		{
 			/* translators: %1$s: discount value, %2$s: currency symbol */
-			$value = sprintf(__(' %1$s%2$s discount for each point', 'woorewards'), $rewards['point_value'], $currency);
-			$summary .= "<div class='lws-wizard-summary-label'>" . __("Points on Cart", 'woorewards') . "</div>";
+			$value = sprintf(__(' %1$s%2$s discount for each point', 'woorewards-lite'), $rewards['point_value'], $currency);
+			$summary .= "<div class='lws-wizard-summary-label'>" . __("Points on Cart", 'woorewards-lite') . "</div>";
 			$summary .= "<div class='lws-wizard-summary-value'>{$value}</div>";
 		}
 
@@ -381,21 +381,21 @@ class Standard extends \LWS\WOOREWARDS\Wizards\Subwizard
 		{
 			if (!$this->isIntGE0($submit, 'spent_earn'))
 				/* translators: %s: currency symbol */
-				$err[] = sprintf(__("Points for each %s spent expects numeric value greater than zero or leave blank.", 'woorewards'), \LWS\Adminpanel\Tools\Conveniences::isWC() ? \get_woocommerce_currency_symbol() : '?');
+				$err[] = sprintf(__("Points for each %s spent expects numeric value greater than zero or leave blank.", 'woorewards-lite'), \LWS\Adminpanel\Tools\Conveniences::isWC() ? \get_woocommerce_currency_symbol() : '?');
 
 			if (!$this->isIntGE0($submit, 'order_earn'))
-				$err[] = __("Points on order placed expects numeric value greater than zero or leave blank.", 'woorewards');
+				$err[] = __("Points on order placed expects numeric value greater than zero or leave blank.", 'woorewards-lite');
 
 			if (!$this->isIntGE0($submit, 'first_order_earn'))
-				$err[] = __("Extra points on first order expects numeric value greater than zero or leave blank.", 'woorewards');
+				$err[] = __("Extra points on first order expects numeric value greater than zero or leave blank.", 'woorewards-lite');
 			if (!$this->isIntGE0($submit, 'product_review'))
-				$err[] = __("Points for product review expects numeric value greater than zero or leave blank.", 'woorewards');
+				$err[] = __("Points for product review expects numeric value greater than zero or leave blank.", 'woorewards-lite');
 
 			if (!$this->isIntGE0($submit, 'sponsored_spent'))
 				/* translators: %s: currency symbol */
-				$err[] = sprintf(__("Points for each %s spent by Referee expects numeric value greater than zero or leave blank.", 'woorewards'), \LWS\Adminpanel\Tools\Conveniences::isWC() ? \get_woocommerce_currency_symbol() : '?');
+				$err[] = sprintf(__("Points for each %s spent by Referee expects numeric value greater than zero or leave blank.", 'woorewards-lite'), \LWS\Adminpanel\Tools\Conveniences::isWC() ? \get_woocommerce_currency_symbol() : '?');
 			if (!$this->isIntGE0($submit, 'sponsored_order'))
-				$err[] = __("Points on order placed by Referee expects numeric value greater than zero or leave blank.", 'woorewards');
+				$err[] = __("Points on order placed by Referee expects numeric value greater than zero or leave blank.", 'woorewards-lite');
 		}
 		else if ($step == 'rew')
 		{
@@ -403,25 +403,25 @@ class Standard extends \LWS\WOOREWARDS\Wizards\Subwizard
 			$pts = isset($submit['needed']) ? trim($submit['needed']) : '';
 			if (intval($pts) <= 0 && $rew != 'pointsoncart')
 			{
-				$err[] = __("Points Needed expects numeric value greater than zero.", 'woorewards');
+				$err[] = __("Points Needed expects numeric value greater than zero.", 'woorewards-lite');
 			}
 			if ($rew == 'discount')
 			{
 				if (!$this->isFloatInRangeEI($submit, 'discount_amount', 0.0, 100.0, false))
-					$err[] = __("Please, set a reward percentage greater than 0% up to 100%.", 'woorewards');
+					$err[] = __("Please, set a reward percentage greater than 0% up to 100%.", 'woorewards-lite');
 			}
 			else if ($rew == 'coupon')
 			{
 				if (!$this->isFloatGT0($submit, 'coupon_amount', false))
-					$err[] = __("Please, set a positive reward amount.", 'woorewards');
+					$err[] = __("Please, set a positive reward amount.", 'woorewards-lite');
 			}
 			else if ($rew == 'pointsoncart')
 			{
 				if (!$this->isFloatGT0($submit, 'point_value', false))
-					$err[] = __("Please, set a positive point value.", 'woorewards');
+					$err[] = __("Please, set a positive point value.", 'woorewards-lite');
 			}
 			else
-				$err[] = __("Please, select a reward type.", 'woorewards');
+				$err[] = __("Please, select a reward type.", 'woorewards-lite');
 		}
 		return $err ? $err : true;
 	}
@@ -435,7 +435,7 @@ class Standard extends \LWS\WOOREWARDS\Wizards\Subwizard
 		$pool->setOptions(array(
 			'type'      => \LWS\WOOREWARDS\Core\Pool::T_STANDARD,
 			'public'    => 'yes' === $this->getValue($data['data'], 'start', 'sum/*'),
-			'title'     => $this->getValue($data['data'], 'system_title', 'ini/*', __("Standard System", 'woorewards')),
+			'title'     => $this->getValue($data['data'], 'system_title', 'ini/*', __("Standard System", 'woorewards-lite')),
 			'whitelist' => array(\LWS\WOOREWARDS\Core\Pool::T_STANDARD),
 		));
 

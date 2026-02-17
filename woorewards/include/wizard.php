@@ -25,7 +25,7 @@ class Wizard extends \LWS\Adminpanel\Wizard
 
 	protected function getTitle()
 	{
-		return __("Loyalty System Setup", 'woorewards');
+		return __("Loyalty System Setup", 'woorewards-lite');
 	}
 
 	/** @return object a i_wizard implementation instance or false if user selected none. */
@@ -89,11 +89,11 @@ class Wizard extends \LWS\Adminpanel\Wizard
 	{
 		$title = $slug;
 		if( $slug == 'choice' )
-			$title = __("Choose a Wizard", 'woorewards');
+			$title = __("Choose a Wizard", 'woorewards-lite');
 		else if( $wiz = $this->getOrCreateWizard() )
 			$title = $wiz->getStepTitle($slug);
 		else if( $slug == 'ini' )
-			$title = __("Settings…", 'woorewards');
+			$title = __("Settings…", 'woorewards-lite');
 		return $title;
 	}
 
@@ -135,16 +135,16 @@ class Wizard extends \LWS\Adminpanel\Wizard
 										'value'=>'standard',
 										'image' => LWS_WOOREWARDS_IMG . '/standard_system.png',
 										'color' => '#526981',
-										'label' => __("Standard System", 'woorewards'),
-										'descr' => __("The standard system is the most common loyalty system available. Users earn points by performing various actions. When they have enough points, they can unlock rewards such as discount coupons.", 'woorewards'),
+										'label' => __("Standard System", 'woorewards-lite'),
+										'descr' => __("The standard system is the most common loyalty system available. Users earn points by performing various actions. When they have enough points, they can unlock rewards such as discount coupons.", 'woorewards-lite'),
 									),
 									array(
 										'value'=>'leveling',
 										'image' => LWS_WOOREWARDS_IMG . '/leveling_system.png',
 										'color' => '#999999',
 										'pro-color' => '#16b9ba',
-										'label' => __("Leveling System", 'woorewards'),
-										'descr' => __("Leveling systems works differently than standard systems. Users earn points by performing various actions. But they don't spend their points. Instead, they reach different levels and unlock all rewards set at a level when they have enough points.", 'woorewards'),
+										'label' => __("Leveling System", 'woorewards-lite'),
+										'descr' => __("Leveling systems works differently than standard systems. Users earn points by performing various actions. But they don't spend their points. Instead, they reach different levels and unlock all rewards set at a level when they have enough points.", 'woorewards-lite'),
 										'pro-only' => 'yes',
 									),
 									array(
@@ -152,12 +152,12 @@ class Wizard extends \LWS\Adminpanel\Wizard
 										'image' => LWS_WOOREWARDS_IMG . '/events.png',
 										'color' => '#999999',
 										'pro-color' => '#ff9a4c',
-										'label' => __("Special Events", 'woorewards'),
-										'descr' => __("Use the special events wizard to create temporary loyalty programs for various occasions. This wizard proposes scenarios for the following events :", 'woorewards')."<br/>".
+										'label' => __("Special Events", 'woorewards-lite'),
+										'descr' => __("Use the special events wizard to create temporary loyalty programs for various occasions. This wizard proposes scenarios for the following events :", 'woorewards-lite')."<br/>".
 											"<div class='lws-wizard-desc-grid'>".
-											"<ul><li>".__("Black Friday", 'woorewards')."</li>".
-											"<li>" . __("Christmas", 'woorewards') . "</li>" .
-											"<li>" . __("Easter", 'woorewards') . "</li></ul></div>",
+											"<ul><li>".__("Black Friday", 'woorewards-lite')."</li>".
+											"<li>" . __("Christmas", 'woorewards-lite') . "</li>" .
+											"<li>" . __("Easter", 'woorewards-lite') . "</li></ul></div>",
 										'pro-only' => 'yes',
 									),
 									array(
@@ -165,8 +165,8 @@ class Wizard extends \LWS\Adminpanel\Wizard
 										'image' => LWS_WOOREWARDS_IMG . '/double_points.png',
 										'color' => '#999999',
 										'pro-color' => '#6e96b5',
-										'label' => __("Double Points", 'woorewards'),
-										'descr' => __("Create a special event and allow customers to earn twice the points for a limited period of time. You can also choose to allow users with a special role to earn twice the points. Or both.", 'woorewards'),
+										'label' => __("Double Points", 'woorewards-lite'),
+										'descr' => __("Create a special event and allow customers to earn twice the points for a limited period of time. You can also choose to allow users with a special role to earn twice the points. Or both.", 'woorewards-lite'),
 										'pro-only' => 'yes',
 									),
 									array(
@@ -174,8 +174,8 @@ class Wizard extends \LWS\Adminpanel\Wizard
 										'image' => LWS_WOOREWARDS_IMG.'/sponsorship.png',
 										'color' => '#999999',
 										'pro-color' => '#59515c',
-										'label' => __("Referrals", 'woorewards'),
-										'descr' => __("Add a points and rewards system that rewards customers for referring new people on your website. Referees also receive a reward to encourage them to subscribe and buy on your website.", 'woorewards'),
+										'label' => __("Referrals", 'woorewards-lite'),
+										'descr' => __("Add a points and rewards system that rewards customers for referring new people on your website. Referees also receive a reward to encourage them to subscribe and buy on your website.", 'woorewards-lite'),
 										'pro-only' => 'yes',
 									),
 									array(
@@ -183,8 +183,8 @@ class Wizard extends \LWS\Adminpanel\Wizard
 										'image' => LWS_WOOREWARDS_IMG.'/anniversary.png',
 										'color' => '#999999',
 										'pro-color' => '#a4255b',
-										'label' => __("Customer Birthday or Registration Anniversary", 'woorewards'),
-										'descr' => __("Celebrate your customers birthday or registration anniversary by sending them a discount coupon on that occasion. Really easy to set up and very appreciated by customers.", 'woorewards'),
+										'label' => __("Customer Birthday or Registration Anniversary", 'woorewards-lite'),
+										'descr' => __("Celebrate your customers birthday or registration anniversary by sending them a discount coupon on that occasion. Really easy to set up and very appreciated by customers.", 'woorewards-lite'),
 										'pro-only' => 'yes',
 									),
 								),

@@ -77,7 +77,7 @@ class Options
 			if( empty($pool) )
 			{
 				if (defined('WP_DEBUG') && WP_DEBUG) error_log("Requested pool cannot be loaded or created ($poolId)."); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-				\lws_admin_add_notice_once('wr-pool-option-update-failure', __("Requested loyalty system cannot be loaded or created.", 'woorewards'), array('level'=>'error'));
+				\lws_admin_add_notice_once('wr-pool-option-update-failure', __("Requested loyalty system cannot be loaded or created.", 'woorewards-lite'), array('level'=>'error'));
 			}
 			else
 			{
@@ -106,11 +106,11 @@ class Options
 					$pool->ensureNameUnicity();
 				else
 				{
-					\lws_admin_add_notice_once('wr-pool-no-name', __("Please, set a <b>Title</b> for this Points and Rewards System.", 'woorewards'), array('level' => 'warning'));
+					\lws_admin_add_notice_once('wr-pool-no-name', __("Please, set a <b>Title</b> for this Points and Rewards System.", 'woorewards-lite'), array('level' => 'warning'));
 					if( !$pool->getOption('disabled') )
 					{
 						$pool->setOption('disabled', true);
-						\lws_admin_add_notice_once('wr-pool-no-name', __("A Points and Rewards System without a <b>Title</b> cannot be turned <b>On</b>.", 'woorewards'), array('level' => 'warning'));
+						\lws_admin_add_notice_once('wr-pool-no-name', __("A Points and Rewards System without a <b>Title</b> cannot be turned <b>On</b>.", 'woorewards-lite'), array('level' => 'warning'));
 					}
 				}
 				$pool->save(false, false);

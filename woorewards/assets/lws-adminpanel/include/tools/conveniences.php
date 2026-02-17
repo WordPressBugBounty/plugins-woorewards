@@ -23,13 +23,13 @@ class Conveniences
 			else
 			{
 				$orderStatusList = array(
-					array('value' => 'pending', 'label' => __("Pending payment", 'woorewards')),
-					array('value' => 'processing', 'label' => __("Processing", 'woorewards')),
-					array('value' => 'on-hold', 'label' => __("On hold", 'woorewards')),
-					array('value' => 'completed', 'label' => __("Completed", 'woorewards')),
-					array('value' => 'cancelled', 'label' => __("Cancelled", 'woorewards')),
-					array('value' => 'refunded', 'label' => __("Refunded", 'woorewards')),
-					array('value' => 'failed', 'label' => __("Failed", 'woorewards')),
+					array('value' => 'pending', 'label' => __("Pending payment", 'lws-adminpanel')),
+					array('value' => 'processing', 'label' => __("Processing", 'lws-adminpanel')),
+					array('value' => 'on-hold', 'label' => __("On hold", 'lws-adminpanel')),
+					array('value' => 'completed', 'label' => __("Completed", 'lws-adminpanel')),
+					array('value' => 'cancelled', 'label' => __("Cancelled", 'lws-adminpanel')),
+					array('value' => 'refunded', 'label' => __("Refunded", 'lws-adminpanel')),
+					array('value' => 'failed', 'label' => __("Failed", 'lws-adminpanel')),
 				);
 			}
 			$orderStatusList = \apply_filters('lws_adminpanel_order_status_list', $orderStatusList);

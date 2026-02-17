@@ -28,9 +28,9 @@ class UsersPoints extends \LWS\Adminpanel\EditList\Source
 		}
 		$column = self::L_PREFIX . ($default ? $default->getId() : 'default');
 		$labels = array(
-			'user'    => array(__("Users", 'woorewards'), '1fr'),
+			'user'    => array(__("Users", 'woorewards-lite'), '1fr'),
 			$column   => array(\LWS_WooRewards::getPointSymbol(2, $default), 'max-content'), // usermeta 'lws_wre_points_default'
-			'rewards' => array(__("Rewards", 'woorewards'), 'auto'), // filled by filter
+			'rewards' => array(__("Rewards", 'woorewards-lite'), 'auto'), // filled by filter
 		);
 		return \apply_filters('lws_woorewards_ui_userspoints_labels', $labels);
 	}
@@ -178,12 +178,12 @@ class UsersPoints extends \LWS\Adminpanel\EditList\Source
 			$stacks = $wpdb->get_results($wpdb->prepare($sql, \LWS\WOOREWARDS\Core\Pool::POST_TYPE));
 
 			$this->sortSource = array(
-				array('value' => '', 'label' => __("User Login", 'woorewards')), // user_login
-				array('value' => 'email', 'label' => __("Email", 'woorewards')), // user_email
-				array('value' => 'name', 'label' => __("Display Name", 'woorewards')), // display_name
+				array('value' => '', 'label' => __("User Login", 'woorewards-lite')), // user_login
+				array('value' => 'email', 'label' => __("Email", 'woorewards-lite')), // user_email
+				array('value' => 'name', 'label' => __("Display Name", 'woorewards-lite')), // display_name
 			);
 			/* translators: %s: loyalty system name */
-			$label = __("Points : %s", 'woorewards');
+			$label = __("Points : %s", 'woorewards-lite');
 			foreach($stacks as $stack) {
 				$this->sortSource[] = array(
 					'value' => ($stack->ID . '-' . $stack->stack_id),

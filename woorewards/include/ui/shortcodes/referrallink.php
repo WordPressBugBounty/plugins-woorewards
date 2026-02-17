@@ -42,58 +42,58 @@ class ReferralLink
 	{
 		$fields['referrallink'] = array(
 			'id' => 'lws_woorewards_referral_link',
-			'title' => __("Referral Link", 'woorewards'),
+			'title' => __("Referral Link", 'woorewards-lite'),
 			'type' => 'shortcode',
 			'extra' => array(
 				'shortcode' => '[wr_referral_link]',
-				'description' =>  __("Use this shortcode to show a referral link button.", 'woorewards') . "<br/>" .
-					__("Customers can use then share this link with their friends.", 'woorewards'),
+				'description' =>  __("Use this shortcode to show a referral link button.", 'woorewards-lite') . "<br/>" .
+					__("Customers can use then share this link with their friends.", 'woorewards-lite'),
 				'options' => array(
 					'mode' => array(
 						'option' => 'mode',
 						'desc' => array(
-							__("Select the type of referral link your customers will get :", 'woorewards'),
+							__("Select the type of referral link your customers will get :", 'woorewards-lite'),
 							array(
 								'tag' => 'ul',
-								array('link', __("(Default Value) Customers will get an url link", 'woorewards')),
-								array('qrcode', __("Customers will get a QR Code link", 'woorewards')),
+								array('link', __("(Default Value) Customers will get an url link", 'woorewards-lite')),
+								array('qrcode', __("Customers will get a QR Code link", 'woorewards-lite')),
 							),
 						),
 						'example' => '[wr_referral_link mode="link"]',
 					),
 					'showlink' => array(
 						'option' => 'showlink',
-						'desc' => __("(Optional) If set, customers will see the referral link or QR-Code above the copy button", 'woorewards'),
+						'desc' => __("(Optional) If set, customers will see the referral link or QR-Code above the copy button", 'woorewards-lite'),
 						'example' => '[wr_referral_link showlink="true"]',
 					),
 					'showbutton' => array(
 						'option' => 'showbutton',
-						'desc' => __("(Optional, default is 'true') Show or hide the copy button", 'woorewards'),
+						'desc' => __("(Optional, default is 'true') Show or hide the copy button", 'woorewards-lite'),
 						'example' => '[wr_referral_link showbutton="true"]',
 					),
 					'url' => array(
 						'option' => 'url',
-						'desc' => __("(Optional) By default, the shortcode shares the url of the page it’s displayed on. You can override that setting by setting an url in this option.", 'woorewards'),
+						'desc' => __("(Optional) By default, the shortcode shares the url of the page it’s displayed on. You can override that setting by setting an url in this option.", 'woorewards-lite'),
 						'example' => '[wr_referral_link url="https://mywebsite.com/nameofapage"]',
 					),
 					'button' => array(
 						'option' => 'button',
-						'desc' => __("(Optional) Set the text customers will see on the copy button", 'woorewards'),
+						'desc' => __("(Optional) Set the text customers will see on the copy button", 'woorewards-lite'),
 						'example' => '[wr_referral_link button="Copy my referral link"]',
 					),
 					'copied' => array(
 						'option' => 'copied',
-						'desc' => __("(Optional) Set the text customers will see when the code is copied to the clipboard", 'woorewards'),
+						'desc' => __("(Optional) Set the text customers will see when the code is copied to the clipboard", 'woorewards-lite'),
 						'example' => '[wr_referral_link copied="Your link has been copied"]',
 					),
 					'layout' => array(
 						'option' => 'layout',
 						'desc' => array(
-							__("Select the type of referral link your customers will get :", 'woorewards'),
+							__("Select the type of referral link your customers will get :", 'woorewards-lite'),
 							array(
 								'tag' => 'ul',
-								array('default', __("The default layout displays a block", 'woorewards')),
-								array('inline', __("Try to follow the text flow", 'woorewards')),
+								array('default', __("The default layout displays a block", 'woorewards-lite')),
+								array('inline', __("Try to follow the text flow", 'woorewards-lite')),
 							),
 						),
 					),
@@ -167,7 +167,7 @@ class ReferralLink
 				\htmlentities($url)
 			);
 			if (!$atts['button']) {
-				$atts['button'] = __('Get your referral link', 'woorewards');
+				$atts['button'] = __('Get your referral link', 'woorewards-lite');
 			}
 		} else {
 			// QR Code
@@ -177,11 +177,11 @@ class ReferralLink
 				\esc_attr($url)
 			);
 			if (!$atts['button']) {
-				$atts['button'] = __('Get your referral QR Code', 'woorewards');
+				$atts['button'] = __('Get your referral QR Code', 'woorewards-lite');
 			}
 		}
 		if (!$atts['copied']) {
-			$atts['copied'] = __('Your code has been copied !', 'woorewards');
+			$atts['copied'] = __('Your code has been copied !', 'woorewards-lite');
 		}
 
 		// Use a real <button> element to meet iOS Safari's user interaction requirement

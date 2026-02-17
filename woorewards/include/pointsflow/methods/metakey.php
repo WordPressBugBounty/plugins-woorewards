@@ -19,7 +19,7 @@ class MetaKey extends \LWS\WOOREWARDS\PointsFlow\ExportMethod
 	/** @return (string) human readable name */
 	public function getTitle()
 	{
-		return __("By User Meta Key", 'woorewards');
+		return __("By User Meta Key", 'woorewards-lite');
 	}
 
 	/** @return (bool) appear in method combobox */

@@ -15,7 +15,7 @@ class OrderNote
 				$me = new \LWS\WOOREWARDS\Ui\Woocommerce\OrderNote();
 				\add_meta_box(
 					'woorewards-order-notes',
-					__('Loyalty system notes', 'woorewards'),
+					__('Loyalty system notes', 'woorewards-lite'),
 					array($me, 'eContent'),
 					$screen,
 					'side', 'default'
@@ -63,7 +63,7 @@ class OrderNote
 					\esc_attr($date->date('Y-m-d H:i:s')),
 					\esc_html(sprintf(
 						/* translators: %1$s: date, %2$s: time */
-						__('%1$s at %2$s', 'woorewards'),
+						__('%1$s at %2$s', 'woorewards-lite'),
 						$date->date_i18n(\wc_date_format()),
 						$date->date_i18n(\wc_time_format())
 					)),
@@ -74,7 +74,7 @@ class OrderNote
 		} else {
 			echo sprintf(
 				'<ul class="woorewards-notes"><li class="no-items">%s</li></ul>',
-				esc_html__( 'There are no notes yet.', 'woorewards')
+				esc_html__( 'There are no notes yet.', 'woorewards-lite')
 			);
 		}
 	}

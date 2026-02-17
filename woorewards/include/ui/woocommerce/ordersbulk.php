@@ -30,7 +30,7 @@ class OrdersBulk
 
   static function getLabel()
   {
-    return \apply_filters('lws_woorewards_orderbulk_action_process_points_label', __("Process MyRewards Points", 'woorewards'));
+    return \apply_filters('lws_woorewards_orderbulk_action_process_points_label', __("Process MyRewards Points", 'woorewards-lite'));
   }
 
   public function addActions($actions)
@@ -100,7 +100,7 @@ class OrdersBulk
 
       if ($checked > 0) {
         /* translators: %1$d: orders checked, %2$d: orders processed, %3$d: points total */
-        $content = sprintf(__('<b>%1$d</b> orders verified, including <b>%2$d</b> processed for a sum of <b>%3$d</b> points.', 'woorewards'), $checked, $processed, $points);
+        $content = sprintf(__('<b>%1$d</b> orders verified, including <b>%2$d</b> processed for a sum of <b>%3$d</b> points.', 'woorewards-lite'), $checked, $processed, $points);
         echo wp_kses_post("<div class='notice notice-success lws-wr-order-bulk-action'><p>{$content}</p></div>");
       }
     }

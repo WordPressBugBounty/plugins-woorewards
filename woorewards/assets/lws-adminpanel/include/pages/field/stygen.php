@@ -44,9 +44,9 @@ class StyGen extends \LWS\Adminpanel\Pages\Field
 			$dftvalues = base64_encode(json_encode(array_values($balises->file)));
 
 			$labels = array(
-				__("Available Elements", 'woorewards'),
-				__("Select an element to start modifying its style", 'woorewards'),
-				esc_attr(_x("Reset Style", "Stygen button", 'woorewards'))
+				__("Available Elements", 'lws-adminpanel'),
+				__("Select an element to start modifying its style", 'lws-adminpanel'),
+				esc_attr(_x("Reset Style", "Stygen button", 'lws-adminpanel'))
 			);
 			$lwsseditor = null;
 			$lwsseditor = "<div class='lwss_editor lwss-editor' data-cssvalues='{$cssvalues}' data-dftvalues='{$dftvalues}'>";
@@ -128,7 +128,7 @@ class StyGen extends \LWS\Adminpanel\Pages\Field
 			$page = \apply_filters('lws_adminpanel_stygen_content_get_'.$template, '');
 		}
 		else
-			return __("Snippet unknown", 'woorewards');
+			return __("Snippet unknown", 'lws-adminpanel');
 
 		$d = new \DOMDocument;
 		@$d->loadHTML('<?xml encoding="utf-8" ?>'.$page, LIBXML_NOERROR|LIBXML_NOWARNING);

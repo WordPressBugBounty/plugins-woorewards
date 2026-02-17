@@ -43,7 +43,7 @@ class Ajax
 		}
 		else
 		{
-			\wp_die(esc_html(__("Loyalty system not found.", 'woorewards')), 404);
+			\wp_die(esc_html(__("Loyalty system not found.", 'woorewards-lite')), 404);
 		}
 	}
 
@@ -55,10 +55,10 @@ class Ajax
 		if( !$user )
 			$user = \get_current_user_id();
 		if( empty($user) || empty($stack) )
-			\wp_die(esc_html(__("Point system or user not found.", 'woorewards')), 404);
+			\wp_die(esc_html(__("Point system or user not found.", 'woorewards-lite')), 404);
 
 		if( $user != \get_current_user_id() && !\current_user_can('manage_rewards') )
-			\wp_die(esc_html(__("You do not have permission to see other history.", 'woorewards')), 403);
+			\wp_die(esc_html(__("You do not have permission to see other history.", 'woorewards-lite')), 403);
 
 		$page = isset($_GET['page']) ? \absint($_GET['page']) : false; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$count = isset($_GET['count']) ? max(\intval($_GET['count']), 1) : false; // phpcs:ignore WordPress.Security.NonceVerification.Recommended

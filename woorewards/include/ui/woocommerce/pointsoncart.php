@@ -88,11 +88,11 @@ class PointsOnCart
 		switch ($msg_code) {
 			case \WC_Coupon::WC_COUPON_SUCCESS:
 				/* translators: %s: discount title */
-				$msg = sprintf(_x("%s discount applied successfully.", 'Points on cart message', 'woorewards'), $title);
+				$msg = sprintf(_x("%s discount applied successfully.", 'Points on cart message', 'woorewards-lite'), $title);
 				break;
 			case \WC_Coupon::WC_COUPON_REMOVED:
 				/* translators: %s: discount title */
-				$msg = sprintf(_x("%s discount removed successfully.", 'Points on cart message', 'woorewards'), $title);
+				$msg = sprintf(_x("%s discount removed successfully.", 'Points on cart message', 'woorewards-lite'), $title);
 				break;
 		}
 		return $msg;
@@ -114,24 +114,24 @@ class PointsOnCart
 		switch ($err_code) {
 			case \WC_Coupon::E_WC_COUPON_INVALID_FILTERED:
 				/* translators: %s: discount title */
-				$err = sprintf(_x("Sorry, %s discount cannot be applied.", 'Points on cart error', 'woorewards'), $title);
+				$err = sprintf(_x("Sorry, %s discount cannot be applied.", 'Points on cart error', 'woorewards-lite'), $title);
 				break;
 			case \WC_Coupon::E_WC_COUPON_NOT_EXIST:
 				/* translators: %s: discount title */
-				$err = sprintf(_x("Sorry, %s discount is no longer available.", 'Points on cart error', 'woorewards'), $title);
+				$err = sprintf(_x("Sorry, %s discount is no longer available.", 'Points on cart error', 'woorewards-lite'), $title);
 				break;
 			case \WC_Coupon::E_WC_COUPON_INVALID_REMOVED:
 				/* translators: %s: discount title */
-				$err = sprintf(_x("Sorry, %s discount has been removed from your order because the requirements are no longer met.", 'Points on cart error', 'woorewards'), $title);
+				$err = sprintf(_x("Sorry, %s discount has been removed from your order because the requirements are no longer met.", 'Points on cart error', 'woorewards-lite'), $title);
 				break;
 			case \WC_Coupon::E_WC_COUPON_ALREADY_APPLIED_INDIV_USE_ONLY:
 				/* translators: %s: discount title */
-				$err = sprintf(_x("Sorry, %s discount cannot be used in conjunction with other coupons.", 'Points on cart error', 'woorewards'), $title);
+				$err = sprintf(_x("Sorry, %s discount cannot be used in conjunction with other coupons.", 'Points on cart error', 'woorewards-lite'), $title);
 				break;
 			case \WC_Coupon::E_WC_COUPON_NOT_APPLICABLE:
 			case \WC_Coupon::E_WC_COUPON_EXCLUDED_CATEGORIES:
 				/* translators: %s: discount title */
-				$err = sprintf(_x("Sorry, %s discount is not applicable to selected products.", 'Points on cart error', 'woorewards'), $title);
+				$err = sprintf(_x("Sorry, %s discount is not applicable to selected products.", 'Points on cart error', 'woorewards-lite'), $title);
 				break;
 		}
 		return $err;
@@ -204,40 +204,40 @@ class PointsOnCart
 	{
 		$fields['pointsoncart'] = array(
 			'id' => 'wr_points_on_cart',
-			'title' => __("Points on Cart Tool", 'woorewards'),
+			'title' => __("Points on Cart Tool", 'woorewards-lite'),
 			'type' => 'shortcode',
 			'extra' => array(
 				'shortcode' => '[wr_points_on_cart]',
-				'description' =>  __("This shortcode is used to display the Points on Cart tool.", 'woorewards') . "<br/>" .
-				__("You can customize its appearance in the Widgets Tab.", 'woorewards'),
+				'description' =>  __("This shortcode is used to display the Points on Cart tool.", 'woorewards-lite') . "<br/>" .
+				__("You can customize its appearance in the Widgets Tab.", 'woorewards-lite'),
 				'options' => array(
 					array(
 						'option' => 'reload',
-						'desc' => __("(Optional) Set it to true to force a page reload when customers modify the points they want to apply on the order", 'woorewards'),
+						'desc' => __("(Optional) Set it to true to force a page reload when customers modify the points they want to apply on the order", 'woorewards-lite'),
 						'example' => '[wr_points_on_cart reload="true"]'
 					),
 					'layout' => array(
 						'option' => 'layout',
-						'desc' => __("(Optional) Select how the tool is displayed. 3 possible values :", 'woorewards'),
+						'desc' => __("(Optional) Select how the tool is displayed. 3 possible values :", 'woorewards-lite'),
 						'options' => array(
 							array(
 								'option' => 'horizontal',
-								'desc'   => __("Default value. Elements are displayed in one line", 'woorewards'),
+								'desc'   => __("Default value. Elements are displayed in one line", 'woorewards-lite'),
 							),
 							array(
 								'option' => 'vertical',
-								'desc'   => __("Elements are displayed on top of another", 'woorewards'),
+								'desc'   => __("Elements are displayed on top of another", 'woorewards-lite'),
 							),
 							array(
 								'option' => 'half',
-								'desc'   => __("If you present this tool next to the cart totals block, use this option to display the tool vertically with some spacing", 'woorewards'),
+								'desc'   => __("If you present this tool next to the cart totals block, use this option to display the tool vertically with some spacing", 'woorewards-lite'),
 							),
 						),
 						'example' => '[wr_points_on_cart layout="vertical"]'
 					),
 					'need_points' => array(
 						'option' => 'need_points',
-						'desc' => __("(Optional, default is false) Set it to true to show this widget only if the current customer has points to spend.", 'woorewards'),
+						'desc' => __("(Optional, default is false) Set it to true to show this widget only if the current customer has points to spend.", 'woorewards-lite'),
 						'example' => '[wr_points_on_cart need_points="true"]'
 					),
 				),
@@ -245,10 +245,10 @@ class PointsOnCart
 		);
 		$fields['pointsoncartheader'] = array(
 			'id' => 'lws_wooreward_points_cart_header',
-			'title' => __("Tool Header", 'woorewards'),
+			'title' => __("Tool Header", 'woorewards-lite'),
 			'type' => 'text',
 			'extra' => array(
-				'placeholder' => __('Loyalty points discount', 'woorewards'),
+				'placeholder' => __('Loyalty points discount', 'woorewards-lite'),
 				'size' => '30',
 				'wpml' => 'WooRewards - Points On Cart Action - Header',
 			)
@@ -261,7 +261,7 @@ class PointsOnCart
 				'template' => 'lws_woorewards_points_to_cart',
 				'html'     => false,
 				'css'      => LWS_WOOREWARDS_CSS . '/templates/pointsoncart.css',
-				'help'     => __("Use the styling tool to change the tool's frontend appearance", 'woorewards'),
+				'help'     => __("Use the styling tool to change the tool's frontend appearance", 'woorewards-lite'),
 				'subids'   => array(
 					'lws_woorewards_points_to_cart_action_balance' => "WooRewards - Points On Cart Action - Balance",
 					'lws_woorewards_points_to_cart_action_use'     => "WooRewards - Points On Cart Action - Use",
@@ -272,15 +272,15 @@ class PointsOnCart
 		);
 		$fields['maxpointsoncart'] = array(
 			'id' => 'wr_max_points_on_cart',
-			'title' => __("Maximum Point Amount on Cart", 'woorewards'),
+			'title' => __("Maximum Point Amount on Cart", 'woorewards-lite'),
 			'type' => 'shortcode',
 			'extra' => array(
 				'shortcode' => '[wr_max_points_on_cart raw=""]',
-				'description' =>  __("This shortcode will show the maximum quantity of Point that could be used on this cart.", 'woorewards'),
+				'description' =>  __("This shortcode will show the maximum quantity of Point that could be used on this cart.", 'woorewards-lite'),
 				'options'   => array(
 					array(
 						'option' => 'raw',
-						'desc' => __("(Optional) If set, the amount will be a simple text. Otherwise, it will be presented inside a stylable element", 'woorewards'),
+						'desc' => __("(Optional) If set, the amount will be a simple text. Otherwise, it will be presented inside a stylable element", 'woorewards-lite'),
 					),
 				),
 			)
@@ -294,8 +294,8 @@ class PointsOnCart
 		$fields['pointsoncart']['extra']['options'] = \array_merge(array(
 			'system' => array(
 				'option' => 'system',
-				'desc'   => __("(Optional, comma separated) Select the points and rewards systems you want to show. If left empty, the first available system will be displayed", 'woorewards') .
-					"<br/>" . __("You can find the points and rewards systems names in WooRewards → Points and Rewards", 'woorewards'),
+				'desc'   => __("(Optional, comma separated) Select the points and rewards systems you want to show. If left empty, the first available system will be displayed", 'woorewards-lite') .
+					"<br/>" . __("You can find the points and rewards systems names in WooRewards → Points and Rewards", 'woorewards-lite'),
 			),
 		), $fields['pointsoncart']['extra']['options']);
 		return $fields;
@@ -424,7 +424,7 @@ class PointsOnCart
 		$this->stygen = true;
 		$pool = \LWS\WOOREWARDS\Collections\Pools::instanciate()->create('dummy')->last();
 		$pool->setOptions(array(
-			'title'    => __("Demo. System", 'woorewards'),
+			'title'    => __("Demo. System", 'woorewards-lite'),
 			'type'     => \LWS\WOOREWARDS\Core\Pool::T_STANDARD,
 			'disabled' => false,
 			'direct_reward_point_rate'    => 0.1,
@@ -728,10 +728,10 @@ class PointsOnCart
 		$balance = $info['pool']->formatPoints($info['amount']);
 		$labels = array(
 			/* translators: %s: points symbol */
-			'balance'     => sprintf(__("Your %s :", 'woorewards'), $poolInfo['symbols']),
-			'use'         => _x("Used Amount :", "Part of Points to use as reward", 'woorewards'),
-			'update'      => __("Apply", 'woorewards'),
-			'max'         => __("Use Max Amount", 'woorewards'),
+			'balance'     => sprintf(__("Your %s :", 'woorewards-lite'), $poolInfo['symbols']),
+			'use'         => _x("Used Amount :", "Part of Points to use as reward", 'woorewards-lite'),
+			'update'      => __("Apply", 'woorewards-lite'),
+			'max'         => __("Use Max Amount", 'woorewards-lite'),
 		);
 		$labels['balance']     = \lws_get_option('lws_woorewards_points_to_cart_action_balance', $labels['balance']);
 		$labels['use']         = \lws_get_option('lws_woorewards_points_to_cart_action_use'    , $labels['use']);
@@ -766,7 +766,7 @@ class PointsOnCart
 			$reload = 'on';
 		elseif (null === $forceReload && \get_option(('cart'==$origin) ? 'lws_woorewards_points_to_cart_reload' : 'lws_woorewards_points_to_checkout_reload'))
 			$reload = 'on';
-		$header = \lws_get_option('lws_wooreward_points_cart_header', __('Loyalty points discount', 'woorewards'));
+		$header = \lws_get_option('lws_wooreward_points_cart_header', __('Loyalty points discount', 'woorewards-lite'));
 		if ('_' === $header) {
 			$header = '';
 		} else {
@@ -822,7 +822,7 @@ class PointsOnCart
 				"<div class='lwss_selectable wr-rateinfo' data-type='Point Rate'>%s</div>",
 				sprintf(
 					/* translators: %1$s: points amount, %2$s: currency price */
-					__('Every %1$s you use is worth %2$s', 'woorewards'),
+					__('Every %1$s you use is worth %2$s', 'woorewards-lite'),
 					$info['pool']->formatPoints(1, true),
 					\LWS\Adminpanel\Tools\Conveniences::getCurrencyPrice($poolInfo['direct_reward_point_rate'], \apply_filters('lws_woorewards_point_rate_displays_real_decimals', false), true)
 				)
@@ -834,7 +834,7 @@ class PointsOnCart
 				"<div class='lwss_selectable wr-minpoints' data-type='Min Points'>%s</div>",
 				sprintf(
 					/* translators: %s: minimum points amount */
-					__('You can use a minimum of %s on a single cart.', 'woorewards'),
+					__('You can use a minimum of %s on a single cart.', 'woorewards-lite'),
 					$info['pool']->formatPoints($poolInfo['direct_reward_min_points_on_cart'], true)
 				)
 			);
@@ -845,7 +845,7 @@ class PointsOnCart
 				"<div class='lwss_selectable wr-maxpoints' data-type='Max Points'>%s</div>",
 				sprintf(
 					/* translators: %s: maximum points amount */
-					__('You can use a maximum of %s on a single cart.', 'woorewards'),
+					__('You can use a maximum of %s on a single cart.', 'woorewards-lite'),
 					$info['pool']->formatPoints($poolInfo['direct_reward_max_points_on_cart'], true)
 				)
 			);
@@ -856,7 +856,7 @@ class PointsOnCart
 				"<div class='lwss_selectable wr-maxpercent' data-type='Max Cart Percentage'>%s</div>",
 				sprintf(
 					/* translators: %1$s: points symbol, %2$s: maximum percentage */
-					__('You can only use your %1$s to reduce the cart total by %2$s%%', 'woorewards'),
+					__('You can only use your %1$s to reduce the cart total by %2$s%%', 'woorewards-lite'),
 					$poolInfo['symbols'],
 					$poolInfo['direct_reward_max_percent_of_cart']
 				)
@@ -868,7 +868,7 @@ class PointsOnCart
 				"<div class='lwss_selectable wr-lowerlimit' data-type='Lower Cart Limit'>%s</div>",
 				sprintf(
 					/* translators: %1$s: points symbol, %2$s: minimum cart total */
-					__('You can only use your %1$s to reduce the cart total to %2$s', 'woorewards'),
+					__('You can only use your %1$s to reduce the cart total to %2$s', 'woorewards-lite'),
 					$poolInfo['symbols'],
 					\LWS\Adminpanel\Tools\Conveniences::getCurrencyPrice($poolInfo['direct_reward_total_floor'])
 				)
@@ -880,7 +880,7 @@ class PointsOnCart
 				"<div class='lwss_selectable wr-mincartamount' data-type='Min Cart Amount'>%s</div>",
 				sprintf(
 					/* translators: %1$s: minimum subtotal amount, %2$s: points symbol */
-					__('The cart subtotal needs to be over %1$s if you want to use %2$s', 'woorewards'),
+					__('The cart subtotal needs to be over %1$s if you want to use %2$s', 'woorewards-lite'),
 					\LWS\Adminpanel\Tools\Conveniences::getCurrencyPrice($poolInfo['direct_reward_min_subtotal']),
 					$poolInfo['symbols']
 				)

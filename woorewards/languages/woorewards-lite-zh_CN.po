@@ -389,13 +389,13 @@ msgstr "保存积分奖励系统时发生错误。"
 
 #: include/core/pool.php:780
 #, php-format
-msgid "Failed to delete the reward system <b>%s</b>/%s."
-msgstr "无法删除积分奖励系统<b>%s</b>/%s."
+msgid "Failed to delete the reward system <b>%1$s</b>/%2$s."
+msgstr "无法删除积分奖励系统<b>%1$s</b>/%2$s."
 
 #: include/core/pool.php:800
 #, php-format
-msgid "The reward system <b>%s</b>/%s successfully deleted."
-msgstr "奖励系统 <b>%s</b>/%s 已成功删除."
+msgid "The reward system <b>%1$s</b>/%2$s successfully deleted."
+msgstr "奖励系统 <b>%1$s</b>/%2$s 已成功删除."
 
 #: include/core/pool.php:905
 #, php-format
@@ -661,8 +661,8 @@ msgstr "商品"
 #: include/events/sponsoredorder.php:224
 #, fuzzy, php-format
 #| msgid "Order #%s completed"
-msgid "Referred friend %s order #%s completed"
-msgstr "订单 #%s 已完成"
+msgid "Referred friend %1$s order #%2$s completed"
+msgstr "订单 #%2$s 已完成 %1$s"
 
 #: include/events/sponsoredorder.php:233
 msgid "Available for referees"
@@ -1697,9 +1697,9 @@ msgstr ""
 #| "It seems the prefab pool does not exists. Please run the <a%s>wizard</a> "
 #| "to create one."
 msgid ""
-"The WooRewards default points and rewards system does not exist. Please run "
-"the <a%s>wizard</a> tool to create one."
-msgstr "似乎预设积分池类型不存在。请运行<a%s>向导</a>来创建一个。"
+"The WooRewards default points and rewards system does not exist. Please run the "
+"<a href='%s' class='lws-adm-btn'>wizard</a> tool to create one."
+msgstr "似乎预设积分池类型不存在。请运行<a href='%s' class='lws-adm-btn'>向导</a>来创建一个。"
 
 #: include/ui/admin.php:1075
 #, fuzzy
@@ -1851,6 +1851,12 @@ msgstr ""
 #: include/ui/admin.php:1406
 #, php-format
 msgid "See %s to let your customer share a referral link and get referees."
+msgstr ""
+
+#: include/ui/admin.php:1634
+#, php-format
+msgid ""
+"Points restoration completed for system <b>%1$s</b> to date <b>%2$s</b>:"
 msgstr ""
 
 #: include/ui/adminscreens/pointsmanagement.php:23
@@ -2287,7 +2293,7 @@ msgstr "应用"
 
 #: include/ui/blocks/integration.php:58
 #, php-format
-msgid "%s → %s"
+msgid "%1$s → %2$s"
 msgstr ""
 
 #: include/ui/blocks/integration.php:70
@@ -2849,10 +2855,10 @@ msgstr ""
 msgid "Elements are displayed on top of another"
 msgstr ""
 
-#: include/ui/shortcodes/pointsbalance.php:205
+#: include/ui/shortcodes/pointsbalance.php:206
 #, php-format
 msgctxt "wr_points_balance element=\"none\""
-msgid "%s : %s"
+msgid "%1$s : %2$s"
 msgstr ""
 
 #: include/ui/shortcodes/pointsvalue.php:27
@@ -3081,11 +3087,11 @@ msgstr ""
 msgid "Process MyRewards Points"
 msgstr "MyRewards 积分显示器"
 
-#: include/ui/woocommerce/ordersbulk.php:103
+#: include/ui/woocommerce/ordersbulk.php:104
 #, php-format
 msgid ""
-"<b>%d</b> orders verified, including <b>%d</b> processed for a sum of <b>%d</"
-"b> points."
+"<b>%1$d</b> orders verified, including <b>%2$d</b> processed for a sum of "
+"<b>%3$d</b> points."
 msgstr ""
 
 #: include/ui/woocommerce/pointsoncart.php:90
@@ -3218,8 +3224,8 @@ msgstr ""
 
 #: include/ui/woocommerce/pointsoncart.php:773
 #, php-format
-msgid "Every %s you use is worth %s"
-msgstr "您使用的每 %s 价值 %s"
+msgid "Every %1$s you use is worth %2$s"
+msgstr "您使用的每 %1$s 价值 %2$s"
 
 #: include/ui/woocommerce/pointsoncart.php:784
 #, php-format
@@ -3233,18 +3239,18 @@ msgstr ""
 
 #: include/ui/woocommerce/pointsoncart.php:804
 #, php-format
-msgid "You can only use your %s to reduce the cart total by %s%%"
-msgstr "您最多可以使用 %s 来抵扣购物车总额中的 %s%%"
+msgid "You can only use your %1$s to reduce the cart total by %2$s%%"
+msgstr "您最多可以使用 %1$s 来抵扣购物车总额中的 %2$s%%"
 
 #: include/ui/woocommerce/pointsoncart.php:815
 #, php-format
-msgid "You can only use your %s to reduce the cart total to %s"
-msgstr "您您最多可以使用 %s 来抵扣购物车总额中的 %s%%"
+msgid "You can only use your %1$s to reduce the cart total to %2$s"
+msgstr "您您最多可以使用 %1$s 来抵扣购物车总额中的 %2$s"
 
 #: include/ui/woocommerce/pointsoncart.php:826
 #, php-format
-msgid "The cart subtotal needs to be over %s if you want to use %s"
-msgstr "购物车总额需要大于 %s 如果您希望使用 %s"
+msgid "The cart subtotal needs to be over %1$s if you want to use %2$s"
+msgstr "购物车总额需要大于 %1$s 如果您希望使用 %2$s"
 
 #: include/unlockables/coupon.php:24
 msgid ""
@@ -3695,8 +3701,8 @@ msgstr "积分系统名称"
 
 #: include/wizards/standard.php:302
 #, php-format
-msgid " %s points earned for each %s spent"
-msgstr " %s 分每消费 %s 元"
+msgid " %1$s points earned for each %2$s spent"
+msgstr " %1$s 分每消费 %2$s 元"
 
 #: include/wizards/standard.php:303
 msgid "Spend Money"
@@ -3733,8 +3739,8 @@ msgstr "商品评价"
 #: include/wizards/standard.php:326
 #, fuzzy, php-format
 #| msgid " %s points earned for each %s spent"
-msgid " %s points earned for each %s spent by a Referee"
-msgstr " %s 分每消费 %s 元"
+msgid " %1$s points earned for each %2$s spent by a Referee"
+msgstr " %1$s 分每消费 %2$s 元"
 
 #: include/wizards/standard.php:327
 #, fuzzy
@@ -3756,8 +3762,8 @@ msgstr "每次下单"
 
 #: include/wizards/standard.php:342
 #, php-format
-msgid " %s percent discount for %s points"
-msgstr " %s 的百分数折扣使用  %s 积分"
+msgid " %1$s percent discount for %2$s points"
+msgstr " %1$s 的百分数折扣使用  %2$s 积分"
 
 #: include/wizards/standard.php:343
 msgid "Percentage Discount"
@@ -3765,8 +3771,8 @@ msgstr "百分数折扣"
 
 #: include/wizards/standard.php:348
 #, php-format
-msgid " %s%s discount for %s points"
-msgstr " %s %s 的折扣使用  %s 积分"
+msgid " %1$s%2$s discount for %3$s points"
+msgstr " %1$s %2$s 的折扣使用  %3$s 积分"
 
 #: include/wizards/standard.php:349
 msgid "Fixed Discount"
@@ -3775,8 +3781,8 @@ msgstr "固定折扣"
 #: include/wizards/standard.php:354
 #, fuzzy, php-format
 #| msgid " %s%s discount for %s points"
-msgid " %s%s discount for each point"
-msgstr " %s %s 的折扣使用  %s 积分"
+msgid " %1$s%2$s discount for each point"
+msgstr " %1$s %2$s 的折扣使用 积分"
 
 #: include/wizards/standard.php:369
 #, php-format

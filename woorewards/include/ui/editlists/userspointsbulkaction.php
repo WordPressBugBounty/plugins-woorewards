@@ -11,8 +11,8 @@ class UsersPointsBulkAction extends \LWS\Adminpanel\EditList\Action
 
 	function input()
 	{
-		$help = esc_attr(__("Enter '=42' to set a total of 42 points to selected users instead of adding it to current amounts.", 'woorewards'));
-		$str = "<label for='{$this->key}' title='$help'>".__("Add/Subtract points", 'woorewards')."</label>";
+		$help = esc_attr(__("Enter '=42' to set a total of 42 points to selected users instead of adding it to current amounts.", 'woorewards-lite'));
+		$str = "<label for='{$this->key}' title='$help'>".__("Add/Subtract points", 'woorewards-lite')."</label>";
 		$str .= " <input type='text' pattern='[0-9]+' name='{$this->key}' id='{$this->key}' size='4' class='lws-input lws-ignore-confirm'/>";
 		return $str;
 	}
@@ -52,13 +52,13 @@ class UsersPointsBulkAction extends \LWS\Adminpanel\EditList\Action
 
 		if( empty($pool = $pools->get(0)) )
 		{
-			\lws_admin_add_notice_once('lws-wre-users-points-add', __("Cannot load default loyalty system.", 'woorewards'), array('level'=>'error'));
+			\lws_admin_add_notice_once('lws-wre-users-points-add', __("Cannot load default loyalty system.", 'woorewards-lite'), array('level'=>'error'));
 			return false;
 		}
 		else
 		{
 			$count = 0;
-			$reason = __("Commercial operation", 'woorewards');
+			$reason = __("Commercial operation", 'woorewards-lite');
 			foreach( $user_ids as $user_id )
 			{
 				if( $set )
@@ -69,9 +69,9 @@ class UsersPointsBulkAction extends \LWS\Adminpanel\EditList\Action
 					$count += $pool->addPoints($user_id, $points, $reason)->tryUnlock($user_id);
 			}
 
-			$msg = _n("Points added to user.", "Points added to users.", count($user_ids), 'woorewards');
+			$msg = _n("Points added to user.", "Points added to users.", count($user_ids), 'woorewards-lite');
 			if( $count > 0 )
-				$msg .= '<br/>' . _n("A reward was generated.", "Few rewards generated.", $count, 'woorewards');
+				$msg .= '<br/>' . _n("A reward was generated.", "Few rewards generated.", $count, 'woorewards-lite');
 			\lws_admin_add_notice_once('lws-wre-users-points-add', $msg, array('level'=>'success'));
 		}
 		return true;

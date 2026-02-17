@@ -65,7 +65,7 @@ class MenuItems
 	 *	else the title of the menu graph element. */
 	protected function getTitle($item=false)
 	{
-		return __('Custom item', 'woorewards');
+		return __('Custom item', 'lws-adminpanel');
 	}
 
 	/** How to embed our menu item. */
@@ -414,7 +414,7 @@ class MenuItems
 				. '</span>',
 				$id,
 				$id,
-				\esc_html__("Select All", 'woorewards')
+				\esc_html__("Select All", 'lws-adminpanel')
 			);
 		}
 
@@ -423,7 +423,7 @@ class MenuItems
 		       . '<span class="add-to-menu">'
 		       . sprintf(
 						 '<input type="submit" class="button-secondary submit-add-to-menu right submit_lws_menuitems" value="%s" name="add-lws-menu-item" id="submit-%s">',
-						 \esc_html__("Add to Menu", 'woorewards'),
+						 \esc_html__("Add to Menu", 'lws-adminpanel'),
 			       $id
 		       )
 		       . '<span class="spinner"></span>'

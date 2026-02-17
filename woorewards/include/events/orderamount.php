@@ -20,8 +20,8 @@ class OrderAmount extends \LWS\WOOREWARDS\Abstracts\Event
 	{
 		return array_merge(parent::getInformation(), array(
 			'icon'  => 'lws-icon-coins',
-			'short' => __("The customer will receive points depending on the amount spent on the order", 'woorewards'),
-			'help'  => __("Most used method on MyRewards. Lots of options", 'woorewards'),
+			'short' => __("The customer will receive points depending on the amount spent on the order", 'woorewards-lite'),
+			'help'  => __("Most used method on MyRewards. Lots of options", 'woorewards-lite'),
 		));
 	}
 
@@ -43,7 +43,7 @@ class OrderAmount extends \LWS\WOOREWARDS\Abstracts\Event
 		$prefix = $this->getDataKeyPrefix();
 		$form = parent::getForm($context);
 
-		$label = _x("Money spent", "Order Amount Event money diviser", 'woorewards');
+		$label = _x("Money spent", "Order Amount Event money diviser", 'woorewards-lite');
 		$value = \esc_attr($this->getDenominator());
 		$str = "<div class='lws-$context-opt-title label pts-earning'>$label</div>"
 			. "<div class='lws-$context-opt-input value pts-earning'>"
@@ -54,8 +54,8 @@ class OrderAmount extends \LWS\WOOREWARDS\Abstracts\Event
 
 		// just hidden since we do not want to reset the value on save
 		$noPri = (\get_option('lws_woorewards_show_loading_order_and_priority') ? '' : ' style="display: none;"');
-		$label = __("Priority", 'woorewards');
-		$tooltip = __("Customer orders will run by ascending priority value.", 'woorewards');
+		$label = __("Priority", 'woorewards-lite');
+		$tooltip = __("Customer orders will run by ascending priority value.", 'woorewards-lite');
 		$str = "<div class='field-help'{$noPri}>$tooltip</div>"
 			. "<div class='lws-$context-opt-title label'{$noPri}>$label<div class='bt-field-help'>?</div></div>"
 			. "<div class='lws-$context-opt-input value'{$noPri}>"
@@ -65,10 +65,10 @@ class OrderAmount extends \LWS\WOOREWARDS\Abstracts\Event
 		$phb0 = $this->getFieldsetPlaceholder(false, 0);
 		$form = str_replace($phb0, $str.$phb0, $form);
 
-		$form .= $this->getFieldsetBegin(2, __("Options", 'woorewards'));
+		$form .= $this->getFieldsetBegin(2, __("Options", 'woorewards-lite'));
 
 		// compute points after discount
-		$label   = _x("Use amount after discount", "Order Amount Event", 'woorewards');
+		$label   = _x("Use amount after discount", "Order Amount Event", 'woorewards-lite');
 		$form .= "<div class='lws-$context-opt-title label'>$label</div>";
 		$toggle = \LWS\Adminpanel\Pages\Field\Checkbox::compose($prefix . 'after_discount', array(
 			'id'      => $prefix . 'after_discount',
@@ -102,8 +102,8 @@ class OrderAmount extends \LWS\WOOREWARDS\Abstracts\Event
 				$prefix . 'event_priority'   => $this->getEventPriority(),
 			),
 			'labels'   => array(
-				$prefix . 'after_discount' => __("After Discount", 'woorewards'),
-				$prefix . 'event_priority' => __("Event Priority", 'woorewards'),
+				$prefix . 'after_discount' => __("After Discount", 'woorewards-lite'),
+				$prefix . 'event_priority' => __("Event Priority", 'woorewards-lite'),
 			)
 		));
 		if( !(isset($values['valid']) && $values['valid']) )
@@ -190,7 +190,7 @@ class OrderAmount extends \LWS\WOOREWARDS\Abstracts\Event
 
 	public function getDisplayType()
 	{
-		return _x("Spend money", "getDisplayType", 'woorewards');
+		return _x("Spend money", "getDisplayType", 'woorewards-lite');
 	}
 
 	protected function _fromPost(\WP_Post $post)
@@ -277,14 +277,14 @@ class OrderAmount extends \LWS\WOOREWARDS\Abstracts\Event
 		$price = \wp_kses(\wc_price($amount, array('currency' => $order->get_currency())), array());
 		return \LWS\WOOREWARDS\Core\Trace::byOrder($order)
 			->setProvider($order->get_customer_id('edit'))
-			->setReason(array('Spent %1$s from order #%2$s', $price, $order->get_order_number()), 'woorewards');
+			->setReason(array('Spent %1$s from order #%2$s', $price, $order->get_order_number()), 'woorewards-lite');
 	}
 
 	/** Never call, only to have poedit/wpml able to extract the sentance. */
 	private function poeditDeclare()
 	{
 		/* translators: %1$s: amount spent, %2$s: order number */
-		__('Spent %1$s from order #%2$s', 'woorewards');
+		__('Spent %1$s from order #%2$s', 'woorewards-lite');
 	}
 
 	function roundPrice($price)
@@ -335,11 +335,11 @@ class OrderAmount extends \LWS\WOOREWARDS\Abstracts\Event
 		$amount = \LWS\Adminpanel\Tools\Conveniences::isWC() ? \wc_price($amount) : \number_format_i18n($amount, 2);
 		if ('=' == substr($value, 0, 1)) {
 			/* translators: %1$s: expression formula, %2$s: money amount */
-			$value = sprintf(_x('[%1$s] / %2$s', "Point per money spent", 'woorewards'), $value, $amount);
+			$value = sprintf(_x('[%1$s] / %2$s', "Point per money spent", 'woorewards-lite'), $value, $amount);
 		} elseif (\is_numeric($value) && $value > 0) {
 			$points = \LWS_WooRewards::formatPointsWithSymbol($value, $this->getPoolName());
 			/* translators: %1$s: points value, %2$s: money amount */
-			$value = sprintf(_x('%1$s / %2$s', "Point per money spent", 'woorewards'), $points, $amount);
+			$value = sprintf(_x('%1$s / %2$s', "Point per money spent", 'woorewards-lite'), $points, $amount);
 		} else {
 			$value = \str_replace('[spent]', $amount, $value);
 		}
@@ -351,9 +351,9 @@ class OrderAmount extends \LWS\WOOREWARDS\Abstracts\Event
 	public function getCategories()
 	{
 		return array_merge(parent::getCategories(), array(
-			'woocommerce' => __("WooCommerce", 'woorewards'),
-			'money' => __("Money", 'woorewards'),
-			'order' => __("Order", 'woorewards')
+			'woocommerce' => __("WooCommerce", 'woorewards-lite'),
+			'money' => __("Money", 'woorewards-lite'),
+			'order' => __("Order", 'woorewards-lite')
 		));
 	}
 

@@ -93,14 +93,14 @@ abstract class Event implements ICategorisable, IRegistrable
 			$period = $ci->duration->getPeriodText();
 			if ($ci->duration->getCount() > 1) {
 				/* translators: %1$s: count, %2$s: period name */
-				$period = sprintf(_x('%1$s %2$s', 'cooldown period eg. "3 Months"', 'woorewards'), $ci->duration->getCount(), $period);
+				$period = sprintf(_x('%1$s %2$s', 'cooldown period eg. "3 Months"', 'woorewards-lite'), $ci->duration->getCount(), $period);
 			}
 			if (1 == $ci->count) {
 				/* translators: %1$s: time period */
-				return sprintf(_x('Max. once every %1$s', 'cooldown display', 'woorewards'), $period);
+				return sprintf(_x('Max. once every %1$s', 'cooldown display', 'woorewards-lite'), $period);
 			} else {
 				/* translators: %1$s: time period, %2$s: maximum count */
-				return sprintf(_x('Max. %2$s times per %1$s', 'cooldown display', 'woorewards'), $period, $ci->count);
+				return sprintf(_x('Max. %2$s times per %1$s', 'cooldown display', 'woorewards-lite'), $period, $ci->count);
 			}
 		}
 		return '';
@@ -436,25 +436,25 @@ abstract class Event implements ICategorisable, IRegistrable
 	function getForm($context='editlist')
 	{
 		$prefix = $this->getDataKeyPrefix();
-		$str = $this->getFieldsetBegin(0, __("Action to perform", 'woorewards'), '', false);
+		$str = $this->getFieldsetBegin(0, __("Action to perform", 'woorewards-lite'), '', false);
 
-		$str .= "<div class='lws-$context-opt-title label'>" . __("Action", 'woorewards') . "</div>";
+		$str .= "<div class='lws-$context-opt-title label'>" . __("Action", 'woorewards-lite') . "</div>";
 		$str .= "<div class='value simple-text large lws_woorewards_system_type_info'>" . $this->getDisplayType() . "</div>";
 		$str .= $this->getFieldsetPlaceholder(true, 0); // type will always be first, so exceptionnaly put at second place
 
 		// custom title
-		$label = _x("Action title", "Event title", 'woorewards');
+		$label = _x("Action title", "Event title", 'woorewards-lite');
 		$placeholder = \esc_attr(\apply_filters('the_title', $this->getDisplayType(), $this->getId()));
 		$str .= "<div class='lws-$context-opt-title label'>$label</div>";
 		$str .= "<div class='value lws-$context-opt-input value'><input type='text' size='30' id='{$prefix}title' name='{$prefix}title' placeholder='$placeholder' /></div>";
 
 		$str .= $this->getFieldsetEnd(0);
-		$str .= $this->getFieldsetBegin(1, __("Points settings", 'woorewards'), array('title' => 'pts-earning'));
+		$str .= $this->getFieldsetBegin(1, __("Points settings", 'woorewards-lite'), array('title' => 'pts-earning'));
 
 		// multiplier
-		$label = _x("Earned points", "Event point multiplier", 'woorewards');
+		$label = _x("Earned points", "Event point multiplier", 'woorewards-lite');
 		/* translators: %s: hard coded flag sign */
-		$tooltip = sprintf(__("Expects an integer or an expression starting by %s", 'woorewards'), '<b>=</b>');
+		$tooltip = sprintf(__("Expects an integer or an expression starting by %s", 'woorewards-lite'), '<b>=</b>');
 		$str .= "<div class='field-help pts-earning'>$tooltip</div>"
 			. "<div for='{$prefix}multiplier' class='lws-$context-opt-title label bold pts-earning'>"
 			. "$label<div class='bt-field-help'>?</div>"
@@ -463,8 +463,8 @@ abstract class Event implements ICategorisable, IRegistrable
 			. "<input type='text' size='5' class='expression_trigger' id='{$prefix}multiplier' name='{$prefix}multiplier' placeholder='1' />"
 			. "</div><!-- [field-after:multiplier] -->";
 
-		$label = _x("Alternative points text", "Event point multiplier", 'woorewards');
-		$tooltip = __("What Earned points value is shown to your customer instead of the formula above when the expression cannot be resolved on the fly", 'woorewards');
+		$label = _x("Alternative points text", "Event point multiplier", 'woorewards-lite');
+		$tooltip = __("What Earned points value is shown to your customer instead of the formula above when the expression cannot be resolved on the fly", 'woorewards-lite');
 		$placeholder = \esc_attr($this->getGainAlt(true));
 		$str .= "<div style='display: none;' class='hide_if_not_expression pts-earning'>"
 			. "<div class='field-help'>$tooltip</div>"
@@ -478,11 +478,11 @@ abstract class Event implements ICategorisable, IRegistrable
 
 		// cooldown
 		if ($this->isRuleSupportedCooldown()) {
-			$label = _x("Cooldown", "Event cooldown", 'woorewards');
-			$tooltip = $this->getCooldownTooltips(__("Allow this event to be counted no more than X times per time interval or let it empty for no limit.", 'woorewards'));
+			$label = _x("Cooldown", "Event cooldown", 'woorewards-lite');
+			$tooltip = $this->getCooldownTooltips(__("Allow this event to be counted no more than X times per time interval or let it empty for no limit.", 'woorewards-lite'));
 			$value = sprintf(
 				/* translators: %1$s: count input field, %2$s: period selector */
-				_x('Max %1$s times / %2$s', 'cooldown edition', 'woorewards'),
+				_x('Max %1$s times / %2$s', 'cooldown edition', 'woorewards-lite'),
 				"<input type='text' id='{$prefix}cooldown_c' name='{$prefix}cooldown_c' size='2'/>",
 				\LWS\Adminpanel\Pages\Field\Duration::compose($prefix.'cooldown_p', array(
 					'force'   => true,
@@ -495,11 +495,11 @@ abstract class Event implements ICategorisable, IRegistrable
 
 			// default is rolling period
 			$req = " data-selector='#{$prefix}cooldown_c' data-value='' data-operator='!='";
-			$label = __("Cooldown rolling period", 'woorewards');
-			$tooltip = __("The default rolling period starts on the first trigger of a customer and so can be different for each customer.", 'woorewards')
-			. '<br/>' . __("Uncheck that box and define a reference date, such as first day of a month. The reference date will be periodically shift by the cooldown and the release date will be the same for each customers.", 'woorewards');
-			$h = \esc_attr(__("Hour", 'woorewards'));
-			$i = \esc_attr(__("Minute", 'woorewards'));
+			$label = __("Cooldown rolling period", 'woorewards-lite');
+			$tooltip = __("The default rolling period starts on the first trigger of a customer and so can be different for each customer.", 'woorewards-lite')
+			. '<br/>' . __("Uncheck that box and define a reference date, such as first day of a month. The reference date will be periodically shift by the cooldown and the release date will be the same for each customers.", 'woorewards-lite');
+			$h = \esc_attr(__("Hour", 'woorewards-lite'));
+			$i = \esc_attr(__("Minute", 'woorewards-lite'));
 			$str .= "<div class='field-help lws_adm_field_require'{$req}>{$tooltip}</div>"
 				. "<div class='lws-{$context}-opt-title label lws_adm_field_require'{$req}>{$label}<div class='bt-field-help'>?</div></div>"
 				. "<div class='lws-{$context}-opt-input value lws_adm_field_require'{$req} style='display: flex; flex-direction: row;'>"
@@ -514,8 +514,8 @@ abstract class Event implements ICategorisable, IRegistrable
 
 		// Max triggers
 		if ($this->isMaxTriggersAllowed()) {
-			$label = _x("Max Triggers", "Event max triggers", 'woorewards');
-			$tooltip = __("Defines how many times this action can be triggered by each user. Leave empty for unlimited times or set an integer value", 'woorewards');
+			$label = _x("Max Triggers", "Event max triggers", 'woorewards-lite');
+			$tooltip = __("Defines how many times this action can be triggered by each user. Leave empty for unlimited times or set an integer value", 'woorewards-lite');
 			$str .= "<div class='field-help pts-earning'>$tooltip</div>"
 				. "<div class='lws-{$context}-opt-title label pts-earning'>{$label}<div class='bt-field-help'>?</div></div>"
 				. "<div class='lws-$context-opt-input value pts-earning'>"
@@ -525,8 +525,8 @@ abstract class Event implements ICategorisable, IRegistrable
 
 		// Points delay
 		if ($this->isDelayAllowed()) {
-			$label = _x("Points delay", "Event points delay", 'woorewards');
-			$tooltip = __("If set, points will only be given after the delay you set here", 'woorewards');
+			$label = _x("Points delay", "Event points delay", 'woorewards-lite');
+			$tooltip = __("If set, points will only be given after the delay you set here", 'woorewards-lite');
 			$delay = \LWS\Adminpanel\Pages\Field\Duration::compose($prefix.'delay');
 			$str .= "<div class='field-help'>{$tooltip}</div>"
 				. "<div class='lws-{$context}-opt-title label'>{$label}<div class='bt-field-help'>?</div></div>"
@@ -536,11 +536,11 @@ abstract class Event implements ICategorisable, IRegistrable
 
 		// Recurrent points
 		if ($this->isRepeatAllowed()) {
-			$label = _x("Repeated points", "Event points occurences", 'woorewards');
-			$tooltip = __("Set how many times points will be given and at what periodicity", 'woorewards');
+			$label = _x("Repeated points", "Event points occurences", 'woorewards-lite');
+			$tooltip = __("Set how many times points will be given and at what periodicity", 'woorewards-lite');
 			$value = sprintf(
 				/* translators: %1$s: count input field, %2$s: period selector */
-				_x('%1$s occurence(s) | one every %2$s', 'occurences edition', 'woorewards'),
+				_x('%1$s occurence(s) | one every %2$s', 'occurences edition', 'woorewards-lite'),
 				"<input type='text' id='{$prefix}recurrent_c' name='{$prefix}recurrent_c' size='2'/>",
 				\LWS\Adminpanel\Pages\Field\Duration::compose($prefix.'recurrent_p', array(
 					'force'   => true,
@@ -597,19 +597,19 @@ abstract class Event implements ICategorisable, IRegistrable
 				$prefix . 'recurrent_p'  => '',
 			),
 			'labels'   => array(
-				$prefix . 'multiplier'   => __("Earned points", 'woorewards'),
-				$prefix . 'gain_alt'     => __("Earned points alternative text", 'woorewards'),
-				$prefix . 'title'        => __("Title", 'woorewards'),
-				$prefix . 'max_triggers' => __("Max Triggers", 'woorewards'),
-				$prefix . 'cooldown_c'   => __("Cooldown (action count)", 'woorewards'),
-				$prefix . 'cooldown_p'   => __("Cooldown (period)", 'woorewards'),
-				$prefix . 'delay'        => __("Delay", 'woorewards'),
-				$prefix . 'recurrent_c'  => __("Occurences", 'woorewards'),
-				$prefix . 'recurrent_p'  => __("Occurences (period)", 'woorewards'),
-				$prefix . 'rolling'      => __("Cooldown rolling period", 'woorewards'),
-				$prefix . 'reset_cd_d'   => __("Period reference date", 'woorewards'),
-				$prefix . 'reset_cd_h'   => __("Period reference hour", 'woorewards'),
-				$prefix . 'reset_cd_i'   => __("Period reference minute", 'woorewards'),
+				$prefix . 'multiplier'   => __("Earned points", 'woorewards-lite'),
+				$prefix . 'gain_alt'     => __("Earned points alternative text", 'woorewards-lite'),
+				$prefix . 'title'        => __("Title", 'woorewards-lite'),
+				$prefix . 'max_triggers' => __("Max Triggers", 'woorewards-lite'),
+				$prefix . 'cooldown_c'   => __("Cooldown (action count)", 'woorewards-lite'),
+				$prefix . 'cooldown_p'   => __("Cooldown (period)", 'woorewards-lite'),
+				$prefix . 'delay'        => __("Delay", 'woorewards-lite'),
+				$prefix . 'recurrent_c'  => __("Occurences", 'woorewards-lite'),
+				$prefix . 'recurrent_p'  => __("Occurences (period)", 'woorewards-lite'),
+				$prefix . 'rolling'      => __("Cooldown rolling period", 'woorewards-lite'),
+				$prefix . 'reset_cd_d'   => __("Period reference date", 'woorewards-lite'),
+				$prefix . 'reset_cd_h'   => __("Period reference hour", 'woorewards-lite'),
+				$prefix . 'reset_cd_i'   => __("Period reference minute", 'woorewards-lite'),
 			)
 		));
 		if( !(isset($values['valid']) && $values['valid']) )
@@ -639,7 +639,7 @@ abstract class Event implements ICategorisable, IRegistrable
 					$this->setCooldownResetDateTime(false);
 				}
 				if (!$this->getCooldownResetDateTime())
-					return __("A date is required if the cooldown is not rolling.", 'woorewards');
+					return __("A date is required if the cooldown is not rolling.", 'woorewards-lite');
 			}
 		} else {
 			$this->setCooldownInfo(0, '');
@@ -764,7 +764,7 @@ abstract class Event implements ICategorisable, IRegistrable
 
 		if( empty($event) )
 		{
-//			\lws_admin_add_notice_once('lws-wre-event-instanciate', __("Error occured during rewarding event instanciation.", 'woorewards'), array('level'=>'error'));
+//			\lws_admin_add_notice_once('lws-wre-event-instanciate', __("Error occured during rewarding event instanciation.", 'woorewards-lite'), array('level'=>'error'));
 		}
 		else
 		{
@@ -882,14 +882,14 @@ abstract class Event implements ICategorisable, IRegistrable
 		if( \is_wp_error($postId) )
 		{
 			if (defined('WP_DEBUG') && WP_DEBUG) error_log("Error occured during event saving: " . $postId->get_error_message()); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-			\lws_admin_add_notice_once('lws-wre-event-save', __("Error occured during rewarding event saving.", 'woorewards'), array('level'=>'error'));
+			\lws_admin_add_notice_once('lws-wre-event-save', __("Error occured during rewarding event saving.", 'woorewards-lite'), array('level'=>'error'));
 			return $this;
 		}
 		$this->id = intval($postId);
 		if ($this->title)
-			\do_action('wpml_register_string', $this->title, 'title', $this->getPackageWPML(true), __("Title", 'woorewards'), 'LINE');
+			\do_action('wpml_register_string', $this->title, 'title', $this->getPackageWPML(true), __("Title", 'woorewards-lite'), 'LINE');
 		if ($this->gainAlt)
-			\do_action('wpml_register_string', $this->gainAlt, 'gain_alt', $this->getPackageWPML(true), __("Earned points alternative text", 'woorewards'), 'LINE');
+			\do_action('wpml_register_string', $this->gainAlt, 'gain_alt', $this->getPackageWPML(true), __("Earned points alternative text", 'woorewards-lite'), 'LINE');
 
 		$this->_save($this->id);
 		\do_action('lws_woorewards_abstracts_event_save_after', $this);
@@ -1097,7 +1097,7 @@ abstract class Event implements ICategorisable, IRegistrable
 
 		$alt = ((null === $default) ? \trim($this->gainAlt) : '');
 		if (!\strlen($alt))
-			$alt = _x("Variable", 'event points expression alternative', 'woorewards');
+			$alt = _x("Variable", 'event points expression alternative', 'woorewards-lite');
 
 		if (null === $default) {
 			$alt = \apply_filters('wpml_translate_string', $alt, 'gain_alt', $this->getPackageWPML());
@@ -1291,10 +1291,10 @@ abstract class Event implements ICategorisable, IRegistrable
 	public function getCategories()
 	{
 		return array(
-			\LWS\WOOREWARDS\Core\Pool::T_STANDARD  => __("Standard", 'woorewards'),
-			\LWS\WOOREWARDS\Core\Pool::T_LEVELLING => __("Leveling", 'woorewards'),
-			'achievement' => __("Achievement", 'woorewards'),
-			'custom'      => __("Events", 'woorewards')
+			\LWS\WOOREWARDS\Core\Pool::T_STANDARD  => __("Standard", 'woorewards-lite'),
+			\LWS\WOOREWARDS\Core\Pool::T_LEVELLING => __("Leveling", 'woorewards-lite'),
+			'achievement' => __("Achievement", 'woorewards-lite'),
+			'custom'      => __("Events", 'woorewards-lite')
 		);
 	}
 }

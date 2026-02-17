@@ -21,8 +21,8 @@ class Coupon extends \LWS\WOOREWARDS\Abstracts\Unlockable
 	{
 		return array_merge(parent::getInformation(), array(
 			'icon'  => 'lws-icon-coupon',
-			'short' => __("The customer will receive a WooCommerce Coupon, either for a fix discount or a percentage one.", 'woorewards'),
-			'help'  => __("The generated coupon can be used like any other WooCommerce coupon.", 'woorewards'),
+			'short' => __("The customer will receive a WooCommerce Coupon, either for a fix discount or a percentage one.", 'woorewards-lite'),
+			'help'  => __("The generated coupon can be used like any other WooCommerce coupon.", 'woorewards-lite'),
 		));
 	}
 
@@ -42,14 +42,14 @@ class Coupon extends \LWS\WOOREWARDS\Abstracts\Unlockable
 	{
 		$prefix = $this->getDataKeyPrefix();
 		$form = parent::getForm($context);
-		$form .= $this->getFieldsetBegin(2, __("Coupon options", 'woorewards'));
+		$form .= $this->getFieldsetBegin(2, __("Coupon options", 'woorewards-lite'));
 
 		// percent or fixed
-		$label = _x("Discount type", "Coupon Unlockable", 'woorewards');
+		$label = _x("Discount type", "Coupon Unlockable", 'woorewards-lite');
 		$value = $this->getInPercent() ? 'per' : 'fix';
 		$form .= "<div class='lws-$context-opt-title label'>$label</div>";
 		$form .= "<div class='lws-$context-opt-input value'><select id='{$prefix}percent' name='{$prefix}percent' class='lac_select' data-mode='select'>";
-		foreach (array('fix' => __("Fixed cart discount", 'woorewards'), 'per' => __("Percentage discount", 'woorewards')) as $v => $l) {
+		foreach (array('fix' => __("Fixed cart discount", 'woorewards-lite'), 'per' => __("Percentage discount", 'woorewards-lite')) as $v => $l) {
 			$selected = ($v == $value ? ' selected' : '');
 			$form .= "<option value='$v'$selected>$l</option>";
 		}
@@ -57,14 +57,14 @@ class Coupon extends \LWS\WOOREWARDS\Abstracts\Unlockable
 		$form .= "</div>";
 
 		// value
-		$label = _x("Coupon amount", "Coupon Unlockable", 'woorewards');
+		$label = _x("Coupon amount", "Coupon Unlockable", 'woorewards-lite');
 		$currency = \LWS\Adminpanel\Tools\Conveniences::isWC() ? \get_woocommerce_currency_symbol() : '$';
 		$value = empty($this->getValue()) ? '' : \esc_attr($this->getValue());
 		$form .= "<div class='lws-$context-opt-title label bold'>$label (<span class='{$prefix}currency_hide currency_fix'>$currency</span><span class='{$prefix}currency_hide currency_per'>%</span>)</div>";
 		$form .= "<div class='lws-$context-opt-input value'><input type='text' id='{$prefix}value' name='{$prefix}value' value='$value' placeholder='5' pattern='\\d*(\\.|,)?\\d*' /></div>";
 
 		// timeout
-		$label = _x("Validity period", "Coupon Unlockable", 'woorewards');
+		$label = _x("Validity period", "Coupon Unlockable", 'woorewards-lite');
 		$value = $this->getTimeout()->toString();
 		$form .= "<div class='lws-$context-opt-title label'>$label</div>";
 		$form .= "<div class='lws-$context-opt-input value'>";
@@ -72,8 +72,8 @@ class Coupon extends \LWS\WOOREWARDS\Abstracts\Unlockable
 		$form .= "</div>";
 
 		if ($this->grantExclCat() && \apply_filters('lwsdev_coupon_individual_use_solver_exists', false)) {
-			$label   = _x("Exclusive categories", "Coupon category", 'woorewards');
-			$tooltip = __("Exclusive categories that the coupon will be applied to. Extends the <i>“Individual use only”</i> rule.", 'woorewards');
+			$label   = _x("Exclusive categories", "Coupon category", 'woorewards-lite');
+			$tooltip = __("Exclusive categories that the coupon will be applied to. Extends the <i>“Individual use only”</i> rule.", 'woorewards-lite');
 			$input = \LWS\Adminpanel\Pages\Field\LacChecklist::compose($prefix . 'coupon_cat', array(
 				'comprehensive' => true,
 				'ajax'          => 'lwsdev_coupon_individual_use_solver_categories',
@@ -104,15 +104,15 @@ class Coupon extends \LWS\WOOREWARDS\Abstracts\Unlockable
 				$prefix . 'percent' => 'fix',
 			),
 			'labels'   => array(
-				$prefix . 'timeout' => __("Validity period", 'woorewards'),
-				$prefix . 'value'   => __("Coupon amount", 'woorewards'),
-				$prefix . 'percent' => __("Discount in percent or fixed price", 'woorewards'),
+				$prefix . 'timeout' => __("Validity period", 'woorewards-lite'),
+				$prefix . 'value'   => __("Coupon amount", 'woorewards-lite'),
+				$prefix . 'percent' => __("Discount in percent or fixed price", 'woorewards-lite'),
 			)
 		);
 		if ($this->grantExclCat()) {
 			$args['format'][$prefix . 'coupon_cat']   = array('D');
 			$args['defaults'][$prefix . 'coupon_cat'] = array();
-			$args['labels'][$prefix . 'coupon_cat']   = __("Exclusive categories", 'woorewards');
+			$args['labels'][$prefix . 'coupon_cat']   = __("Exclusive categories", 'woorewards-lite');
 		}
 		$values = \apply_filters('lws_adminpanel_arg_parse', $args);
 		if (!(isset($values['valid']) && $values['valid']))
@@ -183,7 +183,7 @@ class Coupon extends \LWS\WOOREWARDS\Abstracts\Unlockable
 
 	public function getDisplayType()
 	{
-		return _x("Fixed/Percentage discount", "getDisplayType", 'woorewards');
+		return _x("Fixed/Percentage discount", "getDisplayType", 'woorewards-lite');
 	}
 
 	/**	Provided to be overriden.
@@ -208,16 +208,16 @@ class Coupon extends \LWS\WOOREWARDS\Abstracts\Unlockable
 		}
 
 		/* translators: %s: discount value */
-		$str = sprintf(__("%s discount on an order", 'woorewards'), $value);
+		$str = sprintf(__("%s discount on an order", 'woorewards-lite'), $value);
 
 		if (!$this->getTimeout()->isNull()) {
 			$str .= ' - ';
 			if ($date) {
 				/* translators: %s: expiration date */
-				$str .= sprintf(__('valid up to %s', 'woorewards'), \date_i18n(\get_option('date_format'), $this->getTimeout()->getEndingDate($date)->getTimestamp()));
+				$str .= sprintf(__('valid up to %s', 'woorewards-lite'), \date_i18n(\get_option('date_format'), $this->getTimeout()->getEndingDate($date)->getTimestamp()));
 			} else {
 				/* translators: %1$d: duration count, %2$s: period text (days, weeks...) */
-				$str .= sprintf(__('valid for %1$d %2$s', 'woorewards'), $this->getTimeout()->getCount(), $this->getTimeout()->getPeriodText());
+				$str .= sprintf(__('valid for %1$d %2$s', 'woorewards-lite'), $this->getTimeout()->getCount(), $this->getTimeout()->getPeriodText());
 			}
 		}
 		return $str;
@@ -241,9 +241,9 @@ class Coupon extends \LWS\WOOREWARDS\Abstracts\Unlockable
 		}
 		if (!$omitSuffix) {
 			if ($dispTax && $priceWithoutTax) {
-				$price .= __(" (excl. tax)", 'woorewards');
+				$price .= __(" (excl. tax)", 'woorewards-lite');
 			} else if (!($dispTax || $priceWithoutTax)) {
-				$price .= __(" (incl. tax)", 'woorewards');
+				$price .= __(" (incl. tax)", 'woorewards-lite');
 			}
 		}
 		return $price;
@@ -287,7 +287,7 @@ class Coupon extends \LWS\WOOREWARDS\Abstracts\Unlockable
 	public function getCost($context = 'edit')
 	{
 		if (empty($this->getValue()) && ($context == 'view' || $context == 'front'))
-			return _x("No discount", "Cannot be bought cause no discount", 'woorewards');
+			return _x("No discount", "Cannot be bought cause no discount", 'woorewards-lite');
 		else
 			return parent::getCost($context);
 	}
@@ -317,7 +317,7 @@ class Coupon extends \LWS\WOOREWARDS\Abstracts\Unlockable
 
 		$this->lastCode = '';
 		if ($demo) {
-			$this->lastCode = strtoupper(__('TESTCODE', 'woorewards'));
+			$this->lastCode = strtoupper(__('TESTCODE', 'woorewards-lite'));
 		} else if (empty($this->lastCode = apply_filters('lws_woorewards_new_coupon_label', '', $user, $this))) {
 			$this->lastCode = self::uniqueCode($user);
 		}
@@ -336,7 +336,7 @@ class Coupon extends \LWS\WOOREWARDS\Abstracts\Unlockable
 	{
 		if ($this->lastCode) {
 			/* translators: %s: coupon code */
-			$reason = sprintf(__("Coupon code : %s", 'woorewards'), $this->lastCode);
+			$reason = sprintf(__("Coupon code : %s", 'woorewards-lite'), $this->lastCode);
 			if ($context == 'frontend')
 				$reason .= '<br/>' . $this->getDescription($context);
 			//			unset($this->lastCode);
@@ -459,7 +459,7 @@ class Coupon extends \LWS\WOOREWARDS\Abstracts\Unlockable
 	{
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- WP admin list filter
 		if ($postType == 'shop_coupon' && isset($_REQUEST['customer_email']) && !empty($email = \sanitize_email(\wp_unslash($_REQUEST['customer_email'])))) {
-			echo "<label for='customer_email' class='lws-wr-coupon-filter-customer_email'>" . esc_html(__("Customer Email", 'woorewards')) . "</label>";
+			echo "<label for='customer_email' class='lws-wr-coupon-filter-customer_email'>" . esc_html(__("Customer Email", 'woorewards-lite')) . "</label>";
 			echo "<input  id='customer_email' class='lws-wr-coupon-filter-customer_email' type='email' name='customer_email' value='" . \esc_attr($email) . "' aria-describedby='customer email'>";
 		}
 	}
@@ -491,14 +491,14 @@ class Coupon extends \LWS\WOOREWARDS\Abstracts\Unlockable
 			if (empty($c)) {
 				static $disp = false;
 				if ($disp === false)
-					$disp = __("No coupon", 'woorewards');
+					$disp = __("No coupon", 'woorewards-lite');
 				$content[] = "<div class='lws-adm-btn disabled lws_wre_rewards_no_link'>$disp</div>";
 			} else {
 				$url = \esc_attr(\add_query_arg(array('post_type' => 'shop_coupon', 'customer_email' => $user['user_email']), \admin_url('edit.php')));
 				if (!empty($url)) {
 					static $link = false;
 					if ($link === false)
-						$link = __("See coupons", 'woorewards');
+						$link = __("See coupons", 'woorewards-lite');
 					$content[] = sprintf("<a class='lws-adm-btn lws_wre_rewards_link' href='$url' target='_blank'>$link (%d)</a>", $c);
 				}
 			}
@@ -511,9 +511,9 @@ class Coupon extends \LWS\WOOREWARDS\Abstracts\Unlockable
 	public function getCategories()
 	{
 		return array_merge(parent::getCategories(), array(
-			'woocommerce' => __("WooCommerce", 'woorewards'),
-			'shop_coupon' => __("Coupon", 'woorewards'),
-			'sponsorship' => _x("Referred", "unlockable category", 'woorewards')
+			'woocommerce' => __("WooCommerce", 'woorewards-lite'),
+			'shop_coupon' => __("Coupon", 'woorewards-lite'),
+			'sponsorship' => _x("Referred", "unlockable category", 'woorewards-lite')
 		));
 	}
 

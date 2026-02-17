@@ -25,7 +25,7 @@ class Sponsorships extends \LWS\Adminpanel\EditList\Source
 			new self(),
 			\LWS\Adminpanel\EditList::FIX,
 			array(
-				'user' => new \LWS\Adminpanel\EditList\FilterSimpleField('u', __('Search Users...', 'woorewards')),
+				'user' => new \LWS\Adminpanel\EditList\FilterSimpleField('u', __('Search Users...', 'woorewards-lite')),
 			)
 		);
 	}
@@ -33,8 +33,8 @@ class Sponsorships extends \LWS\Adminpanel\EditList\Source
 	public function labels()
 	{
 		$labels = array(
-			'sponsor_name' => array(__("Referrer", 'woorewards'), 'auto'),
-			'sponsee_name' => array(__("Referee", 'woorewards'), 'auto'),
+			'sponsor_name' => array(__("Referrer", 'woorewards-lite'), 'auto'),
+			'sponsee_name' => array(__("Referee", 'woorewards-lite'), 'auto'),
 		);
 		return $labels;
 	}
@@ -120,10 +120,10 @@ class Sponsorships extends \LWS\Adminpanel\EditList\Source
 	{
 		return sprintf(
 			/* translators: %s: link to PRO version */
-			__('Not available here. Please take a look at our PRO version and its free Referral addon %s!', 'woorewards'),
+			__('Not available here. Please take a look at our PRO version and its free Referral addon %s!', 'woorewards-lite'),
 			sprintf('<a target="_blank" href="%s">%s</a>',
 				\esc_attr('https://plugins.longwatchstudio.com/product/woorewards/'),
-				__("here", 'woorewards')
+				__("here", 'woorewards-lite')
 			)
 		);
 	}

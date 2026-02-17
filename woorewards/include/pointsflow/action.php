@@ -14,10 +14,10 @@ class Action
 	static function register()
 	{
 		$me = new self();
-		\add_action('wp_ajax_'.'woorewards'.'-export-wr', array($me, 'exportWR'));
-		\add_action('wp_ajax_'.'woorewards'.'-export-points', array($me, 'exportPoints'));
+		\add_action('wp_ajax_'.'woorewards-lite'.'-export-wr', array($me, 'exportWR'));
+		\add_action('wp_ajax_'.'woorewards-lite'.'-export-points', array($me, 'exportPoints'));
 
-		\add_filter('pre_update_option_'.'woorewards'.'_import_file', array($me, 'import'), 9, 3);
+		\add_filter('pre_update_option_'.'woorewards-lite'.'_import_file', array($me, 'import'), 9, 3);
 		\add_filter('lws_adminpanel_form_attributes'.LWS_WOOREWARDS_PAGE.'.system', array($me, 'importFormAttributes'));
 		\add_filter('pre_set_transient_settings_errors', array($me, 'importResult'), 999);
 	}
@@ -27,7 +27,7 @@ class Action
 		if (false !== $this->importError)
 		{
 			\lws_admin_delete_notice('lws_ap_page');
-			\lws_admin_add_notice_once('woorewards'.'-error', __("Import Error", 'woorewards') . '<br/>' . $this->importError, array('level'=>'error'));
+			\lws_admin_add_notice_once('woorewards-lite'.'-error', __("Import Error", 'woorewards-lite') . '<br/>' . $this->importError, array('level'=>'error'));
 		}
 		return $value;
 	}
@@ -47,10 +47,10 @@ class Action
 
 		if( !\current_user_can('manage_options') )
 		{
-			$this->importError = __("You are not allowed to do that", 'woorewards');
+			$this->importError = __("You are not allowed to do that", 'woorewards-lite');
 			return $oldValue;
 		}
-		$stack = isset($_REQUEST['woorewards' . '_default_pool']) ? \sanitize_key(\wp_unslash($_REQUEST['woorewards' . '_default_pool'])) : false; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- nonce verified by WP settings API
+		$stack = isset($_REQUEST['woorewards-lite' . '_default_pool']) ? \sanitize_key(\wp_unslash($_REQUEST['woorewards-lite' . '_default_pool'])) : false; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- nonce verified by WP settings API
 		if( $stack )
 		{
 			if (\class_exists('\LWS\WOOREWARDS\PRO\Core\Pool')) {
@@ -68,45 +68,45 @@ class Action
 		}
 		else
 		{
-			$this->importError = __("Missing destination loyalty system.", 'woorewards');
+			$this->importError = __("Missing destination loyalty system.", 'woorewards-lite');
 			return $oldValue;
 		}
 
 		$replace = true;
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified by WP settings API
-		if (isset($_POST['woorewards' . '_behavior']) && 'add' == \sanitize_text_field(\wp_unslash($_POST['woorewards' . '_behavior'])))
+		if (isset($_POST['woorewards-lite' . '_behavior']) && 'add' == \sanitize_text_field(\wp_unslash($_POST['woorewards-lite' . '_behavior'])))
 			$replace = false;
 
-		$key = 'woorewards' . '_import_file';
+		$key = 'woorewards-lite' . '_import_file';
 		if( isset($_FILES[$key]) && !empty($_FILES[$key]) && !empty($_FILES[$key]['tmp_name']) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified by WP settings API
 		{
 			$filename = \sanitize_file_name(\wp_unslash($_FILES[$key]['name'])); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.NonceVerification.Missing
 			if( !empty($_FILES[$key]['error']) ) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.NonceVerification.Missing
 			{
 				/* translators: %s: filename */
-				$this->importError = sprintf(__("Error during upload of file %s, perhaps the file is too big. You can try to split it up or increase max allowed file size on your server.", 'woorewards'), $filename);
+				$this->importError = sprintf(__("Error during upload of file %s, perhaps the file is too big. You can try to split it up or increase max allowed file size on your server.", 'woorewards-lite'), $filename);
 			}
 			else
 			{
 				if( \sanitize_mime_type(\wp_unslash($_FILES[$key]['type'])) != 'application/json' ) // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotValidated
 				{
-					$this->importError = __("Expects a JSON file.", 'woorewards');
+					$this->importError = __("Expects a JSON file.", 'woorewards-lite');
 				}
 				else try
 				{
-					$reason = isset($_POST['woorewards' . '_import_reason']) ? \sanitize_text_field(\wp_unslash($_POST['woorewards' . '_import_reason'])) : false; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+					$reason = isset($_POST['woorewards-lite' . '_import_reason']) ? \sanitize_text_field(\wp_unslash($_POST['woorewards-lite' . '_import_reason'])) : false; // phpcs:ignore WordPress.Security.NonceVerification.Missing
 					$json = @json_decode(@file_get_contents(\sanitize_file_name(\wp_unslash($_FILES[$key]['tmp_name']))), true); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents, WordPress.Security.ValidatedSanitizedInput.InputNotValidated -- reading uploaded tmp file
 					$this->importJSON($json, $stack, $replace, $reason);
 				}
 				catch(\Exception $e)
 				{
-					$this->importError = __("The file cannot be read or format is invalid. Expects JSON content.", 'woorewards');
+					$this->importError = __("The file cannot be read or format is invalid. Expects JSON content.", 'woorewards-lite');
 				}
 				\wp_delete_file(\sanitize_file_name(\wp_unslash($_FILES[$key]['tmp_name']))); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			}
 		}
 		else
-			$this->importError = __("Please, select a file to import.", 'woorewards');
+			$this->importError = __("Please, select a file to import.", 'woorewards-lite');
 		return $oldValue;
 	}
 
@@ -121,14 +121,14 @@ class Action
 		$table = $wpdb->get_var("SHOW TABLES LIKE '{$wpdb->lwsWooRewardsHistoric}'");
 		\set_time_limit(0); // phpcs:ignore Generic.PHP.ForbiddenFunctions.Found, Squiz.PHP.DiscouragedFunctions.Discouraged -- long import needs extended time
 		if (!$reason)
-			$reason = _x("Import", "History line", 'woorewards');
+			$reason = _x("Import", "History line", 'woorewards-lite');
 		$metakey = 'lws_wre_points_'.$stack;
 		$blogId = \get_current_blog_id();
 
-		$multiply = floatval(str_replace(',', '.', \get_option('woorewards'.'_multiply', 1)));
+		$multiply = floatval(str_replace(',', '.', \get_option('woorewards-lite'.'_multiply', 1)));
 		if( !$multiply )
 			$multiply = 1;
-		$round = \get_option('woorewards'.'_rounding', 'floor');
+		$round = \get_option('woorewards-lite'.'_rounding', 'floor');
 
 		foreach( $json as $row )
 		{
@@ -182,26 +182,26 @@ class Action
 			}
 			else
 			{
-				$this->importError = __("Invalid data: ", 'woorewards') . htmlentities(json_encode($row));
+				$this->importError = __("Invalid data: ", 'woorewards-lite') . htmlentities(json_encode($row));
 				return false;
 			}
 		}
 
 		/* translators: %d: number of items */
-		\lws_admin_add_notice_once('woorewards'.'-notice', sprintf(__("Import done. %d items affected.", 'woorewards'), $affected), array('level'=>'success'));
+		\lws_admin_add_notice_once('woorewards-lite'.'-notice', sprintf(__("Import done. %d items affected.", 'woorewards-lite'), $affected), array('level'=>'success'));
 		if( !empty($unknown) )
 		{
-			$warning = __("The following users cannot be found. Points ignored.", 'woorewards');
+			$warning = __("The following users cannot be found. Points ignored.", 'woorewards-lite');
 			$unknown = htmlentities(implode("\n", $unknown));
 			$warning .= "<textarea>$unknown</textarea>";
-			\lws_admin_add_notice_once('woorewards'.'-warning', $warning, array('level'=>'warning'));
+			\lws_admin_add_notice_once('woorewards-lite'.'-warning', $warning, array('level'=>'warning'));
 		}
 		if( !empty($ignored) )
 		{
-			$warning = __("The following point pools cannot be found. Points ignored.", 'woorewards');
+			$warning = __("The following point pools cannot be found. Points ignored.", 'woorewards-lite');
 			$ignored = htmlentities(implode("\n", $ignored));
 			$warning .= "<textarea>$ignored</textarea>";
-			\lws_admin_add_notice_once('woorewards'.'-warning2', $warning, array('level'=>'warning'));
+			\lws_admin_add_notice_once('woorewards-lite'.'-warning2', $warning, array('level'=>'warning'));
 		}
 		return true;
 	}
@@ -211,7 +211,7 @@ class Action
 		if( !\current_user_can('manage_options') )
 			\wp_die('forbidden', 403);
 
-		$poolKey = 'woorewards' . '_from_pool';
+		$poolKey = 'woorewards-lite' . '_from_pool';
 		$poolName = isset($_REQUEST[$poolKey]) ? \sanitize_text_field(\wp_unslash($_REQUEST[$poolKey])) : false; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if( $poolName )
 		{
@@ -228,9 +228,9 @@ class Action
 		if( !\current_user_can('manage_options') )
 			\wp_die('forbidden', 403);
 
-		$metaPost = 'woorewards' . '_from_meta';
+		$metaPost = 'woorewards-lite' . '_from_meta';
 		$metaKey = isset($_REQUEST[$metaPost]) ? \sanitize_text_field(\wp_unslash($_REQUEST[$metaPost])) : false; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		$argPost = 'woorewards' . '_with_arg';
+		$argPost = 'woorewards-lite' . '_with_arg';
 		$argValue = isset($_REQUEST[$argPost]) ? \sanitize_text_field(\wp_unslash($_REQUEST[$argPost])) : false; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 		if( !$metaKey || trim($metaKey) == '—' )

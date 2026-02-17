@@ -34,7 +34,7 @@ class UltimateMember
 		if (\in_array('current_user_id', $flags)) {
 			$options['um-public'] = array(
 				'option' => 'um-public',
-				'desc' => __("Set the option to true (um-public='true') to make the information public on Ultimate Members profile pages", 'woorewards'),
+				'desc' => __("Set the option to true (um-public='true') to make the information public on Ultimate Members profile pages", 'woorewards-lite'),
 			);
 		}
 		return $options;

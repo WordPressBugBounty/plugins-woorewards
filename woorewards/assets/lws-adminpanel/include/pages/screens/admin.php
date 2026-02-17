@@ -150,7 +150,7 @@ class Admin extends \LWS\Adminpanel\Pages\Page
 				// transiant/fleeting notice
 				\lws_admin_add_notice_once(
 					'lws_ap_page',
-					$val['message'] ? $val['message'] : __("Your settings have been saved.", 'woorewards'),
+					$val['message'] ? $val['message'] : __("Your settings have been saved.", 'lws-adminpanel'),
 					array('level'=>'success')
 				);
 			}
@@ -216,8 +216,8 @@ class Admin extends \LWS\Adminpanel\Pages\Page
 				'id'     => 'shortcodes_summary',
 				'icon'   => 'lws-icon-shortcode',
 				'color'  => '#00769b',
-				'title'  => $summaryTitle ? $summaryTitle : __('Shortcodes Summary', 'woorewards'),
-				'text'   => $summaryText ? $summaryText : __('This section groups all the shortcodes presented in that page. Click on an item to go to the shortcode detail', 'woorewards'),
+				'title'  => $summaryTitle ? $summaryTitle : __('Shortcodes Summary', 'lws-adminpanel'),
+				'text'   => $summaryText ? $summaryText : __('This section groups all the shortcodes presented in that page. Click on an item to go to the shortcode detail', 'lws-adminpanel'),
 				'fields' => array(
 					'custom' => array(
 						'id'    => 'custom_summary',

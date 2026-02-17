@@ -23,10 +23,10 @@ class Integration implements \Automattic\WooCommerce\Blocks\Integrations\Integra
 				'name'   => $pool->getName(),
 				//'label'  => \wp_kses($pool->getOption('display_title'), array()),
 				/* translators: %s: points symbol */
-				'field'  => sprintf(__("Use your %s", 'woorewards'), $symbol),
-				'title'  => __("You own", 'woorewards'),
-				'input'  => __("Enter a value", 'woorewards'),
-				'apply'  => __("Apply", 'woorewards'),
+				'field'  => sprintf(__("Use your %s", 'woorewards-lite'), $symbol),
+				'title'  => __("You own", 'woorewards-lite'),
+				'input'  => __("Enter a value", 'woorewards-lite'),
+				'apply'  => __("Apply", 'woorewards-lite'),
 				'details'=> $this->getDetails($pool),
 			];
 		}
@@ -57,7 +57,7 @@ class Integration implements \Automattic\WooCommerce\Blocks\Integrations\Integra
 		if (\trim($info['direct_reward_point_rate']) != '') {
 			$details['rate'] = sprintf(
 				/* translators: %1$s: points amount, %2$s: currency value */
-				__('%1$s → %2$s', 'woorewards'),
+				__('%1$s → %2$s', 'woorewards-lite'),
 				$system->formatPoints(1, true),
 				\LWS\Adminpanel\Tools\Conveniences::getCurrencyPrice(
 					$info['direct_reward_point_rate'],
@@ -70,7 +70,7 @@ class Integration implements \Automattic\WooCommerce\Blocks\Integrations\Integra
 		if (\intval($info['direct_reward_min_points_on_cart']) > 0) {
 			$details['min_points'] = sprintf(
 				/* translators: %s: minimum points */
-				__('Minimum: %s', 'woorewards'),
+				__('Minimum: %s', 'woorewards-lite'),
 				$system->formatPoints($info['direct_reward_min_points_on_cart'], true)
 			);
 		}
@@ -78,7 +78,7 @@ class Integration implements \Automattic\WooCommerce\Blocks\Integrations\Integra
 		if (\intval($info['direct_reward_max_points_on_cart']) > 0) {
 			$details['max_points'] = sprintf(
 				/* translators: %s: maximum points */
-				__('Maximum: %s', 'woorewards'),
+				__('Maximum: %s', 'woorewards-lite'),
 				$system->formatPoints($info['direct_reward_max_points_on_cart'], true)
 			);
 		}
@@ -86,7 +86,7 @@ class Integration implements \Automattic\WooCommerce\Blocks\Integrations\Integra
 		if ($info['direct_reward_max_percent_of_cart'] != '' && $info['direct_reward_max_percent_of_cart'] < 100.0) {
 			$details['max_perc'] = sprintf(
 				/* translators: %s: maximum percentage */
-				__('Max. discount: %s%%', 'woorewards'),
+				__('Max. discount: %s%%', 'woorewards-lite'),
 				$info['direct_reward_max_percent_of_cart']
 			);
 		}
@@ -94,7 +94,7 @@ class Integration implements \Automattic\WooCommerce\Blocks\Integrations\Integra
 		if ($info['direct_reward_total_floor'] != '' && $info['direct_reward_total_floor'] > 0.0) {
 			$details['floor'] = sprintf(
 				/* translators: %s: minimum cart total */
-				__('Min. total: %s', 'woorewards'),
+				__('Min. total: %s', 'woorewards-lite'),
 				\LWS\Adminpanel\Tools\Conveniences::getCurrencyPrice($info['direct_reward_total_floor'])
 			);
 		}
@@ -102,7 +102,7 @@ class Integration implements \Automattic\WooCommerce\Blocks\Integrations\Integra
 		if ($info['direct_reward_min_subtotal'] != '' && $info['direct_reward_min_subtotal'] > 0.0) {
 			$details['min'] = sprintf(
 				/* translators: %s: minimum subtotal amount */
-				__('Requires at least a %s subtotal', 'woorewards'),
+				__('Requires at least a %s subtotal', 'woorewards-lite'),
 				\LWS\Adminpanel\Tools\Conveniences::getCurrencyPrice($info['direct_reward_min_subtotal'])
 			);
 		}
@@ -165,7 +165,7 @@ class Integration implements \Automattic\WooCommerce\Blocks\Integrations\Integra
 			);
 			\wp_set_script_translations(
 				$options['handle'],
-				'woorewards',
+				'woorewards-lite',
 				LWS_WOOREWARDS_PATH . '/languages'
 			);
 			$this->scriptHandlers[$options['handle']] = $options['handle'];

@@ -45,7 +45,7 @@ class Teaser extends \LWS\Adminpanel\Pages\Page
 			$data = \wp_remote_get($request, array('timeout' => 60, 'user-agent'  => $agent));
 
 			if (!$this->isValidResponse($data)) {
-				$transiant = sprintf('<h1>%s</h1>', __("No data loaded.", 'woorewards'));
+				$transiant = sprintf('<h1>%s</h1>', __("No data loaded.", 'lws-adminpanel'));
 				\set_site_transient($key, $transiant, MINUTE_IN_SECONDS * 5);
 			} else {
 				$transiant = \wp_remote_retrieve_body($data);
@@ -63,12 +63,12 @@ class Teaser extends \LWS\Adminpanel\Pages\Page
 			'<div id="lws-teaser-force-link"><small>%s <a href="%s">%s</a></small></div>',
 			sprintf(
 				/* translators: 1: date, 2: time. */
-				__('Last checked on %1$s at %2$s.', 'woorewards'),
+				__('Last checked on %1$s at %2$s.', 'lws-adminpanel'),
 				\date_i18n(\get_option('date_format', 'F j, Y'), $lastCheck),
 				\date_i18n(\get_option('time_format', 'g:i a'), $lastCheck)
 			),
 			\add_query_arg(array('force-check' => 1)),
-			__("Check again.", 'woorewards')
+			__("Check again.", 'lws-adminpanel')
 		));
 		echo '</div>';
 	}

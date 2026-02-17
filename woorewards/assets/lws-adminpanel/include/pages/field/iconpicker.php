@@ -61,7 +61,7 @@ class IconPicker extends \LWS\Adminpanel\Pages\Field
 					<div class='lwsip-show-icon <?php echo esc_attr($value) . ($value ? ' filled' : '') ?>'>
 						<div class='remove-btn lws-icon-cross'></div>
 					</div>
-					<div class='lwsip-popup-btn lwsip_button'><?php \esc_html_e("Pick an Icon", 'woorewards') ?></div>
+					<div class='lwsip-popup-btn lwsip_button'><?php \esc_html_e("Pick an Icon", 'lws-adminpanel') ?></div>
 				</div>
 				<div class='lwsip-popup-wrapper hidden <?php echo esc_attr($position) ?>'>
 					<div class='lwsip-popup'>

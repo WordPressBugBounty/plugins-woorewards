@@ -20,13 +20,13 @@ class PointsManagement
 				'id' => 'wr_export_points_wr',
 				'icon'	 => 'lws-icon-migration',
 				'class'	=> 'half',
-				'title' => __("Export Points from MyRewards", 'woorewards'),
-				'text' => __("Select a points and rewards system to export the users points from that system.", 'woorewards'),
+				'title' => __("Export Points from MyRewards", 'woorewards-lite'),
+				'text' => __("Select a points and rewards system to export the users points from that system.", 'woorewards-lite'),
 				'fields' => array(
 					'pool' => array(
-						'id'    => 'woorewards' . '_from_pool',
+						'id'    => 'woorewards-lite' . '_from_pool',
 						'type'  => 'lacselect',
-						'title' => __("points and rewards system", 'woorewards'),
+						'title' => __("points and rewards system", 'woorewards-lite'),
 						'extra' => array(
 							'class'    => 'lws-ignore-confirm',
 							'maxwidth' => '400px',
@@ -37,9 +37,9 @@ class PointsManagement
 					'export' => array(
 						'id'    => 'export-wr',
 						'type'  => 'button',
-						'title' => __("Export", 'woorewards'),
+						'title' => __("Export", 'woorewards-lite'),
 						'extra' => array(
-							'link' => array('ajax' => 'woorewards' . '-export-wr'),
+							'link' => array('ajax' => 'woorewards-lite' . '-export-wr'),
 						)
 					),
 				)
@@ -48,17 +48,17 @@ class PointsManagement
 				'id' 	=> 'wr_export_points_other',
 				'icon'	=> 'lws-icon-migration',
 				'class'	=> 'half',
-				'title' => __("Export from other plugins", 'woorewards'),
+				'title' => __("Export from other plugins", 'woorewards-lite'),
 				'text'	=> sprintf(
 					'%s<br/><strong>%s</strong>',
-					__("If you're migrating from another loyalty plugin, you can export the users points from the other plugin and import them into MyRewards.", 'woorewards'),
-					__("The other plugin needs to be installed and active for this procedure to work.", 'woorewards')
+					__("If you're migrating from another loyalty plugin, you can export the users points from the other plugin and import them into MyRewards.", 'woorewards-lite'),
+					__("The other plugin needs to be installed and active for this procedure to work.", 'woorewards-lite')
 				),
 				'fields' => array(
 					'meta' => array(
-						'id'    => 'woorewards' . '_from_meta',
+						'id'    => 'woorewards-lite' . '_from_meta',
 						'type'  => 'lacselect',
-						'title' => __("Loyalty Plugin or Meta Key", 'woorewards'),
+						'title' => __("Loyalty Plugin or Meta Key", 'woorewards-lite'),
 						'extra' => array(
 							'class' => 'lws-ignore-confirm',
 							'value' => '—',
@@ -66,13 +66,13 @@ class PointsManagement
 							'allownew' => 'on',
 							'source' => $exports->getMethods(),
 							'gizmo' => true,
-							'tooltips' => __("Do not change that value if you are not sure about what you are doing.", 'woorewards'),
+							'tooltips' => __("Do not change that value if you are not sure about what you are doing.", 'woorewards-lite'),
 						)
 					),
 					'arg' => array(
-						'id'    => 'woorewards' . '_with_arg',
+						'id'    => 'woorewards-lite' . '_with_arg',
 						'type'  => 'lacselect',
-						'title' => __("Some Plugin need extra arguments", 'woorewards'),
+						'title' => __("Some Plugin need extra arguments", 'woorewards-lite'),
 						'extra' => array(
 							'class' => 'lws-ignore-confirm',
 							'value' => '—',
@@ -80,15 +80,15 @@ class PointsManagement
 							'maxwidth' => '400px',
 							'source' => $exports->getArguments(),
 							'gizmo' => true,
-							'tooltips' => __("Main purpose is for plugins that support several point pools. If the plugin is not listed here, it does not need an extra argument.", 'woorewards'),
+							'tooltips' => __("Main purpose is for plugins that support several point pools. If the plugin is not listed here, it does not need an extra argument.", 'woorewards-lite'),
 						)
 					),
 					'export' => array(
 						'id'    => 'export-points',
 						'type'  => 'button',
-						'title' => __("Export", 'woorewards'),
+						'title' => __("Export", 'woorewards-lite'),
 						'extra' => array(
-							'link' => array('ajax' => 'woorewards' . '-export-points'),
+							'link' => array('ajax' => 'woorewards-lite' . '-export-points'),
 						)
 					),
 				)
@@ -96,57 +96,57 @@ class PointsManagement
 			'import' => array(
 				'id' => 'wr_import_points',
 				'icon'	=> 'lws-icon-cloud-download-93',
-				'title' => __("Import Points", 'woorewards'),
+				'title' => __("Import Points", 'woorewards-lite'),
 				'class' => 'half',
 				'text'  => implode('<br/>', array(
-					__("Select the exported file, then click on «Import».", 'woorewards'),
-					__("The Import process does <b>not</b> generate any reward.", 'woorewards'),
+					__("Select the exported file, then click on «Import».", 'woorewards-lite'),
+					__("The Import process does <b>not</b> generate any reward.", 'woorewards-lite'),
 				)),
 				'fields' => array(
 					'round' => array(
-						'id'    => 'woorewards' . '_rounding',
+						'id'    => 'woorewards-lite' . '_rounding',
 						'type'  => 'lacselect',
-						'title' => __("Round imported points", 'woorewards'),
+						'title' => __("Round imported points", 'woorewards-lite'),
 						'extra' => array(
 							'default' => 'floor',
 							'maxwidth' => '400px',
 							'mode'	=> 'select',
-							'tooltips' => __("MyRewards only support integer points", 'woorewards'),
+							'tooltips' => __("MyRewards only support integer points", 'woorewards-lite'),
 							'source' => array(
-								array('value' => 'floor', 'label' => __("Round fractions down", 'woorewards')),
-								array('value' => 'ceil',  'label' => __("Round fractions up", 'woorewards')),
-								array('value' => 'half_up', 'label' => __("Round to nearest integer, half way round up", 'woorewards')),
-								array('value' => 'half_down', 'label' => __("Round to nearest integer, half way round down", 'woorewards')),
+								array('value' => 'floor', 'label' => __("Round fractions down", 'woorewards-lite')),
+								array('value' => 'ceil',  'label' => __("Round fractions up", 'woorewards-lite')),
+								array('value' => 'half_up', 'label' => __("Round to nearest integer, half way round up", 'woorewards-lite')),
+								array('value' => 'half_down', 'label' => __("Round to nearest integer, half way round down", 'woorewards-lite')),
 							)
 						)
 					),
 					'multiply' => array(
-						'id'    => 'woorewards' . '_multiply',
+						'id'    => 'woorewards-lite' . '_multiply',
 						'type'  => 'text',
-						'title' => __("Multiply imported points by", 'woorewards'),
+						'title' => __("Multiply imported points by", 'woorewards-lite'),
 						'extra' => array(
 							'default' => '1',
 							'placeholder' => '1',
 						)
 					),
 					'behavior' => array(
-						'id'    => 'woorewards' . '_behavior',
+						'id'    => 'woorewards-lite' . '_behavior',
 						'type'  => 'lacselect',
-						'title' => __("Import Mode", 'woorewards'),
+						'title' => __("Import Mode", 'woorewards-lite'),
 						'extra' => array(
 							'default' => 'replace',
 							'maxwidth' => '400px',
 							'mode'	=> 'select',
 							'source' => array(
-								array('value' => 'replace', 'label' => __("Replace customers points", 'woorewards')),
-								array('value' => 'add', 'label' => __("Add points to customers totals", 'woorewards')),
+								array('value' => 'replace', 'label' => __("Replace customers points", 'woorewards-lite')),
+								array('value' => 'add', 'label' => __("Add points to customers totals", 'woorewards-lite')),
 							),
 						)
 					),
 					'default' => array(
-						'id'    => 'woorewards' . '_default_pool',
+						'id'    => 'woorewards-lite' . '_default_pool',
 						'type'  => 'lacselect',
-						'title' => __("Add points to that points and rewards system", 'woorewards'),
+						'title' => __("Add points to that points and rewards system", 'woorewards-lite'),
 						'extra' => array(
 							'maxwidth' => '400px',
 							'gizmo'    => true,
@@ -154,18 +154,18 @@ class PointsManagement
 						)
 					),
 					'reason'  => array(
-						'id'    => 'woorewards' . '_import_reason',
-						'title' => __('History Reason', 'woorewards'),
+						'id'    => 'woorewards-lite' . '_import_reason',
+						'title' => __('History Reason', 'woorewards-lite'),
 						'type'  => 'text',
 						'extra' => array(
 							'noconfirm'   => true,
 							'gizmo'       => true,
 							'attributes'  => array('autocomplete' => 'off'),
-							'placeholder' => _x("Import", "History line", 'woorewards'),
+							'placeholder' => _x("Import", "History line", 'woorewards-lite'),
 						)
 					),
 					'file' => array(
-						'id'    => 'woorewards' . '_import_file',
+						'id'    => 'woorewards-lite' . '_import_file',
 						'type'  => 'input',
 						'extra' => array(
 							'value' => '',
@@ -181,7 +181,7 @@ class PointsManagement
 							'gizmo'   => true,
 							'content' => sprintf(
 								'<button type="submit" name="lws_wre_points_action" value="import" class="lws-adm-btn">%s</button>',
-								__("Import", 'woorewards')
+								__("Import", 'woorewards-lite')
 							)
 						)
 					),

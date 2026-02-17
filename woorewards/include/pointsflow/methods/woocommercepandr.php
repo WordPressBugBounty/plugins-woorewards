@@ -21,6 +21,6 @@ class WooCommercePAndR extends \LWS\WOOREWARDS\PointsFlow\ExportMethod
 	/** @return (string) human readable name */
 	public function getTitle()
 	{
-		return __("WooCommerce Points And Rewards (by WooCommerce)", 'woorewards');
+		return __("WooCommerce Points And Rewards (by WooCommerce)", 'woorewards-lite');
 	}
 }

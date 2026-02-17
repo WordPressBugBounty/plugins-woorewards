@@ -20,7 +20,7 @@ class FilterSimpleLinks extends Filter
 		if( !empty($cssclass) )
 			$this->_class .= " $cssclass";
 		$href = array();
-		if(empty($label)) $label = __("Filter the results", 'woorewards');
+		if(empty($label)) $label = __("Filter the results", 'lws-adminpanel');
 		$retour = "<div class='lws-editlist-filter-box'><div class='lws-editlist-filter-box-title'>{$label}</div>";
 		$retour .= "<div class='lws-editlist-filter-box-content'>";
 		$str = '';

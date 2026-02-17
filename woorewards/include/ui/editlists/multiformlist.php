@@ -54,12 +54,12 @@ abstract class MultiFormList extends \LWS\Adminpanel\EditList\Source
 	{
 		return array(
 			array(
-				'idle' 		=> __("First Step", 'woorewards'),
-				'selected' 	=> __("Step : ", 'woorewards')
+				'idle' 		=> __("First Step", 'woorewards-lite'),
+				'selected' 	=> __("Step : ", 'woorewards-lite')
 			),
 			array(
-				'idle' 		=> __("Second Step", 'woorewards'),
-				'selected' 	=> __("Step : ", 'woorewards')
+				'idle' 		=> __("Second Step", 'woorewards-lite'),
+				'selected' 	=> __("Step : ", 'woorewards-lite')
 			)
 		);
 	}

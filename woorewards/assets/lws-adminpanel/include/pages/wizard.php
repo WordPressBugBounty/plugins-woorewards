@@ -200,7 +200,7 @@ abstract class Wizard
 	function errorFallback()
 	{
 		/* translators: 1: cancel button balise open, 2: button balise close. */
-		$text = __('If you can see this, an error occured. Click %1$s here %2$s to resolve. Then restart the wizard.', 'woorewards');
+		$text = __('If you can see this, an error occured. Click %1$s here %2$s to resolve. Then restart the wizard.', 'lws-adminpanel');
 		$text = sprintf($text, "<button class='lws-wizard-action-cancel' name='submit' type='submit' value='cancel'>", "</button>");
 		$formAttrs = '';
 		foreach( $this->getFormAttributes() as $attr => $val )
@@ -213,7 +213,7 @@ abstract class Wizard
 	{
 		$args = array(
 			'id' => 'lws-wizard-cancel',
-			'title' => sprintf('<span class="label">%s</span> %s', __("Leave the wizard", 'woorewards'), \lws_get_tooltips_html(__("You can come back later and continue from that point.", 'woorewards'))),
+			'title' => sprintf('<span class="label">%s</span> %s', __("Leave the wizard", 'lws-adminpanel'), \lws_get_tooltips_html(__("You can come back later and continue from that point.", 'lws-adminpanel'))),
 			'href' => $this->getCancelledURL(),
 		);
 		$wp_admin_bar->add_node($args);
@@ -370,7 +370,7 @@ abstract class Wizard
 		else
 		{
 			if( !$err )
-				$this->lastError = array(__("An error occured during form validation.", 'woorewards'));
+				$this->lastError = array(__("An error occured during form validation.", 'lws-adminpanel'));
 			else if( is_array($err) )
 				$this->lastError = $err;
 			else
@@ -794,7 +794,7 @@ abstract class Wizard
 
 				if( isset($item['loop']) && ($loop = intval($item['loop'])) > 1 ) {
 					/* translators: 1: The level label, 2: loop index. */
-					$item['label'] = sprintf(_x('%1$s (%2$s)', 'wizard critical path tab title with loop count', 'woorewards'), $item['label'], $loop);
+					$item['label'] = sprintf(_x('%1$s (%2$s)', 'wizard critical path tab title with loop count', 'lws-adminpanel'), $item['label'], $loop);
 				}
 
 				$tabs[$step] = "<" . $tag . " class='step-item " . esc_attr($state) . "'" . $attr . ">"
@@ -857,7 +857,7 @@ abstract class Wizard
 		$time = \esc_attr(\microtime());
 		$color = $this->getColor();
 		$colorstring = \lws_get_theme_colors('--group-color', $color);
-		$steplabel = __("Step : ", 'woorewards');
+		$steplabel = __("Step : ", 'lws-adminpanel');
 		$html = "<div class=\"lws_wizard\" style=\"" . esc_attr($colorstring) . "\">"
 			. "<form" . $formAttrs . ">"
 			. "<input type='hidden' name='step' value='" . esc_attr($eStep) . "'>"
@@ -1056,7 +1056,7 @@ abstract class Wizard
 
 		if( $curIndex > 0 )
 		{
-			$button = _x("Previous", 'previous wizard step', 'woorewards');
+			$button = _x("Previous", 'previous wizard step', 'lws-adminpanel');
 			$buttons['previous'] = '<button class="button back" name="submit" type="submit" value="previous">'
 			. '<div class="icon lws-icon lws-icon-circle-left"></div>'
 			. '<div class="label">' . esc_html($button) . '</div>'
@@ -1065,18 +1065,18 @@ abstract class Wizard
 
 		if( isset($page['repeatable']) && $page['repeatable'] )
 		{
-			$button = (isset($page['repeat_btn_text']) && $page['repeat_btn_text']) ? $page['repeat_btn_text'] : _x("Add", 'repeat a wizard portion', 'woorewards');
+			$button = (isset($page['repeat_btn_text']) && $page['repeat_btn_text']) ? $page['repeat_btn_text'] : _x("Add", 'repeat a wizard portion', 'lws-adminpanel');
 			$buttons['repeat'] = '<button class="button redo" name="submit" type="submit" value="repeat">'
 			. '<div class="icon lws-icon lws-icon-repeat"></div>'
 			. '<div class="label">' . esc_html($button) . '</div>'
 			. '</button>';
 		}
 
-		$button =  _x("Next", 'next wizard step', 'woorewards');
+		$button =  _x("Next", 'next wizard step', 'lws-adminpanel');
 		$value = 'next';
 		if( ++$curIndex >= count($criticalPath) )
 		{
-			$button = _x("Submit", 'final wizard submit', 'woorewards');
+			$button = _x("Submit", 'final wizard submit', 'lws-adminpanel');
 			$value = 'submit';
 		}
 		$buttons['next'] = '<button class="button next" name="submit" type="submit" value="' . esc_attr($value) . '">'
@@ -1089,10 +1089,10 @@ abstract class Wizard
 	protected function getFoot()
 	{
 		$href = $this->getCancelledURL();
-		$leave = __("Leave this wizard", 'woorewards');
-		$leavetip = \lws_get_tooltips_html(__("You can come back later and continue from that point.", 'woorewards'));
-		$cancel = __("Cancel this wizard", 'woorewards');
-		$canceltip = \lws_get_tooltips_html(__("You will lose all prepared settings.", 'woorewards'));
+		$leave = __("Leave this wizard", 'lws-adminpanel');
+		$leavetip = \lws_get_tooltips_html(__("You can come back later and continue from that point.", 'lws-adminpanel'));
+		$cancel = __("Cancel this wizard", 'lws-adminpanel');
+		$canceltip = \lws_get_tooltips_html(__("You will lose all prepared settings.", 'lws-adminpanel'));
 		return '<div class="cancel-container">'
 			. '<button class="button cancel" name="submit" type="submit" value="cancel">'
 			. '<div class="icon lws-icon lws-icon-cross"></div>'

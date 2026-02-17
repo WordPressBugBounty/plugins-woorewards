@@ -391,13 +391,13 @@ msgstr "Se produjo un error durante el guardado del sistema de recompensa."
 
 #: include/core/pool.php:780
 #, php-format
-msgid "Failed to delete the reward system <b>%s</b>/%s."
-msgstr "No se pudo eliminar el sistema de recompensas <b> %s </b>/%s."
+msgid "Failed to delete the reward system <b>%1$s</b>/%2$s."
+msgstr "No se pudo eliminar el sistema de recompensas <b>%1$s</b>/%2$s."
 
 #: include/core/pool.php:800
 #, php-format
-msgid "The reward system <b>%s</b>/%s successfully deleted."
-msgstr "Sistema de recompensas <b> %s </b>/%s eliminado correctamente."
+msgid "The reward system <b>%1$s</b>/%2$s successfully deleted."
+msgstr "Sistema de recompensas <b>%1$s</b>/%2$s eliminado correctamente."
 
 #: include/core/pool.php:905
 #, php-format
@@ -669,8 +669,8 @@ msgstr ""
 #: include/events/sponsoredorder.php:224
 #, fuzzy, php-format
 #| msgid "Order #%s completed"
-msgid "Referred friend %s order #%s completed"
-msgstr "Orden # %s validada"
+msgid "Referred friend %1$s order #%2$s completed"
+msgstr "Orden #%2s validada %1$s"
 
 #: include/events/sponsoredorder.php:233
 msgid "Available for referees"
@@ -1727,11 +1727,11 @@ msgstr ""
 #| "It seems the prefab pool does not exists. Please run the <a%s>wizard</a> "
 #| "to create one."
 msgid ""
-"The WooRewards default points and rewards system does not exist. Please run "
-"the <a%s>wizard</a> tool to create one."
+"The WooRewards default points and rewards system does not exist. Please run the "
+"<a href='%s' class='lws-adm-btn'>wizard</a> tool to create one."
 msgstr ""
 "Parece que la piscina prefabricada no existe. Intenta volver a activar este "
-"plugin. Si el problema persiste, póngase en contacto con el administrador."
+"plugin. Ejecute el <a href='%s' class='lws-adm-btn'>asistente</a> para crear uno."
 
 #: include/ui/admin.php:1075
 #, fuzzy
@@ -1885,6 +1885,12 @@ msgstr ""
 #: include/ui/admin.php:1406
 #, php-format
 msgid "See %s to let your customer share a referral link and get referees."
+msgstr ""
+
+#: include/ui/admin.php:1634
+#, php-format
+msgid ""
+"Points restoration completed for system <b>%1$s</b> to date <b>%2$s</b>:"
 msgstr ""
 
 #: include/ui/adminscreens/pointsmanagement.php:23
@@ -2319,7 +2325,7 @@ msgstr "Aplicar"
 
 #: include/ui/blocks/integration.php:58
 #, php-format
-msgid "%s → %s"
+msgid "%1$s → %2$s"
 msgstr ""
 
 #: include/ui/blocks/integration.php:70
@@ -2920,10 +2926,10 @@ msgstr ""
 msgid "Elements are displayed on top of another"
 msgstr ""
 
-#: include/ui/shortcodes/pointsbalance.php:205
+#: include/ui/shortcodes/pointsbalance.php:206
 #, php-format
 msgctxt "wr_points_balance element=\"none\""
-msgid "%s : %s"
+msgid "%1$s : %2$s"
 msgstr ""
 
 #: include/ui/shortcodes/pointsvalue.php:27
@@ -3150,11 +3156,11 @@ msgstr ""
 msgid "Process MyRewards Points"
 msgstr "Visualizador de Puntos MyRewards"
 
-#: include/ui/woocommerce/ordersbulk.php:103
+#: include/ui/woocommerce/ordersbulk.php:104
 #, php-format
 msgid ""
-"<b>%d</b> orders verified, including <b>%d</b> processed for a sum of <b>%d</"
-"b> points."
+"<b>%1$d</b> orders verified, including <b>%2$d</b> processed for a sum of "
+"<b>%3$d</b> points."
 msgstr ""
 
 #: include/ui/woocommerce/pointsoncart.php:90
@@ -3285,7 +3291,7 @@ msgstr ""
 
 #: include/ui/woocommerce/pointsoncart.php:773
 #, php-format
-msgid "Every %s you use is worth %s"
+msgid "Every %1$s you use is worth %2$s"
 msgstr ""
 
 #: include/ui/woocommerce/pointsoncart.php:784
@@ -3300,17 +3306,17 @@ msgstr ""
 
 #: include/ui/woocommerce/pointsoncart.php:804
 #, php-format
-msgid "You can only use your %s to reduce the cart total by %s%%"
+msgid "You can only use your %1$s to reduce the cart total by %2$s%%"
 msgstr ""
 
 #: include/ui/woocommerce/pointsoncart.php:815
 #, php-format
-msgid "You can only use your %s to reduce the cart total to %s"
+msgid "You can only use your %1$s to reduce the cart total to %2$s"
 msgstr ""
 
 #: include/ui/woocommerce/pointsoncart.php:826
 #, php-format
-msgid "The cart subtotal needs to be over %s if you want to use %s"
+msgid "The cart subtotal needs to be over %1$s if you want to use %2$s"
 msgstr ""
 
 #: include/unlockables/coupon.php:24
@@ -3787,8 +3793,8 @@ msgstr "Sistema de fidelización"
 
 #: include/wizards/standard.php:302
 #, php-format
-msgid " %s points earned for each %s spent"
-msgstr " %s puntos ganados por cada %s gastado"
+msgid " %1$s points earned for each %2$s spent"
+msgstr " %1$s puntos ganados por cada %2$s gastado"
 
 #: include/wizards/standard.php:303
 msgid "Spend Money"
@@ -3825,8 +3831,8 @@ msgstr "Product Review"
 #: include/wizards/standard.php:326
 #, fuzzy, php-format
 #| msgid " %s points earned for each %s spent"
-msgid " %s points earned for each %s spent by a Referee"
-msgstr "%s puntos ganados por cada %s gastado"
+msgid " %1$s points earned for each %2$s spent by a Referee"
+msgstr " %1$s puntos ganados por cada %2$s gastado"
 
 #: include/wizards/standard.php:327
 #, fuzzy
@@ -3848,8 +3854,8 @@ msgstr "Haz un encargo"
 
 #: include/wizards/standard.php:342
 #, php-format
-msgid " %s percent discount for %s points"
-msgstr " %s porcentaje de descuento para puntos %s"
+msgid " %1$s percent discount for %2$s points"
+msgstr " %1$s porcentaje de descuento para puntos %2$s"
 
 #: include/wizards/standard.php:343
 msgid "Percentage Discount"
@@ -3857,8 +3863,8 @@ msgstr "Porcentaje de descuento"
 
 #: include/wizards/standard.php:348
 #, php-format
-msgid " %s%s discount for %s points"
-msgstr " %s%s  de descuento por  %s puntos"
+msgid " %1$s%2$s discount for %3$s points"
+msgstr " %1$s%2$s  de descuento por  %3$s puntos"
 
 #: include/wizards/standard.php:349
 msgid "Fixed Discount"
@@ -3867,8 +3873,8 @@ msgstr "Descuento Fijo"
 #: include/wizards/standard.php:354
 #, fuzzy, php-format
 #| msgid " %s percent discount for %s points"
-msgid " %s%s discount for each point"
-msgstr "%s porcentaje de descuento para puntos %s"
+msgid " %1$s%2$s discount for each point"
+msgstr "%1$s%2$s porcentaje de descuento para puntos"
 
 #: include/wizards/standard.php:369
 #, php-format

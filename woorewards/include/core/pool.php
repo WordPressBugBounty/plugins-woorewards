@@ -721,7 +721,7 @@ class Pool
 		if( \is_wp_error($postId) )
 		{
 			if (defined('WP_DEBUG') && WP_DEBUG) error_log("Error occured during pool saving: " . $postId->get_error_message()); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-			\lws_admin_add_notice_once('lws-wre-pool-save', __("Error occured during reward system saving.", 'woorewards'), array('level'=>'error'));
+			\lws_admin_add_notice_once('lws-wre-pool-save', __("Error occured during reward system saving.", 'woorewards-lite'), array('level'=>'error'));
 			return $this;
 		}
 		$this->id = intval($postId);
@@ -729,7 +729,7 @@ class Pool
 			\lws_admin_delete_notice('lws-wre-pool-nothing-loaded');
 		}
 
-		\do_action('wpml_register_string', $this->title, 'title', $this->getPackageWPML(true), __("Title", 'woorewards'), 'LINE');
+		\do_action('wpml_register_string', $this->title, 'title', $this->getPackageWPML(true), __("Title", 'woorewards-lite'), 'LINE');
 
 		if( $withEvents )
 			$this->events->save($this);
@@ -783,7 +783,7 @@ class Pool
 					'lws-wre-pool-delete-error',
 					/* translators: %1$s: pool title, %2$s: pool name */
 					sprintf(
-						__("Failed to delete the reward system <b>%1\$s</b>/%2\$s.", 'woorewards'),
+						__("Failed to delete the reward system <b>%1\$s</b>/%2\$s.", 'woorewards-lite'),
 						$this->title,
 						$this->name
 					),
@@ -804,7 +804,7 @@ class Pool
 					'lws-wre-pool-delete',
 					/* translators: %1$s: pool title, %2$s: pool name */
 					sprintf(
-						__("The reward system <b>%1\$s</b>/%2\$s successfully deleted.", 'woorewards'),
+						__("The reward system <b>%1\$s</b>/%2\$s successfully deleted.", 'woorewards-lite'),
 						$this->title,
 						$this->name
 					),
@@ -910,7 +910,7 @@ class Pool
 					}
 					\LWS\WOOREWARDS\Core\OrderNote::add($order, sprintf(
 						/* translators: %1$s: user name, %2$s: points earned, %3$s: pool title */
-						__('<b>%1$s</b> earned <b>%2$s</b> in <b>%3$s</b> for this order', 'woorewards'),
+						__('<b>%1$s</b> earned <b>%2$s</b> in <b>%3$s</b> for this order', 'woorewards-lite'),
 						$name, $this->formatPoints($data->points), $this->getOption('title')
 					), $this);
 				}
@@ -918,7 +918,7 @@ class Pool
 				// only show no points if an event is about order
 				\LWS\WOOREWARDS\Core\OrderNote::add($order, sprintf(
 					/* translators: %1$s: point symbol, %2$s: pool title */
-					__('No %1$s earned in <b>%2$s</b> for this order', 'woorewards'),
+					__('No %1$s earned in <b>%2$s</b> for this order', 'woorewards-lite'),
 					$this->getSymbol(), $this->getOption('title')
 				), $this);
 			}

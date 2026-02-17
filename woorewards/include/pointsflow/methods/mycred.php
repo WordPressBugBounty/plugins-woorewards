@@ -18,7 +18,7 @@ class MyCred extends \LWS\WOOREWARDS\PointsFlow\Methods\MetaKey
 
 	public function getTitle()
 	{
-		return __("myCRED", 'woorewards');
+		return __("myCRED", 'woorewards-lite');
 	}
 
 	/** allow free user input */

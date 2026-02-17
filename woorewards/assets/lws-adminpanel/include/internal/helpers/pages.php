@@ -56,19 +56,19 @@ function lws_editlist( $editionId, $recordUIdKey, $source, $mode = \LWS\Adminpan
 function lws_google_api_key_group()
 {
 	$txt = sprintf("<p>%s</p><p><a href='%s'>%s</a> %s</p><p>%s</p>",
-		__("Used to get google fonts.", 'woorewards'),
+		__("Used to get google fonts.", 'lws-adminpanel'),
 		'https://console.developers.google.com/apis/api/webfonts.googleapis.com',
 		//'https://console.developers.google.com/henhouse/?pb=["hh-1","webfonts_backend",null,[],"https://developers.google.com",null,["webfonts_backend"],null]&TB_iframe=true&width=600&height=400',
-		__( "Generate API Key", 'woorewards' ),
+		__( "Generate API Key", 'lws-adminpanel' ),
 		/* translators: link to google api's settings 1: escaped url of the link. */
-		sprintf(__( "or <a target='_blank' href='%s'>click here to Get a Google API KEY</a>", 'woorewards' ),
+		sprintf(__( "or <a target='_blank' href='%s'>click here to Get a Google API KEY</a>", 'lws-adminpanel' ),
 			'https://console.developers.google.com/flows/enableapi?apiid=webfonts_backend&keyType=CLIENT_SIDE&reusekey=true'
 		),
-		__( "You MUST be logged in to your Google account to generate a key.", 'woorewards' )
+		__( "You MUST be logged in to your Google account to generate a key.", 'lws-adminpanel' )
 	);
 
 	return array(
-		'title' => __("Google account", 'woorewards'),
+		'title' => __("Google account", 'lws-adminpanel'),
 		'text' => $txt,
 		'fields' => array( array('type' => 'googleapikey') )
 	);

@@ -122,7 +122,7 @@ class CartNotice implements \Automattic\WooCommerce\Blocks\Integrations\Integrat
 	{
 		return [
 			'notice' => [
-				'description' => __('Cart notice', 'woorewards'),
+				'description' => __('Cart notice', 'lws-adminpanel'),
 				'type'        => ['string', 'null'],
 				'context'     => ['view', 'edit'],
 				'readonly'    => false,

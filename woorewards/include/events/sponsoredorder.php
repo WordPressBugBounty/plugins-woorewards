@@ -17,8 +17,8 @@ class SponsoredOrder extends \LWS\WOOREWARDS\Abstracts\Event
 	{
 		return array_merge(parent::getInformation(), array(
 			'icon'  => 'lws-icon-shop',
-			'short' => __("The customer will earn points when a person he referred placed an order. You can restrict this to the first referee order.", 'woorewards'),
-			'help'  => __("This method will only reward the Referrer, not the Referee", 'woorewards'),
+			'short' => __("The customer will earn points when a person he referred placed an order. You can restrict this to the first referee order.", 'woorewards-lite'),
+			'help'  => __("This method will only reward the Referrer, not the Referee", 'woorewards-lite'),
 		));
 	}
 
@@ -39,8 +39,8 @@ class SponsoredOrder extends \LWS\WOOREWARDS\Abstracts\Event
 
 		// just hidden since we do not want to reset the value on save
 		$noPri = (\get_option('lws_woorewards_show_loading_order_and_priority') ? '' : ' style="display: none;"');
-		$label = __("Priority", 'woorewards');
-		$tooltip = __("Customer orders will run by ascending priority value.", 'woorewards');
+		$label = __("Priority", 'woorewards-lite');
+		$tooltip = __("Customer orders will run by ascending priority value.", 'woorewards-lite');
 		$str = "<div class='field-help'{$noPri}>$tooltip</div>"
 			. "<div class='lws-$context-opt-title label'{$noPri}>$label<div class='bt-field-help'>?</div></div>"
 			. "<div class='lws-$context-opt-input value'{$noPri}>"
@@ -49,11 +49,11 @@ class SponsoredOrder extends \LWS\WOOREWARDS\Abstracts\Event
 		$phb0 = $this->getFieldsetPlaceholder(false, 0);
 		$form = str_replace($phb0, $str.$phb0, $form);
 
-		$form .= $this->getFieldsetBegin(2, __("Options", 'woorewards'));
+		$form .= $this->getFieldsetBegin(2, __("Options", 'woorewards-lite'));
 
 		// First Order Only
-		$label   = _x("First order only", "Referral Order Event", 'woorewards');
-		$tooltip = __("If checked, only the first order placed by each referee will give points.", 'woorewards');
+		$label   = _x("First order only", "Referral Order Event", 'woorewards-lite');
+		$tooltip = __("If checked, only the first order placed by each referee will give points.", 'woorewards-lite');
 		$toggle = \LWS\Adminpanel\Pages\Field\Checkbox::compose($prefix . 'first_order_only', array(
 			'id'      => $prefix . 'first_order_only',
 			'layout'  => 'toggle',
@@ -81,8 +81,8 @@ class SponsoredOrder extends \LWS\WOOREWARDS\Abstracts\Event
 				$prefix . 'event_priority'   => $this->getEventPriority(),
 			),
 			'labels'   => array(
-				$prefix . 'first_order_only' => __("First order only", 'woorewards'),
-				$prefix . 'event_priority'   => __("Event priority", 'woorewards'),
+				$prefix . 'first_order_only' => __("First order only", 'woorewards-lite'),
+				$prefix . 'event_priority'   => __("Event priority", 'woorewards-lite'),
 			)
 		));
 		if( !(isset($values['valid']) && $values['valid']) )
@@ -140,7 +140,7 @@ class SponsoredOrder extends \LWS\WOOREWARDS\Abstracts\Event
 		$descr = parent::getDescription($context);
 		if( $this->isFirstOrderOnly() )
 		{
-			$descr .= __(" (first order only)", 'woorewards');
+			$descr .= __(" (first order only)", 'woorewards-lite');
 		}
 		return $descr;
 	}
@@ -148,7 +148,7 @@ class SponsoredOrder extends \LWS\WOOREWARDS\Abstracts\Event
 	/** @return string a human readable type for UI */
 	public function getDisplayType()
 	{
-		return _x("Referee orders", "getDisplayType", 'woorewards');
+		return _x("Referee orders", "getDisplayType", 'woorewards-lite');
 	}
 
 	function getEventPriority()
@@ -204,7 +204,7 @@ class SponsoredOrder extends \LWS\WOOREWARDS\Abstracts\Event
 						$this->sponsorship->sponsored_email,
 						$order->order->get_order_number()
 					),
-					'woorewards'
+					'woorewards-lite'
 				);
 
 			$this->addPoint(array(
@@ -220,7 +220,7 @@ class SponsoredOrder extends \LWS\WOOREWARDS\Abstracts\Event
 	private function poeditDeclare()
 	{
 		/* translators: %1$s: friend name, %2$s: order number */
-		__("Referred friend %1\$s order #%2\$s completed", 'woorewards');
+		__("Referred friend %1\$s order #%2\$s completed", 'woorewards-lite');
 	}
 
 	/**	Event categories, used to filter out events from pool options.
@@ -228,8 +228,8 @@ class SponsoredOrder extends \LWS\WOOREWARDS\Abstracts\Event
 	public function getCategories()
 	{
 		return array_merge(parent::getCategories(), array(
-			'woocommerce' => __("WooCommerce", 'woorewards'),
-			'sponsorship' => __("Available for referees", 'woorewards')
+			'woocommerce' => __("WooCommerce", 'woorewards-lite'),
+			'sponsorship' => __("Available for referees", 'woorewards-lite')
 		));
 	}
 }

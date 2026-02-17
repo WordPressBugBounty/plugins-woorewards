@@ -118,7 +118,7 @@ class PointStack
 		$wpdb->query($wpdb->prepare($update, $args));
 
 		// insert reset line for customers with '' as point value
-		$reason = $reason ? $this->formatReason($reason) : \LWS\WOOREWARDS\Core\Trace::byReason("Lost due to inactivity", 'woorewards');
+		$reason = $reason ? $this->formatReason($reason) : \LWS\WOOREWARDS\Core\Trace::byReason("Lost due to inactivity", 'woorewards-lite');
 		$fields = array('new_total', 'stack', 'commentar', 'blog_id', 'origin', 'mvt_date');
 		$values =  array('%d', '%s', '%s', '%d', '%s', \gmdate("'Y-m-d H:i:s'", \time()));
 		$args = array(
@@ -208,7 +208,7 @@ class PointStack
 			. " WHERE d.meta_key=%s"
 			. " ) as m GROUP BY m.user_id";
 		$args = [
-			\LWS\WOOREWARDS\Core\Trace::serializeReason(array("Points merged from %s", $otherStackName), 'woorewards'),
+			\LWS\WOOREWARDS\Core\Trace::serializeReason(array("Points merged from %s", $otherStackName), 'woorewards-lite'),
 			\get_current_blog_id(), // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			\gmdate('Y-m-d H:i:s', \time()),
 			$this->metaKey(),
@@ -802,7 +802,7 @@ class PointStack
 	private function poeditDeclare()
 	{
 		/* translators: %s: source stack name */
-		__("Points merged from %s", 'woorewards');
-		__("Lost due to inactivity", 'woorewards');
+		__("Points merged from %s", 'woorewards-lite');
+		__("Lost due to inactivity", 'woorewards-lite');
 	}
 }

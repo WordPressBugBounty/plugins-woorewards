@@ -15,8 +15,8 @@ class ProductReview extends \LWS\WOOREWARDS\Abstracts\Event
 	{
 		return array_merge(parent::getInformation(), array(
 			'icon'  => 'lws-icon-star-full',
-			'short' => __("The customer will earn points for writing a review on a product.", 'woorewards'),
-			'help'  => __("You can restrict this method to products already purchased by the customer", 'woorewards'),
+			'short' => __("The customer will earn points for writing a review on a product.", 'woorewards-lite'),
+			'help'  => __("You can restrict this method to products already purchased by the customer", 'woorewards-lite'),
 		));
 	}
 
@@ -31,7 +31,7 @@ class ProductReview extends \LWS\WOOREWARDS\Abstracts\Event
 	protected function getCooldownTooltips($text)
 	{
 		$text .= '<br/>';
-		$text .= __("Points are still given once per product. The cooldown simply limits the number of times a user can earn points for his reviews during a set period.", 'woorewards');
+		$text .= __("Points are still given once per product. The cooldown simply limits the number of times a user can earn points for his reviews during a set period.", 'woorewards-lite');
 		return $text;
 	}
 
@@ -49,15 +49,15 @@ class ProductReview extends \LWS\WOOREWARDS\Abstracts\Event
 		$prefix = $this->getDataKeyPrefix();
 		$form = parent::getForm($context);
 
-		$form .= $this->getFieldsetBegin(2, __("Options", 'woorewards'));
+		$form .= $this->getFieldsetBegin(2, __("Options", 'woorewards-lite'));
 
 		// hide from search and robots on/off
-		$label = __("Purchase Required", 'woorewards');
+		$label = __("Purchase Required", 'woorewards-lite');
 		$toggle = \LWS\Adminpanel\Pages\Field\Checkbox::compose($prefix . 'purchase_required', array(
 			'id'      => $prefix . 'purchase_required',
 			'layout'  => 'toggle',
 		));
-		$tooltip = __("If checked, points are earned only if the customer already purchased the product and order status is 'Complete'.", 'woorewards');
+		$tooltip = __("If checked, points are earned only if the customer already purchased the product and order status is 'Complete'.", 'woorewards-lite');
 		$form .= "<div class='field-help'>{$tooltip}</div>";
 		$form .= "<div class='lws-{$context}-opt-title label'>{$label}<div class='bt-field-help'>?</div></div>";
 		$form .= "<div class='lws-{$context}-opt-input value'>{$toggle}</div>";
@@ -79,7 +79,7 @@ class ProductReview extends \LWS\WOOREWARDS\Abstracts\Event
 				$prefix.'purchase_required' => '',
 			),
 			'labels'   => array(
-				$prefix.'purchase_required' => __("Purchase Required", 'woorewards'),
+				$prefix.'purchase_required' => __("Purchase Required", 'woorewards-lite'),
 			)
 		));
 		if( !(isset($values['valid']) && $values['valid']) )
@@ -121,7 +121,7 @@ class ProductReview extends \LWS\WOOREWARDS\Abstracts\Event
 	/** @return string a human readable type for UI */
 	public function getDisplayType()
 	{
-		return _x("Product review", "getDisplayType", 'woorewards');
+		return _x("Product review", "getDisplayType", 'woorewards-lite');
 	}
 
 	/** Add hook to grab events and add points. */
@@ -167,7 +167,7 @@ class ProductReview extends \LWS\WOOREWARDS\Abstracts\Event
 		if( $points = \apply_filters('trigger_'.$this->getType(), 1, $this, $comment) )
 		{
 			\add_user_meta($comment->user_id, $this->oncekey(), $comment->comment_post_ID, false);
-			$reason = \LWS\WOOREWARDS\Core\Trace::byReason(array("Review about a product (%s)", \get_the_title($comment->comment_post_ID)), 'woorewards');
+			$reason = \LWS\WOOREWARDS\Core\Trace::byReason(array("Review about a product (%s)", \get_the_title($comment->comment_post_ID)), 'woorewards-lite');
 			$this->addPoint(array(
 					'user'    => $comment->user_id,
 					'product' => $comment->comment_post_ID,
@@ -179,7 +179,7 @@ class ProductReview extends \LWS\WOOREWARDS\Abstracts\Event
 	private function poeditDeclare()
 	{
 		/* translators: %s: product name */
-		__("Review about a product (%s)", 'woorewards');
+		__("Review about a product (%s)", 'woorewards-lite');
 	}
 
 	protected function isValid($comment, $delayed=false)
@@ -256,8 +256,8 @@ class ProductReview extends \LWS\WOOREWARDS\Abstracts\Event
 	public function getCategories()
 	{
 		return array_merge(parent::getCategories(), array(
-			'woocommerce' => __("WooCommerce", 'woorewards'),
-			'site'  => __("Website", 'woorewards')
+			'woocommerce' => __("WooCommerce", 'woorewards-lite'),
+			'site'  => __("Website", 'woorewards-lite')
 		));
 	}
 }

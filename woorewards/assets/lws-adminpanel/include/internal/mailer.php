@@ -638,13 +638,13 @@ class Mailer
 			'id' => 'lws_mail_d_' . $domain,
 			'icon' => 'lws-icon-letter',
 			/* translators: 1: The email section title */
-			'title' => empty($title) ? __("Email Settings", 'woorewards') : sprintf(__("%s Email Settings", 'woorewards'), $title),
+			'title' => empty($title) ? __("Email Settings", 'lws-adminpanel') : sprintf(__("%s Email Settings", 'lws-adminpanel'), $title),
 			'extra' => array('doclink' => 'https://plugins.longwatchstudio.com/kb/wr-email-header-and-footer/'),
-			'text'=> __("Once you've finished the email settings, <b>save your changes</b><br/>You will then see the result in the style editor below<br/>Select the elements you wish to change and have fun!", 'woorewards'),
+			'text'=> __("Once you've finished the email settings, <b>save your changes</b><br/>You will then see the result in the style editor below<br/>Select the elements you wish to change and have fun!", 'lws-adminpanel'),
 			'fields' => array(
 				array(
 					'type'  => 'media',
-					'title' => __("Header picture", 'woorewards'),
+					'title' => __("Header picture", 'lws-adminpanel'),
 					'id'    => $prefix.'headerpic',
 					'extra' => array(
 						'size' => 'medium',
@@ -652,7 +652,7 @@ class Mailer
 				),
 				array(
 					'type'  => 'wpeditor',
-					'title' => __("Footer text", 'woorewards'),
+					'title' => __("Footer text", 'lws-adminpanel'),
 					'id'    => $prefix.'footer',
 					'extra' => array(
 						'editor_height' => 30,
@@ -673,12 +673,12 @@ class Mailer
 		$mail = array(
 			'id'    => $mailId,
 			'icon'  => $settings['icon'],
-			'title' => $settings['settings_name'] ? $settings['settings_name'] : __("Email details", 'woorewards'),
+			'title' => $settings['settings_name'] ? $settings['settings_name'] : __("Email details", 'lws-adminpanel'),
 			'text'  => $settings['about'] ? $settings['about'] : '',
 			'fields' => array(
 				array(
 					'id'    => 'lws_mail_subject_'.$template,
-					'title' => __("Subject", 'woorewards'),
+					'title' => __("Subject", 'lws-adminpanel'),
 					'type'  => 'text',
 					'extra' => array(
 						'maxlength'   => 350,
@@ -689,7 +689,7 @@ class Mailer
 				),
 				array(
 					'id'    => 'lws_mail_preheader_'.$template,
-					'title' => __("Preheader", 'woorewards'),
+					'title' => __("Preheader", 'lws-adminpanel'),
 					'type'  => 'text',
 					'extra' => array(
 						'maxlength'   => 350,
@@ -710,7 +710,7 @@ class Mailer
 				'id' => 'lws_mail_bcc_admin_' . $template,
 				'type' => 'input',
 				'extra' => array('type' => 'email'),
-				'title' => __("Blind carbon copy to (bcc)", 'woorewards'),
+				'title' => __("Blind carbon copy to (bcc)", 'lws-adminpanel'),
 			);
 		}
 
@@ -743,17 +743,17 @@ class Mailer
 
 		$mail['fields'][] = array(
 			'id' => 'lws_adminpanel_mail_tester_'.$template,
-			'title' => __("Receiver Email", 'woorewards'),
+			'title' => __("Receiver Email", 'lws-adminpanel'),
 			'type' => 'text',
 			'extra' => array(
-				'help' => __("Test your email to see how it looks", 'woorewards'),
+				'help' => __("Test your email to see how it looks", 'lws-adminpanel'),
 				'noconfirm' => true,
 				'size' => '40'
 			)
 		);
 		$mail['fields'][] = array(
 			'id' => 'lws_adminpanel_mail_tester_btn_'.$template,
-			'title' => __("Send test email", 'woorewards'),
+			'title' => __("Send test email", 'lws-adminpanel'),
 			'type' => 'button',
 			'extra' => array('callback' => array($this, 'test'))
 		);
@@ -771,10 +771,10 @@ class Mailer
 			if( \is_email($email) )
 			{
 				do_action('lws_mail_send', $email, $template, new \WP_Error());
-				return __("Test email sent.", 'woorewards');
+				return __("Test email sent.", 'lws-adminpanel');
 			}
 			else
-				return __("Test email is not valid.", 'woorewards');
+				return __("Test email is not valid.", 'lws-adminpanel');
 		}
 		return false;
 	}

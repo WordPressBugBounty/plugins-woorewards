@@ -59,8 +59,8 @@ class LacChecklist extends \LWS\Adminpanel\Pages\LAC
 			$name = esc_attr($this->m_Id);
 			$source = $this->data('source');
 			$spec = $this->data('spec');
-			$placeholder = __("Select...", 'woorewards');
-			$inputph = __("Search...", 'woorewards');
+			$placeholder = __("Select...", 'lws-adminpanel');
+			$inputph = __("Search...", 'lws-adminpanel');
 			if( empty($source) && $this->hasExtra('prebuild') )
 			{
 				$source = $this->prebuild($originalValue, $this->hasExtra('spec', 'a') ? $this->extra['spec'] : array());

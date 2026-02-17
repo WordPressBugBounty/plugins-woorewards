@@ -310,7 +310,7 @@ class Group
 
 		echo "</div>";
 		if (isset($this->extra['doclink']) && $this->extra['doclink']) {
-			$label = __("Documentation", 'woorewards');
+			$label = __("Documentation", 'lws-adminpanel');
 			echo "<div class='doc-line'><div class='doc-left'></div><div class='doc-right'>";
 			echo wp_kses_post("<a href='{$this->extra['doclink']}'  target='_blank' class='group-doc'>{$label}</a>");
 			echo "</div></div>";

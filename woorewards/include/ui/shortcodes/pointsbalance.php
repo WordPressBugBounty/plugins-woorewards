@@ -38,55 +38,55 @@ class PointsBalance
 	{
 		$fields['pointsbalance'] = array(
 			'id' => 'lws_woorewards_points_balance',
-			'title' => __("Points Balance", 'woorewards'),
+			'title' => __("Points Balance", 'woorewards-lite'),
 			'type' => 'shortcode',
 			'extra' => array(
 				'shortcode' => '[wr_points_balance]',
-				'description' =>  __("Use this shortcode to display their points balance to your customers.", 'woorewards') . "<br/>" .
-				__("Use the following options to change how the balance is displayed.", 'woorewards'),
+				'description' =>  __("Use this shortcode to display their points balance to your customers.", 'woorewards-lite') . "<br/>" .
+				__("Use the following options to change how the balance is displayed.", 'woorewards-lite'),
 				'options' => array(
 					'element' => array(
 						'option' => 'element',
-						'desc' => __("(Optional) Select how the points balance element is displayed. 3 possible values :", 'woorewards'),
+						'desc' => __("(Optional) Select how the points balance element is displayed. 3 possible values :", 'woorewards-lite'),
 						'options' => array(
 							array(
 								'option' => 'none',
-								'desc'   => __("Default value. Simple text without stylable elements", 'woorewards'),
+								'desc'   => __("Default value. Simple text without stylable elements", 'woorewards-lite'),
 							),
 							array(
 								'option' => 'tile',
-								'desc'   => __("Stylable tile with a background color", 'woorewards'),
+								'desc'   => __("Stylable tile with a background color", 'woorewards-lite'),
 							),
 							array(
 								'option' => 'line',
-								'desc'   => __("Horizontal display in stylable elements", 'woorewards'),
+								'desc'   => __("Horizontal display in stylable elements", 'woorewards-lite'),
 							),
 						),
 						'example' => '[wr_points_balance element="tile"]'
 					),
 					'display' => array(
 						'option' => 'display',
-						'desc' => __("(Optional) Select how the points are displayed. 2 possible values :", 'woorewards'),
+						'desc' => __("(Optional) Select how the points are displayed. 2 possible values :", 'woorewards-lite'),
 						'options' => array(
 							array(
 								'option' => 'formatted',
-								'desc'   => __("Default. Points are formatted with the points currency/name", 'woorewards'),
+								'desc'   => __("Default. Points are formatted with the points currency/name", 'woorewards-lite'),
 							),
 							array(
 								'option' => 'simple',
-								'desc'   => __("Only the points balance numeric value is displayed", 'woorewards'),
+								'desc'   => __("Only the points balance numeric value is displayed", 'woorewards-lite'),
 							),
 						),
 						'example' => '[wr_points_balance display="simple"]'
 					),
 					'showname' => array(
 						'option' => 'showname',
-						'desc' => __("(Optional) If set, will force the display of the points and rewards system name", 'woorewards'),
+						'desc' => __("(Optional) If set, will force the display of the points and rewards system name", 'woorewards-lite'),
 						'example' => '[wr_points_balance showname="yes"]',
 					),
 					'showcurrency' => array(
 						'option' => 'showcurrency',
-						'desc' => __("(Optional) Set to 'off' to do not append points currency but show only the number", 'woorewards'),
+						'desc' => __("(Optional) Set to 'off' to do not append points currency but show only the number", 'woorewards-lite'),
 						'example' => '[wr_points_balance showcurrency="yes"]',
 					),
 				),
@@ -103,29 +103,29 @@ class PointsBalance
 			array(
 				'system' => array(
 					'option' => 'system',
-					'desc'   => __("(Optional, comma separated) Select the points and rewards systems you want to show. If left empty, all active systems are displayed", 'woorewards') .
-						"<br/>" . __("You can find the points and rewards systems names in WooRewards → Points and Rewards", 'woorewards'),
+					'desc'   => __("(Optional, comma separated) Select the points and rewards systems you want to show. If left empty, all active systems are displayed", 'woorewards-lite') .
+						"<br/>" . __("You can find the points and rewards systems names in WooRewards → Points and Rewards", 'woorewards-lite'),
 					'example' => '[wr_points_balance system="name_of_your_system"]'
 				),
 				'layout' => array(
 					'option' => 'layout',
-					'desc' => __("(Optional) Select how the points balance elements are organized . 4 possible values :", 'woorewards'),
+					'desc' => __("(Optional) Select how the points balance elements are organized . 4 possible values :", 'woorewards-lite'),
 					'options' => array(
 						array(
 							'option' => 'none',
-							'desc'   => __("Default value. Simple text without stylable elements", 'woorewards'),
+							'desc'   => __("Default value. Simple text without stylable elements", 'woorewards-lite'),
 						),
 						array(
 							'option' => 'grid',
-							'desc'   => __("Elements are displayed in a responsive grid", 'woorewards'),
+							'desc'   => __("Elements are displayed in a responsive grid", 'woorewards-lite'),
 						),
 						array(
 							'option' => 'horizontal',
-							'desc'   => __("Elements are displayed in row", 'woorewards'),
+							'desc'   => __("Elements are displayed in row", 'woorewards-lite'),
 						),
 						array(
 							'option' => 'vertical',
-							'desc'   => __("Elements are displayed on top of another", 'woorewards'),
+							'desc'   => __("Elements are displayed on top of another", 'woorewards-lite'),
 						),
 					),
 					'example' => '[wr_points_balance layout="grid"]'
@@ -203,7 +203,7 @@ class PointsBalance
 			} else {
 				if ($atts['showname']) {
 					/* translators: %1$s: system name, %2$s: points balance */
-					$content .= sprintf(_x('%1$s : %2$s', 'wr_points_balance element="none"', 'woorewards'), $pool->getOption('display_title'), $points);
+					$content .= sprintf(_x('%1$s : %2$s', 'wr_points_balance element="none"', 'woorewards-lite'), $pool->getOption('display_title'), $points);
 				} else {
 					$content .= $points;
 				}

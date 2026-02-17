@@ -57,7 +57,7 @@ class PointDiscount
 			$label = $name;
 		} elseif ($data = self::getDiscountMeta($coupon)) {
 			/* translators: %s: reward system name */
-			$label = sprintf(_x('Reward from %s', 'Reward label', 'woorewards'), $this->getTitle($data));
+			$label = sprintf(_x('Reward from %s', 'Reward label', 'woorewards-lite'), $this->getTitle($data));
 		}
 		return $label;
 	}
@@ -288,7 +288,7 @@ class PointDiscount
 			$appData = self::getDiscountMeta($applied);
 			if ($appData && $appData['stack_id'] == $data['stack_id']) {
 				/* translators: %1$s: existing reward name, %2$s: conflicting reward name */
-				$msg = sprintf(__('%2$s Conflict. Reward from %1$s already uses the same points reserve.', 'woorewards'), $this->getTitle($appData), $this->getTitle($data));
+				$msg = sprintf(__('%2$s Conflict. Reward from %1$s already uses the same points reserve.', 'woorewards-lite'), $this->getTitle($appData), $this->getTitle($data));
 				throw new \Exception(esc_html($msg), (int) self::COUPON_ERR_CODE); // message thrown not used by WC :'('
 			}
 		}
@@ -323,21 +323,21 @@ class PointDiscount
 			if (!$pool) {
 				if (!$throwException) {
 					/* translators: %s: pool name */
-					$this->setOrderFailed($order, sprintf(__('The Reward "%s" is unknown.', 'woorewards'), $discount['pool_name']));
+					$this->setOrderFailed($order, sprintf(__('The Reward "%s" is unknown.', 'woorewards-lite'), $discount['pool_name']));
 					return false;
 				} else {
 					/* translators: %s: pool name */
-					throw new \Exception(esc_html(sprintf(__('The Reward "%s" in your cart is unknown.', 'woorewards'), $discount['pool_name'])));
+					throw new \Exception(esc_html(sprintf(__('The Reward "%s" in your cart is unknown.', 'woorewards-lite'), $discount['pool_name'])));
 				}
 			}
 			if (!$pool->getOption('direct_reward_mode')) {
 				if (!$throwException) {
 					/* translators: %s: pool display title */
-					$this->setOrderFailed($order, sprintf(__('"%s" does not support this kind of reward anymore.', 'woorewards'), $pool->getOption('display_title')));
+					$this->setOrderFailed($order, sprintf(__('"%s" does not support this kind of reward anymore.', 'woorewards-lite'), $pool->getOption('display_title')));
 					return false;
 				} else {
 					/* translators: %s: pool display title */
-					throw new \Exception(esc_html(sprintf(__('"%s" does not support this kind of reward anymore.', 'woorewards'), $pool->getOption('display_title'))));
+					throw new \Exception(esc_html(sprintf(__('"%s" does not support this kind of reward anymore.', 'woorewards-lite'), $pool->getOption('display_title'))));
 				}
 			}
 
@@ -362,11 +362,11 @@ class PointDiscount
 			$need = \reset($stacks);
 			if (!$throwException) {
 				/* translators: %s: point symbol name */
-				$this->setOrderFailed($order, sprintf(__('At least one coupon requires %s. Guest order is not supported.', 'woorewards'), \LWS_WooRewards::getPointSymbol(0, $need['ref']->getName())));
+				$this->setOrderFailed($order, sprintf(__('At least one coupon requires %s. Guest order is not supported.', 'woorewards-lite'), \LWS_WooRewards::getPointSymbol(0, $need['ref']->getName())));
 				return false;
 			} else {
 				/* translators: %s: point symbol name */
-				throw new \Exception(\wp_kses_post(sprintf(__('At least one coupon requires %s. You must log in to continue.', 'woorewards'), \LWS_WooRewards::getPointSymbol(0, $need['ref']->getName()))));
+				throw new \Exception(\wp_kses_post(sprintf(__('At least one coupon requires %s. You must log in to continue.', 'woorewards-lite'), \LWS_WooRewards::getPointSymbol(0, $need['ref']->getName()))));
 			}
 		}
 
@@ -414,7 +414,7 @@ class PointDiscount
 			if ($need['needs'] > $need['max'])
 			{
 				/* translators: %1$s: point symbol, %2$s: reward title */
-				throw new \Exception(wp_kses_post(sprintf(__('You do not have enough %1$s to purchase the reward %2$s.', 'woorewards'), \LWS_WooRewards::getPointSymbol(0, $need['ref']->getName()), $need['ref']->getOption('display_title'))));
+				throw new \Exception(wp_kses_post(sprintf(__('You do not have enough %1$s to purchase the reward %2$s.', 'woorewards-lite'), \LWS_WooRewards::getPointSymbol(0, $need['ref']->getName()), $need['ref']->getOption('display_title'))));
 			}
 		}
 	}
@@ -452,7 +452,7 @@ class PointDiscount
 			if ($this->setOrderFailed($order)) {
 				foreach ($failed as &$need) {
 					/* translators: %1$s: point symbol, %2$s: reward title */
-					$order->add_order_note(sprintf(__('Customer does not have enough %1$s to purchase the reward %2$s.', 'woorewards'), \LWS_WooRewards::getPointSymbol(0, $need['ref']->getName()), $need['ref']->getOption('display_title')));
+					$order->add_order_note(sprintf(__('Customer does not have enough %1$s to purchase the reward %2$s.', 'woorewards-lite'), \LWS_WooRewards::getPointSymbol(0, $need['ref']->getName()), $need['ref']->getOption('display_title')));
 				}
 				return; // if not marked with a status, use points and go down to negative amounts
 			}
@@ -474,7 +474,7 @@ class PointDiscount
 				/* translators: %1$s: pool title, %2$s: order number */
 				$reason = \LWS\WOOREWARDS\Core\Trace::byReason(
 					array('Reward from %1$s on Order #%2$s', $title, $order->get_order_number()),
-					'woorewards'
+					'woorewards-lite'
 				)->setOrigin(self::CODE_PREFIX . $pool->getName())->setOrder($orderId);
 
 				$pool->usePoints($userId, $discount['points'], $reason);
@@ -486,7 +486,7 @@ class PointDiscount
 
 				// keep note on order
 				/* translators: %1$s: points with symbol, %2$s: reward system title */
-				\LWS\WOOREWARDS\Core\OrderNote::add($order, sprintf(_x('Use <i>%1$s</i> from <i>%2$s</i> to get a discount on this order', 'order note', 'woorewards'), \LWS_WooRewards::formatPointsWithSymbol($discount['points'], $pool->getName()), $title), $pool);
+				\LWS\WOOREWARDS\Core\OrderNote::add($order, sprintf(_x('Use <i>%1$s</i> from <i>%2$s</i> to get a discount on this order', 'order note', 'woorewards-lite'), \LWS_WooRewards::formatPointsWithSymbol($discount['points'], $pool->getName()), $title), $pool);
 			}
 		}
 	}
@@ -590,7 +590,7 @@ class PointDiscount
 	private function poedit()
 	{
 		/* translators: %1$s: pool title, %2$s: order number */
-		__('Reward from %1$s on Order #%2$s', 'woorewards');
+		__('Reward from %1$s on Order #%2$s', 'woorewards-lite');
 	}
 
 	function emptied()
@@ -608,23 +608,23 @@ class PointDiscount
 	function reserveAmount()
 	{
 		if (!(isset($_REQUEST['nonce']) && \wp_verify_nonce(\sanitize_text_field(\wp_unslash($_REQUEST['nonce'])), 'lws_woorewards_reserve_pointsoncart')))
-			\wp_send_json(array('error' => __("Action control failed. Try to refresh the page.", 'woorewards')));
+			\wp_send_json(array('error' => __("Action control failed. Try to refresh the page.", 'woorewards-lite')));
 
 		$userId = \get_current_user_id();
 		if (!$userId)
-			\wp_send_json(array('error' => __("A connected user is required.", 'woorewards')));
+			\wp_send_json(array('error' => __("A connected user is required.", 'woorewards-lite')));
 
 		if (!(isset($_REQUEST['system']) && ($pool = \sanitize_key($_REQUEST['system']))))
-			\wp_send_json(array('error' => __('Missing destination or bad format.', 'woorewards')));
+			\wp_send_json(array('error' => __('Missing destination or bad format.', 'woorewards-lite')));
 
 		if (!\WC()->cart)
-			\wp_send_json(array('error' => __('Cannot load the Cart. Operation aborted.', 'woorewards')));
+			\wp_send_json(array('error' => __('Cannot load the Cart. Operation aborted.', 'woorewards-lite')));
 
 		$pool = \apply_filters('lws_woorewards_get_pools_by_args', false, array('system' => $pool), $userId)->last();
 		if (!$pool)
-			\wp_send_json(array('error' => __('Points and Rewards System missing or access not granted.', 'woorewards')));
+			\wp_send_json(array('error' => __('Points and Rewards System missing or access not granted.', 'woorewards-lite')));
 		if (!$pool->getOption('direct_reward_mode'))
-			\wp_send_json(array('error' => __('Points and Rewards System does not accept this kind of reward.', 'woorewards')));
+			\wp_send_json(array('error' => __('Points and Rewards System does not accept this kind of reward.', 'woorewards-lite')));
 
 		$stackId = $pool->getStackId();
 		$max = $pool->getPoints($userId);
@@ -655,7 +655,7 @@ class PointDiscount
 			'formated' => $formated,
 			'dispMax' => \LWS_WooRewards::formatPoints($max, $pool->getName()),
 			/* translators: %1$s: formatted points, %2$s: pool display title */
-			'success' => sprintf(__('Use %1$s from %2$s', 'woorewards'), $formated, $pool->getOption('display_title')),
+			'success' => sprintf(__('Use %1$s from %2$s', 'woorewards-lite'), $formated, $pool->getOption('display_title')),
 		));
 	}
 }

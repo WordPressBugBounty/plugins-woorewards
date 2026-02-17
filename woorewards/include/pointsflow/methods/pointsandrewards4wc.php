@@ -21,6 +21,6 @@ class PointsAndRewards4WC extends \LWS\WOOREWARDS\PointsFlow\Methods\MetaKey
 	/** @return (string) human readable name */
 	public function getTitle()
 	{
-		return __("Points and Rewards for WooCommerce (by WP Swings)", 'woorewards');
+		return __("Points and Rewards for WooCommerce (by WP Swings)", 'woorewards-lite');
 	}
 }

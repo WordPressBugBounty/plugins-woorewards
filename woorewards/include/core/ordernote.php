@@ -44,7 +44,7 @@ class OrderNote
 		if (!$order)
 			return $commentId;
 
-		$author = __("MyRewards", 'woorewards');
+		$author = __("MyRewards", 'woorewards-lite');
 		if ($domain = \strtolower(\site_url()))
 			$domain = \str_replace('www.', '', \wp_parse_url($domain, PHP_URL_HOST));
 

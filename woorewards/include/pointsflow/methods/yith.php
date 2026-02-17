@@ -25,6 +25,6 @@ class Yith extends \LWS\WOOREWARDS\PointsFlow\ExportMethod
 	/** @return (string) human readable name */
 	public function getTitle()
 	{
-		return __("Yith Points and rewards", 'woorewards');
+		return __("Yith Points and rewards", 'woorewards-lite');
 	}
 }

@@ -21,7 +21,7 @@ class GoogleAPIsKey extends \LWS\Adminpanel\Pages\Field
 	{
 		parent::__construct($id, $title, $extra);
 		$this->m_Id = self::ID;
-		$this->m_Title = __("Your Google API key", 'woorewards');
+		$this->m_Title = __("Your Google API key", 'lws-adminpanel');
 	}
 
 	public function input()
@@ -34,6 +34,6 @@ class GoogleAPIsKey extends \LWS\Adminpanel\Pages\Field
 			\esc_attr($value)
 		);
 		if( !$value )
-			\lws_admin_add_notice_once(self::ID, __("You should define a Google API key in this settings.", 'woorewards'), array('level'=>'info', 'dismissible'=>true));
+			\lws_admin_add_notice_once(self::ID, __("You should define a Google API key in this settings.", 'lws-adminpanel'), array('level'=>'info', 'dismissible'=>true));
 	}
 }

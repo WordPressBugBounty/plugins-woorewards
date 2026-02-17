@@ -15,12 +15,12 @@ class MenuShortcode extends \LWS\Adminpanel\Internal\MenuItems
 
 	protected function getTitle($item=false)
 	{
-		$title = __('Shortcode item', 'woorewards');
+		$title = __('Shortcode item', 'lws-adminpanel');
 		if ($item && $item->classes) {
 			if (\in_array('lws-admpnl-logged-only', $item->classes))
-				$title .= sprintf(' (%s)', __("Logged", 'woorewards'));
+				$title .= sprintf(' (%s)', __("Logged", 'lws-adminpanel'));
 			elseif (\in_array('lws-admpnl-guest-only', $item->classes))
-				$title .= sprintf(' (%s)', __("Guest", 'woorewards'));
+				$title .= sprintf(' (%s)', __("Guest", 'lws-adminpanel'));
 		}
 		return $title;
 	}
@@ -48,13 +48,13 @@ class MenuShortcode extends \LWS\Adminpanel\Internal\MenuItems
 	protected function getForm($index, $inputClass)
 	{
 		$texts = array(
-			'label'   => __("Item content", 'woorewards'),
+			'label'   => __("Item content", 'lws-adminpanel'),
 			'ph'      => '[my_shortcode]',
 			'visitor' => array(
-				'label'  => __("Visitor type", 'woorewards'),
-				'guest'  => __("Guest", 'woorewards'),
-				'all'    => __("All", 'woorewards'),
-				'logged' => __("Logged", 'woorewards'),
+				'label'  => __("Visitor type", 'lws-adminpanel'),
+				'guest'  => __("Guest", 'lws-adminpanel'),
+				'all'    => __("All", 'lws-adminpanel'),
+				'logged' => __("Logged", 'lws-adminpanel'),
 			),
 		);
 

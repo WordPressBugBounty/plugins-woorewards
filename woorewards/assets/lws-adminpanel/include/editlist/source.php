@@ -55,7 +55,7 @@ abstract class Source
 	/** Override to add a title line over the popup dialog. */
 	public function getPopupTitle()
 	{
-		return __("Settings", 'woorewards');
+		return __("Settings", 'lws-adminpanel');
 	}
 
 	/** @return array LAC source format [[value, label], etc.]
@@ -121,9 +121,9 @@ abstract class Source
 			$ph = apply_filters(
 				'lws_ap_editlist_item_action_names_' . $editlistSlug,
 				array(
-					\LWS\Adminpanel\EditList\Modes::MOD => __('Quick Edit', 'woorewards'),
-					\LWS\Adminpanel\EditList\Modes::DUP => __('Copy', 'woorewards'),
-					\LWS\Adminpanel\EditList\Modes::DEL => __('Delete', 'woorewards'),
+					\LWS\Adminpanel\EditList\Modes::MOD => __('Quick Edit', 'lws-adminpanel'),
+					\LWS\Adminpanel\EditList\Modes::DUP => __('Copy', 'lws-adminpanel'),
+					\LWS\Adminpanel\EditList\Modes::DEL => __('Delete', 'lws-adminpanel'),
 				),
 				$rowId,
 				$data

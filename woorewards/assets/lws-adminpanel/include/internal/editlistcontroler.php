@@ -164,7 +164,7 @@ class EditlistControler
 			if( !empty($this->groupBy['form']) && $this->groupBy['add'] && ($this->m_Mode & \LWS\Adminpanel\EditList\Modes::ADD) ) // no edit -> no add
 			{
 				if( $this->groupBy['add'] === true )
-					$this->groupBy['add'] = _x("Add a group", "editlist groupby", 'woorewards');
+					$this->groupBy['add'] = _x("Add a group", "editlist groupby", 'lws-adminpanel');
 				$add = (" data-add='" . \esc_attr($this->groupBy['add']) . "'");
 			}
 
@@ -173,11 +173,11 @@ class EditlistControler
 			$actionbuttons = '';
 			/** Group Edition */
 			if (!empty($this->groupBy['form']) && ($this->m_Mode & \LWS\Adminpanel\EditList\Modes::MOD)) {
-				$actionbuttons .= "<button class='lws-editlist-group-btn lws_editlist_modal_edit_button lws_editlist_group_head_edit edit'><div class='icon lws-icon-pencil'></div><div class='label'>" . __('Edit', 'woorewards') . "</div></button>";
+				$actionbuttons .= "<button class='lws-editlist-group-btn lws_editlist_modal_edit_button lws_editlist_group_head_edit edit'><div class='icon lws-icon-pencil'></div><div class='label'>" . __('Edit', 'lws-adminpanel') . "</div></button>";
 			}
 			/** Group Deletion */
 			if ($this->m_Mode & \LWS\Adminpanel\EditList\Modes::DEL) {
-				$actionbuttons .= "<button class='lws-editlist-group-btn lws_editlist_modal_edit_button lws_editlist_group_del del'><div class='icon lws-icon-bin'></div><div class='label'>" . __('Delete', 'woorewards') . "</div></button>";
+				$actionbuttons .= "<button class='lws-editlist-group-btn lws_editlist_modal_edit_button lws_editlist_group_del del'><div class='icon lws-icon-bin'></div><div class='label'>" . __('Delete', 'lws-adminpanel') . "</div></button>";
 			}
 			if ($actionbuttons != '') {
 				$actionbuttons = '<div class="lws-editlist-action-button lws-icon-menu-5">'
@@ -341,7 +341,7 @@ class EditlistControler
 
 	protected function displayActions()
 	{
-		$ph = __('Apply', 'woorewards');
+		$ph = __('Apply', 'lws-adminpanel');
 		echo "<div class='lws_editlist_actions'>";
 		echo "<div class='lws-editlist-actions-cont'>";
 		echo "<div class='lws-editlist-actions-left'><div class='lws-editlist-actions-icon lws-icon lws-icon-arrow-right'></div></div>";
@@ -385,7 +385,7 @@ class EditlistControler
 				$lab[$k][] = $width;
 		}
 		if ($hasActions) {
-			$lab[\LWS\Adminpanel\EditList\Source::ACTION_CELL_KEY] = array(__('Action', 'woorewards'), 'min-content');
+			$lab[\LWS\Adminpanel\EditList\Source::ACTION_CELL_KEY] = array(__('Action', 'lws-adminpanel'), 'min-content');
 		}
 		return $lab;
 	}
@@ -398,7 +398,7 @@ class EditlistControler
 			$buttons['add'] = sprintf(
 				"<button class='lws-adm-btn lws_editlist_modal_edit_button lws-editlist-add lws_editlist_item_add' data-id='%s'>%s</button>",
 				$this->m_Id,
-				__("Add", 'woorewards')
+				__("Add", 'lws-adminpanel')
 			);
 		}
 		$buttons = \apply_filters('lws_ap_editlist_button_add_value_'.$this->slug, $buttons, $this);
@@ -548,7 +548,7 @@ class EditlistControler
 					$str[] = sprintf(
 						"<div class='lws-small-media-cell lws-editlist-cell lws_deep_cell{$head}' style='grid-column:span %d;'>%s</div>",
 						$colspan,
-						$head ? __("Values", 'woorewards') : $this->getSmallEditableRow($cells)
+						$head ? __("Values", 'lws-adminpanel') : $this->getSmallEditableRow($cells)
 					);
 				}
 				$cell['class'] .= ' large-media-cell-content';
@@ -588,14 +588,14 @@ class EditlistControler
 	protected function getEditionForm()
 	{
 		$ph = array(
-			'cancel' => __('Cancel', 'woorewards'),
-			'save'   => __('Save', 'woorewards')
+			'cancel' => __('Cancel', 'lws-adminpanel'),
+			'save'   => __('Save', 'lws-adminpanel')
 		);
 		$form = \apply_filters('lws_adminpanel_editlist_input_' . $this->slug, $this->m_Source->input());
-		//$next = _x("Next", 'Confirm event/unlockable type choice', 'woorewards');
-		//$back = _x("Back", 'Undo event/unlockable type choice', 'woorewards');
+		//$next = _x("Next", 'Confirm event/unlockable type choice', 'lws-adminpanel');
+		//$back = _x("Back", 'Undo event/unlockable type choice', 'lws-adminpanel');
 
-		$title = $this->m_Source ? $this->m_Source->getPopupTitle() : __("Settings", 'woorewards');
+		$title = $this->m_Source ? $this->m_Source->getPopupTitle() : __("Settings", 'lws-adminpanel');
 
 		return '<div class="lws-editlist-form-container lws_editlist_form_hidden lws_editlist_line_form" data-editlist="' . esc_attr($this->m_Id) . '">'
 			. '<div class="lws-editlist-form-popup lws_editlist_modal_form">'
@@ -663,10 +663,10 @@ class EditlistControler
 		if( $editionId === $this->m_Id )
 		{
 			if (!$this->currentUserCan()) {
-				return new \WP_Error(403, __( "You do not have enough capabilities to do that", 'woorewards' ));
+				return new \WP_Error(403, __( "You do not have enough capabilities to do that", 'lws-adminpanel' ));
 			}
 			if (!\wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['_lws_editlist_nonce'] ?? '')), 'lws_adminpanel_editlist')) {
-				return new \WP_Error(403, __( "Expired token. Please reload the page and retry.", 'woorewards' ));
+				return new \WP_Error(403, __( "Expired token. Please reload the page and retry.", 'lws-adminpanel' ));
 			}
 
 			$data = json_decode( base64_decode($line), true );
@@ -724,9 +724,9 @@ class EditlistControler
 				{
 
 					if (!\wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['_lws_editlist_nonce'] ?? '')), 'lws_adminpanel_editlist')) {
-						$ret = __( "Expired token. Please reload the page and retry.", 'woorewards' );
+						$ret = __( "Expired token. Please reload the page and retry.", 'lws-adminpanel' );
 					} elseif (!$this->currentUserCan()) {
-						$ret = __("You do not have enough capabilities to do that", 'woorewards');
+						$ret = __("You do not have enough capabilities to do that", 'lws-adminpanel');
 					} else {
 						$ret = $action->apply( $items );
 					}

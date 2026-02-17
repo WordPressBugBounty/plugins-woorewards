@@ -97,21 +97,21 @@ abstract class Unlockable implements \LWS\WOOREWARDS\Abstracts\ICategorisable, \
 	function getForm($context = 'editlist')
 	{
 		$prefix = $this->getDataKeyPrefix();
-		$str = $this->getFieldsetBegin(0, __("Reward Information", 'woorewards'), '', false);
+		$str = $this->getFieldsetBegin(0, __("Reward Information", 'woorewards-lite'), '', false);
 
-		$str .= "<div class='lws-$context-opt-title label'>" . __("Reward type", 'woorewards') . "</div>";
+		$str .= "<div class='lws-$context-opt-title label'>" . __("Reward type", 'woorewards-lite') . "</div>";
 		$str .= "<div class='value lws_woorewards_system_type_info'>" . $this->getDisplayType() . "</div>";
 		$str .= $this->getFieldsetPlaceholder(true, 0); // type will always be first, so exceptionnaly put at second place
 
 		// custom title
-		$label = _x("Title", "Unlockable title", 'woorewards');
+		$label = _x("Title", "Unlockable title", 'woorewards-lite');
 		$placeholder = \esc_attr(\apply_filters('the_title', $this->getDisplayType(), $this->getId()));
 		$value = \esc_attr($this->title);
 		$str .= "<div class='lws-$context-opt-title label lws_wru_field_title'>$label</div>";
 		$str .= "<div class='value lws-$context-opt-input value lws_wru_field_title'><input type='text' id='{$prefix}title' name='{$prefix}title' value='$value' placeholder='$placeholder' /></div>";
 
 		// custom description
-		$label = _x("Description", "Unlockable title", 'woorewards');
+		$label = _x("Description", "Unlockable title", 'woorewards-lite');
 		$placeholder = \esc_attr(\wp_strip_all_tags(\apply_filters('the_wre_unlockable_description', $this->getDescription('edit'), $this->getId())));
 		$value = \htmlspecialchars($this->description, ENT_QUOTES);
 		$tooltip = $this->getDescriptionTooltip();
@@ -126,7 +126,7 @@ abstract class Unlockable implements \LWS\WOOREWARDS\Abstracts\ICategorisable, \
 		$str .= "</div>";
 
 		// add thumbnail here
-		$label = _x("Featured Image", "Unlockable Thumbnail", 'woorewards');
+		$label = _x("Featured Image", "Unlockable Thumbnail", 'woorewards-lite');
 		$str .= "<div class='lws-$context-opt-title label lws_wru_field_thumbnail'>$label</div>";
 		$str .= "<div class='value lws-$context-opt-input value lws_wru_field_thumbnail'>";
 		$str .= \LWS\Adminpanel\Pages\Field\Media::compose($prefix . 'thumbnail', array(
@@ -139,16 +139,16 @@ abstract class Unlockable implements \LWS\WOOREWARDS\Abstracts\ICategorisable, \
 		$str .= "</div>";
 
 		$str .= $this->getFieldsetEnd(0);
-		$str .= $this->getFieldsetBegin(1, __("Reward Settings", 'woorewards'));
+		$str .= $this->getFieldsetBegin(1, __("Reward Settings", 'woorewards-lite'));
 
 		// cost
-		$label = _x("Points needed", "Unlockable cost", 'woorewards');
+		$label = _x("Points needed", "Unlockable cost", 'woorewards-lite');
 		$value = empty($this->getCost()) ? '' : \esc_attr($this->getCost());
 		$str .= "<div class='lws-$context-opt-title label bold lws_wru_field_cost'>$label</div>";
 		$str .= "<div class='value lws-$context-opt-input value lws_wru_field_cost'><input type='text' id='{$prefix}cost' name='{$prefix}cost' value='$value' placeholder='0' class='lws_wr_unlockable_cost' /></div>";
 
 		// email
-		$label = _x("Send Reward email", "Unlockable cost", 'woorewards');
+		$label = _x("Send Reward email", "Unlockable cost", 'woorewards-lite');
 		$str .= "<div class='lws-$context-opt-title label lws_wru_field_email'>$label</div>";
 		$str .= "<div class='value lws-$context-opt-input value lws_wru_field_email'>";
 		$str .= \LWS\Adminpanel\Pages\Field\Checkbox::compose($prefix . 'email_enabled', array(
@@ -160,8 +160,8 @@ abstract class Unlockable implements \LWS\WOOREWARDS\Abstracts\ICategorisable, \
 
 		// max redeems
 		if (self::$maxRedeemAllowed) {
-			$label = _x("Max Redeems", "Unlockable max redeems", 'woorewards');
-			$tooltip = __("Define how many times this reward can be redeemed by customers. Leave empty or set to 0 for no limits", 'woorewards');
+			$label = _x("Max Redeems", "Unlockable max redeems", 'woorewards-lite');
+			$tooltip = __("Define how many times this reward can be redeemed by customers. Leave empty or set to 0 for no limits", 'woorewards-lite');
 			$str .= "<div class='field-help'>$tooltip</div>";
 			$str .= "<div class='lws-$context-opt-title label lws_wru_field_max_redeem'>$label<div class='bt-field-help'>?</div></div>";
 			$str .= "<div class='value lws-$context-opt-input value lws_wru_field_max_redeem'><input type='text' id='{$prefix}max_redeem' name='{$prefix}max_redeem' class='lws_wr_unlockable_max_redeem' /></div>";
@@ -205,15 +205,15 @@ abstract class Unlockable implements \LWS\WOOREWARDS\Abstracts\ICategorisable, \
 				'grouped_title'           => ''
 			),
 			'labels'   => array(
-				$prefix . 'cost'          => __("Cost", 'woorewards'),
-				$prefix . 'title'         => __("Title", 'woorewards'),
-				$prefix . 'description'   => __("Description", 'woorewards'),
-				$prefix . 'date_start'    => __("Validity Starting Date", 'woorewards'),
-				$prefix . 'date_end'      => __("Validity Ending Date", 'woorewards'),
-				$prefix . 'thumbnail'     => __("Featured Image", 'woorewards'),
-				$prefix . 'email_enabled' => __("Enable Reward email", 'woorewards'),
-				$prefix . 'max_redeem'    => __("Max Redeems", 'woorewards'),
-				'grouped_title'           => __("Level Title", 'woorewards')
+				$prefix . 'cost'          => __("Cost", 'woorewards-lite'),
+				$prefix . 'title'         => __("Title", 'woorewards-lite'),
+				$prefix . 'description'   => __("Description", 'woorewards-lite'),
+				$prefix . 'date_start'    => __("Validity Starting Date", 'woorewards-lite'),
+				$prefix . 'date_end'      => __("Validity Ending Date", 'woorewards-lite'),
+				$prefix . 'thumbnail'     => __("Featured Image", 'woorewards-lite'),
+				$prefix . 'email_enabled' => __("Enable Reward email", 'woorewards-lite'),
+				$prefix . 'max_redeem'    => __("Max Redeems", 'woorewards-lite'),
+				'grouped_title'           => __("Level Title", 'woorewards-lite')
 			)
 		));
 		if (!(isset($values['valid']) && $values['valid']))
@@ -307,7 +307,7 @@ abstract class Unlockable implements \LWS\WOOREWARDS\Abstracts\ICategorisable, \
 		$unlockable = static::instanciate($type);
 
 		if (empty($unlockable)) {
-			//			\lws_admin_add_notice_once('lws-wre-event-instanciate', __("Error occured during unlockable reward instanciation.", 'woorewards'), array('level'=>'error'));
+			//			\lws_admin_add_notice_once('lws-wre-event-instanciate', __("Error occured during unlockable reward instanciation.", 'woorewards-lite'), array('level'=>'error'));
 		} else {
 			$unlockable->id    = intval($post->ID);
 			$unlockable->name  = $post->post_name;
@@ -373,16 +373,16 @@ abstract class Unlockable implements \LWS\WOOREWARDS\Abstracts\ICategorisable, \
 		$postId = $data['ID'] ? \wp_update_post($data, true) : \wp_insert_post($data, true);
 		if (\is_wp_error($postId)) {
 			if (defined('WP_DEBUG') && WP_DEBUG) \error_log("Error occured during event saving: " . $postId->get_error_message()); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-			\lws_admin_add_notice_once('lws-wre-unlockable-save', __("Error occured during unlockable reward saving.", 'woorewards'), array('level' => 'error'));
+			\lws_admin_add_notice_once('lws-wre-unlockable-save', __("Error occured during unlockable reward saving.", 'woorewards-lite'), array('level' => 'error'));
 			return $this;
 		}
 		$this->id = intval($postId);
 		if ($this->title)
-			\do_action('wpml_register_string', $this->title, 'title', $this->getPackageWPML(true), __("Title", 'woorewards'), 'LINE');
+			\do_action('wpml_register_string', $this->title, 'title', $this->getPackageWPML(true), __("Title", 'woorewards-lite'), 'LINE');
 		if ($this->description)
-			\do_action('wpml_register_string', $this->description, 'description', $this->getPackageWPML(true), __("Description", 'woorewards'), 'AREA');
+			\do_action('wpml_register_string', $this->description, 'description', $this->getPackageWPML(true), __("Description", 'woorewards-lite'), 'AREA');
 		if ($this->groupedTitle)
-			\do_action('wpml_register_string', $this->groupedTitle, 'level', $this->getPackageWPML(true), __("Level", 'woorewards'), 'LINE');
+			\do_action('wpml_register_string', $this->groupedTitle, 'level', $this->getPackageWPML(true), __("Level", 'woorewards-lite'), 'LINE');
 
 		$this->_save($this->id);
 		\do_action('lws_woorewards_abstracts_unlockable_save_after', $this);
@@ -847,10 +847,10 @@ abstract class Unlockable implements \LWS\WOOREWARDS\Abstracts\ICategorisable, \
 		$cost = $this->cost;
 		if ($context == 'view' || $context == 'front') {
 			if ($cost <= 0) {
-				return _x("Not redeemable", "Cannot be redeemed", 'woorewards');
+				return _x("Not redeemable", "Cannot be redeemed", 'woorewards-lite');
 			} else if (!$this->inDateRange()) {
 				/* translators: %d: cost in points */
-				return sprintf(_x("%d [Delayed]", "Out of valid date range", 'woorewards'), $cost);
+				return sprintf(_x("%d [Delayed]", "Out of valid date range", 'woorewards-lite'), $cost);
 			}
 		}
 		return $cost;
@@ -884,9 +884,9 @@ abstract class Unlockable implements \LWS\WOOREWARDS\Abstracts\ICategorisable, \
 	public function getCategories()
 	{
 		return array(
-			\LWS\WOOREWARDS\Core\Pool::T_STANDARD  => __("Standard", 'woorewards'),
-			\LWS\WOOREWARDS\Core\Pool::T_LEVELLING => __("Leveling", 'woorewards'),
-			'custom'    => __("Events", 'woorewards')
+			\LWS\WOOREWARDS\Core\Pool::T_STANDARD  => __("Standard", 'woorewards-lite'),
+			\LWS\WOOREWARDS\Core\Pool::T_LEVELLING => __("Leveling", 'woorewards-lite'),
+			'custom'    => __("Events", 'woorewards-lite')
 		);
 	}
 

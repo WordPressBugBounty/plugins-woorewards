@@ -26,6 +26,6 @@ class Sumo extends \LWS\WOOREWARDS\PointsFlow\ExportMethod
 	/** @return (string) human readable name */
 	public function getTitle()
 	{
-		return __("Sumo", 'woorewards');
+		return __("Sumo", 'woorewards-lite');
 	}
 }

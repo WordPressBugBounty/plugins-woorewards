@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: MyRewards\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-06 18:38+0200\n"
-"PO-Revision-Date: 2025-05-06 18:38+0200\n"
+"PO-Revision-Date: 2026-02-06 17:51+0100\n"
 "Last-Translator: LongWatchStudio <plugins@longwatchstudio.com>\n"
 "Language-Team: Suomi\n"
 "Language: fi\n"
@@ -11,13 +11,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.0.1\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: woorewards.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: "
-"__;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Loco-Version: 2.2.1; wp-5.1.1\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
@@ -394,13 +395,13 @@ msgstr "Palkitsemisjärjestelmän tallennuksen aikana sattui virhe."
 
 #: include/core/pool.php:780
 #, php-format
-msgid "Failed to delete the reward system <b>%s</b>/%s."
-msgstr "Ei voitu poistaa palkintojärjestelmää <b>%s</b>/%s."
+msgid "Failed to delete the reward system <b>%1$s</b>/%2$s."
+msgstr "Ei voitu poistaa palkintojärjestelmää <b>%1$s</b>/%2$s."
 
 #: include/core/pool.php:800
 #, php-format
-msgid "The reward system <b>%s</b>/%s successfully deleted."
-msgstr "Palkkiojärjestelmä <b>%s</b>/%s poistettiin onnistuneesti."
+msgid "The reward system <b>%1$s</b>/%2$s successfully deleted."
+msgstr "Palkkiojärjestelmä <b>%1$s</b>/%2$s poistettiin onnistuneesti."
 
 #: include/core/pool.php:905
 #, php-format
@@ -669,8 +670,8 @@ msgstr "Erotuomarin määräykset"
 
 #: include/events/sponsoredorder.php:224
 #, php-format
-msgid "Referred friend %s order #%s completed"
-msgstr "Kutsuttu ystävä %s tilaus #%s valmis"
+msgid "Referred friend %1$s order #%2$s completed"
+msgstr "Kutsuttu ystävä %1$s tilaus #%2$s valmis"
 
 #: include/events/sponsoredorder.php:233
 msgid "Available for referees"
@@ -1509,8 +1510,8 @@ msgid ""
 "Select what and where you want to display content on the WooCommerce "
 "Checkout Page. You can even display other plugins shortcodes"
 msgstr ""
-"Valitse, mitä ja missä haluat näyttää sisältöä WooCommerce Checkout "
-"-sivulla. Voit jopa näyttää muita laajennusten lyhytkoodeja"
+"Valitse, mitä ja missä haluat näyttää sisältöä WooCommerce Checkout -"
+"sivulla. Voit jopa näyttää muita laajennusten lyhytkoodeja"
 
 #: include/ui/admin.php:773
 msgid "Fields below are for legacy [woocommerce_cart] shortcode."
@@ -1586,8 +1587,8 @@ msgid ""
 "The following options are used to decide where and how the Points on Cart "
 "tool will be displayed in the cart page"
 msgstr ""
-"Seuraavien vaihtoehtojen avulla päätetään, missä ja miten Points on Cart "
-"-työkalu näytetään ostoskorisivulla"
+"Seuraavien vaihtoehtojen avulla päätetään, missä ja miten Points on Cart -"
+"työkalu näytetään ostoskorisivulla"
 
 #: include/ui/admin.php:878
 msgid "Reload cart page after amount modification"
@@ -1598,8 +1599,8 @@ msgid ""
 "By default, changing the amount will provoke a javascript (ajax) update. "
 "Check this box if the default behavior doesn't work."
 msgstr ""
-"Oletusarvoisesti määrän muuttaminen aiheuttaa javascript (ajax) "
-"-päivityksen. Valitse tämä valintaruutu, jos oletustoiminta ei toimi."
+"Oletusarvoisesti määrän muuttaminen aiheuttaa javascript (ajax) -"
+"päivityksen. Valitse tämä valintaruutu, jos oletustoiminta ei toimi."
 
 #: include/ui/admin.php:887
 msgid "Checkout Display"
@@ -1622,8 +1623,8 @@ msgid ""
 "The following options are used to decide where and how the Points on Cart "
 "tool will be displayed in the checkout page"
 msgstr ""
-"Seuraavien vaihtoehtojen avulla päätetään, missä ja miten Points on Cart "
-"-työkalu näytetään kassasivulla"
+"Seuraavien vaihtoehtojen avulla päätetään, missä ja miten Points on Cart -"
+"työkalu näytetään kassasivulla"
 
 #: include/ui/admin.php:905
 msgid "Reload checkout page after amount modification"
@@ -1763,11 +1764,11 @@ msgstr ""
 #: include/ui/admin.php:1070
 #, php-format
 msgid ""
-"The WooRewards default points and rewards system does not exist. Please run "
-"the <a%s>wizard</a> tool to create one."
+"The WooRewards default points and rewards system does not exist. Please run the "
+"<a href='%s' class='lws-adm-btn'>wizard</a> tool to create one."
 msgstr ""
 "WooRewards-oletuspiste- ja palkitsemisjärjestelmää ei ole olemassa. Luo "
-"sellainen suorittamalla <a%s>ohjattu työkalu."
+"sellainen suorittamalla <a href='%s' class='lws-adm-btn'>ohjattu työkalu</a>."
 
 #: include/ui/admin.php:1075
 msgid ""
@@ -1933,6 +1934,12 @@ msgstr ""
 msgid "See %s to let your customer share a referral link and get referees."
 msgstr ""
 "Katso %s, jotta asiakkaasi voi jakaa viittauslinkin ja saada suosittelijoita."
+
+#: include/ui/admin.php:1634
+#, php-format
+msgid ""
+"Points restoration completed for system <b>%1$s</b> to date <b>%2$s</b>:"
+msgstr ""
 
 #: include/ui/adminscreens/pointsmanagement.php:23
 msgid "Export Points from MyRewards"
@@ -2389,7 +2396,7 @@ msgstr "Käytä"
 
 #: include/ui/blocks/integration.php:58
 #, php-format
-msgid "%s → %s"
+msgid "%1$s → %2$s"
 msgstr ""
 
 #: include/ui/blocks/integration.php:70
@@ -2969,11 +2976,11 @@ msgstr ""
 msgid "Elements are displayed on top of another"
 msgstr "Elementit näkyvät toisen päällä"
 
-#: include/ui/shortcodes/pointsbalance.php:205
+#: include/ui/shortcodes/pointsbalance.php:206
 #, php-format
 msgctxt "wr_points_balance element=\"none\""
-msgid "%s : %s"
-msgstr "%s : %s"
+msgid "%1$s : %2$s"
+msgstr "%1$s : %2$s"
 
 #: include/ui/shortcodes/pointsvalue.php:27
 msgid "Points Value"
@@ -3212,11 +3219,11 @@ msgstr ""
 msgid "Process MyRewards Points"
 msgstr "MyRewards pisteiden näyttäjä"
 
-#: include/ui/woocommerce/ordersbulk.php:103
+#: include/ui/woocommerce/ordersbulk.php:104
 #, php-format
 msgid ""
-"<b>%d</b> orders verified, including <b>%d</b> processed for a sum of <b>%d</"
-"b> points."
+"<b>%1$d</b> orders verified, including <b>%2$d</b> processed for a sum of "
+"<b>%3$d</b> points."
 msgstr ""
 
 #: include/ui/woocommerce/pointsoncart.php:90
@@ -3356,8 +3363,8 @@ msgstr "Käytä enimmäismäärää"
 
 #: include/ui/woocommerce/pointsoncart.php:773
 #, php-format
-msgid "Every %s you use is worth %s"
-msgstr "Jokainen käyttämäsi %s kannattaa %s"
+msgid "Every %1$s you use is worth %2$s"
+msgstr "Jokainen käyttämäsi %1$s kannattaa %2$s"
 
 #: include/ui/woocommerce/pointsoncart.php:784
 #, php-format
@@ -3371,18 +3378,18 @@ msgstr "Voit käyttää enintään %s yhdessä ostoskorissa."
 
 #: include/ui/woocommerce/pointsoncart.php:804
 #, php-format
-msgid "You can only use your %s to reduce the cart total by %s%%"
-msgstr "Voit käyttää %s vain ostoskorin kokonaismäärän pienentämiseen %s%%"
+msgid "You can only use your %1$s to reduce the cart total by %2$s%%"
+msgstr "Voit käyttää %1$s vain ostoskorin kokonaismäärän pienentämiseen %2$s%%"
 
 #: include/ui/woocommerce/pointsoncart.php:815
 #, php-format
-msgid "You can only use your %s to reduce the cart total to %s"
-msgstr "Voit käyttää %s vain ostoskorin kokonaismäärän pienentämiseen %s"
+msgid "You can only use your %1$s to reduce the cart total to %2$s"
+msgstr "Voit käyttää %1$s vain ostoskorin kokonaismäärän pienentämiseen %2$s"
 
 #: include/ui/woocommerce/pointsoncart.php:826
 #, php-format
-msgid "The cart subtotal needs to be over %s if you want to use %s"
-msgstr "Ostoskorin välisumman on oltava yli %s, jos haluat käyttää %s"
+msgid "The cart subtotal needs to be over %1$s if you want to use %2$s"
+msgstr "Ostoskorin välisumman on oltava yli %1$s, jos haluat käyttää %2$s"
 
 #: include/unlockables/coupon.php:24
 msgid ""
@@ -3853,7 +3860,7 @@ msgstr "Kanta-asiakasjärjestelmä"
 
 #: include/wizards/standard.php:302
 #, php-format
-msgid " %s points earned for each %s spent"
+msgid " %1$s points earned for each %2$s spent"
 msgstr ""
 
 #: include/wizards/standard.php:303
@@ -3889,8 +3896,8 @@ msgstr "Tuotteen arvostelu"
 
 #: include/wizards/standard.php:326
 #, php-format
-msgid " %s points earned for each %s spent by a Referee"
-msgstr " %s ansaittua pistettä jokaisesta erotuomarin käyttämästä %s"
+msgid " %1$s points earned for each %2$s spent by a Referee"
+msgstr " %1$s ansaittua pistettä jokaisesta erotuomarin käyttämästä %2$s"
 
 #: include/wizards/standard.php:327
 msgid "Referee Spends Money"
@@ -3907,7 +3914,7 @@ msgstr "Erotuomari tekee tilauksen"
 
 #: include/wizards/standard.php:342
 #, php-format
-msgid " %s percent discount for %s points"
+msgid " %1$s percent discount for %2$s points"
 msgstr ""
 
 #: include/wizards/standard.php:343
@@ -3916,7 +3923,7 @@ msgstr "Alennusprosentti"
 
 #: include/wizards/standard.php:348
 #, php-format
-msgid " %s%s discount for %s points"
+msgid " %1$s%2$s discount for %3$s points"
 msgstr ""
 
 #: include/wizards/standard.php:349
@@ -3925,7 +3932,7 @@ msgstr "Ostoskorin kiinteä alennus"
 
 #: include/wizards/standard.php:354
 #, php-format
-msgid " %s%s discount for each point"
+msgid " %1$s%2$s discount for each point"
 msgstr ""
 
 #: include/wizards/standard.php:369

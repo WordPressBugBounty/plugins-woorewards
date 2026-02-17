@@ -40,8 +40,8 @@ class UserPointsHistory
 			\wp_localize_script('woorewards-history', 'lwsWooRewardsHistory', array(
 				'ajaxUrl' => \admin_url('admin-ajax.php'),
 				'action' => self::AJAX_ACTION,
-				'loadingText' => __('Loading...', 'woorewards'),
-				'errorText' => __('Error loading history. Please try again.', 'woorewards'),
+				'loadingText' => __('Loading...', 'woorewards-lite'),
+				'errorText' => __('Error loading history. Please try again.', 'woorewards-lite'),
 			));
 			$localized = true;
 		}
@@ -51,15 +51,15 @@ class UserPointsHistory
 	{
 		$fields['history'] = array(
 			'id' => 'lws_woorewards_sc_history',
-			'title' => __("Points History", 'woorewards'),
+			'title' => __("Points History", 'woorewards-lite'),
 			'type' => 'shortcode',
 			'extra' => array(
 				'shortcode'   => "[wr_show_history]",
-				'description' =>  __("This shortcode displays a user's points history with pagination.", 'woorewards'),
+				'description' =>  __("This shortcode displays a user's points history with pagination.", 'woorewards-lite'),
 				'options'     => array(
 					array(
 						'option' => 'per_page',
-						'desc' => __("(Optional) The number of rows displayed per page. Default is 15.", 'woorewards'),
+						'desc' => __("(Optional) The number of rows displayed per page. Default is 15.", 'woorewards-lite'),
 						'example' => '[wr_show_history per_page="15"]'
 					),
 					array(
@@ -67,34 +67,34 @@ class UserPointsHistory
 						'desc' => array(
 							array(
 								'tag' => 'p', 'join' => '<br/>',
-								__("(Optional) The Columns to display (comma separated). <b>The order in which you specify the columns will be the grid columns order</b>.", 'woorewards'),
-								__("If not specified, the history will display the points and rewards system name, date, reason and points movement columns", 'woorewards'),
-								__(" Here are the different options available :", 'woorewards'),
+								__("(Optional) The Columns to display (comma separated). <b>The order in which you specify the columns will be the grid columns order</b>.", 'woorewards-lite'),
+								__("If not specified, the history will display the points and rewards system name, date, reason and points movement columns", 'woorewards-lite'),
+								__(" Here are the different options available :", 'woorewards-lite'),
 							),
 							array(
 								'tag' => 'ul',
 								array(
 									"system",
-									__("The points and rewards system's name.", 'woorewards'),
+									__("The points and rewards system's name.", 'woorewards-lite'),
 								), array(
 								"date",
-								__("The date at which the points movement happened.", 'woorewards'),
+								__("The date at which the points movement happened.", 'woorewards-lite'),
 							), array(
 								"descr",
-								__("The operation's description.", 'woorewards'),
+								__("The operation's description.", 'woorewards-lite'),
 							), array(
 								"points",
-								__("The amount of points earned or lost during the operation.", 'woorewards'),
+								__("The amount of points earned or lost during the operation.", 'woorewards-lite'),
 							), array(
 								"total",
-								__("The new total of points in the user's reserve at the end of the operation.", 'woorewards'),
+								__("The new total of points in the user's reserve at the end of the operation.", 'woorewards-lite'),
 							)
 							)
 						),
 					),
 					array(
 						'option' => 'headers',
-						'desc' => __("(Optional) The column headers (comma separated). <b>Must be specified if you specified the columns option</b>. The headers must respect the same order than the ones of the previous option.", 'woorewards'),
+						'desc' => __("(Optional) The column headers (comma separated). <b>Must be specified if you specified the columns option</b>. The headers must respect the same order than the ones of the previous option.", 'woorewards-lite'),
 					),
 				),
 				'flags' => array('current_user_id'),
@@ -109,7 +109,7 @@ class UserPointsHistory
 			array(
 				'system' => array(
 					'option' => 'system',
-					'desc' => __("(Optional) The points and rewards systems you want to display (comma separated). You can find this value in <strong>MyRewards → points and rewards systems</strong>, in the <b>Shortcode Attribute</b> column.", 'woorewards'),
+					'desc' => __("(Optional) The points and rewards systems you want to display (comma separated). You can find this value in <strong>MyRewards → points and rewards systems</strong>, in the <b>Shortcode Attribute</b> column.", 'woorewards-lite'),
 				),
 			),
 			$fields['history']['extra']['options']
@@ -131,7 +131,7 @@ class UserPointsHistory
 	{
 		try {
 			if (!isset($_POST['nonce']) || !\wp_verify_nonce(\sanitize_text_field(\wp_unslash($_POST['nonce'])), self::AJAX_ACTION)) {
-				\wp_send_json_error(array('message' => __('Security check failed.', 'woorewards')));
+				\wp_send_json_error(array('message' => __('Security check failed.', 'woorewards-lite')));
 				return;
 			}
 
@@ -140,13 +140,13 @@ class UserPointsHistory
 			$atts = (isset($_POST['atts']) && is_array($_POST['atts'])) ? \array_map('\sanitize_text_field', \wp_unslash($_POST['atts'])) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
 			if (!$userId) {
-				\wp_send_json_error(array('message' => __('Invalid user.', 'woorewards')));
+				\wp_send_json_error(array('message' => __('Invalid user.', 'woorewards-lite')));
 				return;
 			}
 
 			$currentUserId = \get_current_user_id();
 			if ($userId != $currentUserId) {
-				\wp_send_json_error(array('message' => __('Invalid user.', 'woorewards')));
+				\wp_send_json_error(array('message' => __('Invalid user.', 'woorewards-lite')));
 				return;
 			}
 
@@ -157,7 +157,7 @@ class UserPointsHistory
 
 			if (empty($result['items'])) {
 				\wp_send_json_success(array(
-					'html' => '<div class="wr-history-no-results">' . __('No history found.', 'woorewards') . '</div>',
+					'html' => '<div class="wr-history-no-results">' . __('No history found.', 'woorewards-lite') . '</div>',
 					'pagination' => '',
 				));
 				return;
@@ -177,7 +177,7 @@ class UserPointsHistory
 			));
 		} catch (\Exception $e) {
 			\wp_send_json_error(array(
-				'message' => __('An error occurred while loading history.', 'woorewards'),
+				'message' => __('An error occurred while loading history.', 'woorewards-lite'),
 				'debug' => WP_DEBUG ? $e->getMessage() : null
 			));
 		}
@@ -363,7 +363,7 @@ class UserPointsHistory
 			$html .= sprintf(
 				'<button class="lwss_selectable wr-history-page-btn wr-history-prev" data-type="PrevButton" data-page="%d">%s</button>',
 				$currentPage - 1,
-				'&laquo; ' . __('Previous', 'woorewards')
+				'&laquo; ' . __('Previous', 'woorewards-lite')
 			);
 		}
 
@@ -397,7 +397,7 @@ class UserPointsHistory
 			$html .= sprintf(
 				'<button class="lwss_selectable wr-history-page-btn wr-history-next" data-type="NextButton" data-page="%d">%s</button>',
 				$currentPage + 1,
-				__('Next', 'woorewards') . ' &raquo;'
+				__('Next', 'woorewards-lite') . ' &raquo;'
 			);
 		}
 
@@ -512,19 +512,19 @@ class UserPointsHistory
 		for ($i = count($headers); $i < $columnsCount; ++$i) {
 			switch ($columns[$i]) {
 				case 'system':
-					$headers[$i] = __("Loyalty System", 'woorewards');
+					$headers[$i] = __("Loyalty System", 'woorewards-lite');
 					break;
 				case 'date':
-					$headers[$i] = __("Date", 'woorewards');
+					$headers[$i] = __("Date", 'woorewards-lite');
 					break;
 				case 'descr':
-					$headers[$i] = __("Description", 'woorewards');
+					$headers[$i] = __("Description", 'woorewards-lite');
 					break;
 				case 'points':
-					$headers[$i] = __("Points", 'woorewards');
+					$headers[$i] = __("Points", 'woorewards-lite');
 					break;
 				case 'total':
-					$headers[$i] = __("Points Balance", 'woorewards');
+					$headers[$i] = __("Points Balance", 'woorewards-lite');
 					break;
 				default:
 					$headers[$i] = $columns[$i];
