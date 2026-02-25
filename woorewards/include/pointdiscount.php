@@ -211,7 +211,7 @@ class PointDiscount
 		if ($points <= 0)
 			return false;
 
-		$points = \min($points, $pool->getPoints($userId));
+		$points = \min($points, \apply_filters('lws_woorewards_pointdiscount_available_points', $pool->getPoints($userId), $pool, $userId));
 		if ($points <= 0)
 			return false;
 
@@ -374,7 +374,7 @@ class PointDiscount
 		foreach ($stacks as $stackId => &$stack)
 		{
 			$stack['needs'] = \array_sum(\array_column($stack['discounts'], 'points'));
-			$stack['max'] = $stack['ref']->getPoints($userId);
+			$stack['max'] = \apply_filters('lws_woorewards_pointdiscount_available_points', $stack['ref']->getPoints($userId), $stack['ref'], $userId);
 		}
 
 		return $stacks;
@@ -627,7 +627,7 @@ class PointDiscount
 			\wp_send_json(array('error' => __('Points and Rewards System does not accept this kind of reward.', 'woorewards-lite')));
 
 		$stackId = $pool->getStackId();
-		$max = $pool->getPoints($userId);
+		$max = \apply_filters('lws_woorewards_pointdiscount_available_points', $pool->getPoints($userId), $pool, $userId);
 
 		$points = \sanitize_text_field(isset($_REQUEST['amount']) ? \wp_unslash($_REQUEST['amount']) : 0);
 		$points = (int)$pool->reversePointsFormat($points);

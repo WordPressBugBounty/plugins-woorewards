@@ -185,7 +185,7 @@ abstract class Unlockable implements \LWS\WOOREWARDS\Abstracts\ICategorisable, \
 			'format'   => array(
 				$prefix . 'cost'          => '0',
 				$prefix . 'title'         => 't',
-				$prefix . 'description'   => 't',
+				$prefix . 'description'   => 'h',
 				$prefix . 'date_start'    => 's',
 				$prefix . 'date_end'      => 's',
 				$prefix . 'thumbnail'     => 'd',

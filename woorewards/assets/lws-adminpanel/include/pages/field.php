@@ -170,7 +170,7 @@ abstract class Field
 		if (\is_array($value)) {
 			return array_map([$this, 'sanitize_field'], $value);
 		} else {
-			return \sanitize_textarea_field($value);
+			return $value;
 		}
 	}
 

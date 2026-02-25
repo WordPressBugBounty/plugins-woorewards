@@ -343,6 +343,8 @@ class ArgParser
 							$value = \sanitize_key($value);
 						else if( $u == 'T' )
 							$value = \sanitize_text_field($value);
+						else if( $u == 'H' )
+							$value = \wp_kses_post($value);
 						else
 							$value = trim($value);
 
