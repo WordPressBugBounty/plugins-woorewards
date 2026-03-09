@@ -6,7 +6,7 @@
  * Plugin URI: https://plugins.longwatchstudio.com/product/woorewards/
  * Author: Long Watch Studio
  * Author URI: https://longwatchstudio.com
- * Version: 5.7.2
+ * Version: 5.7.3
  * License: GPLv2 or later
  * Text Domain: woorewards-lite
  * Domain Path: /languages
@@ -109,7 +109,7 @@ final class LWS_WooRewards
 	 */
 	private function defineConstants()
 	{
-		define('LWS_WOOREWARDS_VERSION', '5.7.2');
+		define('LWS_WOOREWARDS_VERSION', '5.7.3');
 		define('LWS_WOOREWARDS_FILE', __FILE__);
 		define('LWS_WOOREWARDS_DOMAIN', 'woorewards-lite');
 		define('LWS_WOOREWARDS_PAGE', 'woorewards');
@@ -147,7 +147,7 @@ final class LWS_WooRewards
 
 	public function addPluginVersion($url)
 	{
-		return '5.7.2';
+		return '5.7.3';
 	}
 
 	public function addDocUrl($url)

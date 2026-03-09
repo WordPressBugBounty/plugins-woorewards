@@ -817,16 +817,20 @@ class PointsOnCart
 	{
 		$details = array();
 
-		if (\trim($poolInfo['direct_reward_point_rate']) != '') {
-			$details['rate'] = sprintf(
-				"<div class='lwss_selectable wr-rateinfo' data-type='Point Rate'>%s</div>",
-				sprintf(
+		$ratio_rate = \trim($poolInfo['direct_reward_point_rate']);
+		if ($ratio_rate != '') {
+			$pts_rate = (float)$info['pool']->formatPointsNumber(1, true);
+			if ($pts_rate !== (float)$ratio_rate) {
+				$details['rate'] = sprintf(
+					"<div class='lwss_selectable wr-rateinfo' data-type='Point Rate'>%s</div>",
+					sprintf(
 					/* translators: %1$s: points amount, %2$s: currency price */
-					__('Every %1$s you use is worth %2$s', 'woorewards-lite'),
-					$info['pool']->formatPoints(1, true),
-					\LWS\Adminpanel\Tools\Conveniences::getCurrencyPrice($poolInfo['direct_reward_point_rate'], \apply_filters('lws_woorewards_point_rate_displays_real_decimals', false), true)
-				)
-			);
+						__( 'Every %1$s you use is worth %2$s', 'woorewards-lite' ),
+						$info['pool']->formatPoints( 1, true ),
+						\LWS\Adminpanel\Tools\Conveniences::getCurrencyPrice( $ratio_rate, \apply_filters( 'lws_woorewards_point_rate_displays_real_decimals', false ), true )
+					)
+				);
+			}
 		}
 
 		if (\intval($poolInfo['direct_reward_min_points_on_cart']) > 0) {

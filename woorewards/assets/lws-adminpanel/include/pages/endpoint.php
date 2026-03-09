@@ -348,13 +348,32 @@ class Endpoint
 
 		$postId = \get_option($this->options['prefix'] . '_page');
 		if ($postId) {
-			$content = \get_the_content(null, false, $postId);
-			$this->muteElementor();
-			$content = \apply_filters('the_content', $content);
-			$this->restoreElementor();
-			$content = \str_replace(']]>', ']]&gt;', $content);
+			$content = $this->getElementorContent($postId);
+			if (!$content) {
+				$content = $this->getWordPressContent($postId);
+			}
 			echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
+	}
+
+	private function getElementorContent($postId)
+	{
+		if ( !(did_action('elementor/loaded') && \class_exists('\Elementor\Plugin'))) {
+			return false;
+		}
+		$elementor = \Elementor\Plugin::instance();
+		// disable edition for frontend
+		$elementor->editor->set_edit_mode(false);
+		return $elementor->frontend->get_builder_content_for_display($postId, true);
+	}
+
+	private function getWordPressContent($postId)
+	{
+		$content = \get_the_content(null, false, $postId);
+		$this->muteElementor();
+		$content = \apply_filters('the_content', $content);
+		$this->restoreElementor();
+		return \str_replace(']]>', ']]&gt;', $content);
 	}
 
 	/** Elementor reacts to 'the_content' even if already

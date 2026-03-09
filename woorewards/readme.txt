@@ -4,7 +4,7 @@ Tags: loyalty, points, referrals, rewards, coupons
 Requires at least: 5.3
 Tested up to: 6.9
 Requires PHP: 7.3.0
-Stable tag: 5.7.2
+Stable tag: 5.7.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -108,6 +108,11 @@ Yes, High-Performance Order Storage is supported.
 5. Styling options
 
 == Changelog ==
+
+= 5.7.3 =
+* MyRewards Pro :
+    * Feature - WooCommerce — My Account pages supports Elementor edition again
+    * Feature - Extends points display options
 
 = 5.7.2 =
 * Feature - Reward description accept html
