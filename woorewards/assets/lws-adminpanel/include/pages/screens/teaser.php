@@ -53,7 +53,13 @@ class Teaser extends \LWS\Adminpanel\Pages\Page
 			}
 		}
 
-		echo wp_kses_post($transiant);
+		echo \wp_kses($transiant, \array_merge_recursive(\wp_kses_allowed_html('post'), [
+			'style' => [
+				'id'    => true,
+				'type'  => true,
+				'media' => true,
+			],
+		]));
 
 		echo '</div>';
 		if ($lastCheck && \function_exists('wp_timezone')) {

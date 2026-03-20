@@ -169,6 +169,8 @@ class PointsOnCart
 
 	function registerScripts()
 	{
+		if (!\LWS\Adminpanel\Tools\Conveniences::isWC()) return;
+
 		$alias = array();
 		$pools = \apply_filters('lws_woorewards_get_pools_by_args', false, array(
 			'showall' => true,
@@ -195,9 +197,11 @@ class PointsOnCart
 
 	protected function enqueueScripts()
 	{
-		\wp_enqueue_script('lws_wr_pointsoncart');
-		\wp_enqueue_style('lws_wr_pointsoncart_hard');
-		\wp_enqueue_style('lws_wr_pointsoncart_custom');
+		if (\LWS\Adminpanel\Tools\Conveniences::isWC()) {
+			\wp_enqueue_script('lws_wr_pointsoncart');
+			\wp_enqueue_style('lws_wr_pointsoncart_hard');
+			\wp_enqueue_style('lws_wr_pointsoncart_custom');
+		}
 	}
 
 	public function admin($fields)
@@ -243,6 +247,9 @@ class PointsOnCart
 				),
 			)
 		);
+		if (!\LWS\Adminpanel\Tools\Conveniences::isWC()) {
+			$fields['pointsoncart']['extra']['description'] .= '<br/><b>' . __("WooCommerce is required but cannot be found on the website!", 'woorewards-lite') . '</b>';
+		}
 		$fields['pointsoncartheader'] = array(
 			'id' => 'lws_wooreward_points_cart_header',
 			'title' => __("Tool Header", 'woorewards-lite'),
@@ -703,6 +710,9 @@ class PointsOnCart
 	{
 		if (!$this->stygen)
 		{
+			if (!\LWS\Adminpanel\Tools\Conveniences::isWC()) {
+				return '';
+			}
 			if( !\WC()->cart || \WC()->cart->is_empty() )
 				return '';
 			$this->enqueueScripts();
