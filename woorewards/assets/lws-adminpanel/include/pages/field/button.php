@@ -76,6 +76,11 @@ class Button extends \LWS\Adminpanel\Pages\Field
 			} else {
 				$attrs['data-action'] = $submit;
 			}
+
+			$nonce = $this->getExtraValue('nonce', false);
+			if ($nonce) {
+				$attrs['data-adm-btn-nonce'] = \wp_create_nonce( $nonce );
+			}
 		}
 		if ($this->getExtraValue('disabled', false))
 			$attrs['disabled'] = 'disabled';
@@ -100,10 +105,20 @@ class Button extends \LWS\Adminpanel\Pages\Field
 			$out .= "<$tag class='$cc'>";
 		}
 
+		if( $triggable ) {
+			// security
+			$out .= sprintf(
+				'<input type="hidden" value="%s" name="lws_adminpanel_triggerable_button_nonce"/>',
+				\esc_attr(\wp_create_nonce('lws_adminpanel_triggerable_button_nonce'))
+			);
+		}
+
 		$attrs = $this->getDomAttributes($attrs);
 		$out .= "<div class='lws-adm-btn$class' id='{$this->m_Id}' type='button'{$attrs}>$text</div>";
-		if( $triggable || $submit ) // answer zone
+		if( $triggable || $submit ) {
+			// answer zone
 			$out .= "<div class='lws-adm-btn-trigger-response'></div>";
+		}
 
 		if( isset($this->extra['container']) )
 			$out .= "</$tag>";

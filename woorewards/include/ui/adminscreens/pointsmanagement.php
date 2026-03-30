@@ -40,6 +40,7 @@ class PointsManagement
 						'title' => __("Export", 'woorewards-lite'),
 						'extra' => array(
 							'link' => array('ajax' => 'woorewards-lite' . '-export-wr'),
+							'nonce' => 'woorewards-lite' . '-export-wr',
 						)
 					),
 				)
@@ -89,6 +90,7 @@ class PointsManagement
 						'title' => __("Export", 'woorewards-lite'),
 						'extra' => array(
 							'link' => array('ajax' => 'woorewards-lite' . '-export-points'),
+							'nonce' => 'woorewards-lite' . '-export-points',
 						)
 					),
 				)

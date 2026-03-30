@@ -208,6 +208,9 @@ class Action
 
 	function exportWR()
 	{
+		if (!\wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['lws_btn_nonce'] ?? '')), 'woorewards-lite' . '-export-wr')) {
+			\wp_die('forbidden', 403);
+		}
 		if( !\current_user_can('manage_options') )
 			\wp_die('forbidden', 403);
 
@@ -225,6 +228,9 @@ class Action
 
 	function exportPoints()
 	{
+		if (!\wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['lws_btn_nonce'] ?? '')), 'woorewards-lite' . '-export-points')) {
+			\wp_die('forbidden', 403);
+		}
 		if( !\current_user_can('manage_options') )
 			\wp_die('forbidden', 403);
 

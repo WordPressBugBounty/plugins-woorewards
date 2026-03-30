@@ -481,6 +481,11 @@ class Pages
 			if( $data === null )
 				exit(0);
 
+			$nonce = sanitize_text_field(wp_unslash($data['lws_adminpanel_triggerable_button_nonce'] ?? ''));
+			if (!\wp_verify_nonce($nonce, 'lws_adminpanel_triggerable_button_nonce')) {
+				\wp_send_json_error(__("Token expired. Please reload the page and retry.", 'lws-adminpanel'));
+			}
+
 			$response = $this->trigAjaxButton($this->pages, $button, $data);
 			if( !is_null($response) )
 			{
@@ -495,6 +500,11 @@ class Pages
 	{
 		foreach( $tree as $node )
 		{
+			$rights = $node['rights'] ?? '';
+			if ($rights && !\current_user_can($rights)) {
+				continue;
+			}
+
 			if( is_array($node) )
 			{
 				if( isset($node['fields']) )
