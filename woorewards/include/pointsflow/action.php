@@ -95,7 +95,8 @@ class Action
 				else try
 				{
 					$reason = isset($_POST['woorewards-lite' . '_import_reason']) ? \sanitize_text_field(\wp_unslash($_POST['woorewards-lite' . '_import_reason'])) : false; // phpcs:ignore WordPress.Security.NonceVerification.Missing
-					$json = @json_decode(@file_get_contents(\sanitize_file_name(\wp_unslash($_FILES[$key]['tmp_name']))), true); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents, WordPress.Security.ValidatedSanitizedInput.InputNotValidated -- reading uploaded tmp file
+					$filename_esc = \wp_unslash($_FILES[$key]['tmp_name']);
+					$json = (array)@json_decode(@file_get_contents($filename_esc), true); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents, WordPress.Security.ValidatedSanitizedInput.InputNotValidated -- reading uploaded tmp file
 					$this->importJSON($json, $stack, $replace, $reason);
 				}
 				catch(\Exception $e)

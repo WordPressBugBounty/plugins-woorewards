@@ -4,7 +4,7 @@ Tags: loyalty, points, referrals, rewards, coupons
 Requires at least: 5.3
 Tested up to: 6.9
 Requires PHP: 7.3.0
-Stable tag: 5.7.4
+Stable tag: 5.7.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -108,6 +108,13 @@ Yes, High-Performance Order Storage is supported.
 5. Styling options
 
 == Changelog ==
+
+= 5.7.5 =
+* Tag - WooCommerce 10.7
+* Fix - Point import
+* Fix - Coupon reward edition missing field
+* MyRewards Pro :
+    * Features - Add product brand support for events, coupons, and point discounts
 
 = 5.7.4 =
 * Fix - Vulnerability ad9d6479-7107-4663-994c-4a07b91e0d99 — Arbitrary Content Deletion in MyRewards

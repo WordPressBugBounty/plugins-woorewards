@@ -57,7 +57,7 @@ class Session
 	{
 		$me = new self();
 		$GLOBALS['lwssession_user'] = $me;
-		\add_action('shutdown', [$me, 'save'], 200);
+		\add_action('shutdown', [$me, 'save'], PHP_INT_MAX - 1);
 		\add_action('wp_logout', [$me, 'clean']);
 		$me->maybeRepeat();
 	}
@@ -153,6 +153,21 @@ class Session
 	private function hasTable()
 	{
 		global $wpdb;
+
+		try {
+			// prevent out-of-sync command due to other plugins that let connection in a dirty state
+			if ( $wpdb->use_mysqli ) {
+				while ( mysqli_more_results( $wpdb->dbh ) ) {
+					mysqli_next_result( $wpdb->dbh );
+				}
+			}
+			$wpdb->flush();
+		} catch (\Exception $e) {
+			if (defined('WP_DEBUG') && WP_DEBUG) {
+				error_log('A plugins lets db connection in a dirty state during shutdown: ' . $e->getMessage()); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+			}
+		}
+
 		$table = $this->getTableName();
 		$query = $wpdb->prepare('SHOW TABLES LIKE %s', $wpdb->esc_like($table));
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared

@@ -83,7 +83,7 @@ class Coupon extends \LWS\WOOREWARDS\Abstracts\Unlockable
 				. "<div class='lws-{$context}-opt-input value'>{$input}</div>";
 		}
 
-		$form .= $this->getFieldsetPlaceholder(false, 2);
+		$form .= $this->getFieldsetEnd(2);
 		return $form;
 	}
 
