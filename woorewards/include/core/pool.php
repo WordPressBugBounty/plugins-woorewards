@@ -222,6 +222,20 @@ class Pool
 		return ($cost > 0);
 	}
 
+	public static function error_log(string $message)
+	{
+		if (\function_exists('wc_get_logger')) {
+			$logger = \wc_get_logger();
+			if ($logger) {
+				$logger->error(
+					$message,
+					['source' => 'woorewards-error']
+				);
+			}
+		}
+		if (defined('WP_DEBUG') && WP_DEBUG) error_log($message);
+	}
+
 	/** Some configuration sets are relevant as specific pool kind.
 	 *	@return array of option */
 	public function getDefaultConfiguration($type)

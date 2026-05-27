@@ -2,9 +2,9 @@
 Contributors: lwsdevelopers
 Tags: loyalty, points, referrals, rewards, coupons
 Requires at least: 5.3
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 7.3.0
-Stable tag: 5.7.5
+Stable tag: 5.7.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -108,6 +108,10 @@ Yes, High-Performance Order Storage is supported.
 5. Styling options
 
 == Changelog ==
+
+= 5.7.6 =
+* Tag - WordPress tested up to 7.0
+* Fix - Coupon expiration dates in emails didn't use the local timezone.
 
 = 5.7.5 =
 * Tag - WooCommerce 10.7

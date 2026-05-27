@@ -213,8 +213,9 @@ class Coupon extends \LWS\WOOREWARDS\Abstracts\Unlockable
 		if (!$this->getTimeout()->isNull()) {
 			$str .= ' - ';
 			if ($date) {
+				$ending = $this->getTimeout()->getEndingDate($date->setTimezone(\wp_timezone()));
 				/* translators: %s: expiration date */
-				$str .= sprintf(__('valid up to %s', 'woorewards-lite'), \date_i18n(\get_option('date_format'), $this->getTimeout()->getEndingDate($date)->getTimestamp()));
+				$str .= sprintf(__('valid up to %s', 'woorewards-lite'), \date_i18n(\get_option('date_format'), $ending->getTimestamp() + $ending->getOffset()));
 			} else {
 				/* translators: %1$d: duration count, %2$s: period text (days, weeks...) */
 				$str .= sprintf(__('valid for %1$d %2$s', 'woorewards-lite'), $this->getTimeout()->getCount(), $this->getTimeout()->getPeriodText());

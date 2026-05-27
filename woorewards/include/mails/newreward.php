@@ -64,8 +64,9 @@ class NewReward
 		$code = $data['reward']->get_code();
 
 		$expiry = false;
-		if( $data['reward']->get_date_expires('edit') )
-			$expiry = \mysql2date(\get_option('date_format'), $data['reward']->get_date_expires('edit')->date('Y-m-d'));
+		if( $data['reward']->get_date_expires('edit') ) {
+			$expiry = $data['reward']->get_date_expires('edit')->date_i18n(\get_option('date_format'));
+		}
 
 		$value = $data['reward']->get_amount('edit');
 		if( $data['reward']->get_discount_type('edit') == 'percent' )
