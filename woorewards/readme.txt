@@ -4,7 +4,7 @@ Tags: loyalty, points, referrals, rewards, coupons
 Requires at least: 5.3
 Tested up to: 7.0
 Requires PHP: 7.3.0
-Stable tag: 5.7.6
+Stable tag: 5.7.7
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -108,6 +108,11 @@ Yes, High-Performance Order Storage is supported.
 5. Styling options
 
 == Changelog ==
+
+= 5.7.7 =
+* Tag - WooCommerce 10.8
+* Fix - inline mail content styling - emogrifier assets lookup
+* Improvement - increase the points amount reference for small points value ratio on Points-on-cart display
 
 = 5.7.6 =
 * Tag - WordPress tested up to 7.0

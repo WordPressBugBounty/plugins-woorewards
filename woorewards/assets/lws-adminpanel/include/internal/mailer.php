@@ -531,13 +531,17 @@ class Mailer
 	{
 		$done = false;
 		if(class_exists('WooCommerce') && class_exists('DOMDocument')) {
-			if(class_exists('Pelago\\Emogrifier\\CssInliner')) {
+			$ns = $this->emogrifierNamespace();
+			if($ns !== false) {
+				$inlinerClass   = $ns . '\\CssInliner';
+				$prunerClass    = $ns . '\\HtmlProcessor\\HtmlPruner';
+				$converterClass = $ns . '\\HtmlProcessor\\CssToAttributeConverter';
 				try {
-					$inliner = \Pelago\Emogrifier\CssInliner::fromHtml($html)->inlineCss($style);
+					$inliner = $inlinerClass::fromHtml($html)->inlineCss($style);
 					$document = $inliner->getDomDocument();
-					\Pelago\Emogrifier\HtmlProcessor\HtmlPruner::fromDomDocument($document)->removeElementsWithDisplayNone();
+					$prunerClass::fromDomDocument($document)->removeElementsWithDisplayNone();
 
-					$html = \Pelago\Emogrifier\HtmlProcessor\CssToAttributeConverter::fromDomDocument($document)
+					$html = $converterClass::fromDomDocument($document)
 						->convertCssToVisualAttributes()
 						->render();
 
@@ -559,6 +563,26 @@ class Mailer
 			$html = ('<style type="text/css">' . $style . '</style>' . $html);
 		}
 		return $html;
+	}
+
+	/** Resolve the available Emogrifier (CssInliner) base namespace.
+	 *  WooCommerce 9+ ships the bundled library scoped under its own vendor
+	 *  prefix, so the plain Pelago\Emogrifier namespace no longer resolves when
+	 *  only WooCommerce provides Emogrifier. Probe known namespaces in order.
+	 *  @return string|false base namespace, or false when no CssInliner exists. */
+	protected function emogrifierNamespace()
+	{
+		$candidates = array(
+			'Pelago\\Emogrifier',
+			'Automattic\\WooCommerce\\Vendor\\Pelago\\Emogrifier',
+			'Automattic\\WooCommerce\\EmailEditorVendor\\Pelago\\Emogrifier',
+		);
+		foreach ($candidates as $ns) {
+			if (class_exists($ns . '\\CssInliner')) {
+				return $ns;
+			}
+		}
+		return false;
 	}
 
 	/** Ask for a mail content with placeholder data.

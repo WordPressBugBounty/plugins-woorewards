@@ -823,6 +823,18 @@ class PointsOnCart
 		return $content;
 	}
 
+	protected function getPointsValuePair(float $ratio_rate): array
+	{
+		$points = 1;
+		$value = $ratio_rate;
+		$ceil = \apply_filters('lws_woorewards_points_rate_incr_loop_ceil', 0.01);
+		while ($value < $ceil) {
+			$points *= 10;
+			$value *= 10.0;
+		}
+		return \apply_filters('lws_woorewards_points_rate_displayed_pair', [$points, $value], $ratio_rate);
+	}
+
 	protected function getDetailsText($origin, $info, $poolInfo)
 	{
 		$details = array();
@@ -831,13 +843,14 @@ class PointsOnCart
 		if ($ratio_rate != '') {
 			$pts_rate = (float)$info['pool']->formatPointsNumber(1, true);
 			if ($pts_rate !== (float)$ratio_rate) {
+				list($disp_pts, $disp_value) = $this->getPointsValuePair($ratio_rate);
 				$details['rate'] = sprintf(
 					"<div class='lwss_selectable wr-rateinfo' data-type='Point Rate'>%s</div>",
 					sprintf(
 					/* translators: %1$s: points amount, %2$s: currency price */
 						__( 'Every %1$s you use is worth %2$s', 'woorewards-lite' ),
-						$info['pool']->formatPoints( 1, true ),
-						\LWS\Adminpanel\Tools\Conveniences::getCurrencyPrice( $ratio_rate, \apply_filters( 'lws_woorewards_point_rate_displays_real_decimals', false ), true )
+						$info['pool']->formatPoints( $disp_pts, true ),
+						\LWS\Adminpanel\Tools\Conveniences::getCurrencyPrice( $disp_value, \apply_filters( 'lws_woorewards_point_rate_displays_real_decimals', false ), true )
 					)
 				);
 			}
