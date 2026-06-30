@@ -4,7 +4,7 @@ Tags: loyalty, points, referrals, rewards, coupons
 Requires at least: 5.3
 Tested up to: 7.0
 Requires PHP: 7.3.0
-Stable tag: 5.7.7
+Stable tag: 5.7.8
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -108,6 +108,10 @@ Yes, High-Performance Order Storage is supported.
 5. Styling options
 
 == Changelog ==
+
+= 5.7.8 =
+* Tag - WooCommerce 10.9
+* Improvement - Show points expiration conflicts in loyalty system edition UI
 
 = 5.7.7 =
 * Tag - WooCommerce 10.8
