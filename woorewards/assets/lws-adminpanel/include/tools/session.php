@@ -157,7 +157,9 @@ class Session
 		try {
 			// prevent out-of-sync command due to other plugins that let connection in a dirty state
 			if ( $wpdb->use_mysqli ) {
+				// phpcs:ignore WordPress.DB.RestrictedFunctions.mysql_mysqli_more_results -- drains results another plugin left on wpdb's own connection
 				while ( mysqli_more_results( $wpdb->dbh ) ) {
+					// phpcs:ignore WordPress.DB.RestrictedFunctions.mysql_mysqli_next_result
 					mysqli_next_result( $wpdb->dbh );
 				}
 			}

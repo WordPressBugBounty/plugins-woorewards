@@ -2,9 +2,9 @@
 Contributors: lwsdevelopers
 Tags: loyalty, points, referrals, rewards, coupons
 Requires at least: 5.3
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 7.3.0
-Stable tag: 5.7.8
+Stable tag: 5.7.9
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -108,6 +108,12 @@ Yes, High-Performance Order Storage is supported.
 5. Styling options
 
 == Changelog ==
+
+= 5.7.9 =
+* Tag - WordPress tested up to 7.1
+* Tag - WooCommerce 11.2
+* MyRewards Pro :
+    * Features - Offer free shipping per shipping method
 
 = 5.7.8 =
 * Tag - WooCommerce 10.9
