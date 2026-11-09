@@ -222,7 +222,9 @@ class UserPointsHistory
 				$atts['showall'] = true;
 		}
 
-		$atts['columns'] = array_map('strtolower', array_map('trim', explode(',', $atts['columns'])));
+		$columns = array_map('strtolower', array_map('trim', explode(',', (string) $atts['columns'])));
+		$columns = array_values(array_intersect($columns, array('system', 'date', 'descr', 'points', 'total')));
+		$atts['columns'] = $columns ? $columns : explode(',', $defaults['columns']);
 		$atts['headers'] = $this->getColumnHeaders($atts);
 
 		return $atts;
@@ -473,12 +475,12 @@ class UserPointsHistory
 
 		return "<div class='lwss_selectable wr-history-wrapper'"
 			. " data-type='HistoryWrapper'"
-			. " data-user-id='{$dataUserId}'"
-			. " data-nonce='{$dataNonce}'"
-			. " data-per-page='{$dataPerPage}'"
-			. " data-system='{$dataSystem}'"
-			. " data-columns='{$dataColumns}'"
-			. " data-headers='{$dataHeaders}'>"
+			. " data-wr-user-id='{$dataUserId}'"
+			. " data-wr-nonce='{$dataNonce}'"
+			. " data-wr-per-page='{$dataPerPage}'"
+			. " data-wr-system='{$dataSystem}'"
+			. " data-wr-columns='{$dataColumns}'"
+			. " data-wr-headers='{$dataHeaders}'>"
 			. "<div class='lwss_selectable wr-history-grid' data-type='Grid' style='grid-template-columns:{$gridTemplateColumns}'>"
 			. $head
 			. $rows
